@@ -22,3 +22,6 @@ wordpress/dist/
 # Berkas kerja sementara
 *.tmp
 scratchpad/
+
+# kredensial FTP lokal
+.tjr-ftp
