@@ -251,14 +251,108 @@ header.wp-block-template-part{
     display:flex;
   }
 }
-/* Di layar paling sempit pilnya dikecilkan, bukan dibiarkan meluber. */
-@media(max-width:420px){
-  .wp-block-button.is-style-pil > .wp-block-button__link,
-  .wp-block-button.is-style-pil-isi > .wp-block-button__link,
-  .wp-block-button.is-style-pil-rose > .wp-block-button__link{
-    padding:12px 16px;font-size:9.5px;letter-spacing:.14em;gap:8px;
+
+/* Menu layar kecil.
+   Di bawah 900px logo disembunyikan dan tombol Menu mengambil tempatnya di
+   kiri, jadi bar cuma berisi dua tombol: Menu dan Hubungi kami.
+
+   Panel menunya digantung di bawah bar, bukan menutup layar. Blok Navigation
+   bawaan memakai position:fixed inset:0, tapi lembar kertas .wp-site-blocks
+   memakai overflow:clip, dan itu mengurung elemen fixed di dalamnya. Hasilnya
+   panel setinggi 94px yang isinya harus digulir. Diubah jadi absolute terhadap
+   .bar yang memang sticky, tingginya ikut isi, tidak pernah perlu digulir. */
+@media(max-width:900px){
+  .bar{gap:var(--wp--preset--spacing--jarak-2)}
+  .bar > .wp-block-site-logo,
+  .bar > .mark{display:none}
+  /* position:static wajib. Blok Navigation memasang position:relative pada
+     dirinya sendiri, dan panel di bawah ini absolute. Kalau dibiarkan, panelnya
+     mengukur diri terhadap tombol burger yang cuma selebar 114px. */
+  .bar .wp-block-navigation{flex:0 0 auto;margin-right:auto;position:static}
+
+  /* tombol burger dibentuk jadi pil, sebaris dengan tombol di sebelahnya */
+  .bar .wp-block-navigation__responsive-container-open{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:12px 18px;margin:0;
+    border:1px solid var(--wp--preset--color--tinta);
+    border-radius:var(--wp--custom--radius--pil);
+    background:transparent;color:var(--wp--preset--color--tinta);
+    font-family:var(--wp--preset--font-family--teks);
+    font-size:var(--wp--preset--font-size--label);font-weight:700;
+    letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;
+    transition:background .4s var(--wp--custom--lengkung--halus),color .4s;
   }
-  .hero-aksi{gap:8px}
+  .bar .wp-block-navigation__responsive-container-open::before{content:"Menu"}
+  .bar .wp-block-navigation__responsive-container-open:hover,
+  .bar .wp-block-navigation__responsive-container-open:focus-visible{
+    background:var(--wp--preset--color--tinta);
+    color:var(--wp--preset--color--kertas);
+  }
+  .bar .wp-block-navigation__responsive-container-open svg{
+    width:16px;height:16px;fill:currentColor;
+  }
+
+  /* panel yang terbuka */
+  .bar .wp-block-navigation__responsive-container.is-menu-open{
+    position:absolute;inset:auto 0 auto 0;top:100%;
+    width:auto;min-width:0;height:auto;min-height:0;max-height:none;
+    overflow:visible;z-index:90;
+    padding:12px;
+    background:var(--wp--preset--color--kertas);
+    border:1px solid var(--wp--preset--color--garis);
+    border-radius:var(--wp--custom--radius--besar);
+    box-shadow:0 20px 48px rgb(36 28 20 / .22);
+    display:block;
+  }
+  /* Blok Navigation membungkus isinya dua lapis lagi, responsive-close dan
+     responsive-dialog, dan keduanya membawa jarak bawaan untuk mode layar
+     penuh. Di panel gantung ini jaraknya dibuang. */
+  .bar .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-close,
+  .bar .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-dialog{
+    max-width:none;width:100%;padding:0;margin:0;
+  }
+  .bar .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-container-content{
+    display:block;width:100%;padding:0;
+  }
+  .bar .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__container{
+    display:flex;flex-direction:column;align-items:stretch;gap:2px;
+  }
+  .bar .wp-block-navigation__responsive-container.is-menu-open a{
+    display:block;width:100%;padding:14px 12px;border-radius:12px;text-align:left;
+    font-size:var(--wp--preset--font-size--mikro);
+    letter-spacing:.2em;text-transform:uppercase;
+    color:var(--wp--preset--color--tinta-lembut);text-decoration:none;
+    transition:background .3s,color .3s;
+  }
+  .bar .wp-block-navigation__responsive-container.is-menu-open a:hover,
+  .bar .wp-block-navigation__responsive-container.is-menu-open a:focus-visible{
+    background:var(--wp--preset--color--kertas-tua);
+    color:var(--wp--preset--color--burgundy);
+  }
+  /* garis bawah animasi di menu desktop tidak dipakai di panel */
+  .bar .wp-block-navigation__responsive-container.is-menu-open a::after{content:none}
+
+  /* tombol tutup diletakkan di sudut panel, kecil dan tidak berteriak */
+  .bar .wp-block-navigation__responsive-container-close{
+    position:absolute;top:2px;right:2px;z-index:2;
+    width:36px;height:36px;display:grid;place-items:center;
+    color:var(--wp--preset--color--tinta-lembut);
+  }
+  /* link pertama diberi ruang supaya tidak tertimpa tombol tutup */
+  .bar .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__container > li:first-child a{padding-right:48px}
+  .bar .wp-block-navigation__responsive-container-close svg{width:18px;height:18px}
+}
+
+/* Di layar paling sempit label Menu dibuang, sisakan ikonnya saja, supaya
+   tombol Hubungi kami tetap kebagian ruang. */
+@media(max-width:480px){
+  .bar .wp-block-navigation__responsive-container-open{padding:12px 14px}
+  .bar .wp-block-navigation__responsive-container-open::before{content:none}
 }
 
 /* ===== 6. Hero ===== */
