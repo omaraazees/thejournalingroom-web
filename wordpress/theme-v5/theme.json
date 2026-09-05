@@ -1,0 +1,572 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "useRootPaddingAwareAlignments": false,
+    "layout": {
+      "contentSize": "1580px",
+      "wideSize": "1580px"
+    },
+    "color": {
+      "custom": false,
+      "customDuotone": false,
+      "customGradient": false,
+      "defaultPalette": false,
+      "defaultGradients": false,
+      "defaultDuotone": false,
+      "palette": [
+        {
+          "slug": "kertas",
+          "name": "Kertas",
+          "color": "#FBF7F0"
+        },
+        {
+          "slug": "kertas-tua",
+          "name": "Kertas tua",
+          "color": "#F3EADC"
+        },
+        {
+          "slug": "kertas-redup",
+          "name": "Kertas redup (teks di atas strip gelap)",
+          "color": "#EAE4D6"
+        },
+        {
+          "slug": "meja",
+          "name": "Meja (warna cadangan latar foto)",
+          "color": "#E8DCC8"
+        },
+        {
+          "slug": "tinta",
+          "name": "Tinta",
+          "color": "#241C14"
+        },
+        {
+          "slug": "tinta-lembut",
+          "name": "Tinta lembut",
+          "color": "#6D5D4C"
+        },
+        {
+          "slug": "tinta-samar",
+          "name": "Tinta samar (kontras 4.5:1 di kertas)",
+          "color": "#7E6F5E"
+        },
+        {
+          "slug": "garis",
+          "name": "Garis",
+          "color": "#E3D8C6"
+        },
+        {
+          "slug": "burgundy",
+          "name": "Burgundy",
+          "color": "#5F1D1D"
+        },
+        {
+          "slug": "rose",
+          "name": "Rose",
+          "color": "#E7BFB9"
+        },
+        {
+          "slug": "rose-pucat",
+          "name": "Rose pucat (latar ajakan)",
+          "color": "#F1DCD7"
+        },
+        {
+          "slug": "rose-tua",
+          "name": "Rose tua (latar strip)",
+          "color": "#7E5753"
+        },
+        {
+          "slug": "rose-teks",
+          "name": "Rose teks (kontras 4.6:1 di atas rose)",
+          "color": "#81403A"
+        },
+        {
+          "slug": "zaitun",
+          "name": "Zaitun",
+          "color": "#454E3C"
+        },
+        {
+          "slug": "kraft",
+          "name": "Kraft (latar strip)",
+          "color": "#81572D"
+        },
+        {
+          "slug": "kraft-muda",
+          "name": "Kraft muda",
+          "color": "#EBD9BE"
+        }
+      ]
+    },
+    "typography": {
+      "customFontSize": false,
+      "defaultFontSizes": false,
+      "fluid": true,
+      "writingMode": true,
+      "fontFamilies": [
+        {
+          "slug": "display",
+          "name": "Playfair Display",
+          "fontFamily": "\"Playfair Display\", Georgia, \"Times New Roman\", serif",
+          "fontFace": [
+            {
+              "fontFamily": "Playfair Display",
+              "fontStyle": "italic",
+              "fontWeight": "400",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/playfair-display-italic-400.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Playfair Display",
+              "fontStyle": "italic",
+              "fontWeight": "500",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/playfair-display-italic-500.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Playfair Display",
+              "fontStyle": "italic",
+              "fontWeight": "600",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/playfair-display-italic-600.woff2"
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "teks",
+          "name": "Manrope",
+          "fontFamily": "\"Manrope\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+          "fontFace": [
+            {
+              "fontFamily": "Manrope",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/manrope-400.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Manrope",
+              "fontStyle": "normal",
+              "fontWeight": "500",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/manrope-500.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Manrope",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/manrope-700.woff2"
+              ]
+            }
+          ]
+        }
+      ],
+      "fontSizes": [
+        {
+          "slug": "label",
+          "name": "Label (10)",
+          "size": "10px"
+        },
+        {
+          "slug": "mikro",
+          "name": "Mikro (12)",
+          "size": "12px"
+        },
+        {
+          "slug": "kecil",
+          "name": "Kecil (13)",
+          "size": "13px"
+        },
+        {
+          "slug": "teks",
+          "name": "Teks (15)",
+          "size": "15px"
+        },
+        {
+          "slug": "sedang",
+          "name": "Sedang (17)",
+          "size": "17px",
+          "fluid": {
+            "min": "15px",
+            "max": "17px"
+          }
+        },
+        {
+          "slug": "display-md",
+          "name": "Display sedang (29)",
+          "size": "29px",
+          "fluid": {
+            "min": "21px",
+            "max": "29px"
+          }
+        },
+        {
+          "slug": "display-lg",
+          "name": "Display besar (42)",
+          "size": "42px",
+          "fluid": {
+            "min": "26px",
+            "max": "42px"
+          }
+        },
+        {
+          "slug": "display-xl",
+          "name": "Display raksasa (58)",
+          "size": "58px",
+          "fluid": {
+            "min": "30px",
+            "max": "58px"
+          }
+        },
+        {
+          "slug": "display-xxl",
+          "name": "Display judul utama (92)",
+          "size": "92px",
+          "fluid": {
+            "min": "38px",
+            "max": "92px"
+          }
+        }
+      ]
+    },
+    "spacing": {
+      "customSpacingSize": false,
+      "defaultSpacingSizes": false,
+      "units": [
+        "px",
+        "rem",
+        "%",
+        "vw",
+        "vh"
+      ],
+      "spacingSizes": [
+        {
+          "slug": "jarak-1",
+          "name": "Jarak 1 (8px)",
+          "size": "8px"
+        },
+        {
+          "slug": "jarak-2",
+          "name": "Jarak 2 (16px)",
+          "size": "16px"
+        },
+        {
+          "slug": "jarak-3",
+          "name": "Jarak 3 (24px)",
+          "size": "24px"
+        },
+        {
+          "slug": "jarak-4",
+          "name": "Jarak 4 (40px)",
+          "size": "40px"
+        },
+        {
+          "slug": "jarak-5",
+          "name": "Jarak 5 (64px)",
+          "size": "64px"
+        },
+        {
+          "slug": "jarak-6",
+          "name": "Jarak 6 (96px)",
+          "size": "96px"
+        },
+        {
+          "slug": "jarak-7",
+          "name": "Jarak 7 (144px)",
+          "size": "144px"
+        }
+      ]
+    },
+    "border": {
+      "radius": true,
+      "color": true,
+      "style": true,
+      "width": true
+    },
+    "shadow": {
+      "defaultPresets": false,
+      "presets": [
+        {
+          "slug": "lembar",
+          "name": "Lembar melayang",
+          "shadow": "0 26px 64px rgb(40 30 18 / .34)"
+        },
+        {
+          "slug": "kartu",
+          "name": "Kartu",
+          "shadow": "0 16px 40px rgb(36 28 20 / .2)"
+        },
+        {
+          "slug": "cetakan",
+          "name": "Cetakan polaroid",
+          "shadow": "0 14px 32px rgb(36 28 20 / .26)"
+        },
+        {
+          "slug": "sticker",
+          "name": "Sticker bulat",
+          "shadow": "0 8px 20px rgb(36 28 20 / .18)"
+        },
+        {
+          "slug": "mengambang",
+          "name": "Tombol mengambang",
+          "shadow": "0 12px 30px rgb(36 28 20 / .3)"
+        }
+      ]
+    },
+    "custom": {
+      "radius": {
+        "lembar": "24px",
+        "besar": "20px",
+        "sedang": "16px",
+        "kecil": "12px",
+        "cetakan": "4px",
+        "pil": "999px"
+      },
+      "lengkung": {
+        "halus": "cubic-bezier(.16,1,.3,1)",
+        "tirai": "cubic-bezier(.7,0,.2,1)"
+      },
+      "durasi": {
+        "cepat": "0.35s",
+        "sedang": "0.45s",
+        "pelan": "0.6s",
+        "sangatPelan": "0.9s"
+      },
+      "tebal": {
+        "spasiLabel": "0.22em",
+        "spasiTombol": "0.18em",
+        "spasiNav": "0.2em"
+      },
+      "lebarLembar": "1580px",
+      "tinggiBento": "clamp(432px, 45vw, 656px)",
+      "tinggiTumpukan": "clamp(432px, 44vw, 624px)"
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--kertas)",
+      "text": "var(--wp--preset--color--tinta)"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--teks)",
+      "fontSize": "var(--wp--preset--font-size--teks)",
+      "fontWeight": "400",
+      "lineHeight": "1.7"
+    },
+    "spacing": {
+      "padding": {
+        "top": "0",
+        "bottom": "var(--wp--preset--spacing--jarak-4)",
+        "left": "0",
+        "right": "0"
+      },
+      "blockGap": "var(--wp--preset--spacing--jarak-3)"
+    },
+    "elements": {
+      "heading": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--display)",
+          "fontStyle": "italic",
+          "fontWeight": "400",
+          "lineHeight": "0.98",
+          "letterSpacing": "-0.012em"
+        },
+        "color": {
+          "text": "var(--wp--preset--color--burgundy)"
+        }
+      },
+      "h1": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--display-xxl)"
+        }
+      },
+      "h2": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--display-xl)"
+        }
+      },
+      "h3": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--display-lg)"
+        }
+      },
+      "h4": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--display-md)"
+        }
+      },
+      "h5": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--sedang)"
+        }
+      },
+      "h6": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--teks)",
+          "fontStyle": "normal",
+          "fontSize": "var(--wp--preset--font-size--label)",
+          "fontWeight": "700",
+          "textTransform": "uppercase",
+          "letterSpacing": "0.22em"
+        },
+        "color": {
+          "text": "var(--wp--preset--color--tinta-samar)"
+        }
+      },
+      "link": {
+        "color": {
+          "text": "inherit"
+        },
+        ":hover": {
+          "color": {
+            "text": "var(--wp--preset--color--burgundy)"
+          }
+        },
+        ":focus": {
+          "outline": {
+            "color": "var(--wp--preset--color--burgundy)",
+            "style": "solid",
+            "width": "2px",
+            "offset": "3px"
+          }
+        }
+      },
+      "button": {
+        "border": {
+          "radius": "999px",
+          "width": "1px",
+          "style": "solid",
+          "color": "var(--wp--preset--color--tinta)"
+        },
+        "color": {
+          "background": "transparent",
+          "text": "var(--wp--preset--color--tinta)"
+        },
+        "spacing": {
+          "padding": {
+            "top": "12px",
+            "bottom": "12px",
+            "left": "20px",
+            "right": "20px"
+          }
+        },
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--teks)",
+          "fontSize": "var(--wp--preset--font-size--label)",
+          "fontWeight": "700",
+          "textTransform": "uppercase",
+          "letterSpacing": "0.18em"
+        },
+        ":hover": {
+          "color": {
+            "background": "var(--wp--preset--color--tinta)",
+            "text": "var(--wp--preset--color--kertas)"
+          }
+        },
+        ":focus": {
+          "outline": {
+            "color": "var(--wp--preset--color--burgundy)",
+            "style": "solid",
+            "width": "2px",
+            "offset": "3px"
+          }
+        }
+      },
+      "caption": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--display)",
+          "fontStyle": "italic",
+          "fontSize": "var(--wp--preset--font-size--mikro)"
+        },
+        "color": {
+          "text": "var(--wp--preset--color--tinta-lembut)"
+        }
+      }
+    },
+    "blocks": {
+      "core/paragraph": {
+        "spacing": {
+          "margin": {
+            "top": "0",
+            "bottom": "0"
+          }
+        }
+      },
+      "core/image": {
+        "border": {
+          "radius": "var(--wp--custom--radius--besar)"
+        }
+      },
+      "core/post-title": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--display)",
+          "fontStyle": "italic",
+          "fontWeight": "400"
+        },
+        "color": {
+          "text": "var(--wp--preset--color--burgundy)"
+        }
+      },
+      "core/post-date": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--label)",
+          "fontWeight": "700",
+          "textTransform": "uppercase",
+          "letterSpacing": "0.2em"
+        },
+        "color": {
+          "text": "var(--wp--preset--color--tinta-samar)"
+        }
+      },
+      "core/post-terms": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--label)",
+          "fontWeight": "700",
+          "textTransform": "uppercase",
+          "letterSpacing": "0.2em"
+        },
+        "color": {
+          "text": "var(--wp--preset--color--tinta-samar)"
+        }
+      },
+      "core/separator": {
+        "color": {
+          "text": "var(--wp--preset--color--garis)"
+        }
+      },
+      "core/quote": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--display)",
+          "fontStyle": "italic"
+        },
+        "color": {
+          "text": "var(--wp--preset--color--burgundy)"
+        }
+      }
+    }
+  },
+  "templateParts": [
+    {
+      "name": "header",
+      "title": "Bar atas",
+      "area": "header"
+    },
+    {
+      "name": "footer",
+      "title": "Kaki halaman",
+      "area": "footer"
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jadwal sesi journaling di Jogja · The Journaling Room</title>
+<meta name="description" content="Semua jadwal sesi journaling The Journaling Room di Yogyakarta. Saring per format dan kota, lihat sisa slot, ambil tempat lewat WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../prototipe/tokens.css">
+<link rel="stylesheet" href="pages.css">
+<style>
+.filters{background:var(--paper-deep);border:var(--line);border-radius:var(--r-card);
+  padding:var(--sp-4);margin-bottom:var(--sp-5)}
+.filters .row+.row{margin-top:var(--sp-3)}
+.count{font-size:13px;color:var(--ink-soft);margin:var(--sp-3) 0 0}
+.sep{display:flex;align-items:center;gap:var(--sp-3);margin:var(--sp-7) 0 var(--sp-4)}
+.sep h2{font-size:var(--step-2);white-space:nowrap}
+.sep::after{content:"";flex:1;height:1px;background:rgba(176,137,104,.3)}
+.empty{padding:var(--sp-5) 0;color:var(--ink-soft)}
+.sample{font-size:13px;color:var(--ink-soft);background:var(--paper-deep);
+  border-left:2px solid var(--rose);padding:var(--sp-3) var(--sp-4);border-radius:0 12px 12px 0}
+</style>
+</head>
+<body class="has-sticky">
+
+<a class="skip" href="#isi">Lompat ke isi</a>
+<header class="bar wp-host"><span class="wp">template-part: header</span>
+  <div class="wrap">
+    <a class="brand" href="../wp-prototype/final-beranda.html">The Journaling Room</a>
+    <nav class="nav" aria-label="Utama">
+      <a href="jadwal.html" aria-current="page">Jadwal</a>
+      <a href="tentang.html">Tentang</a>
+      <a href="cerita.html">Cerita</a>
+      <a href="kolaborasi.html">Kolaborasi</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+    <a class="btn btn-primary" href="https://wa.me/6285728225369">Ambil slot</a>
+  </div>
+</header>
+
+<main id="isi">
+
+<section class="phead wp-host"><span class="wp">pattern: tjr/page-header</span>
+  <div class="wrap">
+    <p class="crumb"><a href="../wp-prototype/final-beranda.html">Beranda</a><span>/</span>Jadwal</p>
+    <p class="script">Semua sesi, satu halaman</p>
+    <h1>Jadwal sesi journaling</h1>
+    <p class="lead">Sesi berikutnya, lengkap dengan venue, harga, dan sisa slot. Kalau yang kamu mau sudah penuh, ada waitlist dan biasanya cepat gantian.</p>
+  </div>
+</section>
+
+<section style="padding-top:0" class="wp-host"><span class="wp">pattern: tjr/schedule-filters</span>
+  <div class="wrap">
+    <div class="filters">
+      <div class="row">
+        <p class="filter-label" id="lbl-format">Format</p>
+        <div class="chips" role="group" aria-labelledby="lbl-format">
+          <button class="chip on" data-group="format" data-val="all" aria-pressed="true">Semua format</button>
+          <button class="chip" data-group="format" data-val="workshop" aria-pressed="false">Workshop</button>
+          <button class="chip" data-group="format" data-val="lettering" aria-pressed="false">Brush lettering</button>
+          <button class="chip" data-group="format" data-val="playdate" aria-pressed="false">Playdate</button>
+          <button class="chip" data-group="format" data-val="kolaborasi" aria-pressed="false">Kolaborasi</button>
+          <button class="chip" data-group="format" data-val="brand" aria-pressed="false">Brand activation</button>
+        </div>
+      </div>
+      <div class="row">
+        <p class="filter-label" id="lbl-kota">Kota</p>
+        <div class="chips" role="group" aria-labelledby="lbl-kota">
+          <button class="chip on" data-group="kota" data-val="all" aria-pressed="true">Semua kota</button>
+          <button class="chip" data-group="kota" data-val="yogyakarta" aria-pressed="false">Yogyakarta</button>
+          <button class="chip" data-group="kota" data-val="magelang" aria-pressed="false">Magelang</button>
+          <button class="chip" data-group="kota" data-val="jakarta" aria-pressed="false">Jakarta</button>
+        </div>
+      </div>
+      <p class="count" role="status"><span id="count">5</span> sesi mendatang cocok dengan saringan ini</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0" class="wp-host"><span class="wp">query loop: CPT acara, status mendatang, urut tanggal naik</span>
+  <div class="wrap">
+    <div class="sep"><h2 id="mendatang">Mendatang</h2></div>
+    <div class="rows">
+      <a class="ev" href="acara-detail.html" data-format="workshop" data-kota="yogyakarta">
+        <div class="cal"><div class="m">Sep</div><div class="dd">20</div></div>
+        <div><h3>Tracing Shadows, Mapping Stars</h3><p class="v">Workshop tiga jam, kit lengkap</p></div>
+        <span class="v">Kupiku Coffee, Yogyakarta</span>
+        <div class="r"><div class="p">75K</div><div class="s low">4 slot lagi</div></div></a>
+
+      <a class="ev" href="acara-detail.html" data-format="lettering" data-kota="yogyakarta">
+        <div class="cal"><div class="m">Sep</div><div class="dd">28</div></div>
+        <div><h3>Brush Lettering Class + Journaling</h3><p class="v">Kelas lettering digabung sesi journaling</p></div>
+        <span class="v">ROCCA Artotel, Yogyakarta</span>
+        <div class="r"><div class="p">98K</div><div class="s">9 slot lagi</div></div></a>
+
+      <a class="ev" href="acara-detail.html" data-format="playdate" data-kota="yogyakarta">
+        <div class="cal"><div class="m">Okt</div><div class="dd">04</div></div>
+        <div><h3>Journaling Playdate</h3><p class="v">Enam orang, bawa notebook sendiri</p></div>
+        <span class="v">Kopi Kalandjana, Yogyakarta</span>
+        <div class="r"><div class="p">40K</div><div class="s low">2 slot lagi</div></div></a>
+
+      <a class="ev" href="acara-detail.html" data-format="workshop" data-kota="yogyakarta">
+        <div class="cal"><div class="m">Okt</div><div class="dd">18</div></div>
+        <div><h3>A Moment Between Chapters</h3><p class="v">Refleksi tengah tahun, termasuk buku</p></div>
+        <span class="v">Copenhagen, Yogyakarta</span>
+        <div class="r"><div class="p">100K</div><div class="s">Waitlist</div></div></a>
+
+      <a class="ev" href="acara-detail.html" data-format="kolaborasi" data-kota="yogyakarta">
+        <div class="cal"><div class="m">Nov</div><div class="dd">09</div></div>
+        <div><h3>Between the Pages</h3><p class="v">Baca bareng Sunday Reads Club, lanjut journaling</p></div>
+        <span class="v">Heejaz, Yogyakarta</span>
+        <div class="r"><div class="p">89K</div><div class="s">12 slot lagi</div></div></a>
+    </div>
+    <p class="empty" id="kosong" hidden>Belum ada sesi mendatang untuk saringan itu. Coba lepas salah satu filter, atau lihat arsip di bawah.</p>
+  </div>
+</section>
+
+<section class="alt wp-host"><span class="wp">query loop: CPT acara, status selesai, urut tanggal turun</span>
+  <div class="wrap">
+    <div class="sep"><h2 id="arsip">Arsip</h2></div>
+    <p class="muted" style="font-size:14px;margin-bottom:var(--sp-4)">Sesi yang sudah lewat. Foto dan halamannya tetap dibuka, sering dipakai calon peserta buat lihat suasananya dulu.</p>
+    <div class="rows">
+      <a class="ev past" href="acara-detail.html" data-format="kolaborasi" data-kota="yogyakarta">
+        <div class="cal"><div class="m">Sep</div><div class="dd">06</div></div>
+        <div><h3>Between the Pages</h3><p class="v">Kolaborasi Sunday Reads Club</p></div>
+        <span class="v">Heejaz, Yogyakarta</span>
+        <div class="r"><div class="p">89K</div><div class="s">Selesai</div></div></a>
+
+      <a class="ev past" href="acara-detail.html" data-format="workshop" data-kota="yogyakarta">
+        <div class="cal"><div class="m">Agu</div><div class="dd">23</div></div>
+        <div><h3>About Myself</h3><p class="v">Workshop tiga jam, kit lengkap</p></div>
+        <span class="v">AMCO Bakehouse, Yogyakarta</span>
+        <div class="r"><div class="p">75K</div><div class="s">Selesai</div></div></a>
+
+      <a class="ev past" href="acara-detail.html" data-format="brand" data-kota="yogyakarta">
+        <div class="cal"><div class="m">Agu</div><div class="dd">10</div></div>
+        <div><h3>Wardah x The Journaling Room</h3><p class="v">Brand activation, kit khusus</p></div>
+        <span class="v">Copenhagen, Yogyakarta</span>
+        <div class="r"><div class="p">125K</div><div class="s">Selesai</div></div></a>
+
+      <a class="ev past" href="acara-detail.html" data-format="workshop" data-kota="magelang">
+        <div class="cal"><div class="m">Jul</div><div class="dd">19</div></div>
+        <div><h3>Much Between the Lines</h3><p class="v">Workshop tiga jam, kit lengkap</p></div>
+        <span class="v">collective28, Magelang</span>
+        <div class="r"><div class="p">75K</div><div class="s">Selesai</div></div></a>
+
+      <a class="ev past" href="acara-detail.html" data-format="workshop" data-kota="jakarta">
+        <div class="cal"><div class="m">Jun</div><div class="dd">28</div></div>
+        <div><h3>A Gentle Space to Write and Glow</h3><p class="v">Workshop tiga jam, kit lengkap</p></div>
+        <span class="v">Radian, Jakarta</span>
+        <div class="r"><div class="p">98K</div><div class="s">Selesai</div></div></a>
+    </div>
+    <p class="sample" style="margin-top:var(--sp-5)">Data di halaman ini contoh, disusun dari acara yang benar pernah jalan menurut feed Instagram. Tanggal dan sisa slot diganti isi CPT <code>acara</code> begitu CMS-nya hidup.</p>
+  </div>
+</section>
+
+<section class="end wp-host"><span class="wp">pattern: tjr/cta</span>
+  <div class="wrap">
+    <p class="script">Belum nemu yang pas</p>
+    <h2 style="margin:var(--sp-3) 0 var(--sp-5)">Tanya aja<br>dulu</h2>
+    <a class="btn btn-primary" href="https://wa.me/6285728225369">Tanya via WhatsApp</a>
+    <a class="btn btn-ghost" href="kontak.html">Halaman kontak</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="wp-host"><span class="wp">template-part: footer</span>
+  <div class="wrap fgrid">
+    <div>
+      <p class="brand" style="color:var(--paper)">The Journaling Room</p>
+      <p style="opacity:.7;font-size:14px;max-width:290px">Ruang journaling bareng di Yogyakarta. Berpindah venue tiap acara.</p>
+    </div>
+    <div><h2>Acara</h2><ul><li><a href="jadwal.html">Jadwal</a></li><li><a href="jadwal.html#mendatang">Mendatang</a></li><li><a href="jadwal.html#arsip">Arsip</a></li><li><a href="kolaborasi.html">Inner Circle</a></li></ul></div>
+    <div><h2>Tentang</h2><ul><li><a href="tentang.html">Cerita kami</a></li><li><a href="cerita.html">Cerita</a></li><li><a href="kontak.html#faq">FAQ</a></li></ul></div>
+    <div><h2>Kontak</h2><ul><li><a href="https://wa.me/6285728225369">WhatsApp</a></li><li><a href="https://instagram.com/thejournalingroom">Instagram</a></li><li><a href="kolaborasi.html">Kolaborasi brand</a></li></ul></div>
+  </div>
+  <div class="wrap" style="margin-top:var(--sp-6);padding-top:var(--sp-3);border-top:1px solid rgba(237,227,215,.15);font-size:13px;opacity:.6">
+    2026 The Journaling Room · Yogyakarta
+  </div>
+</footer>
+
+<div class="sticky">
+  <div class="t"><b>Tracing Shadows, Mapping Stars</b>Sab 20 Sep · Kupiku Coffee · 75K · 4 slot lagi</div>
+  <a class="btn btn-primary" href="acara-detail.html">Lihat sesi</a>
+</div>
+
+<button class="toggle" onclick="document.body.classList.toggle('show-wp')">Blok WordPress</button>
+<script>
+const st={format:'all',kota:'all'};
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+  const g=c.dataset.group; st[g]=c.dataset.val;
+  document.querySelectorAll('.chip[data-group="'+g+'"]').forEach(x=>{
+    const on=x===c; x.classList.toggle('on',on); x.setAttribute('aria-pressed',on);});
+  let n=0;
+  document.querySelectorAll('.ev[data-format]').forEach(e=>{
+    const ok=(st.format==='all'||e.dataset.format===st.format)&&(st.kota==='all'||e.dataset.kota===st.kota);
+    e.hidden=!ok; if(ok&&!e.classList.contains('past')) n++;});
+  document.getElementById('count').textContent=n;
+  document.getElementById('kosong').hidden=n>0;
+});
+</script>
+</body>
+</html>

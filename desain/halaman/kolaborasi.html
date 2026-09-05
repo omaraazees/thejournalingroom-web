@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kolaborasi brand · The Journaling Room</title>
+<meta name="description" content="Sesi journaling untuk brand activation, gathering tim, dan event komunitas di Yogyakarta. Sudah jalan bareng Wardah, Artotel, dan Copenhagen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../prototipe/tokens.css">
+<link rel="stylesheet" href="pages.css">
+<style>
+.fmt{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4)}
+.fmt .card h3{font-size:var(--step-1);margin-bottom:var(--sp-2)}
+.fmt .card p{color:var(--ink-soft);font-size:15px;margin:0 0 var(--sp-2)}
+.fmt .card ul{margin:0;padding-left:18px;color:var(--ink-soft);font-size:14px}
+.fmt .card li{margin-bottom:5px}
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4)}
+.case .ph{height:clamp(180px,20vw,230px);margin-bottom:var(--sp-3)}
+.case h3{font-size:var(--step-1);margin-bottom:var(--sp-1)}
+.case .meta{font-size:13px;color:var(--ink-soft);margin-bottom:var(--sp-2)}
+.case p{font-size:15px;color:var(--ink-soft);margin:0}
+.deliver{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp-4) var(--sp-5)}
+.get{display:flex;gap:var(--sp-2);align-items:flex-start}
+.get .ic{width:28px;height:28px;border-radius:9px;background:rgba(147,161,129,.28);flex:0 0 28px}
+.get b{display:block;font-weight:600;font-size:15px;margin-bottom:2px}
+.get p{color:var(--ink-soft);font-size:14px;margin:0}
+form{display:grid;gap:var(--sp-3)}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3)}
+label{display:block;font-size:13px;font-weight:500;margin-bottom:6px}
+input,select,textarea{width:100%;font:inherit;font-size:15px;padding:12px 14px;min-height:44px;
+  border:var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+textarea{min-height:120px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--burgundy);outline-offset:2px}
+.hint{font-size:12px;color:var(--ink-soft);margin-top:6px}
+fieldset{border:var(--line);border-radius:var(--r-card);padding:var(--sp-3);margin:0}
+legend{font-size:13px;font-weight:500;padding:0 8px}
+.radios{display:flex;flex-wrap:wrap;gap:var(--sp-3);margin-top:var(--sp-1)}
+.radios label{display:flex;align-items:center;gap:8px;font-weight:400;font-size:15px;margin:0;min-height:44px}
+.radios input{width:auto;min-height:auto}
+@media(max-width:900px){.fmt,.cases,.deliver,.f2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#isi">Lompat ke isi</a>
+<header class="bar wp-host"><span class="wp">template-part: header</span>
+  <div class="wrap">
+    <a class="brand" href="../wp-prototype/final-beranda.html">The Journaling Room</a>
+    <nav class="nav" aria-label="Utama">
+      <a href="jadwal.html">Jadwal</a>
+      <a href="tentang.html">Tentang</a>
+      <a href="cerita.html">Cerita</a>
+      <a href="kolaborasi.html" aria-current="page">Kolaborasi</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+    <a class="btn btn-primary" href="#brief">Kirim brief</a>
+  </div>
+</header>
+
+<main id="isi">
+
+<section class="phead wp-host"><span class="wp">pattern: tjr/b2b-hero</span>
+  <div class="wrap">
+    <p class="crumb"><a href="../wp-prototype/final-beranda.html">Beranda</a><span>/</span>Kolaborasi</p>
+    <p class="script">Untuk brand dan tim</p>
+    <h1>Sesi journaling yang dibikin khusus buat brand kamu</h1>
+    <p class="lead">Kami sudah bawa format ini ke activation brand kecantikan, hotel, dan kafe. Yang kami jaga sama seperti sesi publik: pesertanya pulang merasa lega, bukan merasa habis dijualin.</p>
+    <div class="logos" style="display:flex;flex-wrap:wrap;gap:10px var(--sp-4);margin-top:var(--sp-5);font-size:13px;letter-spacing:.06em;color:var(--ink-soft)">
+      <span>Wardah</span><span>Artotel</span><span>AMCO Bakehouse</span><span>Kupiku Coffee</span>
+      <span>Copenhagen</span><span>Heejaz</span><span>collective28</span><span>Radian</span><span>Sunday Reads Club</span>
+    </div>
+  </div>
+</section>
+
+<section class="wp-host"><span class="wp">pattern: tjr/b2b-formats</span>
+  <div class="wrap">
+    <div class="head"><div><p class="eyebrow">Format</p><h2>Tiga cara kerja bareng</h2></div></div>
+    <div class="fmt">
+      <div class="card">
+        <h3>Brand activation</h3>
+        <p>Sesi journaling terbuka yang dibawa nama brand kamu, terbuka untuk publik atau untuk daftar undangan.</p>
+        <ul><li>Tema disesuaikan pesan kampanye</li><li>Kit dan booklet co-branded</li><li>Dokumentasi foto untuk brand</li></ul>
+      </div>
+      <div class="card">
+        <h3>Sesi tertutup untuk tim</h3>
+        <p>Buat gathering, offsite, atau penutup kuartal. Formatnya sama dengan Inner Circle kami, cuma pesertanya satu tim.</p>
+        <ul><li>Tema refleksi atau perencanaan</li><li>Ukuran kelompok kecil, biar semua kebagian</li><li>Bisa di kantor atau venue partner</li></ul>
+      </div>
+      <div class="card">
+        <h3>Kolaborasi komunitas</h3>
+        <p>Barengan komunitas atau kafe, biaya dan promosi dibagi. Ini yang kami jalankan bareng Sunday Reads Club.</p>
+        <ul><li>Dua audiens ketemu</li><li>Bagi peran promosi</li><li>Skema biaya dibicarakan per acara</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt wp-host"><span class="wp">pattern: tjr/case-studies</span>
+  <div class="wrap">
+    <div class="head"><div><p class="eyebrow">Pernah jalan</p><h2>Contoh kerja</h2></div></div>
+    <div class="cases">
+      <article class="case">
+        <div class="ph tilt-1" data-label="Foto sesi Wardah x TJR"></div>
+        <h3>Wardah x The Journaling Room</h3>
+        <p class="meta">Brand activation · Copenhagen, Yogyakarta · IDR 125.000 per peserta</p>
+        <p>Sesi journaling berbayar dengan kit khusus. Pesertanya campur, dari pengikut Wardah dan dari komunitas kami sendiri.</p>
+      </article>
+      <article class="case">
+        <div class="ph tilt-2" data-label="Foto sesi di ROCCA Artotel"></div>
+        <h3>Creative Workshop di ROCCA Artotel</h3>
+        <p class="meta">Kolaborasi venue · ROCCA Artotel, Yogyakarta · IDR 98.000 per peserta</p>
+        <p>Workshop journaling di ruang hotel, digabung kelas brush lettering. Venue dapat trafik akhir pekan, kami dapat ruang yang tenang.</p>
+      </article>
+      <article class="case">
+        <div class="ph tilt-3" data-label="Foto sesi Between the Pages"></div>
+        <h3>Between the Pages bareng Sunday Reads Club</h3>
+        <p class="meta">Kolaborasi komunitas · Heejaz, Yogyakarta</p>
+        <p>Baca bareng dulu, lanjut journaling. Format ini yang paling gampang dibawa ke komunitas lain karena bebannya dibagi dua.</p>
+      </article>
+    </div>
+    <p class="muted" style="font-size:13px;margin-top:var(--sp-4)">Angka peserta, hasil jangkauan, dan foto dokumentasi tiap kerja sama belum dikumpulkan. Perlu diminta ke Caca dan Dhanty sebelum halaman ini dipakai buat pitching.</p>
+  </div>
+</section>
+
+<section class="wp-host"><span class="wp">pattern: tjr/b2b-deliverables</span>
+  <div class="wrap">
+    <div class="head"><div><p class="eyebrow">Yang brand dapat</p><h2>Isi paket kerja sama</h2></div></div>
+    <div class="deliver">
+      <div class="get"><span class="ic"></span><div><b>Konsep dan tema sesi</b><p>Disusun dari pesan kampanye kamu, bukan template yang dipakai ulang</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Kit peserta co-branded</b><p>Notebook, booklet tema, sticker sheet, dan isi deco station</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Dua fasilitator</b><p>Caca dan Dhanty memandu langsung, bukan diserahkan ke orang lain</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Dokumentasi foto</b><p>Foto sesi yang bisa dipakai brand untuk konten lanjutan</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Bantuan promosi</b><p>Diumumkan lewat Instagram TJR dan daftar peserta lama</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Koordinasi venue</b><p>Kalau belum punya tempat, kami punya jaringan kafe dan hotel partner di Jogja</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="brief" class="alt wp-host"><span class="wp">pattern: tjr/brief-form</span>
+  <div class="wrap narrow">
+    <p class="eyebrow">Kirim brief</p>
+    <h2 style="font-size:clamp(28px,4vw,52px);letter-spacing:-.03em;margin-bottom:var(--sp-2)">Ceritain rencananya</h2>
+    <p class="muted" style="margin-bottom:var(--sp-5)">Isi seadanya dulu juga nggak apa-apa. Kami balas dengan perkiraan biaya dan dua pilihan format dalam dua hari kerja.</p>
+
+    <form id="brief-form">
+      <div class="f2">
+        <div><label for="brand">Nama brand atau organisasi</label>
+          <input id="brand" name="brand" type="text" required autocomplete="organization"></div>
+        <div><label for="pic">Nama kamu</label>
+          <input id="pic" name="pic" type="text" required autocomplete="name"></div>
+      </div>
+      <div class="f2">
+        <div><label for="kontak">Email atau nomor WhatsApp</label>
+          <input id="kontak" name="kontak" type="text" required autocomplete="email">
+          <p class="hint" id="kontak-hint">Dipakai buat balas brief ini saja</p></div>
+        <div><label for="kota">Kota acara</label>
+          <input id="kota" name="kota" type="text" placeholder="Yogyakarta" autocomplete="address-level2"></div>
+      </div>
+
+      <fieldset>
+        <legend>Format yang dibayangkan</legend>
+        <div class="radios">
+          <label><input type="radio" name="format" value="Brand activation" checked> Brand activation</label>
+          <label><input type="radio" name="format" value="Sesi tertutup untuk tim"> Sesi tertutup untuk tim</label>
+          <label><input type="radio" name="format" value="Kolaborasi komunitas"> Kolaborasi komunitas</label>
+          <label><input type="radio" name="format" value="Belum tahu"> Belum tahu</label>
+        </div>
+      </fieldset>
+
+      <div class="f2">
+        <div><label for="peserta">Perkiraan jumlah peserta</label>
+          <input id="peserta" name="peserta" type="number" min="1" inputmode="numeric" placeholder="20"></div>
+        <div><label for="tanggal">Perkiraan tanggal</label>
+          <input id="tanggal" name="tanggal" type="text" placeholder="Minggu kedua November"></div>
+      </div>
+
+      <div><label for="catatan">Ada yang mau diceritain duluan</label>
+        <textarea id="catatan" name="catatan" placeholder="Pesan kampanye, siapa audiensnya, atau kendala yang sudah kelihatan"></textarea></div>
+
+      <button class="btn btn-primary" type="submit" style="justify-self:start">Kirim lewat WhatsApp</button>
+      <p class="hint">Tombol ini menyusun pesan berisi isian di atas lalu membukanya di WhatsApp. Belum ada data yang tersimpan di situs.</p>
+    </form>
+  </div>
+</section>
+
+<section class="end wp-host"><span class="wp">pattern: tjr/cta</span>
+  <div class="wrap">
+    <p class="script">Atau ngobrol dulu aja</p>
+    <h2 style="margin:var(--sp-3) 0 var(--sp-5)">Nggak harus<br>langsung fix</h2>
+    <a class="btn btn-primary" href="https://wa.me/6285728225369" rel="noopener">Chat WhatsApp</a>
+    <a class="btn btn-ghost" href="jadwal.html">Lihat sesi publik dulu</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="wp-host"><span class="wp">template-part: footer</span>
+  <div class="wrap fgrid">
+    <div>
+      <p class="brand" style="color:var(--paper)">The Journaling Room</p>
+      <p style="opacity:.7;font-size:14px;max-width:290px">Ruang journaling bareng di Yogyakarta. Berpindah venue tiap acara.</p>
+    </div>
+    <div><h2>Acara</h2><ul><li><a href="jadwal.html">Jadwal</a></li><li><a href="jadwal.html#mendatang">Mendatang</a></li><li><a href="jadwal.html#arsip">Arsip</a></li><li><a href="kolaborasi.html">Inner Circle</a></li></ul></div>
+    <div><h2>Tentang</h2><ul><li><a href="tentang.html">Cerita kami</a></li><li><a href="cerita.html">Cerita</a></li><li><a href="kontak.html#faq">FAQ</a></li></ul></div>
+    <div><h2>Kontak</h2><ul><li><a href="https://wa.me/6285728225369">WhatsApp</a></li><li><a href="https://instagram.com/thejournalingroom">Instagram</a></li><li><a href="kolaborasi.html">Kolaborasi brand</a></li></ul></div>
+  </div>
+  <div class="wrap" style="margin-top:var(--sp-6);padding-top:var(--sp-3);border-top:1px solid rgba(237,227,215,.15);font-size:13px;opacity:.6">
+    2026 The Journaling Room · Yogyakarta
+  </div>
+</footer>
+
+<button class="toggle" onclick="document.body.classList.toggle('show-wp')">Blok WordPress</button>
+<script>
+document.getElementById('brief-form').addEventListener('submit',e=>{
+  e.preventDefault();
+  const f=new FormData(e.target), g=k=>(f.get(k)||'belum diisi');
+  const t=`Halo TJR, mau tanya kolaborasi.\nBrand: ${g('brand')}\nNama: ${g('pic')}\nKontak: ${g('kontak')}\nKota: ${g('kota')}\nFormat: ${g('format')}\nPeserta: ${g('peserta')}\nTanggal: ${g('tanggal')}\nCatatan: ${g('catatan')}`;
+  window.open('https://wa.me/6285728225369?text='+encodeURIComponent(t),'_blank','noopener');
+});
+</script>
+</body>
+</html>

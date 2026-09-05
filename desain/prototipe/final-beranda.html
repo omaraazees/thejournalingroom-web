@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beranda Final — The Journaling Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+/* ==========================================================
+   BERANDA FINAL
+   Kerangka  : arah C (jadwal dan slot didahulukan)
+   Visual    : arah D (tipografi besar, gerak CSS murni)
+   Detail    : arah A (foto miring, selotip, tekstur kertas)
+   JS        : 6 baris, cuma buat filter chip. Nol library.
+   ========================================================== */
+
+/* ---------- NAV ---------- */
+.bar{position:fixed;top:0;left:0;right:0;z-index:120;background:rgba(250,246,240,.9);
+  backdrop-filter:blur(10px);border-bottom:var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:var(--sp-3)}
+.brand{font-family:var(--font-script);font-size:21px;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.nav{display:flex;gap:var(--sp-3);font-size:14px}
+.nav a{text-decoration:none;color:var(--ink-soft)}
+.nav a:hover{color:var(--ink)}
+.nav a:focus-visible,.bar a:focus-visible{outline:2px solid var(--burgundy);outline-offset:3px;border-radius:4px}
+main{padding-top:64px;padding-bottom:78px}
+
+/* ---------- HERO ---------- */
+.hero{padding:var(--sp-7) 0 var(--sp-6)}
+.hero-grid{display:grid;grid-template-columns:1fr 390px;gap:var(--sp-6);align-items:start}
+.hero h1{font-size:clamp(40px,6.4vw,88px);line-height:.98;letter-spacing:-.035em;
+  text-wrap:balance;margin:var(--sp-2) 0 var(--sp-3)}
+.hero h1 em{font-style:italic;color:var(--rose-text)}
+.hero .lead{max-width:46ch}
+.trust{display:flex;gap:var(--sp-5);margin-top:var(--sp-5);flex-wrap:wrap}
+.trust div{font-size:13px;color:var(--ink-soft);line-height:1.35}
+.trust b{font-family:var(--font-display);font-size:var(--step-3);color:var(--burgundy);
+  display:block;line-height:1;margin-bottom:3px}
+.logos{display:flex;flex-wrap:wrap;gap:10px var(--sp-4);margin-top:var(--sp-5);
+  font-size:13px;letter-spacing:.06em;color:var(--ink-soft)}
+
+/* kartu sesi terdekat, ditempel selotip */
+.book{position:relative;background:var(--paper);border:1.5px solid var(--burgundy);
+  border-radius:20px;padding:var(--sp-4);box-shadow:0 10px 34px rgba(62,47,36,.1);
+  transform:rotate(-1.2deg);position:sticky;top:88px}
+.book::before,.book::after{content:"";position:absolute;top:-11px;width:82px;height:24px;
+  background:rgba(224,183,180,.6);border-left:1px dashed rgba(176,137,104,.55);
+  border-right:1px dashed rgba(176,137,104,.55)}
+.book::before{left:14%;transform:rotate(-7deg)}
+.book::after{right:11%;transform:rotate(6deg)}
+.book .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--burgundy);font-weight:600}
+.book h2{font-size:var(--step-2);margin:var(--sp-2) 0;letter-spacing:-.01em}
+.book .ph{height:132px;margin:var(--sp-3) 0}
+.kv{display:flex;justify-content:space-between;gap:var(--sp-2);font-size:14px;
+  padding:9px 0;border-bottom:var(--line)}
+.kv:last-of-type{border-bottom:0}
+.kv span:first-child{color:var(--ink-soft)}
+.kv b{font-weight:500}
+.slotbar{height:6px;border-radius:99px;background:rgba(176,137,104,.24);margin-top:var(--sp-3);overflow:hidden}
+.slotbar i{display:block;height:100%;width:73%;background:var(--rose-deep)}
+.note{font-size:12px;color:var(--ink-soft);margin-top:8px}
+.book .btn{width:100%;justify-content:center;margin-top:var(--sp-3)}
+
+/* ---------- TICKER ---------- */
+.ticker{overflow:hidden;border-block:var(--line);padding:var(--sp-3) 0;background:var(--paper-deep)}
+.ticker-track{display:flex;gap:var(--sp-5);width:max-content;animation:slide 42s linear infinite}
+.ticker span{font-family:var(--font-display);font-size:var(--step-2);white-space:nowrap;color:var(--ink-soft)}
+.ticker span::after{content:"✳";margin-left:var(--sp-5);color:var(--rose)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- GERAK, CSS MURNI ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes wipe{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .rise{animation:rise linear both;animation-timeline:view();animation-range:entry 6% cover 26%}
+    .wipe{animation:wipe linear both;animation-timeline:view();animation-range:entry 2% cover 28%}
+  }
+}
+@media (prefers-reduced-motion: reduce){.ticker-track{animation:none}}
+
+/* ---------- SECTION HEAD ---------- */
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--sp-4);
+  margin-bottom:var(--sp-5);flex-wrap:wrap}
+.head h2{font-size:clamp(30px,4.6vw,60px);letter-spacing:-.03em;text-wrap:balance}
+
+/* ---------- JADWAL ---------- */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--sp-4)}
+.chip{font:inherit;font-size:13px;padding:9px 17px;border-radius:999px;border:var(--line);
+  background:transparent;cursor:pointer;color:var(--ink-soft);min-height:40px}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip:focus-visible{outline:2px solid var(--burgundy);outline-offset:2px}
+.rows{border-top:var(--line)}
+.ev{display:grid;grid-template-columns:72px 1fr 190px 120px;gap:var(--sp-3);align-items:center;
+  padding:var(--sp-3) var(--sp-2);border-bottom:var(--line);text-decoration:none;color:inherit;
+  transition:padding .32s cubic-bezier(.2,.8,.2,1),background .32s}
+.ev:hover{padding-inline:var(--sp-4);background:var(--paper-deep)}
+.ev:focus-visible{outline:2px solid var(--burgundy);outline-offset:-2px}
+.ev.past{opacity:.5}
+.cal{text-align:center;background:var(--paper-deep);border-radius:10px;padding:8px 0}
+.cal .m{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft)}
+.cal .dd{font-family:var(--font-display);font-size:var(--step-2);line-height:1;color:var(--burgundy)}
+.ev h3{font-family:var(--font-display);font-size:var(--step-1);letter-spacing:-.01em;margin-bottom:2px}
+.ev .v{font-size:13px;color:var(--ink-soft)}
+.ev .r{text-align:right}
+.ev .r .p{font-family:var(--font-display);font-size:var(--step-1)}
+.ev .r .s{font-size:12px;color:var(--sage-text)}
+.ev .r .s.low{color:var(--burgundy);font-weight:500}
+
+/* ---------- ISI KIT ---------- */
+.gets{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4) var(--sp-5)}
+.get{display:flex;gap:var(--sp-2);align-items:flex-start}
+.get .ic{width:28px;height:28px;border-radius:9px;background:rgba(147,161,129,.28);flex:0 0 28px}
+.get b{display:block;font-weight:600;font-size:15px;margin-bottom:2px}
+.get p{color:var(--ink-soft);font-size:14px;margin:0}
+
+/* ---------- GALERI ---------- */
+.rail{display:flex;gap:var(--sp-3);overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:var(--sp-2) 0 var(--sp-3);scrollbar-width:thin}
+.rail figure{flex:0 0 clamp(230px,30vw,380px);scroll-snap-align:center;margin:0}
+.rail .ph{height:clamp(280px,38vw,460px)}
+.rail figure:nth-child(odd) .ph{transform:rotate(-1.5deg)}
+.rail figure:nth-child(even) .ph{transform:rotate(2deg)}
+.rail figcaption{font-size:13px;color:var(--ink-soft);margin-top:12px}
+
+/* ---------- TENTANG ---------- */
+.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--sp-6);align-items:start}
+.stick{position:sticky;top:96px}
+.stick .ph{height:min(64vh,560px);transform:rotate(-1.5deg)}
+.split p{font-size:var(--step-1);line-height:1.72;color:var(--ink-soft);margin-bottom:var(--sp-3)}
+.split .first{font-family:var(--font-display);font-size:clamp(22px,2.6vw,32px);
+  line-height:1.35;color:var(--ink)}
+
+/* ---------- ANGKA ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-3);text-align:center}
+.stat .n{font-family:var(--font-display);font-size:clamp(40px,6vw,80px);color:var(--burgundy);
+  line-height:.92;font-variant-numeric:tabular-nums}
+.stat .l{font-size:13px;color:var(--ink-soft);margin-top:var(--sp-2)}
+
+/* ---------- TESTIMONI ---------- */
+.tst{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-3)}
+.tst .card{font-size:15px}
+.stars{color:var(--rose-text);letter-spacing:3px;font-size:13px;margin-bottom:var(--sp-2)}
+.who{display:flex;align-items:center;gap:10px;margin-top:var(--sp-3);font-size:13px;color:var(--ink-soft)}
+.av{width:32px;height:32px;border-radius:99px;background:var(--rose);flex:0 0 32px}
+
+/* ---------- FAQ ---------- */
+.faq details{border-bottom:var(--line);padding:var(--sp-3) 0}
+.faq summary{cursor:pointer;font-family:var(--font-display);font-size:var(--step-1);list-style:none;
+  padding-right:28px;position:relative;min-height:32px;display:flex;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:0;color:var(--kraft-text)}
+.faq details[open] summary::after{content:"–"}
+.faq summary:focus-visible{outline:2px solid var(--burgundy);outline-offset:3px;border-radius:4px}
+.faq p{margin:var(--sp-2) 0 0;color:var(--ink-soft)}
+
+/* ---------- PENUTUP ---------- */
+.end{background:var(--ink);color:var(--paper);text-align:center;padding:var(--sp-8) 0}
+.end h2{color:var(--paper);font-size:clamp(36px,7.4vw,104px);line-height:.98;letter-spacing:-.03em}
+.end .script{color:var(--rose)}
+.end .btn-ghost{border-color:rgba(237,227,215,.45);color:var(--paper)}
+
+/* ---------- STICKY CTA ---------- */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:150;background:var(--ink);color:var(--paper);
+  padding:11px var(--sp-3);display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3)}
+.sticky .t{font-size:13px;opacity:.85;line-height:1.35}
+.sticky .t b{font-family:var(--font-display);font-size:var(--step-1);display:block;opacity:1}
+
+.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:var(--sp-4)}
+.fgrid ul{list-style:none;padding:0;margin:0;font-size:14px}
+.fgrid li{margin-bottom:8px}
+.toggle{position:fixed;right:14px;bottom:76px;z-index:200;font-size:12px;background:var(--kraft);
+  color:#fff;border:0;padding:9px 14px;border-radius:999px;cursor:pointer}
+
+@media(max-width:900px){
+  .hero-grid,.split,.gets,.tst{grid-template-columns:1fr}
+  .book{position:static;transform:none;margin-top:var(--sp-4)}
+  .stick{position:static}
+  .ev{grid-template-columns:64px 1fr;row-gap:6px}
+  .ev .v{grid-column:2}
+  .ev .r{grid-column:2;text-align:left;display:flex;gap:var(--sp-3);align-items:baseline}
+  .stats{grid-template-columns:1fr 1fr;gap:var(--sp-5)}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .nav{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="bar wp-host"><span class="wp">template-part: header</span>
+  <div class="wrap">
+    <a class="brand" href="#">The Journaling Room</a>
+    <nav class="nav" aria-label="Utama">
+      <a href="#jadwal">Jadwal</a><a href="#kit">Isi kit</a>
+      <a href="#galeri">Galeri</a><a href="#tentang">Tentang</a><a href="#cerita">Cerita</a>
+    </nav>
+    <a class="btn btn-primary" href="#jadwal">Ambil slot</a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero wp-host"><span class="wp">pattern: tjr/hero-booking</span>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="script">Your kind, journaling companions</p>
+      <h1>Menulis lebih enak <em>bareng</em></h1>
+      <p class="lead">Sesi journaling bersama di Yogyakarta. Datang tanpa pengalaman, tanpa alat, tanpa harus ngomong. Semua yang kamu butuh sudah ada di meja.</p>
+      <div class="trust">
+        <div><b>22</b>sesi berjalan</div>
+        <div><b>240</b>peserta</div>
+        <div><b>3</b>kota</div>
+        <div><b>9</b>brand partner</div>
+      </div>
+      <div class="logos">
+        <span>Wardah</span><span>Artotel</span><span>AMCO Bakehouse</span>
+        <span>Kupiku Coffee</span><span>Copenhagen</span><span>Heejaz</span>
+      </div>
+    </div>
+
+    <aside class="book" aria-labelledby="next-h">
+      <span class="lbl">Sesi terdekat</span>
+      <h2 id="next-h">Tracing Shadows, Mapping Stars</h2>
+      <div class="ph" data-label="Foto sesi"></div>
+      <div class="kv"><span>Tanggal</span><b>Sabtu, 20 Sep</b></div>
+      <div class="kv"><span>Waktu</span><b>15.00 sampai 18.00</b></div>
+      <div class="kv"><span>Lokasi</span><b>Kupiku Coffee</b></div>
+      <div class="kv"><span>Harga</span><b class="price" style="font-size:var(--step-1)">75K</b></div>
+      <div class="slotbar" role="img" aria-label="11 dari 15 slot terisi"><i></i></div>
+      <p class="note">11 dari 15 slot sudah terisi</p>
+      <a class="btn btn-primary" href="#">Ambil slot lewat WhatsApp</a>
+      <p class="note" style="text-align:center">Dibalas 09.00 sampai 21.00</p>
+    </aside>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Tracing Shadows, Mapping Stars</span><span>About Myself</span><span>Between the Pages</span>
+    <span>A Moment Between Chapters</span><span>Much Between the Lines</span><span>A Gentle Space to Write and Glow</span>
+    <span>Tracing Shadows, Mapping Stars</span><span>About Myself</span><span>Between the Pages</span>
+    <span>A Moment Between Chapters</span><span>Much Between the Lines</span><span>A Gentle Space to Write and Glow</span>
+  </div>
+</div>
+
+<section id="jadwal" class="wp-host"><span class="wp">query loop: CPT acara + taksonomi format</span>
+  <div class="wrap">
+    <div class="head rise">
+      <div><p class="eyebrow">Jadwal</p><h2>Pilih yang paling pas</h2></div>
+      <a class="btn btn-ghost" href="#">Arsip semua sesi</a>
+    </div>
+    <div class="chips" role="group" aria-label="Saring format">
+      <button class="chip on">Semua</button><button class="chip">Workshop</button>
+      <button class="chip">Lettering</button><button class="chip">Playdate</button><button class="chip">Kolaborasi</button>
+    </div>
+    <div class="rows">
+      <a class="ev" href="#"><div class="cal"><div class="m">Sep</div><div class="dd">20</div></div>
+        <div><h3>Tracing Shadows, Mapping Stars</h3><p class="v">Workshop tiga jam, kit lengkap</p></div>
+        <span class="v">Kupiku Coffee, Jogja</span>
+        <div class="r"><div class="p">75K</div><div class="s low">4 slot lagi</div></div></a>
+      <a class="ev" href="#"><div class="cal"><div class="m">Sep</div><div class="dd">28</div></div>
+        <div><h3>Brush Lettering &amp; Journaling</h3><p class="v">Kelas lettering digabung sesi journaling</p></div>
+        <span class="v">ROCCA Artotel, Jogja</span>
+        <div class="r"><div class="p">98K</div><div class="s">9 slot lagi</div></div></a>
+      <a class="ev" href="#"><div class="cal"><div class="m">Okt</div><div class="dd">04</div></div>
+        <div><h3>Journaling Playdate</h3><p class="v">Enam orang, bawa notebook sendiri</p></div>
+        <span class="v">Kopi Kalandjana, Jogja</span>
+        <div class="r"><div class="p">40K</div><div class="s low">2 slot lagi</div></div></a>
+      <a class="ev" href="#"><div class="cal"><div class="m">Okt</div><div class="dd">18</div></div>
+        <div><h3>A Moment Between Chapters</h3><p class="v">Refleksi tengah tahun, termasuk buku</p></div>
+        <span class="v">Copenhagen, Jogja</span>
+        <div class="r"><div class="p">100K</div><div class="s">Waitlist</div></div></a>
+      <a class="ev past" href="#"><div class="cal"><div class="m">Sep</div><div class="dd">06</div></div>
+        <div><h3>Between the Pages</h3><p class="v">Kolaborasi Sunday Reads Club</p></div>
+        <span class="v">Heejaz, Jogja</span>
+        <div class="r"><div class="p">89K</div><div class="s">Penuh</div></div></a>
+    </div>
+  </div>
+</section>
+
+<section id="kit" class="alt wp-host"><span class="wp">pattern: tjr/inclusions</span>
+  <div class="wrap">
+    <div class="head rise"><div><p class="eyebrow">Sudah termasuk</p><h2>Yang kamu bawa pulang</h2></div></div>
+    <div class="gets rise">
+      <div class="get"><span class="ic"></span><div><b>Notebook A6</b><p>Isinya punya kamu, nggak dibaca siapa pun</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Sticker sheet &amp; booklet</b><p>Panduan tema sesi hari itu</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Akses deco station</b><p>Washi, pita, stempel, gunting pola</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Minuman</b><p>Dari venue partner hari itu</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Foto cetak</b><p>Dokumentasi sesi, dicetak di tempat</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Teman baru</b><p>Ini yang paling sering disebut peserta</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="galeri" class="wp-host"><span class="wp">pattern: tjr/gallery-rail</span>
+  <div class="wrap">
+    <div class="head rise">
+      <div><p class="eyebrow">Dari sesi sebelumnya</p><h2>Yang terjadi di meja</h2></div>
+      <a class="btn btn-ghost" href="#">Buka galeri</a>
+    </div>
+    <div class="rail">
+      <figure><div class="ph wipe" data-label="Tangan menulis"></div><figcaption>About Myself, Agustus</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Deco station"></div><figcaption>Deco station</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Halaman jurnal peserta"></div><figcaption>Halaman peserta</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Peserta bareng"></div><figcaption>Between the Pages, Juli</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Isi kit workshop"></div><figcaption>Isi kit</figcaption></figure>
+    </div>
+    <p class="muted" style="font-size:13px">Geser ke samping</p>
+  </div>
+</section>
+
+<section id="tentang" class="alt wp-host"><span class="wp">pattern: tjr/about</span>
+  <div class="wrap split">
+    <div class="stick"><div class="ph" data-label="Caca &amp; Dhanty"></div></div>
+    <div>
+      <p class="eyebrow rise">Tentang</p>
+      <h2 class="rise" style="font-size:clamp(28px,4vw,52px);letter-spacing:-.03em;text-wrap:balance;margin-bottom:var(--sp-4)">Dibikin dua orang yang juga butuh ruang itu</h2>
+      <p class="first rise">Dhanty bilang kepalanya sering penuh, dan journaling jadi cara mengosongkannya. Caca bilang journaling itu ritual kecil yang bantu dia melewati naik turun sambil makin kenal diri sendiri.</p>
+      <p class="rise">Dari dua alasan itu The Journaling Room dimulai. Kami tidak mengajari cara menulis yang benar. Kami cuma menyiapkan meja, kertas, dan orang-orang yang tidak akan menghakimi.</p>
+      <p class="rise">Tiap sesi punya tema, dan tiap tema disiapkan supaya siapa pun bisa mulai walau belum pernah journaling sekali pun. Nggak ada yang dinilai, nggak ada yang dibaca keras-keras. Kamu boleh datang sendiri, boleh diam sepanjang sesi, boleh cuma nulis dua baris lalu berhenti.</p>
+      <p class="rise">Kami berpindah venue tiap acara, dari kafe sampai hotel, di Yogyakarta dan sekitarnya.</p>
+      <a class="btn btn-ghost rise" href="#">Cerita lengkapnya</a>
+    </div>
+  </div>
+</section>
+
+<section class="wp-host"><span class="wp">pattern: tjr/stats</span>
+  <div class="wrap stats rise">
+    <div class="stat"><div class="n">22</div><div class="l">sesi berjalan</div></div>
+    <div class="stat"><div class="n">240</div><div class="l">peserta</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">kota</div></div>
+    <div class="stat"><div class="n">9</div><div class="l">brand partner</div></div>
+  </div>
+</section>
+
+<section class="alt wp-host"><span class="wp">pattern: tjr/testimonials (tarik dari review Google)</span>
+  <div class="wrap">
+    <div class="head rise"><div><p class="eyebrow">Kata peserta</p><h2>Yang mereka rasakan</h2></div></div>
+    <div class="tst rise">
+      <blockquote class="card" style="margin:0"><div class="stars" aria-label="5 dari 5">★★★★★</div>
+        <p>"Awalnya takut karena datang sendiri. Ternyata setengah ruangan juga datang sendiri."</p>
+        <footer class="who"><span class="av"></span>Peserta workshop September</footer></blockquote>
+      <blockquote class="card" style="margin:0"><div class="stars" aria-label="5 dari 5">★★★★★</div>
+        <p>"Tiga jam berasa cepat banget. Pulangnya kepala jauh lebih lega."</p>
+        <footer class="who"><span class="av"></span>Peserta A Moment Between Chapters</footer></blockquote>
+      <blockquote class="card" style="margin:0"><div class="stars" aria-label="5 dari 5">★★★★★</div>
+        <p>"Kitnya niat, dan mbak-mbaknya beneran nggak bikin canggung."</p>
+        <footer class="who"><span class="av"></span>Peserta playdate</footer></blockquote>
+    </div>
+    <p class="muted" style="font-size:13px;margin-top:var(--sp-3)">Placeholder. Diganti review asli dari Google Business Profile setelah terkumpul.</p>
+  </div>
+</section>
+
+<section class="faq wp-host">
+  <div class="wrap narrow"><span class="wp">pattern: tjr/faq (schema FAQPage)</span>
+    <p class="eyebrow rise">Sering ditanya</p>
+    <h2 class="rise" style="font-size:clamp(28px,4vw,52px);letter-spacing:-.03em;margin-bottom:var(--sp-4)">Sebelum ambil slot</h2>
+    <details open><summary>Belum pernah journaling sama sekali, boleh ikut?</summary>
+      <p>Boleh. Sebagian besar peserta baru pertama kali, dan tiap sesi selalu dimulai dari nol.</p></details>
+    <details><summary>Datang sendiri aneh nggak?</summary>
+      <p>Nggak. Sebagian besar peserta datang sendiri, dan sesinya memang dirancang supaya itu nyaman.</p></details>
+    <details><summary>Harus ngomong atau baca tulisan di depan orang?</summary>
+      <p>Tidak pernah. Kalau mau berbagi silakan, kalau tidak juga aman.</p></details>
+    <details><summary>Perlu bawa apa?</summary>
+      <p>Untuk workshop semua sudah disediakan. Untuk playdate, bawa notebook dan alat tulis favoritmu.</p></details>
+    <details><summary>Bayarnya gimana?</summary>
+      <p>Konfirmasi slot lewat WhatsApp, lalu transfer. Slot dikunci setelah pembayaran masuk.</p></details>
+    <details><summary>Kalau berhalangan?</summary>
+      <p>Kabari paling lambat dua hari sebelum sesi, slot bisa dipindah ke jadwal berikutnya.</p></details>
+  </div>
+</section>
+
+<section class="end wp-host"><span class="wp">pattern: tjr/cta</span>
+  <div class="wrap">
+    <p class="script">Sampai ketemu di ruangnya</p>
+    <h2 style="margin:var(--sp-3) 0 var(--sp-5)">Kursinya<br>masih ada</h2>
+    <a class="btn btn-primary" href="#jadwal">Lihat jadwal</a>
+    <a class="btn btn-ghost" href="#">Tanya via WhatsApp</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="wp-host"><span class="wp">template-part: footer</span>
+  <div class="wrap fgrid">
+    <div>
+      <p class="brand" style="color:var(--paper)">The Journaling Room</p>
+      <p style="opacity:.7;font-size:14px;max-width:290px">Ruang journaling bareng di Yogyakarta. Berpindah venue tiap acara.</p>
+    </div>
+    <div><h4>Acara</h4><ul><li><a href="#">Jadwal</a></li><li><a href="#">Workshop</a></li><li><a href="#">Playdate</a></li><li><a href="#">Inner Circle</a></li></ul></div>
+    <div><h4>Tentang</h4><ul><li><a href="#">Cerita kami</a></li><li><a href="#">Galeri</a></li><li><a href="#">Cerita</a></li><li><a href="#">FAQ</a></li></ul></div>
+    <div><h4>Kontak</h4><ul><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Kolaborasi brand</a></li></ul></div>
+  </div>
+  <div class="wrap" style="margin-top:var(--sp-6);padding-top:var(--sp-3);border-top:1px solid rgba(237,227,215,.15);font-size:13px;opacity:.6">
+    2026 The Journaling Room · Yogyakarta
+  </div>
+</footer>
+
+<div class="sticky">
+  <div class="t"><b>Tracing Shadows, Mapping Stars</b>Sab 20 Sep · Kupiku Coffee · 75K · 4 slot lagi</div>
+  <a class="btn btn-primary" href="#">Ambil slot</a>
+</div>
+
+<button class="toggle" onclick="document.body.classList.toggle('show-wp')">Blok WordPress</button>
+<script>
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');});
+</script>
+</body>
+</html>

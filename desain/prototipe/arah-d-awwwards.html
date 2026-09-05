@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arah D · Rasa Awwwards, Tanpa Tagihannya — The Journaling Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+/* ============================================================
+   Semua gerak di halaman ini pakai CSS scroll-driven animation
+   dan position:sticky. Nol library. JS cuma untuk filter chip.
+   Kalau browser belum dukung, semuanya tetap tampil normal,
+   cuma tanpa animasi. Itu yang namanya progressive enhancement.
+   ============================================================ */
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:100;mix-blend-mode:difference}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:var(--sp-3)}
+.bar a{color:#fff;text-decoration:none}
+.brand{font-family:var(--font-display);font-size:17px;letter-spacing:.2em;text-transform:uppercase}
+.nav{display:flex;gap:var(--sp-4);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+
+/* ---------- HERO: pinned + kecil sendiri saat di-scroll ---------- */
+.hero{height:190vh;position:relative;view-timeline-name:--hero;view-timeline-axis:block}
+.hero-pin{position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden}
+.hero-type{text-align:center;padding:0 var(--sp-3);position:relative;z-index:2}
+.hero-type h1{
+  font-size:clamp(46px,13.5vw,196px);line-height:.92;letter-spacing:-.035em;
+  text-wrap:balance;margin:0}
+.hero-type h1 em{font-style:italic;color:var(--rose-text)}
+.hero-sub{margin-top:var(--sp-4);font-size:var(--step-1);color:var(--ink-soft);
+  max-width:44ch;margin-left:auto;margin-right:auto}
+.hero-bg{position:absolute;inset:0;z-index:1;display:grid;place-items:center;pointer-events:none}
+.hero-bg .ph{width:min(30vw,340px);height:min(40vw,440px);opacity:.9}
+.scrollcue{position:absolute;bottom:26px;left:50%;translate:-50% 0;z-index:3;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ---------- TICKER: nama tema acara, CSS murni ---------- */
+.ticker{overflow:hidden;border-top:var(--line);border-bottom:var(--line);
+  padding:var(--sp-3) 0;background:var(--paper-deep)}
+.ticker-track{display:flex;gap:var(--sp-5);width:max-content;animation:slide 38s linear infinite}
+.ticker span{font-family:var(--font-display);font-size:var(--step-2);white-space:nowrap;color:var(--ink-soft)}
+.ticker span::after{content:"✳";margin-left:var(--sp-5);color:var(--rose)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- REVEAL: muncul saat masuk viewport ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+@keyframes wipe{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .rise{animation:rise linear both;animation-timeline:view();animation-range:entry 5% cover 26%}
+    .wipe{animation:wipe linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+    /* hero pinned: timeline diambil dari wrapper .hero yang tinggi 190vh,
+       bukan dari elemen sticky-nya sendiri (elemen sticky tidak pernah keluar viewport) */
+    .hero-type{animation:heroOut linear both;animation-timeline:--hero;animation-range:cover 34% cover 88%}
+    @keyframes heroOut{to{transform:scale(.84);opacity:0;filter:blur(5px)}}
+    .hero-bg .ph{animation:bgIn linear both;animation-timeline:--hero;animation-range:cover 0% cover 90%}
+    @keyframes bgIn{from{transform:scale(1.16) rotate(2.5deg)}to{transform:scale(.94) rotate(0)}}
+    .scrollcue{animation:cueOut linear both;animation-timeline:--hero;animation-range:cover 8% cover 30%}
+    @keyframes cueOut{to{opacity:0}}
+    .stat .n{animation:rise linear both;animation-timeline:view();animation-range:entry 10% cover 34%}
+  }
+}
+
+/* ---------- SECTION judul besar ---------- */
+.big-head{font-size:clamp(34px,7.6vw,110px);line-height:.98;letter-spacing:-.03em;
+  text-wrap:balance;margin-bottom:var(--sp-5)}
+
+/* ---------- JADWAL: baris melebar saat hover ---------- */
+.rows{border-top:var(--line)}
+.r{display:grid;grid-template-columns:120px 1fr 170px 110px;gap:var(--sp-3);align-items:center;
+  padding:var(--sp-4) var(--sp-2);border-bottom:var(--line);text-decoration:none;color:inherit;
+  transition:padding .35s cubic-bezier(.2,.8,.2,1),background .35s}
+.r:hover{padding-left:var(--sp-4);padding-right:var(--sp-4);background:var(--paper-deep)}
+.r .d{font-family:var(--font-display);font-size:var(--step-1);color:var(--burgundy)}
+.r h3{font-size:var(--step-2);font-family:var(--font-display);letter-spacing:-.01em}
+.r .v{font-size:14px;color:var(--ink-soft)}
+.r .p{font-family:var(--font-display);font-size:var(--step-1);text-align:right}
+
+/* ---------- GALERI: scroll horizontal native, snap ---------- */
+.rail{display:flex;gap:var(--sp-3);overflow-x:auto;scroll-snap-type:x mandatory;
+  padding-bottom:var(--sp-3);scrollbar-width:thin}
+.rail>figure{flex:0 0 clamp(240px,32vw,420px);scroll-snap-align:center;margin:0}
+.rail .ph{height:clamp(300px,42vw,520px)}
+.rail figcaption{font-size:13px;color:var(--ink-soft);margin-top:10px}
+
+/* ---------- TENTANG: teks besar + sticky gambar ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-6);align-items:start}
+.split .sticky-img{position:sticky;top:110px}
+.split .sticky-img .ph{height:min(70vh,620px)}
+.split p{font-size:var(--step-1);line-height:1.7;color:var(--ink-soft);margin-bottom:var(--sp-4)}
+.split .first{font-size:clamp(22px,2.6vw,34px);font-family:var(--font-display);
+  line-height:1.35;color:var(--ink)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-3);text-align:center}
+.stat .n{font-family:var(--font-display);font-size:clamp(44px,7vw,96px);color:var(--burgundy);line-height:.9}
+.stat .l{font-size:13px;color:var(--ink-soft);margin-top:var(--sp-2)}
+
+/* ---------- PENUTUP ---------- */
+.end{min-height:88vh;display:grid;place-items:center;text-align:center;background:var(--ink);color:var(--paper)}
+.end h2{color:var(--paper);font-size:clamp(38px,8.6vw,128px);line-height:.96;letter-spacing:-.03em}
+.end .script{color:var(--rose)}
+.end .btn-ghost{border-color:rgba(237,227,215,.45);color:var(--paper)}
+
+/* ---------- panel biaya, jujur ---------- */
+.cost{position:fixed;right:16px;bottom:16px;z-index:300;max-width:310px;
+  background:var(--ink);color:var(--paper);border-radius:14px;padding:var(--sp-3);font-size:12.5px;line-height:1.55}
+.cost h4{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.12em;opacity:.6;font-family:var(--font-body);font-weight:500}
+.cost table{width:100%;border-collapse:collapse}
+.cost td{padding:3px 0;border:0}
+.cost td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.cost .ok{color:#A8C48F}
+.cost .bad{color:var(--rose)}
+.cost button{margin-top:10px;font-size:11px;background:transparent;border:1px solid rgba(237,227,215,.35);
+  color:var(--paper);border-radius:99px;padding:5px 11px;cursor:pointer;font-family:inherit}
+.cost.min table,.cost.min p{display:none}
+
+@media(max-width:900px){
+  .split{grid-template-columns:1fr}
+  .split .sticky-img{position:static}
+  .r{grid-template-columns:1fr;gap:6px}
+  .r .p{text-align:left}
+  .stats{grid-template-columns:1fr 1fr;gap:var(--sp-5)}
+  .nav{display:none}
+  .hero{height:150vh}
+}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <a class="brand" href="#">The Journaling Room</a>
+  <nav class="nav"><a href="#jadwal">Jadwal</a><a href="#galeri">Galeri</a><a href="#tentang">Tentang</a><a href="#">Daftar</a></nav>
+</div></div>
+
+<main>
+
+<section class="hero">
+  <div class="hero-pin">
+    <div class="hero-bg"><div class="ph" data-label="Foto potret: tangan menulis"></div></div>
+    <div class="hero-type">
+      <h1>Menulis<br>lebih enak<br><em>berdua</em></h1>
+      <p class="hero-sub">Sesi journaling bersama di Yogyakarta. Datang sendiri boleh, diam sepanjang sesi juga boleh.</p>
+    </div>
+    <span class="scrollcue">Gulir</span>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Tracing Shadows, Mapping Stars</span><span>About Myself</span><span>Between the Pages</span>
+    <span>A Moment Between Chapters</span><span>Much Between the Lines</span><span>A Gentle Space to Write and Glow</span>
+    <span>Tracing Shadows, Mapping Stars</span><span>About Myself</span><span>Between the Pages</span>
+    <span>A Moment Between Chapters</span><span>Much Between the Lines</span><span>A Gentle Space to Write and Glow</span>
+  </div>
+</div>
+
+<section id="jadwal">
+  <div class="wrap">
+    <p class="eyebrow rise">Jadwal terdekat</p>
+    <h2 class="big-head rise">Empat sesi berikutnya</h2>
+    <div class="rows">
+      <a class="r" href="#"><span class="d">20 Sep</span>
+        <div><h3>Tracing Shadows, Mapping Stars</h3></div>
+        <span class="v">Kupiku Coffee, Jogja</span><span class="p">75K</span></a>
+      <a class="r" href="#"><span class="d">28 Sep</span>
+        <div><h3>Brush Lettering &amp; Journaling</h3></div>
+        <span class="v">ROCCA Artotel, Jogja</span><span class="p">98K</span></a>
+      <a class="r" href="#"><span class="d">04 Okt</span>
+        <div><h3>Journaling Playdate</h3></div>
+        <span class="v">Kopi Kalandjana, Jogja</span><span class="p">40K</span></a>
+      <a class="r" href="#"><span class="d">18 Okt</span>
+        <div><h3>A Moment Between Chapters</h3></div>
+        <span class="v">Copenhagen, Jogja</span><span class="p">100K</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="galeri">
+  <div class="wrap">
+    <p class="eyebrow rise">Dari sesi sebelumnya</p>
+    <h2 class="big-head rise">Yang terjadi di meja</h2>
+  </div>
+  <div class="wrap">
+    <div class="rail">
+      <figure><div class="ph wipe" data-label="Tangan menulis"></div><figcaption>About Myself, Agustus</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Deco station"></div><figcaption>Deco station</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Halaman jurnal"></div><figcaption>Halaman peserta</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Peserta bareng"></div><figcaption>Between the Pages, Juli</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Kit workshop"></div><figcaption>Isi kit</figcaption></figure>
+    </div>
+    <p class="muted" style="font-size:13px">Geser ke samping. Scroll horizontal native, pakai scroll-snap CSS, tanpa library.</p>
+  </div>
+</section>
+
+<section id="tentang">
+  <div class="wrap split">
+    <div class="sticky-img"><div class="ph" data-label="Caca &amp; Dhanty"></div></div>
+    <div>
+      <p class="eyebrow rise">Tentang</p>
+      <h2 class="big-head rise" style="font-size:clamp(30px,4.6vw,64px)">Dibikin dua orang yang juga butuh ruang itu</h2>
+      <p class="first rise">Dhanty bilang kepalanya sering penuh, dan journaling jadi cara mengosongkannya. Caca bilang journaling itu ritual kecil yang bantu dia melewati naik turun sambil makin kenal diri sendiri.</p>
+      <p class="rise">Dari dua alasan itu The Journaling Room dimulai. Kami tidak mengajari cara menulis yang benar. Kami cuma menyiapkan meja, kertas, dan orang-orang yang tidak akan menghakimi.</p>
+      <p class="rise">Tiap sesi punya tema, dan tiap tema disiapkan supaya siapa pun bisa mulai walau belum pernah journaling sekali pun. Kit lengkap: notebook, sticker, booklet, akses deco station, minuman.</p>
+      <p class="rise">Yang tidak ada di paket, dan justru paling sering disebut peserta, adalah teman baru.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap stats">
+    <div class="stat"><div class="n">22</div><div class="l">sesi berjalan</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">kota</div></div>
+    <div class="stat"><div class="n">240</div><div class="l">peserta</div></div>
+    <div class="stat"><div class="n">9</div><div class="l">brand partner</div></div>
+  </div>
+</section>
+
+<section class="end">
+  <div class="wrap">
+    <p class="script">Sampai ketemu di ruangnya</p>
+    <h2 style="margin:var(--sp-3) 0 var(--sp-5)">Kursinya<br>masih ada</h2>
+    <a class="btn btn-primary" href="#jadwal">Lihat jadwal</a>
+    <a class="btn btn-ghost" href="#">Tanya via WhatsApp</a>
+  </div>
+</section>
+
+</main>
+
+<aside class="cost" id="cost">
+  <h4>Ongkos halaman ini</h4>
+  <table>
+    <tr><td>Library JS</td><td class="ok">0 KB</td></tr>
+    <tr><td>JS ditulis tangan</td><td class="ok">0 baris</td></tr>
+    <tr><td>File gambar tekstur</td><td class="ok">0 request</td></tr>
+    <tr><td>Font</td><td>3 keluarga</td></tr>
+    <tr><td colspan="2" style="padding-top:8px;opacity:.5">Bandingkan versi GSAP + Lenis</td></tr>
+    <tr><td>GSAP core + ScrollTrigger</td><td class="bad">+69 KB</td></tr>
+    <tr><td>Lenis smooth scroll</td><td class="bad">+11 KB</td></tr>
+    <tr><td>Three.js kalau pakai WebGL</td><td class="bad">+160 KB</td></tr>
+  </table>
+  <p style="margin:10px 0 0;opacity:.75">Gerak di sini pakai <code>animation-timeline: view()</code> dan <code>position: sticky</code>. Browser lama tetap dapat halaman utuh, cuma tanpa animasi. Yang setel <em>reduce motion</em> juga aman.</p>
+  <button onclick="document.getElementById('cost').classList.toggle('min')">Sembunyikan</button>
+</aside>
+
+</body>
+</html>

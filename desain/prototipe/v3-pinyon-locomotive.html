@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>V3 Pinyon + Manrope — The Journaling Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================
+   V3 · Pinyon Script + Manrope, arah Locomotive
+   Script  : Pinyon Script, HANYA besar dan jarang
+   Semua   : Manrope variabel 200 sampai 800
+   Gerak   : Lenis 11KB untuk inersia, sisanya CSS scroll-driven
+   ========================================================== */
+:root{
+  --paper:#F6F1E9; --deep:#EBE1D4; --ink:#1C1611; --soft:#5A4B3D;
+  --rose:#E6BDB8; --rose-t:#9A4E48; --burg:#5F1D1D; --line:rgba(90,75,61,.22);
+  --s1:8px;--s2:16px;--s3:24px;--s4:40px;--s5:64px;--s6:104px;--s7:150px;--s8:220px;
+  --wide:1320px; --read:640px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:16px;line-height:1.62;font-weight:400;letter-spacing:-.005em;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:var(--wide);margin:0 auto;padding:0 var(--s3)}
+.read{max-width:var(--read);margin:0 auto}
+section{padding:var(--s7) 0;position:relative}
+
+/* ---------- SCRIPT, besar dan jarang ---------- */
+.sc{font-family:"Pinyon Script",cursive;font-weight:400;line-height:.92;
+  letter-spacing:0;color:var(--burg)}
+.sc-xxl{font-size:clamp(74px,17vw,280px)}
+.sc-xl {font-size:clamp(52px,10vw,150px)}
+.sc-md {font-size:clamp(34px,5vw,72px)}
+.sc-sm {font-size:clamp(26px,3vw,40px)}
+
+/* ---------- MANROPE ---------- */
+h1,h2,h3{font-weight:600;letter-spacing:-.035em;line-height:.98;margin:0}
+.h-xl{font-size:clamp(38px,6.4vw,92px)}
+.h-lg{font-size:clamp(30px,4.2vw,60px)}
+.h-md{font-size:clamp(22px,2.4vw,34px);letter-spacing:-.025em;line-height:1.1}
+.lead{font-size:clamp(17px,1.8vw,22px);line-height:1.5;color:var(--soft);font-weight:400}
+.lbl{font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--rose-t);margin:0}
+.meta{font-size:13px;color:var(--soft);font-weight:500}
+.num{font-variant-numeric:tabular-nums;font-weight:200}
+
+/* ---------- NAV ---------- */
+.bar{position:fixed;inset:0 0 auto;z-index:200;padding:var(--s3) 0;
+  transition:background .35s,padding .35s,border-color .35s;border-bottom:1px solid transparent}
+.bar.on{background:rgba(246,241,233,.9);backdrop-filter:blur(14px);padding:12px 0;border-color:var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--s3)}
+.mark{font-family:"Pinyon Script",cursive;font-size:30px;color:var(--ink);
+  text-decoration:none;line-height:1;white-space:nowrap;padding-top:6px}
+.nav{display:flex;gap:var(--s4);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.nav a{color:var(--soft);text-decoration:none;transition:color .2s}
+.nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:13px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;padding:15px 28px;border-radius:999px;text-decoration:none;
+  border:1px solid transparent;min-height:48px;transition:.25s;cursor:pointer}
+.btn-p{background:var(--burg);color:var(--paper)}
+.btn-p:hover{background:var(--ink)}
+.btn-g{border-color:var(--soft);color:var(--ink)}
+.btn-g:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--burg);outline-offset:4px}
+
+/* ---------- HERO ---------- */
+.hero{min-height:96vh;display:grid;place-items:center;text-align:center;padding:var(--s8) 0 var(--s6)}
+.hero .sc-xxl{display:block;margin:-.06em 0 -.04em}
+.hero .h-xl{display:block}
+.hero .lead{max-width:44ch;margin:var(--s4) auto 0}
+.scroll-cue{position:absolute;bottom:var(--s4);left:50%;translate:-50% 0;
+  font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--soft);font-weight:600}
+
+/* ---------- FOTO FULL BLEED ---------- */
+.bleed{width:100%;overflow:hidden}
+.bleed .ph{height:min(88vh,820px)}
+.ph{position:relative;overflow:hidden;background:
+  linear-gradient(140deg,rgba(230,189,184,.6),rgba(90,75,61,.28)),var(--deep);
+  display:grid;place-items:center}
+.ph::after{content:attr(data-l);font-size:10px;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(28,22,17,.4);text-align:center;padding:0 16px}
+
+/* ---------- GERAK ---------- */
+@keyframes fade{from{opacity:0;transform:translateY(38px)}to{opacity:1;transform:none}}
+@keyframes wipe{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes par{from{transform:scale(1.24) translateY(-3%)}to{transform:scale(1.06) translateY(3%)}}
+@keyframes grow{from{letter-spacing:.06em;opacity:0}to{letter-spacing:0;opacity:1}}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .f{animation:fade linear both;animation-timeline:view();animation-range:entry 3% cover 25%}
+    .w{animation:wipe linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+    .par .ph{animation:par linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+    .g{animation:grow linear both;animation-timeline:view();animation-range:entry 5% cover 28%}
+  }
+}
+@media (prefers-reduced-motion: reduce){.marq-t{animation:none!important}}
+
+/* ---------- MARQUEE ---------- */
+.marq{border-block:1px solid var(--line);padding:var(--s4) 0;overflow:hidden;background:var(--deep)}
+.marq-t{display:flex;gap:var(--s6);width:max-content;animation:sl 52s linear infinite}
+.marq-t span{font-family:"Pinyon Script",cursive;font-size:clamp(38px,5.6vw,86px);
+  white-space:nowrap;color:var(--ink);line-height:1;padding-top:.1em}
+@keyframes sl{to{transform:translateX(-50%)}}
+
+/* ---------- JADWAL, gaya Kinfolk dua kolom ---------- */
+.rows{border-top:1px solid var(--line)}
+.ev{display:grid;grid-template-columns:120px 1fr 150px 120px;gap:var(--s3);align-items:baseline;
+  padding:var(--s4) 0;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;
+  transition:padding .45s cubic-bezier(.16,1,.3,1),background .45s,color .3s}
+.ev:hover{padding-inline:var(--s3);background:var(--deep)}
+.ev .cat{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.ev h3{font-size:clamp(22px,2.6vw,38px);font-weight:500;letter-spacing:-.03em;line-height:1.02}
+.ev .when{font-size:13px;font-weight:500;color:var(--soft);font-variant-numeric:tabular-nums}
+.ev .price{text-align:right;font-size:clamp(19px,1.9vw,26px);font-weight:200;font-variant-numeric:tabular-nums}
+.ev .slot{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--rose-t);margin-top:5px;text-align:right}
+.ev.past{opacity:.38}
+
+/* ---------- SESI TERDEKAT ---------- */
+.next{background:var(--ink);color:var(--paper)}
+.next .lbl{color:var(--rose)}
+.next .sc{color:var(--rose)}
+.next h2{color:var(--paper)}
+.ng{display:grid;grid-template-columns:1fr 1fr;gap:var(--s6);align-items:center}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:var(--s2) var(--s4);margin-top:var(--s5);align-items:baseline}
+.dl dt{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,241,233,.5)}
+.dl dd{margin:0;font-size:17px;font-weight:500}
+.bar-slot{height:2px;background:rgba(246,241,233,.2);margin-top:var(--s5);overflow:hidden}
+.bar-slot i{display:block;height:100%;width:73%;background:var(--rose)}
+.next .btn-p{background:var(--rose);color:var(--ink);margin-top:var(--s4)}
+.next .btn-p:hover{background:var(--paper)}
+.next .ph{aspect-ratio:4/5}
+
+/* ---------- KIT ---------- */
+.kit{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5) var(--s4)}
+.kit b{display:block;font-size:clamp(19px,2vw,26px);font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
+.kit p{margin:0;color:var(--soft);font-size:15px}
+.kit i{display:block;width:26px;height:1px;background:var(--rose-t);margin-bottom:var(--s3)}
+
+/* ---------- GALERI ---------- */
+.rail{display:flex;gap:var(--s3);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:var(--s3)}
+.rail figure{flex:0 0 clamp(270px,36vw,520px);scroll-snap-align:center;margin:0}
+.rail .ph{height:clamp(360px,50vw,660px)}
+.rail figcaption{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--soft);margin-top:16px}
+
+/* ---------- TENTANG ---------- */
+.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--s6);align-items:start}
+.stick{position:sticky;top:120px}
+.stick .ph{aspect-ratio:3/4}
+.split p{font-size:17.5px;line-height:1.75;color:var(--soft);margin:0 0 var(--s3)}
+.pull{margin:var(--s5) 0;text-align:center}
+
+/* ---------- FAQ ---------- */
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:var(--s4) 44px var(--s4) 0;position:relative;
+  font-size:clamp(19px,2.1vw,28px);font-weight:500;letter-spacing:-.025em;min-height:48px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:6px;top:50%;width:13px;height:1px;
+  background:var(--soft);transition:.3s}
+.faq summary::before{content:"";position:absolute;right:12px;top:50%;width:1px;height:13px;
+  background:var(--soft);translate:0 -50%;transition:.3s}
+.faq details[open] summary::before{transform:rotate(90deg);opacity:0}
+.faq p{margin:0 0 var(--s4);color:var(--soft);max-width:58ch}
+
+/* ---------- PENUTUP ---------- */
+.end{background:var(--burg);color:var(--paper);text-align:center;padding:var(--s8) 0}
+.end .sc{color:var(--rose)}
+.end h2{color:var(--paper)}
+.end .lead{color:rgba(246,241,233,.72)}
+.end .btn-p{background:var(--paper);color:var(--burg)}
+.end .btn-g{border-color:rgba(246,241,233,.45);color:var(--paper)}
+.end .btn-g:hover{background:var(--paper);color:var(--burg)}
+
+footer{background:var(--ink);color:#CFC2B2;padding:var(--s6) 0 var(--s4)}
+.fg{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:var(--s4)}
+footer a{color:#CFC2B2;text-decoration:none;font-size:14px}
+footer a:hover{color:var(--paper)}
+footer h4{font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.5;margin:0 0 var(--s2);font-weight:700}
+footer ul{list-style:none;padding:0;margin:0}
+footer li{margin-bottom:10px}
+
+@media(max-width:920px){
+  .ng,.split,.fg{grid-template-columns:1fr}
+  .kit{grid-template-columns:1fr}
+  .stick{position:static}
+  .ev{grid-template-columns:1fr;row-gap:6px}
+  .ev .price,.ev .slot{text-align:left}
+  .nav{display:none}
+  .hero{min-height:auto;padding-top:var(--s7)}
+}
+</style>
+</head>
+<body>
+
+<header class="bar" id="bar"><div class="wrap">
+  <a class="mark" href="#">The Journaling Room</a>
+  <nav class="nav"><a href="#jadwal">Jadwal</a><a href="#kit">Isi kit</a><a href="#galeri">Galeri</a><a href="#tentang">Tentang</a></nav>
+  <a class="btn btn-p" href="#next">Ambil slot</a>
+</div></header>
+
+<main id="scroll">
+
+<section class="hero"><div class="wrap">
+  <p class="lbl f">Yogyakarta</p>
+  <h1>
+    <span class="h-xl f">Menulis lebih enak</span>
+    <span class="sc sc-xxl g">bareng</span>
+  </h1>
+  <p class="lead f">Sesi journaling bersama di kafe, hotel, dan ruang kecil di seputar Jogja. Datang tanpa pengalaman, tanpa alat, tanpa harus ngomong.</p>
+  <p class="scroll-cue">Gulir</p>
+</div></section>
+
+<div class="bleed par"><div class="ph w" data-l="Foto lebar · meja panjang, banyak tangan menulis"></div></div>
+
+<section class="next" id="next"><div class="wrap ng">
+  <div>
+    <p class="lbl f">Sesi terdekat</p>
+    <h2 class="h-lg f" style="margin-top:var(--s3)">Tracing Shadows,</h2>
+    <p class="sc sc-md g" style="margin:.05em 0 0">Mapping Stars</p>
+    <dl class="dl f">
+      <dt>Tanggal</dt><dd>Sabtu, 20 September 2026</dd>
+      <dt>Waktu</dt><dd>15.00 sampai 18.00</dd>
+      <dt>Lokasi</dt><dd>Kupiku Coffee, Yogyakarta</dd>
+      <dt>Harga</dt><dd>Rp 75.000 <span style="opacity:.55">· kit lengkap</span></dd>
+    </dl>
+    <div class="bar-slot" role="img" aria-label="11 dari 15 slot terisi"><i></i></div>
+    <p class="meta f" style="color:rgba(246,241,233,.55);margin-top:12px">11 dari 15 slot sudah terisi</p>
+    <a class="btn btn-p f" href="#">Ambil slot lewat WhatsApp</a>
+  </div>
+  <div class="par"><div class="ph w" data-l="Foto sesi · potret"></div></div>
+</div></section>
+
+<div class="marq" aria-hidden="true"><div class="marq-t">
+  <span>Tracing Shadows, Mapping Stars</span><span>About Myself</span><span>Between the Pages</span>
+  <span>A Moment Between Chapters</span><span>Much Between the Lines</span>
+  <span>Tracing Shadows, Mapping Stars</span><span>About Myself</span><span>Between the Pages</span>
+  <span>A Moment Between Chapters</span><span>Much Between the Lines</span>
+</div></div>
+
+<section id="jadwal"><div class="wrap">
+  <p class="lbl f">Jadwal</p>
+  <h2 class="h-lg f" style="margin:var(--s3) 0 var(--s6)">Pilih yang paling pas</h2>
+  <div class="rows">
+    <a class="ev f" href="#"><span class="cat">Workshop</span>
+      <h3>Tracing Shadows, Mapping Stars</h3>
+      <span class="when">20 Sep · Kupiku Coffee</span>
+      <div><span class="price">75K</span><span class="slot">4 slot lagi</span></div></a>
+    <a class="ev f" href="#"><span class="cat">Lettering</span>
+      <h3>Much Between the Lines</h3>
+      <span class="when">28 Sep · ROCCA Artotel</span>
+      <div><span class="price">98K</span><span class="slot">2 slot lagi</span></div></a>
+    <a class="ev f" href="#"><span class="cat">Playdate</span>
+      <h3>Journaling Playdate</h3>
+      <span class="when">04 Okt · Kopi Kalandjana</span>
+      <div><span class="price">40K</span><span class="slot">Penuh</span></div></a>
+    <a class="ev f" href="#"><span class="cat">Workshop</span>
+      <h3>A Moment Between Chapters</h3>
+      <span class="when">18 Okt · Copenhagen</span>
+      <div><span class="price">100K</span><span class="slot">15 slot lagi</span></div></a>
+    <a class="ev f past" href="#"><span class="cat">Kolaborasi</span>
+      <h3>Between the Pages</h3>
+      <span class="when">23 Agu · Heejaz</span>
+      <div><span class="price">89K</span><span class="slot">Selesai</span></div></a>
+  </div>
+  <p style="margin-top:var(--s6)"><a class="btn btn-g" href="#">Arsip semua sesi</a></p>
+</div></section>
+
+<section id="kit" style="background:var(--deep)"><div class="wrap">
+  <p class="lbl f">Sudah termasuk</p>
+  <h2 class="h-lg f" style="margin:var(--s3) 0 var(--s6)">Yang kamu bawa pulang</h2>
+  <div class="kit">
+    <div class="f"><i></i><b>Notebook A6</b><p>Isinya punya kamu. Nggak dibaca siapa pun, nggak dinilai siapa pun.</p></div>
+    <div class="f"><i></i><b>Sticker &amp; booklet</b><p>Panduan tema sesi hari itu, plus lembar stiker untuk menghias.</p></div>
+    <div class="f"><i></i><b>Deco station</b><p>Washi tape, pita, stempel, gunting pola. Bebas dipakai sepuasnya.</p></div>
+    <div class="f"><i></i><b>Minuman</b><p>Dari venue partner hari itu, sudah masuk harga.</p></div>
+    <div class="f"><i></i><b>Foto cetak</b><p>Dokumentasi sesi, dicetak di tempat sebelum kamu pulang.</p></div>
+    <div class="f"><i></i><b>Teman baru</b><p>Ini yang paling sering disebut peserta waktu ditanya apa yang dibawa pulang.</p></div>
+  </div>
+</div></section>
+
+<section id="galeri"><div class="wrap">
+  <p class="lbl f">Dari sesi sebelumnya</p>
+  <h2 class="h-lg f" style="margin:var(--s3) 0 var(--s6)">Yang terjadi di meja</h2>
+</div>
+<div class="wrap"><div class="rail">
+  <figure><div class="ph w" data-l="Tangan menulis"></div><figcaption>About Myself · Agustus</figcaption></figure>
+  <figure><div class="ph w" data-l="Deco station"></div><figcaption>Deco station</figcaption></figure>
+  <figure><div class="ph w" data-l="Halaman peserta"></div><figcaption>Halaman peserta</figcaption></figure>
+  <figure><div class="ph w" data-l="Peserta bareng"></div><figcaption>Between the Pages · Juli</figcaption></figure>
+  <figure><div class="ph w" data-l="Isi kit"></div><figcaption>Isi kit</figcaption></figure>
+</div><p class="meta">Geser ke samping</p></div>
+</section>
+
+<section id="tentang" style="background:var(--deep)"><div class="wrap split">
+  <div class="stick par"><div class="ph" data-l="Caca &amp; Dhanty"></div></div>
+  <div>
+    <p class="lbl f">Tentang</p>
+    <h2 class="h-md f" style="margin:var(--s3) 0 var(--s4);font-size:clamp(26px,3.4vw,46px)">Ruang ini kami bikin karena kami sendiri butuh</h2>
+    <p class="f">Dhanty bilang kepalanya sering penuh. Journaling jadi cara mengosongkannya, satu halaman setiap kali isinya sudah terlalu ramai.</p>
+    <p class="f">Caca bilang journaling itu ritual kecil. Bukan untuk menyelesaikan apa apa, tapi untuk melewati naik turun sambil pelan pelan makin kenal diri sendiri.</p>
+    <blockquote class="pull"><p class="sc sc-md g" style="margin:0">Tidak ada yang dinilai di sini</p></blockquote>
+    <p class="f">Kami cuma menyiapkan meja, kertas, dan orang orang yang tidak akan menghakimi. Tiap sesi punya tema, dan tiap tema disiapkan supaya siapa pun bisa mulai walau belum pernah journaling sekali pun.</p>
+    <p class="f">Kami berpindah venue tiap acara, dari kafe sampai hotel, di Yogyakarta dan sekitarnya.</p>
+  </div>
+</div></section>
+
+<section class="faq"><div class="wrap read">
+  <p class="lbl f">Sering ditanya</p>
+  <h2 class="h-lg f" style="margin:var(--s3) 0 var(--s5)">Sebelum ambil slot</h2>
+  <details open><summary>Belum pernah journaling sama sekali, boleh ikut?</summary>
+    <p>Boleh. Sebagian besar peserta baru pertama kali, dan tiap sesi selalu dimulai dari nol.</p></details>
+  <details><summary>Datang sendiri aneh nggak?</summary>
+    <p>Nggak. Sebagian besar peserta datang sendiri, dan sesinya memang dirancang supaya itu nyaman.</p></details>
+  <details><summary>Harus baca tulisan di depan orang?</summary>
+    <p>Tidak pernah. Kalau mau berbagi silakan, kalau tidak juga aman.</p></details>
+  <details><summary>Bayarnya gimana?</summary>
+    <p>Konfirmasi slot lewat WhatsApp, lalu transfer. Slot dikunci setelah pembayaran masuk.</p></details>
+</div></section>
+
+<section class="end"><div class="wrap">
+  <p class="lbl" style="color:var(--rose)">Sampai ketemu di ruangnya</p>
+  <p class="sc sc-xl g" style="margin:var(--s3) 0 0">Kursinya masih ada</p>
+  <p class="lead" style="max-width:38ch;margin:var(--s4) auto var(--s6)">Slot tiap sesi terbatas karena ruangnya memang sengaja kecil.</p>
+  <a class="btn btn-p" href="#jadwal">Lihat jadwal</a>
+  <a class="btn btn-g" href="#">Tanya via WhatsApp</a>
+</div></section>
+
+</main>
+
+<footer><div class="wrap fg">
+  <div>
+    <p class="mark" style="color:var(--paper);font-size:34px;margin:0 0 var(--s2)">The Journaling Room</p>
+    <p style="opacity:.6;font-size:14px;max-width:32ch;margin:0">Ruang journaling bareng di Yogyakarta. Berpindah venue tiap acara.</p>
+  </div>
+  <div><h4>Acara</h4><ul><li><a href="#">Jadwal</a></li><li><a href="#">Workshop</a></li><li><a href="#">Playdate</a></li><li><a href="#">Inner Circle</a></li></ul></div>
+  <div><h4>Tentang</h4><ul><li><a href="#">Cerita kami</a></li><li><a href="#">Galeri</a></li><li><a href="#">Blog</a></li><li><a href="#">FAQ</a></li></ul></div>
+  <div><h4>Kontak</h4><ul><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Kolaborasi brand</a></li></ul></div>
+</div>
+<div class="wrap" style="margin-top:var(--s5);padding-top:var(--s3);border-top:1px solid rgba(207,194,178,.16);font-size:13px;opacity:.5">
+  2026 The Journaling Room · Yogyakarta
+</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.14/lenis.min.js"></script>
+<script>
+addEventListener('scroll',()=>document.getElementById('bar').classList.toggle('on',scrollY>70));
+// inersia ala Locomotive. dimatikan kalau pengguna minta kurangi animasi,
+// dan navigasi keyboard tetap jalan karena Lenis tidak membajak tombol panah.
+if(window.Lenis && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const l=new Lenis({duration:1.15,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smoothWheel:true});
+  (function raf(t){l.raf(t);requestAnimationFrame(raf)})();
+}
+</script>
+</body>
+</html>

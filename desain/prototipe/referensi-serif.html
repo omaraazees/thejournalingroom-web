@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Papan Referensi Serif — The Journaling Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Instrument+Serif:ital@0;1&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Young+Serif&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Libre+Caslon+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F1E8; --deep:#EDE2D2; --ink:#241C16; --soft:#5C4B3D;
+  --rose:#E0B7B4; --rose-t:#9F534E; --burg:#6E2222; --line:rgba(168,125,89,.35);
+  --u:"Inter",-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--u);font-size:16px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+header{padding:80px 0 40px;border-bottom:1px solid var(--line)}
+h1.t{font-family:"Fraunces";font-variation-settings:"opsz" 144,"SOFT" 40,"WONK" 1;
+  font-size:clamp(38px,6vw,76px);font-weight:600;letter-spacing:-.03em;line-height:.95;margin:12px 0 20px}
+.lbl{font-size:11px;text-transform:uppercase;letter-spacing:.2em;font-weight:600;color:var(--rose-t)}
+.lead{font-size:18px;color:var(--soft);max-width:62ch}
+
+/* kartu arah */
+.card{border-bottom:1px solid var(--line);padding:64px 0}
+.card-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.num{font-family:"Fraunces";font-size:15px;color:var(--rose-t);letter-spacing:.1em}
+.name{font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.mood{font-size:14px;color:var(--soft);font-style:italic}
+.spec{margin:0 0 22px}
+.sub{display:grid;grid-template-columns:1fr 300px;gap:36px;align-items:start}
+.note{font-size:14.5px;color:var(--soft);margin:0}
+.note b{color:var(--ink);display:block;margin-bottom:5px;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.row{border-top:1px solid var(--line);padding-top:14px;margin-top:18px;
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.row .n{font-size:13px;color:var(--soft);letter-spacing:.08em;text-transform:uppercase}
+
+/* per font */
+.f1 .spec{font-family:"Fraunces";font-variation-settings:"opsz" 144,"SOFT" 60,"WONK" 1;font-weight:600;letter-spacing:-.035em;line-height:.86;font-size:clamp(40px,8.4vw,124px)}
+.f1 .spec em{font-variation-settings:"opsz" 144,"SOFT" 90,"WONK" 1;font-weight:300}
+.f1 .row .h{font-family:"Fraunces";font-variation-settings:"opsz" 96,"SOFT" 40,"WONK" 1;font-size:26px;font-weight:500}
+
+.f2 .spec{font-family:"Instrument Serif";font-weight:400;letter-spacing:-.02em;line-height:.9;font-size:clamp(42px,9vw,134px)}
+.f2 .spec em{font-style:italic}
+.f2 .row .h{font-family:"Instrument Serif";font-size:28px}
+
+.f3 .spec{font-family:"Bodoni Moda";font-variation-settings:"opsz" 96;font-weight:700;letter-spacing:-.02em;line-height:.92;font-size:clamp(38px,7.8vw,116px)}
+.f3 .spec em{font-style:italic;font-weight:400}
+.f3 .row .h{font-family:"Bodoni Moda";font-size:26px;font-weight:600}
+
+.f4 .spec{font-family:"Young Serif";font-weight:400;letter-spacing:-.025em;line-height:.9;font-size:clamp(38px,7.6vw,112px)}
+.f4 .row .h{font-family:"Young Serif";font-size:26px}
+
+.f5 .spec{font-family:"Newsreader";font-variation-settings:"opsz" 72;font-weight:500;letter-spacing:-.025em;line-height:.92;font-size:clamp(40px,8.2vw,120px)}
+.f5 .spec em{font-style:italic;font-weight:300}
+.f5 .row .h{font-family:"Newsreader";font-size:27px;font-weight:500}
+
+.f6 .spec{font-family:"Libre Caslon Display";font-weight:400;letter-spacing:-.02em;line-height:.94;font-size:clamp(36px,7.2vw,106px)}
+.f6 .spec em{font-style:italic}
+.f6 .row .h{font-family:"Libre Caslon Display";font-size:25px}
+
+/* rekomendasi */
+.rec{background:var(--ink);color:var(--paper);padding:56px 0;margin-top:64px}
+.rec h2{font-family:"Fraunces";font-variation-settings:"opsz" 144,"SOFT" 40,"WONK" 1;
+  font-size:clamp(30px,4.4vw,54px);font-weight:600;letter-spacing:-.03em;margin:10px 0 22px;color:var(--paper)}
+.rec p{color:rgba(247,241,232,.8);max-width:64ch}
+.rec .lbl{color:var(--rose)}
+.rec a{color:var(--rose)}
+
+/* motion refs */
+.mrefs{padding:64px 0}
+.mrefs ul{list-style:none;padding:0;margin:22px 0 0}
+.mrefs li{border-top:1px solid var(--line);padding:18px 0;display:grid;grid-template-columns:210px 1fr;gap:24px;align-items:baseline}
+.mrefs a{color:var(--burg);font-weight:600;text-decoration:none;border-bottom:1px solid var(--rose)}
+.mrefs span{font-size:14.5px;color:var(--soft)}
+@media(max-width:820px){.sub,.mrefs li{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <p class="lbl">Papan referensi · serif maximalism</p>
+  <h1 class="t">Enam arah serif,<br>kata kata TJR sendiri</h1>
+  <p class="lead">Tiap kartu memakai headline dan satu baris jadwal yang sama, jadi bedanya murni dari hurufnya. Semua font ini ada di Google Fonts, artinya bisa langsung dipakai di WordPress tanpa biaya lisensi.</p>
+</div></header>
+
+<div class="wrap">
+
+  <section class="card f1">
+    <div class="card-head"><span class="num">01</span><span class="name">Fraunces</span><span class="mood">hangat, sedikit nakal, punya sumbu SOFT dan WONK</span></div>
+    <p class="spec">Menulis lebih <em>enak</em> bareng</p>
+    <div class="sub">
+      <div class="row"><span class="h">Tracing Shadows, Mapping Stars</span><span class="n">20 Sep · 75K</span></div>
+      <p class="note"><b>Rasanya</b>Serif variabel yang bisa dibikin gemuk dan miring sekaligus. Paling dekat dengan karakter TJR yang hangat dan personal, tapi tetap bisa didorong sampai besar tanpa jadi dingin.</p>
+    </div>
+  </section>
+
+  <section class="card f2">
+    <div class="card-head"><span class="num">02</span><span class="name">Instrument Serif</span><span class="mood">kontras tinggi, editorial modern</span></div>
+    <p class="spec">Menulis lebih <em>enak</em> bareng</p>
+    <div class="sub">
+      <div class="row"><span class="h">Tracing Shadows, Mapping Stars</span><span class="n">20 Sep · 75K</span></div>
+      <p class="note"><b>Rasanya</b>Ini serif yang lagi banyak dipakai studio desain sekarang. Tipis di satu sisi, tebal di sisi lain, kesannya tajam dan mahal. Risikonya sudah mulai terasa umum.</p>
+    </div>
+  </section>
+
+  <section class="card f3">
+    <div class="card-head"><span class="num">03</span><span class="name">Bodoni Moda</span><span class="mood">kontras ekstrem, fashion editorial</span></div>
+    <p class="spec">Menulis lebih <em>enak</em> bareng</p>
+    <div class="sub">
+      <div class="row"><span class="h">Tracing Shadows, Mapping Stars</span><span class="n">20 Sep · 75K</span></div>
+      <p class="note"><b>Rasanya</b>Paling maximalist dari semuanya. Kesannya majalah mode, dramatis dan berjarak. Bagus untuk kejutan, tapi bisa bertabrakan dengan nada TJR yang ramah.</p>
+    </div>
+  </section>
+
+  <section class="card f4">
+    <div class="card-head"><span class="num">04</span><span class="name">Young Serif</span><span class="mood">gemuk, membumi, sedikit kasar</span></div>
+    <p class="spec">Menulis lebih enak bareng</p>
+    <div class="sub">
+      <div class="row"><span class="h">Tracing Shadows, Mapping Stars</span><span class="n">20 Sep · 75K</span></div>
+      <p class="note"><b>Rasanya</b>Serif tebal dengan ujung tumpul. Terasa buatan tangan dan hangat, cocok untuk brand kecil yang tidak mau kelihatan korporat. Tidak punya italic, jadi variasinya terbatas.</p>
+    </div>
+  </section>
+
+  <section class="card f5">
+    <div class="card-head"><span class="num">05</span><span class="name">Newsreader</span><span class="mood">editorial, terbaca, variabel</span></div>
+    <p class="spec">Menulis lebih <em>enak</em> bareng</p>
+    <div class="sub">
+      <div class="row"><span class="h">Tracing Shadows, Mapping Stars</span><span class="n">20 Sep · 75K</span></div>
+      <p class="note"><b>Rasanya</b>Dibuat untuk teks panjang, jadi enak dipakai judul sekaligus badan artikel. Kalau blog TJR nanti serius, satu font ini bisa menanggung seluruh situs.</p>
+    </div>
+  </section>
+
+  <section class="card f6">
+    <div class="card-head"><span class="num">06</span><span class="name">Libre Caslon Display</span><span class="mood">bookish, literer, klasik</span></div>
+    <p class="spec">Menulis lebih <em>enak</em> bareng</p>
+    <div class="sub">
+      <div class="row"><span class="h">Tracing Shadows, Mapping Stars</span><span class="n">20 Sep · 75K</span></div>
+      <p class="note"><b>Rasanya</b>Paling mirip buku cetak. Nyambung sama tema journaling, tapi paling konservatif dan paling tidak maximalist dari enam ini.</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="rec"><div class="wrap">
+  <p class="lbl">Rekomendasiku</p>
+  <h2>01 Fraunces untuk judul,<br>05 Newsreader untuk teks panjang</h2>
+  <p>Fraunces punya sumbu SOFT dan WONK yang bisa diputar, jadi judul besar bisa dibikin miring dan gemuk tanpa kehilangan kehangatan. Itu yang membedakannya dari Bodoni yang dramatis tapi dingin, dan dari Instrument Serif yang tajam tapi sudah mulai umum.</p>
+  <p>Newsreader menanggung artikel blog nanti, karena Fraunces terlalu berkarakter untuk paragraf panjang.</p>
+  <p>Tapi ini rekomendasi, bukan keputusan. Kalau kamu mau yang paling liar, ambil 03 Bodoni. Kalau mau yang paling hangat dan paling jauh dari kesan korporat, ambil 04 Young Serif.</p>
+</div></div>
+
+<div class="mrefs"><div class="wrap">
+  <p class="lbl">Referensi gerak</p>
+  <h1 class="t" style="font-size:clamp(28px,4vw,48px)">Situs yang rasa geraknya jadi acuan</h1>
+  <p class="lead">Buka sendiri dan scroll pelan pelan. Yang aku minta kamu perhatikan bukan warnanya, tapi kapan sesuatu muncul dan seberapa lambat.</p>
+  <ul>
+    <li><a href="https://www.locomotive.ca/" target="_blank" rel="noopener">locomotive.ca</a><span>Studio yang bikin Locomotive Scroll. Rujukan paling murni untuk rasa scroll yang berat dan halus.</span></li>
+    <li><a href="https://www.klim.co.nz/" target="_blank" rel="noopener">klim.co.nz</a><span>Foundry huruf. Spesimen serif raksasa, halaman panjang, gerak yang sangat ditahan.</span></li>
+    <li><a href="https://www.pentagram.com/" target="_blank" rel="noopener">pentagram.com</a><span>Kepadatan editorial. Banyak isi tapi tidak pernah terasa sesak.</span></li>
+    <li><a href="https://www.awwwards.com/websites/typography/" target="_blank" rel="noopener">awwwards.com/websites/typography</a><span>Galeri berjalan, disaring kategori tipografi. Bagus untuk cari kejutan.</span></li>
+    <li><a href="https://fonts.google.com/specimen/Fraunces/tester" target="_blank" rel="noopener">Penguji Fraunces</a><span>Geser sendiri sumbu SOFT dan WONK-nya, biar kelihatan seberapa jauh bisa didorong.</span></li>
+  </ul>
+</div></div>
+
+</body>
+</html>

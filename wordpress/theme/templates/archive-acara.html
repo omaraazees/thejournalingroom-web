@@ -1,0 +1,61 @@
+<!-- wp:template-part {"slug":"header","tagName":"header","area":"header"} /-->
+<!-- wp:group {"tagName":"main","className":"site-main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group site-main">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|7","bottom":"var:preset|spacing|7"}}},"layout":{"type":"constrained","contentSize":"1160px"}} -->
+<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--7);padding-bottom:var(--wp--preset--spacing--7)">
+
+<!-- wp:group {"className":"head","layout":{"type":"constrained"}} -->
+<div class="wp-block-group head">
+<!-- wp:paragraph {"className":"eyebrow","fontSize":"xs","textColor":"ink-soft"} --><p class="eyebrow has-ink-soft-color has-text-color has-xs-font-size">Jadwal</p><!-- /wp:paragraph -->
+<!-- wp:query-title {"type":"archive","level":1,"fontSize":"xxxl"} /-->
+<!-- wp:term-description {"textColor":"ink-soft"} /-->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"chips","layout":{"type":"flex","flexWrap":"wrap"}} -->
+<div class="wp-block-group chips">
+<!-- wp:paragraph {"className":"chip on"} --><p class="chip on"><a href="/jadwal/">Semua</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"chip"} --><p class="chip"><a href="/format/journaling-workshop/">Workshop</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"chip"} --><p class="chip"><a href="/format/brush-lettering-class/">Lettering</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"chip"} --><p class="chip"><a href="/format/journaling-playdate/">Playdate</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"chip"} --><p class="chip"><a href="/kota/yogyakarta/">Yogyakarta</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"chip"} --><p class="chip"><a href="/kota/magelang/">Magelang</a></p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:query {"queryId":0,"query":{"perPage":24,"pages":0,"offset":0,"postType":"acara","order":"asc","orderBy":"date","inherit":true},"className":"rows"} -->
+<div class="wp-block-query rows">
+<!-- wp:post-template {"className":"rows-list"} -->
+<!-- wp:group {"className":"ev","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
+<div class="wp-block-group ev">
+<!-- wp:group {"className":"cal","layout":{"type":"constrained"}} -->
+<div class="wp-block-group cal">
+<!-- wp:post-date {"format":"M","className":"m","isLink":false} /-->
+<!-- wp:post-date {"format":"d","className":"dd","isLink":false} /-->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"ev-main","layout":{"type":"constrained"}} -->
+<div class="wp-block-group ev-main">
+<!-- wp:post-title {"level":2,"isLink":true,"fontSize":"md"} /-->
+<!-- wp:post-excerpt {"className":"v","excerptLength":14,"showMoreOnNewLine":false} /-->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"ev-meta","layout":{"type":"constrained"}} -->
+<div class="wp-block-group ev-meta">
+<!-- wp:post-terms {"term":"kota","className":"v"} /-->
+<!-- wp:post-terms {"term":"format-acara","className":"v tag"} /-->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+<!-- wp:query-pagination --><!-- wp:query-pagination-previous /--><!-- wp:query-pagination-numbers /--><!-- wp:query-pagination-next /--><!-- /wp:query-pagination -->
+<!-- wp:query-no-results --><!-- wp:paragraph {"textColor":"ink-soft"} --><p class="has-ink-soft-color has-text-color">Belum ada sesi yang dijadwalkan. Tanya lewat WhatsApp, biasanya jadwal berikutnya sudah disiapkan.</p><!-- /wp:paragraph --><!-- /wp:query-no-results -->
+</div>
+<!-- /wp:query -->
+
+</div>
+<!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer","area":"footer"} /-->

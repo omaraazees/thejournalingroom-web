@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tentang kami · The Journaling Room Yogyakarta</title>
+<meta name="description" content="The Journaling Room dimulai dua orang yang juga butuh ruang menulis. Bukan kelas teknik, tapi sesi journaling bareng di Yogyakarta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../prototipe/tokens.css">
+<link rel="stylesheet" href="pages.css">
+<style>
+.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--sp-6);align-items:start}
+.stick{position:sticky;top:96px}
+.stick .ph{height:min(64vh,560px);transform:rotate(-1.5deg)}
+.split p{font-size:var(--step-1);line-height:1.72;color:var(--ink-soft);margin-bottom:var(--sp-3)}
+.split .first{font-family:var(--font-display);font-size:clamp(22px,2.6vw,32px);
+  line-height:1.35;color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5)}
+.who-card .ph{height:clamp(240px,30vw,340px);margin-bottom:var(--sp-3)}
+.who-card h3{margin-bottom:var(--sp-1)}
+.who-card .role{font-size:13px;color:var(--ink-soft);margin-bottom:var(--sp-2)}
+.who-card p{color:var(--ink-soft);font-size:15px}
+.vals{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp-4)}
+.val h3{font-size:var(--step-1);margin-bottom:var(--sp-1)}
+.val p{color:var(--ink-soft);font-size:15px;margin:0}
+.pull{font-family:var(--font-display);font-size:clamp(24px,3.4vw,40px);line-height:1.3;
+  text-wrap:balance;color:var(--ink);margin:0}
+.pull cite{display:block;font-family:var(--font-body);font-size:13px;font-style:normal;
+  color:var(--ink-soft);margin-top:var(--sp-3);letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:900px){.split,.two,.vals{grid-template-columns:1fr}.stick{position:static}}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#isi">Lompat ke isi</a>
+<header class="bar wp-host"><span class="wp">template-part: header</span>
+  <div class="wrap">
+    <a class="brand" href="../wp-prototype/final-beranda.html">The Journaling Room</a>
+    <nav class="nav" aria-label="Utama">
+      <a href="jadwal.html">Jadwal</a>
+      <a href="tentang.html" aria-current="page">Tentang</a>
+      <a href="cerita.html">Cerita</a>
+      <a href="kolaborasi.html">Kolaborasi</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+    <a class="btn btn-primary" href="jadwal.html">Ambil slot</a>
+  </div>
+</header>
+
+<main id="isi">
+
+<section class="phead wp-host"><span class="wp">pattern: tjr/page-header</span>
+  <div class="wrap">
+    <p class="crumb"><a href="../wp-prototype/final-beranda.html">Beranda</a><span>/</span>Tentang</p>
+    <p class="script">Your kind, journaling companions</p>
+    <h1>Dibikin dua orang yang juga butuh ruang itu</h1>
+    <p class="lead">The Journaling Room bukan kelas menulis. Kami menyiapkan meja, kertas, dan orang-orang yang tidak akan menghakimi, lalu sisanya terserah kamu.</p>
+  </div>
+</section>
+
+<section style="padding-top:0" class="wp-host"><span class="wp">pattern: tjr/about</span>
+  <div class="wrap split">
+    <div class="stick"><div class="ph" data-label="Caca dan Dhanty di salah satu sesi"></div></div>
+    <div>
+      <p class="first rise">Dhanty bilang kepalanya sering penuh, dan journaling jadi cara mengosongkannya. Caca bilang journaling itu ritual kecil yang bantu dia melewati naik turun sambil makin kenal diri sendiri.</p>
+      <p class="rise">Dua alasan itu yang bikin The Journaling Room ada. Awalnya cuma sesi kecil buat teman-teman sendiri, lalu ada yang nanya boleh ikut atau nggak, lalu ada lagi, dan ternyata banyak orang butuh alasan buat duduk diam satu jam sambil nulis.</p>
+      <p class="rise">Kami tidak mengajari cara menulis yang benar, karena memang tidak ada yang benar. Yang kami kerjakan itu hal-hal kecil di sekitarnya: menyiapkan tema supaya kamu nggak bengong di halaman kosong, menyiapkan alat supaya kamu nggak perlu belanja dulu, dan menjaga suasananya supaya kamu nggak merasa harus tampil.</p>
+      <p class="rise">Tiap sesi punya tema, dan tiap tema disiapkan supaya siapa pun bisa mulai walau belum pernah journaling sekali pun. Nggak ada yang dinilai, nggak ada yang dibaca keras-keras. Kamu boleh datang sendiri, boleh diam sepanjang sesi, boleh cuma nulis dua baris lalu berhenti.</p>
+      <p class="rise">Kami berpindah venue tiap acara, dari kafe sampai hotel, di Yogyakarta dan sekitarnya. Itu bikin tiap sesi terasa agak beda, dan bikin kami kenal banyak tempat bagus di kota ini.</p>
+      <a class="btn btn-ghost rise" href="jadwal.html">Lihat jadwal sesi</a>
+    </div>
+  </div>
+</section>
+
+<section class="alt wp-host"><span class="wp">pattern: tjr/quote</span>
+  <div class="wrap narrow" style="text-align:center">
+    <blockquote class="pull">
+      "Some pages are meant to be written alone. Some feel better when shared in kind company."
+      <cite>Dari feed The Journaling Room</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section class="wp-host"><span class="wp">pattern: tjr/founders</span>
+  <div class="wrap">
+    <div class="head"><div><p class="eyebrow">Siapa di balik meja</p><h2>Caca dan Dhanty</h2></div></div>
+    <div class="two">
+      <div class="who-card">
+        <div class="ph tilt-1" data-label="Foto Caca"></div>
+        <h3>Caca</h3>
+        <p class="role">Instagram @cha.playground</p>
+        <p>Buat Caca, journaling itu ritual kecil yang dia pegang waktu hidup lagi naik turun. Bukan buat cari jawaban, lebih ke supaya makin kenal diri sendiri. Di sesi, Caca biasanya yang menyiapkan tema dan booklet.</p>
+      </div>
+      <div class="who-card">
+        <div class="ph tilt-2" data-label="Foto Dhanty"></div>
+        <h3>Dhanty</h3>
+        <p class="role">Instagram @dilljinjin</p>
+        <p>Dhanty mulai journaling karena kepalanya kepenuhan dan butuh tempat naruh isinya. Di sesi, Dhanty biasanya yang jaga suasananya tetap santai, termasuk memastikan yang datang sendirian nggak merasa sendirian.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt wp-host"><span class="wp">pattern: tjr/principles</span>
+  <div class="wrap">
+    <div class="head"><div><p class="eyebrow">Cara kerja sesi</p><h2>Empat hal yang selalu sama</h2></div></div>
+    <div class="vals">
+      <div class="card val"><h3>Nggak ada yang dinilai</h3><p>Tulisanmu nggak dikoreksi, nggak dinilai bagus jelek, dan nggak dibaca keras-keras kecuali kamu sendiri yang mau.</p></div>
+      <div class="card val"><h3>Datang sendiri itu biasa</h3><p>Sebagian besar peserta datang sendirian. Sesinya memang dirancang supaya itu nyaman, bukan supaya kamu terpaksa kenalan.</p></div>
+      <div class="card val"><h3>Alatnya sudah disiapkan</h3><p>Untuk workshop, semua ada di meja. Kamu nggak perlu beli notebook dulu atau bingung harus bawa apa.</p></div>
+      <div class="card val"><h3>Tempatnya pindah-pindah</h3><p>Kafe, bakehouse, hotel. Venue ganti tiap acara supaya suasananya nggak monoton, dan supaya kami bisa kolaborasi dengan tempat lokal.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="wp-host"><span class="wp">pattern: tjr/stats</span>
+  <div class="wrap stats rise">
+    <div class="stat"><div class="n">22</div><div class="l">sesi berjalan</div></div>
+    <div class="stat"><div class="n">240</div><div class="l">peserta</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">kota</div></div>
+    <div class="stat"><div class="n">9</div><div class="l">brand partner</div></div>
+  </div>
+  <div class="wrap" style="margin-top:var(--sp-4)">
+    <p class="muted" style="font-size:13px;text-align:center">Angka peserta masih perkiraan dari dokumentasi sesi. Perlu dihitung ulang dari catatan pendaftaran sebelum dipakai di materi resmi.</p>
+  </div>
+</section>
+
+<section class="end wp-host"><span class="wp">pattern: tjr/cta</span>
+  <div class="wrap">
+    <p class="script">Kalau kedengarannya cocok</p>
+    <h2 style="margin:var(--sp-3) 0 var(--sp-5)">Datang aja<br>dulu sekali</h2>
+    <a class="btn btn-primary" href="jadwal.html">Lihat jadwal</a>
+    <a class="btn btn-ghost" href="https://wa.me/6285728225369" rel="noopener">Tanya via WhatsApp</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="wp-host"><span class="wp">template-part: footer</span>
+  <div class="wrap fgrid">
+    <div>
+      <p class="brand" style="color:var(--paper)">The Journaling Room</p>
+      <p style="opacity:.7;font-size:14px;max-width:290px">Ruang journaling bareng di Yogyakarta. Berpindah venue tiap acara.</p>
+    </div>
+    <div><h2>Acara</h2><ul><li><a href="jadwal.html">Jadwal</a></li><li><a href="jadwal.html#mendatang">Mendatang</a></li><li><a href="jadwal.html#arsip">Arsip</a></li><li><a href="kolaborasi.html">Inner Circle</a></li></ul></div>
+    <div><h2>Tentang</h2><ul><li><a href="tentang.html">Cerita kami</a></li><li><a href="cerita.html">Cerita</a></li><li><a href="kontak.html#faq">FAQ</a></li></ul></div>
+    <div><h2>Kontak</h2><ul><li><a href="https://wa.me/6285728225369">WhatsApp</a></li><li><a href="https://instagram.com/thejournalingroom">Instagram</a></li><li><a href="kolaborasi.html">Kolaborasi brand</a></li></ul></div>
+  </div>
+  <div class="wrap" style="margin-top:var(--sp-6);padding-top:var(--sp-3);border-top:1px solid rgba(237,227,215,.15);font-size:13px;opacity:.6">
+    2026 The Journaling Room · Yogyakarta
+  </div>
+</footer>
+
+<button class="toggle" onclick="document.body.classList.toggle('show-wp')">Blok WordPress</button>
+</body>
+</html>

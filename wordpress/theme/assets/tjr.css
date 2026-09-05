@@ -1,0 +1,389 @@
+/* =========================================================================
+   The Journaling Room - CSS yang tidak bisa diwakili theme.json
+   =========================================================================
+   Semua warna, ukuran huruf, dan spacing di file ini memakai variabel hasil
+   theme.json. Jangan menulis hex baru di sini. Kalau butuh warna, pakai
+   var(--wp--preset--color--*) atau color-mix dari dua warna palet.
+
+   Isi:
+   1. Tekstur kertas
+   2. Gerak: reveal saat scroll, ticker
+   3. Kelas bantu dari tokens.css
+   4. Hero dan kartu sesi bersolotip
+   5. Jadwal, chip, baris acara
+   6. Isi kit
+   7. Galeri geser
+   8. Tentang
+   9. Angka
+   10. Testimoni
+   11. FAQ
+   12. Penutup dan bar CTA
+   13. Tombol varian
+   14. Fokus keyboard
+   15. Responsif
+   ========================================================================= */
+
+
+/* 1. TEKSTUR KERTAS ------------------------------------------------------
+   Satu lapis noise 4 persen di atas seluruh halaman. Tidak bisa dari
+   theme.json karena butuh pseudo-element di body. */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.editor-styles-wrapper::before{content:none}
+
+
+/* 2. GERAK ---------------------------------------------------------------
+   Reveal saat elemen masuk layar, tanpa satu baris JavaScript.
+   Browser yang belum dukung animation-timeline tetap melihat halaman utuh,
+   cuma tanpa animasi. */
+@keyframes tjr-rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes tjr-wipe{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes tjr-slide{to{transform:translateX(-50%)}}
+
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .rise{animation:tjr-rise linear both;animation-timeline:view();animation-range:entry 6% cover 26%}
+    .wipe{animation:tjr-wipe linear both;animation-timeline:view();animation-range:entry 2% cover 28%}
+  }
+}
+
+.ticker{overflow:hidden;padding:var(--wp--preset--spacing--3) 0;
+  background:var(--wp--preset--color--paper-deep);
+  border-top:var(--wp--custom--line);border-bottom:var(--wp--custom--line)}
+.ticker-track{display:flex;gap:var(--wp--preset--spacing--5);width:max-content;
+  animation:tjr-slide 42s linear infinite}
+.ticker span{font-family:var(--wp--preset--font-family--display);
+  font-size:var(--wp--preset--font-size--lg);white-space:nowrap;
+  color:var(--wp--preset--color--ink-soft)}
+.ticker span::after{content:"*";margin-left:var(--wp--preset--spacing--5);
+  color:var(--wp--preset--color--rose)}
+
+@media (prefers-reduced-motion: reduce){
+  .ticker-track{animation:none}
+  html{scroll-behavior:auto}
+}
+
+
+/* 3. KELAS BANTU --------------------------------------------------------- */
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:500;
+  margin:0 0 var(--wp--preset--spacing--2)}
+.lead{line-height:1.6;max-width:46ch}
+.script{line-height:1.4}
+.muted{color:var(--wp--preset--color--ink-soft)}
+.price{font-family:var(--wp--preset--font-family--display);
+  color:var(--wp--preset--color--burgundy)}
+.tag{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;
+  padding:5px 11px;border-radius:var(--wp--custom--radius--pill);
+  background:color-mix(in srgb, var(--wp--preset--color--sage) 20%, transparent);
+  color:var(--wp--preset--color--sage-text);
+  font-weight:500}
+.card{background:var(--wp--preset--color--paper);border:var(--wp--custom--line);
+  border-radius:var(--wp--custom--radius--card);padding:var(--wp--preset--spacing--4)}
+.tilt-1 img{transform:rotate(-1.5deg)}
+.tilt-2 img{transform:rotate(2deg)}
+.tilt-3 img{transform:rotate(-3deg)}
+.head{margin-bottom:var(--wp--preset--spacing--5);align-items:flex-end}
+.head h2{text-wrap:balance}
+
+
+/* 4. HERO DAN KARTU SESI -------------------------------------------------- */
+.hero h1{text-wrap:balance;margin:var(--wp--preset--spacing--2) 0 var(--wp--preset--spacing--3)}
+.hero h1 em{font-style:italic;color:var(--wp--preset--color--rose-text)}
+
+.trust{gap:var(--wp--preset--spacing--5)}
+.trust-item{margin:0}
+.trust .n{font-family:var(--wp--preset--font-family--display);
+  font-size:var(--wp--preset--font-size--xl);color:var(--wp--preset--color--burgundy);
+  line-height:1;margin:0 0 3px}
+.trust .l{font-size:13px;color:var(--wp--preset--color--ink-soft);line-height:1.35;margin:0}
+
+.logos{gap:10px var(--wp--preset--spacing--4);font-size:13px;letter-spacing:.06em;
+  color:var(--wp--preset--color--ink-soft)}
+.logos p{margin:0}
+
+/* kartu sesi terdekat, ditempel selotip kertas */
+.book{position:sticky;top:88px;background:var(--wp--preset--color--paper);
+  border:1.5px solid var(--wp--preset--color--burgundy);border-radius:20px;
+  padding:var(--wp--preset--spacing--4);box-shadow:var(--wp--preset--shadow--lift);
+  transform:rotate(-1.2deg)}
+.book::before,.book::after{content:"";position:absolute;top:-11px;width:82px;height:24px;
+  background:color-mix(in srgb, var(--wp--preset--color--rose) 60%, transparent);
+  border-left:1px dashed color-mix(in srgb, var(--wp--preset--color--kraft) 55%, transparent);
+  border-right:1px dashed color-mix(in srgb, var(--wp--preset--color--kraft) 55%, transparent)}
+.book::before{left:14%;transform:rotate(-7deg)}
+.book::after{right:11%;transform:rotate(6deg)}
+.book .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin:0}
+.book h2{margin:var(--wp--preset--spacing--2) 0}
+.book .ph-slot img{border-radius:var(--wp--custom--radius--photo);
+  width:100%;height:132px;object-fit:cover}
+.book .wp-block-buttons{margin-top:var(--wp--preset--spacing--3)}
+
+.kv{padding:9px 0;border-bottom:var(--wp--custom--line);font-size:14px;
+  align-items:baseline;gap:var(--wp--preset--spacing--2)}
+.kv:last-of-type{border-bottom:0}
+.kv p{margin:0;color:var(--wp--preset--color--ink-soft)}
+.kv .v{color:var(--wp--preset--color--ink);font-weight:500}
+
+.slotbar{height:6px;border-radius:var(--wp--custom--radius--pill);
+  background:color-mix(in srgb, var(--wp--preset--color--kraft) 24%, transparent);
+  margin-top:var(--wp--preset--spacing--3);overflow:hidden}
+.slotbar i{display:block;height:100%;background:var(--wp--preset--color--rose-deep)}
+.note{font-size:12px;color:var(--wp--preset--color--ink-soft);margin-top:8px}
+
+
+/* 5. JADWAL --------------------------------------------------------------- */
+.chips{gap:8px;margin-bottom:var(--wp--preset--spacing--4)}
+.chip{margin:0;font-size:13px;border-radius:var(--wp--custom--radius--pill);
+  border:var(--wp--custom--line)}
+.chip a{display:flex;align-items:center;min-height:44px;padding:0 17px;
+  text-decoration:none;color:var(--wp--preset--color--ink-soft)}
+.chip.on{background:var(--wp--preset--color--ink);border-color:var(--wp--preset--color--ink)}
+.chip.on a{color:var(--wp--preset--color--paper)}
+
+.rows .wp-block-post-template{list-style:none;margin:0;padding:0;
+  border-top:var(--wp--custom--line)}
+.ev{padding:var(--wp--preset--spacing--3) var(--wp--preset--spacing--2);
+  border-bottom:var(--wp--custom--line);gap:var(--wp--preset--spacing--3);
+  align-items:center;
+  transition:padding .32s cubic-bezier(.2,.8,.2,1),background .32s}
+.ev:hover{padding-inline:var(--wp--preset--spacing--4);
+  background:var(--wp--preset--color--paper-deep)}
+.cal{flex:0 0 72px;text-align:center;background:var(--wp--preset--color--paper-deep);
+  border-radius:10px;padding:8px 0}
+.cal .m{font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--wp--preset--color--ink-soft);margin:0}
+.cal .dd{font-family:var(--wp--preset--font-family--display);
+  font-size:var(--wp--preset--font-size--lg);line-height:1;
+  color:var(--wp--preset--color--burgundy);margin:0}
+.ev-main{flex:1 1 auto}
+.ev-main h3{margin:0 0 2px}
+.ev-main h3 a{text-decoration:none}
+.ev-meta{flex:0 0 auto;text-align:right}
+.ev .v{font-size:13px;color:var(--wp--preset--color--ink-soft);margin:0}
+
+
+/* 6. ISI KIT -------------------------------------------------------------- */
+.gets{gap:var(--wp--preset--spacing--4) var(--wp--preset--spacing--5)}
+.get{position:relative;padding-left:40px;margin-bottom:var(--wp--preset--spacing--4)}
+.get::before{content:"";position:absolute;left:0;top:2px;width:28px;height:28px;
+  border-radius:9px;
+  background:color-mix(in srgb, var(--wp--preset--color--sage) 28%, transparent)}
+.get h3{margin:0 0 2px;font-family:var(--wp--preset--font-family--body);font-weight:600}
+.get p{margin:0}
+
+
+/* 7. GALERI GESER --------------------------------------------------------- */
+.rail{gap:var(--wp--preset--spacing--3);overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:var(--wp--preset--spacing--2) 0 var(--wp--preset--spacing--3);
+  scrollbar-width:thin;align-items:flex-start}
+.rail .wp-block-image{flex:0 0 clamp(230px,30vw,380px);scroll-snap-align:center;margin:0}
+.rail .wp-block-image img{width:100%;height:clamp(280px,38vw,460px);object-fit:cover;
+  border-radius:var(--wp--custom--radius--photo)}
+.rail .wp-block-image:nth-child(odd) img{transform:rotate(-1.5deg)}
+.rail .wp-block-image:nth-child(even) img{transform:rotate(2deg)}
+.rail figcaption{font-size:13px;color:var(--wp--preset--color--ink-soft);
+  margin-top:12px;text-align:left}
+
+
+/* 8. TENTANG -------------------------------------------------------------- */
+.split .stick{position:sticky;top:96px;align-self:flex-start}
+.split .stick img{width:100%;height:min(64vh,560px);object-fit:cover;
+  border-radius:var(--wp--custom--radius--photo)}
+.split .first{line-height:1.35;color:var(--wp--preset--color--ink)}
+.split p{line-height:1.72;margin-bottom:var(--wp--preset--spacing--3)}
+
+
+/* 9. ANGKA ---------------------------------------------------------------- */
+.stats .n{font-family:var(--wp--preset--font-family--display);
+  font-size:clamp(40px,6vw,80px);color:var(--wp--preset--color--burgundy);
+  line-height:.92;font-variant-numeric:tabular-nums;margin:0}
+.stats .l{margin-top:var(--wp--preset--spacing--2)}
+
+
+/* 10. TESTIMONI ----------------------------------------------------------- */
+.tst .wp-block-quote{margin:0;background:var(--wp--preset--color--paper)}
+.tst .stars{color:var(--wp--preset--color--rose-text);letter-spacing:3px;
+  font-size:13px;margin-bottom:var(--wp--preset--spacing--2)}
+.tst cite{display:block;margin-top:var(--wp--preset--spacing--3);font-size:13px;
+  font-style:normal;color:var(--wp--preset--color--ink-soft)}
+
+
+/* 11. FAQ ----------------------------------------------------------------- */
+.faq .wp-block-details{border-bottom:var(--wp--custom--line);
+  padding:var(--wp--preset--spacing--3) 0}
+.faq summary{cursor:pointer;font-family:var(--wp--preset--font-family--display);
+  font-size:var(--wp--preset--font-size--md);list-style:none;padding-right:28px;
+  position:relative;min-height:44px;display:flex;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:0;
+  color:var(--wp--preset--color--kraft-text)}
+.faq .wp-block-details[open] summary::after{content:"\2013"}
+.faq .wp-block-details p{margin:var(--wp--preset--spacing--2) 0 0;
+  color:var(--wp--preset--color--ink-soft)}
+
+
+/* 12. PENUTUP DAN BAR CTA -------------------------------------------------
+   Markup bar CTA ada di template part footer, bukan di pattern.
+   CSS-nya ditaruh di sini supaya satu tempat. */
+.end h2{text-wrap:balance;line-height:.98;letter-spacing:-.03em}
+
+.tjr-sticky{position:fixed;left:0;right:0;bottom:0;z-index:150;
+  background:var(--wp--preset--color--ink);color:var(--wp--preset--color--paper);
+  padding:11px var(--wp--preset--spacing--3);display:flex;align-items:center;
+  justify-content:space-between;gap:var(--wp--preset--spacing--3)}
+.tjr-sticky .t{font-size:13px;opacity:.85;line-height:1.35}
+.tjr-sticky .t b{font-family:var(--wp--preset--font-family--display);
+  font-size:var(--wp--preset--font-size--md);display:block;opacity:1}
+body.has-tjr-sticky{padding-bottom:78px}
+
+
+/* 13. TOMBOL VARIAN ------------------------------------------------------- */
+.btn-ghost .wp-block-button__link{background:transparent;
+  border:1px solid var(--wp--preset--color--kraft-line);
+  color:var(--wp--preset--color--ink)}
+.btn-ghost .wp-block-button__link:hover{
+  background:color-mix(in srgb, var(--wp--preset--color--kraft) 12%, transparent)}
+.btn-ghost.on-dark .wp-block-button__link{
+  border-color:color-mix(in srgb, var(--wp--preset--color--paper) 45%, transparent);
+  color:var(--wp--preset--color--paper)}
+.btn-ghost.on-dark .wp-block-button__link:hover{
+  background:color-mix(in srgb, var(--wp--preset--color--paper) 12%, transparent)}
+.wp-block-button__link{min-height:44px;display:inline-flex;align-items:center;
+  justify-content:center;gap:8px}
+
+
+/* 14. FOKUS KEYBOARD ------------------------------------------------------
+   Wajib kelihatan di semua elemen yang bisa ditekan. */
+a:focus-visible,button:focus-visible,summary:focus-visible,
+.wp-block-button__link:focus-visible{
+  outline:2px solid var(--wp--preset--color--burgundy);outline-offset:3px;
+  border-radius:4px}
+.end a:focus-visible,.tjr-sticky a:focus-visible{
+  outline-color:var(--wp--preset--color--rose)}
+
+
+/* 15. RESPONSIF ----------------------------------------------------------- */
+@media (max-width:900px){
+  .book{position:static;transform:none;margin-top:var(--wp--preset--spacing--4)}
+  .split .stick{position:static}
+  .split .stick img{height:auto;max-height:420px}
+  .ev{flex-wrap:wrap}
+  .ev-meta{text-align:left;flex-basis:100%;display:flex;gap:var(--wp--preset--spacing--3)}
+  .hero h1{font-size:var(--wp--preset--font-size--xxxl)}
+}
+@media (max-width:600px){
+  .trust{gap:var(--wp--preset--spacing--3)}
+  .rail .wp-block-image{flex-basis:78vw}
+}
+
+
+/* 16. ALIAS KELAS DARI PROTOTIPE ------------------------------------------
+   Empat kelas ini dipakai di pattern supaya penamaan sama persis dengan
+   final-beranda.html dan halaman buatan lane A1. Warna latarnya sendiri
+   datang dari atribut blok, bukan dari sini. */
+.alt{background-color:var(--wp--preset--color--paper-deep)}
+.hero-grid{align-items:flex-start}
+.wp-block-buttons.is-full{width:100%}
+.wp-block-buttons.is-full .wp-block-button{width:100%}
+.rows-list{list-style:none;margin:0;padding:0;border-top:var(--wp--custom--line)}
+
+
+/* 17. HEADER, template part ----------------------------------------------
+   Menempel di atas layar. Tombol Ambil slot burgundy di kanan. */
+.bar{position:sticky;top:0;z-index:120;
+  background:color-mix(in srgb, var(--wp--preset--color--paper) 90%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:var(--wp--custom--line)}
+.bar-inner{min-height:64px;gap:var(--wp--preset--spacing--3)}
+.bar .brand,.site-footer .brand{font-family:var(--wp--preset--font-family--script);
+  text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.bar .brand a{text-decoration:none}
+.bar .nav{flex:1 1 auto}
+.bar .nav a{text-decoration:none;color:var(--wp--preset--color--ink-soft)}
+.bar .nav a:hover{color:var(--wp--preset--color--ink)}
+.bar-cta{flex:0 0 auto}
+
+
+/* 18. FOOTER, template part -----------------------------------------------
+   Latar ink gelap, empat kolom, lalu satu baris penutup. */
+.site-footer a{color:var(--wp--preset--color--paper-deep);text-decoration:none;opacity:.85}
+.site-footer a:hover{opacity:1;text-decoration:underline}
+.site-footer .f-desc{opacity:.75;max-width:290px}
+.site-footer .f-head{font-family:var(--wp--preset--font-family--body);
+  text-transform:uppercase;letter-spacing:.12em;font-weight:500;opacity:.6;
+  margin:0 0 var(--wp--preset--spacing--2)}
+.site-footer .f-list{list-style:none;padding:0;margin:0;font-size:14px}
+.site-footer .f-list li{margin-bottom:8px}
+.site-footer .f-bottom{
+  border-top:1px solid color-mix(in srgb, var(--wp--preset--color--paper-deep) 15%, transparent)}
+.site-footer .f-bottom p{opacity:.6;margin:0}
+@media (max-width:781px){
+  .site-footer .fgrid{gap:var(--wp--preset--spacing--5)}
+}
+
+
+/* 19. TEMPLATE BLOCK ------------------------------------------------------ */
+.site-main{padding-bottom:var(--wp--preset--spacing--5)}
+.acara-detail .acara-hero img{width:100%;max-height:52vh;object-fit:cover;
+  border-radius:var(--wp--custom--radius--photo)}
+.acara-detail .book{position:sticky;top:88px}
+.acara-acf-slot{display:none}
+.editor-styles-wrapper .acara-acf-slot{display:block;
+  border:1px dashed var(--wp--preset--color--kraft-line);border-radius:8px;
+  padding:var(--wp--preset--spacing--2);font-size:12px;
+  color:var(--wp--preset--color--ink-soft)}
+.editor-styles-wrapper .acara-acf-slot::before{content:attr(data-catatan)}
+@media (max-width:900px){
+  .acara-detail .book{position:static}
+}
+
+
+/* 20. LATAR HALAMAN -------------------------------------------------------
+   theme.json sudah menyetel styles.color.background ke paper, tapi
+   GeneratePress juga menulis background untuk body lewat CSS-nya sendiri.
+   Selektor di bawah pakai dua tag supaya menang tanpa bergantung urutan file.
+   Section alt tetap paper-deep, diatur lewat atribut blok, bukan dari sini. */
+html body{background-color:var(--wp--preset--color--paper)}
+.wp-site-blocks,.site-main{background-color:transparent}
+
+
+/* 21. BADGE TAKSONOMI -----------------------------------------------------
+   core/post-terms merender <div class="wp-block-post-terms"> berisi <a>.
+   Kalau pill dipasang di div-nya, yang jadi kotak seluruh baris, dan link di
+   dalamnya tetap bergaris bawah. Jadi pill dipindah ke <a>, div-nya cuma
+   jadi pembungkus tanpa gaya. */
+.wp-block-post-terms.tag{display:flex;flex-wrap:wrap;gap:6px;
+  background:none;padding:0;border-radius:0;font-size:inherit;letter-spacing:normal;
+  text-transform:none;margin:0}
+.wp-block-post-terms.tag a{display:inline-block;text-decoration:none;
+  font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:500;
+  padding:5px 11px;border-radius:var(--wp--custom--radius--pill);
+  background:color-mix(in srgb, var(--wp--preset--color--sage) 20%, transparent);
+  color:var(--wp--preset--color--sage-text);
+  line-height:1.4}
+.wp-block-post-terms.tag a:hover{text-decoration:none;
+  background:color-mix(in srgb, var(--wp--preset--color--sage) 34%, transparent)}
+.wp-block-post-terms.tag a:focus-visible{outline:2px solid var(--wp--preset--color--burgundy);
+  outline-offset:2px}
+/* pemisah koma bawaan tidak dipakai, jaraknya sudah dari gap */
+.wp-block-post-terms.tag .wp-block-post-terms__separator{display:none}
+
+/* post-terms kota tetap teks biasa, cuma dibuang garis bawahnya */
+.ev-meta .wp-block-post-terms:not(.tag){margin:0}
+.ev-meta .wp-block-post-terms:not(.tag) a{text-decoration:none}
+.ev-meta .wp-block-post-terms:not(.tag) a:hover{text-decoration:underline}
+
+
+/* 22. KARTU KALENDER ------------------------------------------------------
+   Tanggal contoh sekarang seragam karena field ACF belum terisi. Aturan di
+   bawah menjaga kartunya tetap rapi begitu tanggalnya beda beda:
+   angka pakai lebar tetap, bulan tidak boleh patah dua baris, dan tingginya
+   dikunci supaya baris acara tidak naik turun. */
+.cal{min-height:58px;display:flex;flex-direction:column;justify-content:center;
+  overflow:hidden}
+.cal .wp-block-post-date{margin:0}
+.cal .m{white-space:nowrap;font-variant-numeric:tabular-nums}
+.cal .dd{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;
+  white-space:nowrap}

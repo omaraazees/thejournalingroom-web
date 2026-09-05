@@ -1,0 +1,22 @@
+<!-- wp:template-part {"slug":"header","tagName":"header","area":"header"} /-->
+<!-- wp:group {"tagName":"main","className":"site-main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group site-main">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|7","bottom":"var:preset|spacing|7"}}},"layout":{"type":"constrained","contentSize":"720px"}} -->
+<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--7);padding-bottom:var(--wp--preset--spacing--7)">
+<!-- wp:query-title {"type":"search","level":1,"fontSize":"xxl"} /-->
+<!-- wp:search {"label":"Cari","showLabel":false,"placeholder":"Cari acara atau tulisan","buttonText":"Cari","buttonPosition":"button-inside"} /-->
+<!-- wp:query {"queryId":0,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"relevance","inherit":true}} -->
+<div class="wp-block-query">
+<!-- wp:post-template -->
+<!-- wp:post-title {"level":2,"isLink":true,"fontSize":"md"} /-->
+<!-- wp:post-excerpt {"textColor":"ink-soft","fontSize":"xs"} /-->
+<!-- /wp:post-template -->
+<!-- wp:query-pagination --><!-- wp:query-pagination-previous /--><!-- wp:query-pagination-numbers /--><!-- wp:query-pagination-next /--><!-- /wp:query-pagination -->
+<!-- wp:query-no-results --><!-- wp:paragraph {"textColor":"ink-soft"} --><p class="has-ink-soft-color has-text-color">Tidak ada yang cocok. Coba kata lain, atau lihat semua sesi di halaman Jadwal.</p><!-- /wp:paragraph --><!-- /wp:query-no-results -->
+</div>
+<!-- /wp:query -->
+</div>
+<!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer","area":"footer"} /-->

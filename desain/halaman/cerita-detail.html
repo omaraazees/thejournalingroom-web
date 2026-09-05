@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mulai journaling waktu nggak tahu mau nulis apa · TJR</title>
+<meta name="description" content="Halaman kosong itu bagian paling bikin nyerah. Ini urutan yang kami pakai di sesi buat lewatin lima menit pertama, plus tujuh pemantik.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../prototipe/tokens.css">
+<link rel="stylesheet" href="pages.css">
+<style>
+.art{display:grid;grid-template-columns:230px minmax(0,1fr);gap:var(--sp-6);align-items:start}
+.toc{position:sticky;top:96px;font-size:14px}
+.toc h2{font-family:var(--font-body);font-size:11px;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--ink-soft);font-weight:500;margin-bottom:var(--sp-2)}
+.toc ol{list-style:none;padding:0;margin:0;counter-reset:t}
+.toc li{counter-increment:t;margin-bottom:10px}
+.toc a{display:block;text-decoration:none;color:var(--ink-soft);line-height:1.4;
+  padding-left:22px;position:relative}
+.toc a::before{content:counter(t);position:absolute;left:0;font-size:11px;color:var(--ink-soft);top:2px}
+.toc a:hover{color:var(--ink)}
+.prose{max-width:65ch}
+.prose h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin:var(--sp-6) 0 var(--sp-3);
+  scroll-margin-top:88px;text-wrap:balance}
+.prose h2:first-of-type{margin-top:0}
+.prose p{font-size:var(--step-1);line-height:1.72;color:var(--ink-soft);margin-bottom:var(--sp-3)}
+.prose p strong{color:var(--ink);font-weight:600}
+.prose ol.q{counter-reset:q;list-style:none;padding:0;margin:0 0 var(--sp-4)}
+.prose ol.q li{counter-increment:q;display:grid;grid-template-columns:36px 1fr;gap:var(--sp-2);
+  padding:var(--sp-2) 0;border-bottom:var(--line);font-size:var(--step-1);line-height:1.6;color:var(--ink-soft)}
+.prose ol.q li::before{content:counter(q);font-family:var(--font-display);font-size:var(--step-1);color:var(--burgundy)}
+.prose blockquote{margin:var(--sp-4) 0;padding:var(--sp-3) var(--sp-4);background:var(--paper-deep);
+  border-left:2px solid var(--rose);border-radius:0 12px 12px 0}
+.prose blockquote p{margin:0;font-family:var(--font-display);font-size:var(--step-2);
+  line-height:1.35;color:var(--ink)}
+.art-meta{display:flex;gap:var(--sp-3);flex-wrap:wrap;align-items:center;font-size:13px;
+  color:var(--ink-soft);margin-top:var(--sp-3)}
+.hero-shot{height:clamp(240px,32vw,400px);margin:var(--sp-5) 0}
+.draft{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);font-weight:600}
+.rel{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4)}
+.rel a{display:block;text-decoration:none;color:inherit}
+.rel .ph{height:170px;margin-bottom:var(--sp-3)}
+.rel h3{font-size:var(--step-1);letter-spacing:-.01em;text-wrap:balance}
+.rel .meta{font-size:12px;color:var(--ink-soft);margin-top:8px}
+.rel a:focus-visible{outline:2px solid var(--burgundy);outline-offset:6px;border-radius:var(--r-card)}
+@media(max-width:900px){
+  .art{grid-template-columns:1fr;gap:var(--sp-4)}
+  .toc{position:static;background:var(--paper-deep);border-radius:var(--r-card);padding:var(--sp-3)}
+  .rel{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#isi">Lompat ke isi</a>
+<header class="bar wp-host"><span class="wp">template-part: header</span>
+  <div class="wrap">
+    <a class="brand" href="../wp-prototype/final-beranda.html">The Journaling Room</a>
+    <nav class="nav" aria-label="Utama">
+      <a href="jadwal.html">Jadwal</a>
+      <a href="tentang.html">Tentang</a>
+      <a href="cerita.html" aria-current="page">Cerita</a>
+      <a href="kolaborasi.html">Kolaborasi</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+    <a class="btn btn-primary" href="jadwal.html">Ambil slot</a>
+  </div>
+</header>
+
+<main id="isi">
+
+<article>
+
+<section class="phead wp-host" style="padding-bottom:0"><span class="wp">single: post + pattern tjr/post-header</span>
+  <div class="wrap narrow">
+    <p class="crumb"><a href="../wp-prototype/final-beranda.html">Beranda</a><span>/</span><a href="cerita.html">Cerita</a><span>/</span>Mulai journaling</p>
+    <p class="tag" style="margin-top:var(--sp-3)">Panduan journaling</p>
+    <h1 style="font-size:clamp(32px,4.6vw,58px);line-height:1.05;margin:var(--sp-2) 0 var(--sp-2)">Mulai journaling waktu nggak tahu mau nulis apa</h1>
+    <p class="lead">Halaman kosong itu bagian paling bikin nyerah. Ini urutan yang kami pakai di sesi buat lewatin lima menit pertama.</p>
+    <p class="art-meta">Ditulis Caca dan Dhanty · Bacaan 7 menit · <span class="draft">Draf</span></p>
+  </div>
+  <div class="wrap">
+    <div class="ph hero-shot tilt-1" data-label="Halaman jurnal kosong, pena, dan secangkir kopi"></div>
+  </div>
+</section>
+
+<section style="padding-top:0" class="wp-host"><span class="wp">pattern: tjr/post-body (TOC + isi, lebar baca 65ch)</span>
+  <div class="wrap art">
+
+    <nav class="toc" aria-labelledby="toc-h">
+      <h2 id="toc-h">Isi tulisan</h2>
+      <ol>
+        <li><a href="#kenapa">Kenapa halaman kosong bikin nyerah</a></li>
+        <li><a href="#lima-menit">Lima menit pertama</a></li>
+        <li><a href="#pemantik">Tujuh pemantik yang boleh dicontek</a></li>
+        <li><a href="#mentok">Kalau tetap mentok</a></li>
+        <li><a href="#sesering">Sesering apa harus nulis</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <h2 id="kenapa">Kenapa halaman kosong bikin nyerah</h2>
+      <p>Hampir semua peserta yang baru pertama ikut sesi kami bilang hal yang sama: bukan nggak mau nulis, tapi nggak tahu mulai dari mana. Begitu buku dibuka, yang muncul di kepala malah pertanyaan lain. Nulis apa. Harus rapi nggak. Nanti dibaca orang nggak.</p>
+      <p>Masalahnya bukan di kemampuan menulis. Masalahnya kita terlanjur mengira journaling itu harus jadi sesuatu. Harus dalam, harus runut, harus ada kesimpulannya di paragraf terakhir. Padahal <strong>halaman jurnal nggak punya pembaca</strong>, jadi nggak ada standar yang perlu dikejar.</p>
+      <p>Yang kami lakukan di sesi cuma satu: memperkecil pertanyaannya. Bukan "hari ini aku merasa apa", tapi sesuatu yang jauh lebih kecil dan lebih gampang dijawab.</p>
+
+      <h2 id="lima-menit">Lima menit pertama</h2>
+      <p>Ini urutan yang kami pakai, dan bisa kamu tiru sendiri di rumah tanpa alat apa pun selain buku dan pena.</p>
+      <p><strong>Tulis tanggal dan tempat.</strong> Kedengarannya sepele, tapi ini bikin tangan mulai bergerak sebelum kepala sempat menilai. Dua detik, dan halamannya sudah nggak kosong lagi.</p>
+      <p><strong>Tulis tiga hal yang kamu lihat sekarang.</strong> Bukan perasaan, bukan rencana. Benda. Gelas yang tinggal setengah, hujan di luar, kaus kaki yang beda warna. Ini menurunkan taruhannya sampai hampir nol.</p>
+      <p><strong>Baru masuk ke satu pertanyaan.</strong> Satu saja, dan pilih yang paling gampang, bukan yang paling penting. Yang penting biasanya datang sendiri di paragraf ketiga.</p>
+      <blockquote><p>Kalau lima menit pertama sudah lewat, sisanya jarang terasa berat.</p></blockquote>
+
+      <h2 id="pemantik">Tujuh pemantik yang boleh dicontek</h2>
+      <p>Ini pertanyaan yang paling sering bikin peserta akhirnya nulis panjang. Urutannya sengaja dari yang paling ringan.</p>
+      <ol class="q">
+        <li>Hal kecil apa yang bikin hari ini lumayan?</li>
+        <li>Apa yang kamu tunda hari ini, dan kenapa?</li>
+        <li>Kalimat apa yang nyangkut di kepala minggu ini?</li>
+        <li>Siapa yang pengin kamu kabari tapi belum sempat?</li>
+        <li>Apa yang kamu syukuri tapi jarang kamu sebut?</li>
+        <li>Apa yang bikin capek, padahal kelihatannya sepele?</li>
+        <li>Kalau minggu depan cuma boleh berubah satu hal, kamu pilih apa?</li>
+      </ol>
+      <p>Nggak perlu dijawab semua. Ambil satu, tulis sampai berhenti sendiri, lalu tutup bukunya. Itu sudah satu sesi journaling yang utuh.</p>
+
+      <h2 id="mentok">Kalau tetap mentok</h2>
+      <p>Kadang tetap nggak keluar juga, dan itu normal. Beberapa hal yang biasanya menolong.</p>
+      <p><strong>Turunkan targetnya.</strong> Dua baris juga jadi. Aturan "harus satu halaman penuh" itu yang bikin orang berhenti journaling di minggu kedua.</p>
+      <p><strong>Ganti bentuknya.</strong> Nggak harus kalimat. Daftar juga boleh, coretan juga boleh, tempel struk kopi hari itu juga boleh. Di sesi kami, meja deco justru yang paling ramai.</p>
+      <p><strong>Tulis soal kenapa lagi mentok.</strong> Ini kedengaran curang, tapi hampir selalu jalan. "Aku nggak tahu mau nulis apa karena" lalu lanjutkan kalimatnya.</p>
+      <p><strong>Nulis bareng orang lain.</strong> Ini alasan The Journaling Room ada. Ada sesuatu yang beda waktu satu ruangan sama-sama diam dan sama-sama nulis. Nggak ada yang ngajak ngobrol, tapi juga nggak sendirian.</p>
+
+      <h2 id="sesering">Sesering apa harus nulis</h2>
+      <p>Nggak ada angka yang benar. Yang kami lihat dari peserta yang bertahan, polanya sama: mereka nggak menargetkan tiap hari. Mereka menargetkan <strong>gampang diulang</strong>. Seminggu sekali di jam yang sama lebih awet daripada tiap hari selama empat hari lalu berhenti.</p>
+      <p>Kalau kamu mau mulai dari sesuatu yang sudah dijadwalkan orang lain, sesi kami jalan dua mingguan di Yogyakarta. Semua alat sudah di meja, temanya sudah disiapkan, dan kamu boleh diam sepanjang sesi.</p>
+      <p><a class="btn btn-primary" href="../pages/jadwal.html" style="margin-top:var(--sp-2)">Lihat jadwal sesi</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="alt wp-host"><span class="wp">query loop: post terkait, kategori sama</span>
+  <div class="wrap">
+    <div class="head"><div><p class="eyebrow">Lanjut baca</p><h2>Tulisan lain</h2></div>
+      <a class="btn btn-ghost" href="cerita.html">Semua cerita</a></div>
+    <div class="rel">
+      <a href="cerita-detail.html">
+        <div class="ph tilt-1" data-label="Tangan menulis daftar pertanyaan"></div>
+        <p class="tag">Panduan journaling</p>
+        <h3>Tujuh pertanyaan pemantik buat halaman pertama</h3>
+        <p class="meta">Bacaan 5 menit · <span class="draft">Draf</span></p>
+      </a>
+      <a href="cerita-detail.html">
+        <div class="ph tilt-2" data-label="Jurnal di meja pagi hari"></div>
+        <p class="tag">Panduan journaling</p>
+        <h3>Journaling sepuluh menit buat yang jadwalnya padat</h3>
+        <p class="meta">Bacaan 4 menit · <span class="draft">Draf</span></p>
+      </a>
+      <a href="cerita-detail.html">
+        <div class="ph tilt-3" data-label="Peserta pemanasan menulis"></div>
+        <p class="tag">Di balik sesi</p>
+        <h3>Kenapa tiap sesi dimulai dari pemanasan sepuluh menit</h3>
+        <p class="meta">Bacaan 5 menit · <span class="draft">Draf</span></p>
+      </a>
+    </div>
+    <p class="muted" style="font-size:13px;margin-top:var(--sp-4)">Artikel ini contoh isi, dipakai buat menguji lebar baca dan daftar isi. Naskah finalnya nanti dari <code>konten/outline-blog.md</code>.</p>
+  </div>
+</section>
+
+</article>
+
+</main>
+
+<footer class="wp-host"><span class="wp">template-part: footer</span>
+  <div class="wrap fgrid">
+    <div>
+      <p class="brand" style="color:var(--paper)">The Journaling Room</p>
+      <p style="opacity:.7;font-size:14px;max-width:290px">Ruang journaling bareng di Yogyakarta. Berpindah venue tiap acara.</p>
+    </div>
+    <div><h2>Acara</h2><ul><li><a href="jadwal.html">Jadwal</a></li><li><a href="jadwal.html#mendatang">Mendatang</a></li><li><a href="jadwal.html#arsip">Arsip</a></li><li><a href="kolaborasi.html">Inner Circle</a></li></ul></div>
+    <div><h2>Tentang</h2><ul><li><a href="tentang.html">Cerita kami</a></li><li><a href="cerita.html">Cerita</a></li><li><a href="kontak.html#faq">FAQ</a></li></ul></div>
+    <div><h2>Kontak</h2><ul><li><a href="https://wa.me/6285728225369">WhatsApp</a></li><li><a href="https://instagram.com/thejournalingroom">Instagram</a></li><li><a href="kolaborasi.html">Kolaborasi brand</a></li></ul></div>
+  </div>
+  <div class="wrap" style="margin-top:var(--sp-6);padding-top:var(--sp-3);border-top:1px solid rgba(237,227,215,.15);font-size:13px;opacity:.6">
+    2026 The Journaling Room · Yogyakarta
+  </div>
+</footer>
+
+<button class="toggle" onclick="document.body.classList.toggle('show-wp')">Blok WordPress</button>
+</body>
+</html>

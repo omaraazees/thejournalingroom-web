@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+
+# Foto turunan yang bisa dibuat ulang, jangan bebani repo
+# foto-2026  : hasil konversi menengah dari file asli di Documents
+# foto-webp  : turunan dari foto-hd, dibuat ulang dengan skrip
+# foto-web   : kumpulan lama dari desain v4, tidak dipakai v5
+wordpress/foto-2026/
+wordpress/foto-webp/
+wordpress/foto-web/
+
+# Paket distribusi yang dibuat ulang saat deploy
+wordpress/dist/
+
+# Kredensial. Jangan pernah masuk repo.
+.tjr-wp-auth
+*.pat
+*.secret
+.env
+.env.*
+
+# Berkas kerja sementara
+*.tmp
+scratchpad/

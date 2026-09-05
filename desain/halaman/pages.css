@@ -1,0 +1,129 @@
+/* The Journaling Room - CSS bersama untuk halaman dalam
+   Semua nilai diambil dari tokens.css dan dari final-beranda.html.
+   Nol nilai baru: tidak ada warna, font, atau langkah spacing yang dibuat di sini.
+   Nanti A2 yang memindahkan ini ke theme.json plus assets/tjr.css. */
+
+/* ---------- NAV ---------- */
+.bar{position:fixed;top:0;left:0;right:0;z-index:120;background:rgba(250,246,240,.9);
+  backdrop-filter:blur(10px);border-bottom:var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:var(--sp-3)}
+.brand{font-family:var(--font-script);font-size:21px;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.nav{display:flex;gap:var(--sp-3);font-size:14px}
+.nav a{text-decoration:none;color:var(--ink-soft)}
+.nav a:hover{color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--ink);text-decoration:underline;text-underline-offset:5px}
+.nav a:focus-visible,.bar a:focus-visible{outline:2px solid var(--burgundy);outline-offset:3px;border-radius:4px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--burgundy);outline-offset:3px;border-radius:4px}
+main{padding-top:64px}
+.skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--burgundy);color:#fff;
+  padding:12px 18px;border-radius:0 0 10px 0;text-decoration:none}
+.skip:focus{left:0}
+
+/* ---------- KEPALA HALAMAN ---------- */
+.phead{padding:var(--sp-6) 0 var(--sp-5)}
+.phead h1{max-width:18ch;text-wrap:balance;margin:var(--sp-2) 0 var(--sp-3)}
+.phead .lead{max-width:56ch}
+.crumb{font-size:13px;color:var(--ink-soft)}
+.crumb a{text-decoration:none;border-bottom:1px solid rgba(176,137,104,.4)}
+.crumb span{margin:0 8px;opacity:.6}
+
+/* ---------- KEPALA SECTION ---------- */
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--sp-4);
+  margin-bottom:var(--sp-5);flex-wrap:wrap}
+.head h2{font-size:clamp(30px,4.6vw,60px);letter-spacing:-.03em;text-wrap:balance}
+
+/* ---------- FILTER ---------- */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--sp-3)}
+.chip{font:inherit;font-size:13px;padding:9px 17px;border-radius:999px;border:var(--line);
+  background:transparent;cursor:pointer;color:var(--ink-soft);min-height:44px}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.filter-label{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);
+  margin:0 0 8px;font-weight:500}
+
+/* ---------- BARIS ACARA ---------- */
+.rows{border-top:var(--line)}
+.ev{display:grid;grid-template-columns:72px 1fr 190px 120px;gap:var(--sp-3);align-items:center;
+  padding:var(--sp-3) var(--sp-2);border-bottom:var(--line);text-decoration:none;color:inherit;
+  transition:padding .32s cubic-bezier(.2,.8,.2,1),background .32s}
+.ev:hover{padding-inline:var(--sp-4);background:var(--paper-deep)}
+.ev:focus-visible{outline:2px solid var(--burgundy);outline-offset:-2px}
+.ev.past{opacity:.5}
+.cal{text-align:center;background:var(--paper-deep);border-radius:10px;padding:8px 0}
+.cal .m{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft)}
+.cal .dd{font-family:var(--font-display);font-size:var(--step-2);line-height:1;color:var(--burgundy)}
+.ev h3{font-family:var(--font-display);font-size:var(--step-1);letter-spacing:-.01em;margin-bottom:2px}
+.ev .v{font-size:13px;color:var(--ink-soft)}
+.ev .r{text-align:right}
+.ev .r .p{font-family:var(--font-display);font-size:var(--step-1)}
+.ev .r .s{font-size:12px;color:var(--ink-soft)}
+.ev .r .s.low{color:var(--burgundy);font-weight:500}
+
+/* ---------- GALERI GESER ---------- */
+.rail{display:flex;gap:var(--sp-3);overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:var(--sp-2) 0 var(--sp-3);scrollbar-width:thin}
+.rail figure{flex:0 0 clamp(230px,30vw,380px);scroll-snap-align:center;margin:0}
+.rail .ph{height:clamp(280px,38vw,460px)}
+.rail figure:nth-child(odd) .ph{transform:rotate(-1.5deg)}
+.rail figure:nth-child(even) .ph{transform:rotate(2deg)}
+.rail figcaption{font-size:13px;color:var(--ink-soft);margin-top:12px}
+
+/* ---------- ANGKA ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-3);text-align:center}
+.stat .n{font-family:var(--font-display);font-size:clamp(40px,6vw,80px);color:var(--burgundy);
+  line-height:.92;font-variant-numeric:tabular-nums}
+.stat .l{font-size:13px;color:var(--ink-soft);margin-top:var(--sp-2)}
+
+/* ---------- FAQ ---------- */
+.faq details{border-bottom:var(--line);padding:var(--sp-3) 0}
+.faq summary{cursor:pointer;font-family:var(--font-display);font-size:var(--step-1);list-style:none;
+  padding-right:28px;position:relative;min-height:44px;display:flex;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:0;color:var(--ink-soft)}
+.faq details[open] summary::after{content:"\2013"}
+.faq p{margin:var(--sp-2) 0 0;color:var(--ink-soft)}
+
+/* ---------- PENUTUP ---------- */
+.end{background:var(--ink);color:var(--paper);text-align:center;padding:var(--sp-8) 0}
+.end h2{color:var(--paper);font-size:clamp(36px,7.4vw,104px);line-height:.98;letter-spacing:-.03em}
+.end .script{color:var(--rose)}
+.end .btn-ghost{border-color:rgba(237,227,215,.45);color:var(--paper)}
+
+/* ---------- CTA NEMPEL ---------- */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:150;background:var(--ink);color:var(--paper);
+  padding:11px var(--sp-3);display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3)}
+.sticky .t{font-size:13px;opacity:.85;line-height:1.35}
+.sticky .t b{font-family:var(--font-display);font-size:var(--step-1);display:block;opacity:1}
+body.has-sticky main{padding-bottom:78px}
+
+/* ---------- FOOTER ---------- */
+.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:var(--sp-4)}
+.fgrid ul{list-style:none;padding:0;margin:0;font-size:14px}
+.fgrid li{margin-bottom:8px}
+
+/* ---------- GERAK, CSS MURNI ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes wipe{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .rise{animation:rise linear both;animation-timeline:view();animation-range:entry 6% cover 26%}
+    .wipe{animation:wipe linear both;animation-timeline:view();animation-range:entry 2% cover 28%}
+  }
+}
+
+/* ---------- PENANDA BLOK ---------- */
+.toggle{position:fixed;right:14px;bottom:76px;z-index:200;font-size:12px;background:var(--ink);
+  color:#fff;border:0;padding:9px 14px;border-radius:999px;cursor:pointer;min-height:44px}
+
+@media(max-width:900px){
+  .stats{grid-template-columns:1fr 1fr;gap:var(--sp-5)}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .nav{display:none}
+  .ev{grid-template-columns:64px 1fr;row-gap:6px}
+  .ev .v{grid-column:2}
+  .ev .r{grid-column:2;text-align:left;display:flex;gap:var(--sp-3);align-items:baseline}
+}
+
+/* Label kolom footer memakai h2, bukan h4, supaya urutan heading tidak melompat
+   dari h2 ke h4. Tampilannya disamakan persis dengan aturan "footer h4" di tokens.css. */
+.fgrid h2{font-family:var(--font-body);font-size:12px;text-transform:uppercase;
+  letter-spacing:.12em;margin:0 0 var(--sp-2);opacity:.6;font-weight:500;line-height:1.7}

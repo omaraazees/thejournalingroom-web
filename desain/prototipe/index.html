@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Journaling Room · Prototipe Web WordPress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+main{max-width:1000px;margin:0 auto;padding:var(--sp-7) var(--sp-3) var(--sp-8)}
+.dirs{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-3);margin:var(--sp-5) 0 var(--sp-7)}
+.dir{display:block;text-decoration:none;background:var(--paper);border:var(--line);
+  border-radius:var(--r-card);padding:var(--sp-4);transition:.18s}
+.dir:hover{border-color:var(--burgundy);transform:translateY(-2px);box-shadow:var(--shadow)}
+.dir .k{font-family:var(--font-display);font-size:var(--step-3);color:var(--kraft-text);line-height:1}
+.dir h3{font-size:var(--step-1);margin:var(--sp-2) 0 var(--sp-1)}
+.dir p{font-size:14px;color:var(--ink-soft);margin:0}
+.dir .for{display:block;margin-top:var(--sp-3);font-size:12px;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--burgundy)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:var(--sp-3) 0 var(--sp-5)}
+th,td{text-align:left;padding:11px 12px;border-bottom:var(--line);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);font-weight:500}
+td code,li code,p code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+  background:rgba(176,137,104,.15);padding:2px 6px;border-radius:4px}
+h2{margin:var(--sp-7) 0 var(--sp-3);padding-top:var(--sp-3);border-top:var(--line)}
+h3{font-size:var(--step-1);margin:var(--sp-5) 0 var(--sp-2)}
+ul{padding-left:20px;color:var(--ink-soft)}
+li{margin-bottom:7px}
+.note{background:var(--paper-deep);border-left:2px solid var(--rose);padding:var(--sp-3) var(--sp-4);
+  border-radius:0 12px 12px 0;margin:var(--sp-4) 0;font-size:15px}
+.note b{color:var(--ink)}
+.map{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2);font-size:14px}
+.map>div{background:var(--paper-deep);border-radius:10px;padding:var(--sp-2) var(--sp-3)}
+@media(max-width:1000px){.dirs{grid-template-columns:1fr 1fr}}
+@media(max-width:800px){.dirs,.map{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+
+<p class="script">The Journaling Room</p>
+<h1 style="margin:var(--sp-2) 0 var(--sp-3)">Prototipe web, tiga arah</h1>
+<p class="lead">Semua pakai token brand yang sama: palet, tipografi, dan bentuk yang sudah diturunkan dari feed Instagram TJR. Yang beda cuma cara nyusun halamannya. Buka ketiganya, lihat mana yang paling kerasa TJR.</p>
+<p class="muted" style="font-size:14px">Tombol kanan bawah di tiap halaman nampilin nama blok WordPress-nya, biar kelihatan gimana desain ini nanti dibangun.</p>
+
+<div class="dirs">
+  <a class="dir" href="arah-a-scrapbook.html">
+    <span class="k">A</span><h3>Scrapbook Hangat</h3>
+    <p>Foto miring, selotip kertas, polaroid bertumpuk, aksen tulisan tangan. Paling dekat dengan feed IG sekarang.</p>
+    <span class="for">Kalau mau terasa personal</span>
+  </a>
+  <a class="dir" href="arah-b-editorial.html">
+    <span class="k">B</span><h3>Editorial Tenang</h3>
+    <p>Tipografi besar, ruang kosong lega, jadwal sebagai daftar bukan kartu, section bernomor seperti bab.</p>
+    <span class="for">Kalau mau terasa berkelas</span>
+  </a>
+  <a class="dir" href="arah-c-booking.html">
+    <span class="k">C</span><h3>Jadwal Dulu</h3>
+    <p>Kartu sesi terdekat langsung di hero, slot terisi kelihatan, filter format, CTA nempel di bawah layar.</p>
+    <span class="for">Kalau mau isi seat cepat</span>
+  </a>
+  <a class="dir" href="arah-d-awwwards.html">
+    <span class="k">D</span><h3>Rasa Awwwards</h3>
+    <p>Hero raksasa yang nempel dan mengecil sendiri, ticker tema acara, galeri geser samping, reveal saat scroll. Nol library.</p>
+    <span class="for">Kalau mau bikin orang berhenti</span>
+  </a>
+</div>
+
+<div class="note">
+  <b>Rekomendasiku: C untuk struktur, A untuk rasa.</b> Arah C paling efektif isi seat karena orang yang nyari "workshop journaling jogja" itu niatnya sudah mau ikut, bukan mau baca cerita brand. Tapi tampilan C paling netral. Jalan terbaiknya ambil kerangka C lalu tempel detail scrapbook dari A: foto miring, selotip, aksen tulisan tangan. Arah B paling cantik tapi paling lambat bawa orang ke tombol daftar.
+</div>
+
+
+<h2>Soal gaya Awwwards</h2>
+<p class="muted">Pertanyaannya wajar, dan jawabannya bisa. Tapi yang perlu dipisah: mana yang bikin situs kelihatan mahal, dan mana yang cuma mahal.</p>
+
+<table>
+<tr><th>Yang bikin kelihatan "Awwwards"</th><th>Ongkosnya</th><th>Dipakai?</th></tr>
+<tr><td>Tipografi raksasa, fluid, <code>text-wrap: balance</code></td><td>Nol</td><td>Ya, di arah D</td></tr>
+<tr><td>Ruang kosong lega dan ritme vertikal</td><td>Nol</td><td>Ya</td></tr>
+<tr><td>Hero pinned yang mengecil saat scroll</td><td>Nol, pakai <code>position: sticky</code></td><td>Ya</td></tr>
+<tr><td>Reveal saat elemen masuk layar</td><td>Nol, pakai <code>animation-timeline: view()</code></td><td>Ya</td></tr>
+<tr><td>Galeri geser horizontal dengan snap</td><td>Nol, pakai <code>scroll-snap-type</code></td><td>Ya</td></tr>
+<tr><td>Ticker teks berjalan</td><td>Nol, satu <code>@keyframes</code></td><td>Ya</td></tr>
+<tr><td>Smooth scroll Lenis</td><td>+11 KB, dan navigasi keyboard rusak</td><td>Tidak</td></tr>
+<tr><td>GSAP ScrollTrigger</td><td>+69 KB, INP naik</td><td>Tidak</td></tr>
+<tr><td>WebGL / Three.js</td><td>+160 KB, baterai HP boros</td><td>Tidak</td></tr>
+<tr><td>Custom cursor</td><td>Nol arti di mobile, ganggu screen reader</td><td>Tidak</td></tr>
+</table>
+
+<div class="note">
+  <b>Satu hal yang lebih mendasar dari soal teknis.</b> Situs Awwwards umumnya karya sekali jadi yang kontennya jarang berubah, dibangun custom, dan tugasnya bikin orang kagum. Situs TJR ini mesin jualan seat yang kontennya diganti Caca dan Dhanty tiap dua minggu, dan tugasnya bikin orang klik WhatsApp. Layout eksperimental gampang patah begitu judul acara jadi dua kali lebih panjang dari yang didesain.
+  <br><br>
+  Jadi target yang masuk akal itu <b>Honorable Mention</b>, bukan Site of the Day. Jaraknya sebagian besar bukan JS, tapi kerapian dan keberanian ngasih ruang kosong.
+</div>
+
+<h3>Kalau tetap mau ada satu momen berat</h3>
+<ul>
+<li>Pilih satu tempat saja, biasanya hero, dan muat library-nya khusus di beranda pakai <code>wp_enqueue_script</code> bersyarat, bukan di semua halaman</li>
+<li>Load dengan <code>defer</code> dan bungkus di <code>prefers-reduced-motion</code>, jadi yang setel kurangi animasi tetap dapat halaman diam</li>
+<li>Halaman jadwal dan detail acara tetap ringan, karena itu halaman yang beneran menghasilkan uang</li>
+</ul>
+
+<h2>Peta halaman</h2>
+<table>
+<tr><th>Halaman</th><th>Isi</th><th>Tipe di WordPress</th></tr>
+<tr><td><b>Beranda</b></td><td>Hero, jadwal terdekat, yang kamu dapat, testimoni, tentang ringkas, FAQ, CTA</td><td>Halaman statis + block pattern</td></tr>
+<tr><td><b>Jadwal</b></td><td>Semua acara, bisa difilter per format dan kota</td><td>Arsip CPT <code>acara</code></td></tr>
+<tr><td><b>Detail acara</b></td><td>Satu sesi: tanggal, venue, harga, isi kit, sisa slot, tombol WhatsApp</td><td>Single CPT <code>acara</code></td></tr>
+<tr><td><b>Tentang</b></td><td>Cerita Caca &amp; Dhanty, cara kerja sesi, foto</td><td>Halaman statis</td></tr>
+<tr><td><b>Galeri</b></td><td>Foto per sesi, dikelompokkan per acara</td><td>Halaman + block gallery</td></tr>
+<tr><td><b>Cerita</b></td><td>Blog. Ini mesin SEO jangka panjangnya</td><td>Post bawaan</td></tr>
+<tr><td><b>Kolaborasi</b></td><td>Halaman B2B untuk brand: format, contoh kerja, form brief</td><td>Halaman statis</td></tr>
+<tr><td><b>Kontak</b></td><td>WhatsApp, Instagram, area layanan, FAQ</td><td>Halaman statis</td></tr>
+</table>
+
+<h2>Struktur CMS</h2>
+<p class="muted">Tujuannya satu: Caca dan Dhanty bisa nambah acara baru tanpa nyentuh layout, tanpa nanya siapa pun. Semua yang berubah tiap sesi jadi field, bukan teks yang diketik ulang di halaman.</p>
+
+<h3>Custom post type: Acara</h3>
+<table>
+<tr><th>Field</th><th>Tipe</th><th>Dipakai di mana</th></tr>
+<tr><td>Judul tema</td><td>Judul bawaan</td><td>Kartu jadwal, halaman detail, title tag</td></tr>
+<tr><td>Foto utama</td><td>Featured image</td><td>Kartu, share ke WhatsApp dan IG</td></tr>
+<tr><td>Tanggal &amp; jam mulai</td><td>Date time</td><td>Urutan jadwal, badge tanggal, schema Event</td></tr>
+<tr><td>Durasi</td><td>Angka jam</td><td>Detail acara</td></tr>
+<tr><td>Venue</td><td>Teks + link Maps</td><td>Kartu, detail, schema Event</td></tr>
+<tr><td>Kota</td><td>Taksonomi</td><td>Filter jadwal, SEO lokal</td></tr>
+<tr><td>Format</td><td>Taksonomi</td><td>Filter jadwal, badge kategori</td></tr>
+<tr><td>Harga</td><td>Angka</td><td>Kartu, detail, schema Offer</td></tr>
+<tr><td>Catatan harga</td><td>Teks pendek</td><td>Contoh "termasuk buku"</td></tr>
+<tr><td>Kapasitas</td><td>Angka</td><td>Hitung sisa slot</td></tr>
+<tr><td>Slot terisi</td><td>Angka</td><td>Bar "11 dari 15 terisi", status otomatis</td></tr>
+<tr><td>Isi kit</td><td>Daftar centang</td><td>Section "yang kamu dapat"</td></tr>
+<tr><td>Galeri sesi</td><td>Gallery</td><td>Halaman galeri, diisi setelah acara</td></tr>
+</table>
+
+<div class="note">
+  <b>Yang jalan otomatis, biar nggak ada kerja manual:</b>
+  <ul style="margin:var(--sp-2) 0 0">
+    <li>Status acara dihitung sendiri dari tanggal dan slot: <code>Buka</code>, <code>Hampir penuh</code> di bawah 25 persen, <code>Penuh</code>, <code>Selesai</code> kalau tanggal sudah lewat</li>
+    <li>Acara yang sudah lewat pindah sendiri ke arsip, hilang dari beranda</li>
+    <li>Link WhatsApp dibuat otomatis, lengkap dengan pesan awal berisi nama acara dan tanggal</li>
+    <li>Schema <code>Event</code> JSON-LD dibuat dari field, jadi sesi TJR bisa muncul di daftar acara Google</li>
+  </ul>
+</div>
+
+<h3>Yang lain</h3>
+<ul>
+<li><b>Cerita</b> pakai post bawaan, kategori: Panduan journaling, Di balik sesi, Kolaborasi</li>
+<li><b>Testimoni</b> jadi CPT kecil: kutipan, nama, sesi yang diikuti. Dipanggil di beranda dan halaman acara</li>
+<li><b>Pengaturan TJR</b> jadi satu halaman opsi berisi nomor WhatsApp, link Instagram, angka statistik, dan jam operasional. Ganti nomor sekali, berubah di seluruh situs</li>
+</ul>
+
+<h2>Peta ke WordPress</h2>
+<div class="map">
+  <div><b>Theme</b><br>Block theme (GeneratePress atau Kadence) + child theme</div>
+  <div><b>Token</b><br>Semua variabel di <code>tokens.css</code> masuk ke <code>theme.json</code></div>
+  <div><b>Section</b><br>Tiap <code>pattern: tjr/*</code> jadi block pattern terdaftar</div>
+  <div><b>Daftar acara</b><br>Query Loop block ke CPT <code>acara</code></div>
+  <div><b>CPT &amp; taksonomi</b><br>Didaftarkan di <code>functions.php</code> child theme, bukan plugin</div>
+  <div><b>Custom field</b><br>ACF versi gratis, sudah cukup</div>
+  <div><b>SEO</b><br>Rank Math: meta, sitemap, schema Event dan FAQ</div>
+  <div><b>Cache</b><br>LiteSpeed Cache, bawaan Hostinger, gratis</div>
+</div>
+
+<h2>Yang sudah dibaked untuk SEO dan accessibility</h2>
+<ul>
+<li>Satu H1 per halaman, hierarki heading turun rapi tanpa lompat</li>
+<li>Landmark semantik: <code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>article</code>, <code>footer</code></li>
+<li>Kontras teks utama <code>#3E2F24</code> di atas <code>#FAF6F0</code> ada di 10.9:1, jauh di atas syarat AA 4.5:1</li>
+<li>Teks sekunder <code>#6B5847</code> di 6.2:1, masih lolos AA</li>
+<li>Tombol dan target sentuh minimal 44px tinggi</li>
+<li>FAQ pakai <code>details</code> bawaan browser, jalan tanpa JavaScript dan langsung kebaca screen reader</li>
+<li>Semua ukuran pakai unit relatif, halaman nggak pernah scroll horizontal</li>
+<li>Tekstur kertas cuma satu overlay SVG inline, bukan file gambar, jadi nol request tambahan</li>
+</ul>
+
+<div class="note">
+  <b>Yang masih kosong dan cuma kamu yang bisa isi:</b> foto asli. Semua kotak berlabel di prototipe itu placeholder. Foto candid tangan menulis, meja penuh alat tulis, dan peserta ketawa bareng itu aset paling kuat TJR, dan nggak ada penggantinya. Logo resolusi tinggi juga belum ada, yang di folder invoice cuma versi kecil.
+</div>
+
+</main>
+</body>
+</html>

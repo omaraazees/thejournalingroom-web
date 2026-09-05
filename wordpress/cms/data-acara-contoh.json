@@ -1,0 +1,240 @@
+{
+  "_catatan": "Enam acara contoh untuk mengisi CPT acara saat testing. Judul, format, venue, harga, dan durasi diambil dari brand-brief.md. Tanggal, kapasitas, slot terisi, alamat, dan link Maps TIDAK ada di brand brief, jadi semuanya angka contoh. Tiap record punya kunci _sumber yang menandai mana yang fakta dan mana yang contoh. Jangan pakai angka bertanda contoh di situs live.",
+  "_legenda": {
+    "brand-brief": "Diambil apa adanya dari brand-brief.md",
+    "beranda": "Mengikuti final-beranda.html yang sudah disetujui",
+    "contoh": "Angka karangan untuk testing, WAJIB diganti sebelum live",
+    "kosong": "Memang belum ada datanya, dibiarkan kosong"
+  },
+  "_status_yang_diuji": "Keenam acara ini sengaja dipilih supaya keempat status ikut teruji: Buka, Hampir penuh, Penuh, dan Selesai.",
+  "acara": [
+    {
+      "judul": "Tracing Shadows, Mapping Stars",
+      "slug": "tracing-shadows-mapping-stars",
+      "status_post": "publish",
+      "format_acara": "Journaling Workshop",
+      "kota": "Yogyakarta",
+      "ringkasan": "Sesi journaling tiga jam dengan kit lengkap. Temanya menelusuri hal hal yang selama ini cuma lewat di kepala, lalu menaruhnya di halaman.",
+      "fields": {
+        "tanggal_mulai": "2026-09-20 15:00:00",
+        "durasi_jam": 3,
+        "venue_nama": "Kupiku Coffee",
+        "venue_alamat": "",
+        "venue_maps": "",
+        "harga": 75000,
+        "catatan_harga": "",
+        "kapasitas": 15,
+        "slot_terisi": 11,
+        "isi_kit": ["Notebook A6", "Sticker sheet", "Booklet panduan", "Akses deco station", "Minuman", "Dokumentasi foto", "Teman baru"]
+      },
+      "status_yang_dihasilkan": "Buka, sisa 4 dari 15 atau 27 persen",
+      "_sumber": {
+        "judul": "brand-brief",
+        "format_acara": "brand-brief",
+        "venue_nama": "brand-brief",
+        "harga": "brand-brief",
+        "durasi_jam": "brand-brief",
+        "ringkasan": "ditulis untuk contoh",
+        "tanggal_mulai": "beranda",
+        "kapasitas": "beranda",
+        "slot_terisi": "beranda",
+        "venue_alamat": "kosong",
+        "venue_maps": "kosong"
+      }
+    },
+    {
+      "judul": "Much Between the Lines",
+      "slug": "much-between-the-lines",
+      "status_post": "publish",
+      "format_acara": "Brush Lettering Class + Journaling",
+      "kota": "Yogyakarta",
+      "ringkasan": "Kelas brush lettering digabung sesi journaling. Belajar bentuk hurufnya dulu, lalu dipakai untuk menulis halaman sendiri.",
+      "fields": {
+        "tanggal_mulai": "2026-09-28 13:00:00",
+        "durasi_jam": 3,
+        "venue_nama": "ROCCA Artotel",
+        "venue_alamat": "",
+        "venue_maps": "",
+        "harga": 98000,
+        "catatan_harga": "",
+        "kapasitas": 12,
+        "slot_terisi": 10,
+        "isi_kit": ["Notebook A6", "Sticker sheet", "Booklet panduan", "Foto cetak", "Minuman", "Dokumentasi foto"]
+      },
+      "status_yang_dihasilkan": "Hampir penuh, sisa 2 dari 12 atau 17 persen",
+      "_sumber": {
+        "judul": "brand-brief",
+        "format_acara": "brand-brief",
+        "venue_nama": "brand-brief",
+        "harga": "brand-brief",
+        "durasi_jam": "contoh",
+        "ringkasan": "ditulis untuk contoh",
+        "tanggal_mulai": "contoh",
+        "kapasitas": "contoh",
+        "slot_terisi": "contoh",
+        "venue_alamat": "kosong",
+        "venue_maps": "kosong"
+      }
+    },
+    {
+      "judul": "Journaling Playdate",
+      "slug": "journaling-playdate-oktober",
+      "status_post": "publish",
+      "format_acara": "Journaling Playdate",
+      "kota": "Yogyakarta",
+      "ringkasan": "Enam orang, bawa notebook sendiri, tidak ada materi. Datang, duduk, nulis bareng.",
+      "fields": {
+        "tanggal_mulai": "2026-10-04 16:00:00",
+        "durasi_jam": 2,
+        "venue_nama": "Kopi Kalandjana",
+        "venue_alamat": "",
+        "venue_maps": "",
+        "harga": 40000,
+        "catatan_harga": "minimum spend",
+        "kapasitas": 6,
+        "slot_terisi": 6,
+        "isi_kit": ["Akses deco station", "Teman baru"]
+      },
+      "status_yang_dihasilkan": "Penuh, 6 dari 6",
+      "_sumber": {
+        "judul": "brand-brief",
+        "format_acara": "brand-brief",
+        "venue_nama": "beranda",
+        "harga": "brand-brief",
+        "catatan_harga": "brand-brief",
+        "kapasitas": "brand-brief",
+        "durasi_jam": "contoh",
+        "ringkasan": "ditulis untuk contoh",
+        "tanggal_mulai": "beranda",
+        "slot_terisi": "contoh",
+        "venue_alamat": "kosong",
+        "venue_maps": "kosong"
+      }
+    },
+    {
+      "judul": "A Moment Between Chapters: 2026 Half-year Reflection",
+      "slug": "a-moment-between-chapters",
+      "status_post": "publish",
+      "format_acara": "Journaling Workshop",
+      "kota": "Yogyakarta",
+      "ringkasan": "Sesi refleksi tengah tahun. Melihat ke belakang sebentar, lalu menulis apa yang mau dibawa ke separuh tahun berikutnya.",
+      "fields": {
+        "tanggal_mulai": "2026-10-18 15:00:00",
+        "durasi_jam": 3,
+        "venue_nama": "Kopi Kalandjana",
+        "venue_alamat": "",
+        "venue_maps": "",
+        "harga": 100000,
+        "catatan_harga": "termasuk buku",
+        "kapasitas": 20,
+        "slot_terisi": 5,
+        "isi_kit": ["Notebook A6", "Sticker sheet", "Booklet panduan", "Foto cetak", "Akses deco station", "Minuman", "Dokumentasi foto", "Teman baru"]
+      },
+      "status_yang_dihasilkan": "Buka, sisa 15 dari 20",
+      "_sumber": {
+        "judul": "brand-brief",
+        "format_acara": "brand-brief",
+        "venue_nama": "brand-brief",
+        "harga": "brand-brief",
+        "catatan_harga": "brand-brief",
+        "durasi_jam": "brand-brief",
+        "ringkasan": "ditulis untuk contoh",
+        "tanggal_mulai": "contoh",
+        "kapasitas": "contoh",
+        "slot_terisi": "contoh",
+        "venue_alamat": "kosong",
+        "venue_maps": "kosong"
+      }
+    },
+    {
+      "judul": "Wardah x The Journaling Room",
+      "slug": "wardah-x-tjr",
+      "status_post": "publish",
+      "format_acara": "Brand Activation",
+      "kota": "Yogyakarta",
+      "ringkasan": "Sesi journaling yang digarap bareng Wardah. Formatnya sama dengan workshop publik, kitnya disesuaikan dengan brand.",
+      "fields": {
+        "tanggal_mulai": "2026-11-08 10:00:00",
+        "durasi_jam": 3,
+        "venue_nama": "Copenhagen",
+        "venue_alamat": "",
+        "venue_maps": "",
+        "harga": 125000,
+        "catatan_harga": "",
+        "kapasitas": 30,
+        "slot_terisi": 30,
+        "isi_kit": ["Notebook A6", "Sticker sheet", "Booklet panduan", "Foto cetak", "Minuman", "Dokumentasi foto"]
+      },
+      "status_yang_dihasilkan": "Penuh, 30 dari 30",
+      "_sumber": {
+        "judul": "brand-brief",
+        "format_acara": "brand-brief",
+        "venue_nama": "brand-brief",
+        "harga": "brand-brief",
+        "durasi_jam": "contoh",
+        "ringkasan": "ditulis untuk contoh",
+        "tanggal_mulai": "contoh",
+        "kapasitas": "contoh",
+        "slot_terisi": "contoh",
+        "venue_alamat": "kosong",
+        "venue_maps": "kosong"
+      }
+    },
+    {
+      "judul": "Between the Pages",
+      "slug": "between-the-pages",
+      "status_post": "publish",
+      "format_acara": "Sunday Reads Club x TJR",
+      "kota": "Yogyakarta",
+      "ringkasan": "Baca bareng lalu journaling. Kolaborasi dengan Sunday Reads Club, jadi setengah sesi dipakai untuk membaca dulu.",
+      "fields": {
+        "tanggal_mulai": "2026-08-23 15:00:00",
+        "durasi_jam": 3,
+        "venue_nama": "Heejaz",
+        "venue_alamat": "",
+        "venue_maps": "",
+        "harga": 0,
+        "catatan_harga": "HARGA BELUM ADA DI BRAND BRIEF, isi sebelum tayang",
+        "kapasitas": 15,
+        "slot_terisi": 15,
+        "isi_kit": ["Notebook A6", "Booklet panduan", "Minuman", "Teman baru"]
+      },
+      "status_yang_dihasilkan": "Selesai, tanggal sudah lewat. Dipakai untuk menguji halaman arsip dan galeri sesi.",
+      "_sumber": {
+        "judul": "brand-brief",
+        "format_acara": "brand-brief",
+        "venue_nama": "brand-brief",
+        "harga": "kosong",
+        "durasi_jam": "contoh",
+        "ringkasan": "ditulis untuk contoh",
+        "tanggal_mulai": "contoh",
+        "kapasitas": "contoh",
+        "slot_terisi": "contoh",
+        "venue_alamat": "kosong",
+        "venue_maps": "kosong"
+      }
+    }
+  ],
+  "_taksonomi_yang_dibutuhkan": {
+    "format-acara": [
+      "Journaling Workshop",
+      "Brush Lettering Class + Journaling",
+      "Sunday Reads Club x TJR",
+      "Journaling Playdate",
+      "Inner Circle",
+      "Brand Activation"
+    ],
+    "kota": [
+      "Yogyakarta",
+      "Magelang",
+      "Jakarta"
+    ]
+  },
+  "_yang_belum_bisa_diisi": [
+    "Alamat lengkap tiap venue. Brand brief cuma menyebut nama venue.",
+    "Link Google Maps tiap venue.",
+    "Foto utama tiap acara. Semua kotak foto di prototipe masih placeholder.",
+    "Harga Between the Pages. Tidak ada di brand brief.",
+    "Acara di Magelang dan Jakarta. Dua kota itu disebut di brand brief tapi tidak ada acara spesifik yang bisa dipasangkan, jadi tidak dikarang."
+  ]
+}

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cerita · The Journaling Room</title>
+<meta name="description" content="Panduan journaling untuk pemula, catatan di balik sesi The Journaling Room, dan cerita kolaborasi dengan brand serta komunitas di Yogyakarta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../prototipe/tokens.css">
+<link rel="stylesheet" href="pages.css">
+<style>
+.feat{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--sp-5);align-items:center;
+  background:var(--paper-deep);border:var(--line);border-radius:var(--r-card);
+  padding:var(--sp-5);margin-bottom:var(--sp-6)}
+.feat .ph{height:clamp(220px,26vw,320px);transform:rotate(-1.5deg)}
+.feat h2{font-size:clamp(26px,3.4vw,44px);letter-spacing:-.02em;text-wrap:balance;margin:var(--sp-2) 0 var(--sp-3)}
+.feat p{color:var(--ink-soft);margin-bottom:var(--sp-3)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5) var(--sp-4)}
+.post{display:block;text-decoration:none;color:inherit}
+.post .ph{height:clamp(170px,18vw,210px);margin-bottom:var(--sp-3);transition:.2s}
+.post:hover .ph{transform:translateY(-3px)}
+.post:focus-visible{outline:2px solid var(--burgundy);outline-offset:6px;border-radius:var(--r-card)}
+.post h3{font-size:var(--step-1);letter-spacing:-.01em;margin:var(--sp-2) 0 6px;text-wrap:balance}
+.post .meta{font-size:12px;color:var(--ink-soft);display:flex;gap:10px;flex-wrap:wrap}
+.post .ex{font-size:14px;color:var(--ink-soft);margin:8px 0 0}
+.draft{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);font-weight:600}
+@media(max-width:900px){.feat,.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#isi">Lompat ke isi</a>
+<header class="bar wp-host"><span class="wp">template-part: header</span>
+  <div class="wrap">
+    <a class="brand" href="../wp-prototype/final-beranda.html">The Journaling Room</a>
+    <nav class="nav" aria-label="Utama">
+      <a href="jadwal.html">Jadwal</a>
+      <a href="tentang.html">Tentang</a>
+      <a href="cerita.html" aria-current="page">Cerita</a>
+      <a href="kolaborasi.html">Kolaborasi</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+    <a class="btn btn-primary" href="jadwal.html">Ambil slot</a>
+  </div>
+</header>
+
+<main id="isi">
+
+<section class="phead wp-host"><span class="wp">pattern: tjr/page-header</span>
+  <div class="wrap">
+    <p class="crumb"><a href="../wp-prototype/final-beranda.html">Beranda</a><span>/</span>Cerita</p>
+    <p class="script">Yang kami tulis di luar sesi</p>
+    <h1>Cerita</h1>
+    <p class="lead">Panduan buat yang baru mulai, catatan dari dalam sesi, dan cerita kerja bareng brand. Ditulis Caca dan Dhanty sendiri.</p>
+  </div>
+</section>
+
+<section style="padding-top:0" class="wp-host"><span class="wp">query loop: post, filter kategori</span>
+  <div class="wrap">
+    <div class="chips" role="group" aria-label="Saring kategori">
+      <button class="chip on" data-val="all" aria-pressed="true">Semua</button>
+      <button class="chip" data-val="panduan" aria-pressed="false">Panduan journaling</button>
+      <button class="chip" data-val="balik" aria-pressed="false">Di balik sesi</button>
+      <button class="chip" data-val="kolaborasi" aria-pressed="false">Kolaborasi</button>
+    </div>
+
+    <article class="feat post-item" data-cat="panduan">
+      <div>
+        <p class="tag">Panduan journaling</p>
+        <h2><a href="cerita-detail.html" style="text-decoration:none">Mulai journaling waktu nggak tahu mau nulis apa</a></h2>
+        <p>Halaman kosong itu bagian paling bikin nyerah. Ini urutan yang kami pakai di sesi buat lewatin lima menit pertama, dan bisa kamu pakai sendiri di rumah.</p>
+        <p class="meta" style="font-size:12px;color:var(--ink-soft)">Bacaan 7 menit · <span class="draft">Draf</span></p>
+        <a class="btn btn-ghost" href="cerita-detail.html" style="margin-top:var(--sp-2)">Baca</a>
+      </div>
+      <div class="ph" data-label="Halaman jurnal kosong dan pena"></div>
+    </article>
+
+    <div class="grid">
+      <a class="post post-item" href="cerita-detail.html" data-cat="panduan">
+        <div class="ph" data-label="Tangan menulis daftar pertanyaan"></div>
+        <p class="meta"><span class="tag">Panduan journaling</span></p>
+        <h3>Tujuh pertanyaan pemantik buat halaman pertama</h3>
+        <p class="ex">Pertanyaan yang paling sering bikin peserta akhirnya nulis panjang, lengkap dengan alasan kenapa urutannya begitu.</p>
+        <p class="meta" style="margin-top:8px">Bacaan 5 menit · <span class="draft">Draf</span></p>
+      </a>
+
+      <a class="post post-item" href="cerita-detail.html" data-cat="panduan">
+        <div class="ph" data-label="Tiga jenis buku catatan"></div>
+        <p class="meta"><span class="tag">Panduan journaling</span></p>
+        <h3>Bedanya journaling, diary, dan bullet journal</h3>
+        <p class="ex">Tiga hal yang sering ketuker. Bukan buat gaya-gayaan istilah, tapi supaya kamu tahu mana yang paling cocok sama kebutuhanmu.</p>
+        <p class="meta" style="margin-top:8px">Bacaan 6 menit · <span class="draft">Draf</span></p>
+      </a>
+
+      <a class="post post-item" href="cerita-detail.html" data-cat="panduan">
+        <div class="ph" data-label="Jurnal di meja pagi hari"></div>
+        <p class="meta"><span class="tag">Panduan journaling</span></p>
+        <h3>Journaling sepuluh menit buat yang jadwalnya padat</h3>
+        <p class="ex">Nggak semua orang punya satu jam. Ini versi pendeknya, dan kenapa konsisten lebih penting daripada panjang.</p>
+        <p class="meta" style="margin-top:8px">Bacaan 4 menit · <span class="draft">Draf</span></p>
+      </a>
+
+      <a class="post post-item" href="cerita-detail.html" data-cat="balik">
+        <div class="ph" data-label="Peserta pemanasan menulis"></div>
+        <p class="meta"><span class="tag">Di balik sesi</span></p>
+        <h3>Kenapa tiap sesi dimulai dari pemanasan sepuluh menit</h3>
+        <p class="ex">Awalnya kami skip bagian ini. Ternyata itu yang bikin setengah ruangan diam kaku sampai jam kedua.</p>
+        <p class="meta" style="margin-top:8px">Bacaan 5 menit · <span class="draft">Draf</span></p>
+      </a>
+
+      <a class="post post-item" href="cerita-detail.html" data-cat="balik">
+        <div class="ph" data-label="Isi kit workshop ditata"></div>
+        <p class="meta"><span class="tag">Di balik sesi</span></p>
+        <h3>Isi kit workshop, dan alasan tiap barangnya ada</h3>
+        <p class="ex">Notebook A6, sticker sheet, booklet, foto cetak. Tiap satu ada alasannya, dan beberapa sempat kami coret.</p>
+        <p class="meta" style="margin-top:8px">Bacaan 6 menit · <span class="draft">Draf</span></p>
+      </a>
+
+      <a class="post post-item" href="cerita-detail.html" data-cat="balik">
+        <div class="ph" data-label="Peserta datang sendirian"></div>
+        <p class="meta"><span class="tag">Di balik sesi</span></p>
+        <h3>Yang kami pelajari dari peserta yang datang sendirian</h3>
+        <p class="ex">Mereka yang paling ragu waktu daftar, seringnya yang paling betah waktu sesi selesai.</p>
+        <p class="meta" style="margin-top:8px">Bacaan 5 menit · <span class="draft">Draf</span></p>
+      </a>
+
+      <a class="post post-item" href="cerita-detail.html" data-cat="kolaborasi">
+        <div class="ph" data-label="Sesi brand activation"></div>
+        <p class="meta"><span class="tag">Kolaborasi</span></p>
+        <h3>Bikin sesi journaling bareng brand tanpa terasa jualan</h3>
+        <p class="ex">Batas yang kami jaga waktu kerja bareng brand, supaya pesertanya tetap merasa diundang bukan ditarget.</p>
+        <p class="meta" style="margin-top:8px">Bacaan 7 menit · <span class="draft">Draf</span></p>
+      </a>
+
+      <a class="post post-item" href="cerita-detail.html" data-cat="kolaborasi">
+        <div class="ph" data-label="Sesi Between the Pages"></div>
+        <p class="meta"><span class="tag">Kolaborasi</span></p>
+        <h3>Catatan dari Between the Pages bareng Sunday Reads Club</h3>
+        <p class="ex">Baca bareng dulu lalu journaling. Format ini paling gampang dibawa ke komunitas lain, dan ini alasannya.</p>
+        <p class="meta" style="margin-top:8px">Bacaan 6 menit · <span class="draft">Draf</span></p>
+      </a>
+
+      <a class="post post-item" href="cerita-detail.html" data-cat="kolaborasi">
+        <div class="ph" data-label="Interior kafe di Jogja"></div>
+        <p class="meta"><span class="tag">Kolaborasi</span></p>
+        <h3>Cara milih venue buat sesi journaling di Jogja</h3>
+        <p class="ex">Yang kami cek sebelum bilang iya: meja, cahaya, tingkat berisik, dan satu hal yang sering kelewat.</p>
+        <p class="meta" style="margin-top:8px">Bacaan 5 menit · <span class="draft">Draf</span></p>
+      </a>
+    </div>
+
+    <p class="muted" style="font-size:13px;margin-top:var(--sp-5)">Semua judul di halaman ini masih draf. Judul final, target keyword, dan outline-nya disusun di <code>konten/outline-blog.md</code> oleh lane konten, jadi isinya masih bisa berubah.</p>
+  </div>
+</section>
+
+<section class="end wp-host"><span class="wp">pattern: tjr/cta</span>
+  <div class="wrap">
+    <p class="script">Baca boleh, ikut lebih seru</p>
+    <h2 style="margin:var(--sp-3) 0 var(--sp-5)">Coba sesinya<br>langsung</h2>
+    <a class="btn btn-primary" href="jadwal.html">Lihat jadwal</a>
+    <a class="btn btn-ghost" href="tentang.html">Kenalan dulu</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="wp-host"><span class="wp">template-part: footer</span>
+  <div class="wrap fgrid">
+    <div>
+      <p class="brand" style="color:var(--paper)">The Journaling Room</p>
+      <p style="opacity:.7;font-size:14px;max-width:290px">Ruang journaling bareng di Yogyakarta. Berpindah venue tiap acara.</p>
+    </div>
+    <div><h2>Acara</h2><ul><li><a href="jadwal.html">Jadwal</a></li><li><a href="jadwal.html#mendatang">Mendatang</a></li><li><a href="jadwal.html#arsip">Arsip</a></li><li><a href="kolaborasi.html">Inner Circle</a></li></ul></div>
+    <div><h2>Tentang</h2><ul><li><a href="tentang.html">Cerita kami</a></li><li><a href="cerita.html">Cerita</a></li><li><a href="kontak.html#faq">FAQ</a></li></ul></div>
+    <div><h2>Kontak</h2><ul><li><a href="https://wa.me/6285728225369">WhatsApp</a></li><li><a href="https://instagram.com/thejournalingroom">Instagram</a></li><li><a href="kolaborasi.html">Kolaborasi brand</a></li></ul></div>
+  </div>
+  <div class="wrap" style="margin-top:var(--sp-6);padding-top:var(--sp-3);border-top:1px solid rgba(237,227,215,.15);font-size:13px;opacity:.6">
+    2026 The Journaling Room · Yogyakarta
+  </div>
+</footer>
+
+<button class="toggle" onclick="document.body.classList.toggle('show-wp')">Blok WordPress</button>
+<script>
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+  const v=c.dataset.val;
+  document.querySelectorAll('.chip').forEach(x=>{
+    const on=x===c; x.classList.toggle('on',on); x.setAttribute('aria-pressed',on);});
+  document.querySelectorAll('.post-item').forEach(p=>{p.hidden=!(v==='all'||p.dataset.cat===v);});
+});
+</script>
+</body>
+</html>

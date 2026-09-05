@@ -1,0 +1,1157 @@
+<meta charset="utf-8">
+<title>The Journaling Room</title>
+<meta name="description" content="Workshop journaling di Yogyakarta. Datang tanpa pengalaman, alat tulis kami siapkan, dan tidak ada giliran bercerita. Satu meja panjang, satu sore.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,500;1,600&family=Manrope:wght@400;500;700&display=swap">
+
+<style>
+/* ============================================================
+   The Journaling Room &middot; v5
+   Arah: lembar kertas krem melayang di atas foto meja kerja.
+   Display serif italic kontras tinggi, sudut membulat, strip warna.
+   ============================================================ */
+
+:root{
+  /* kertas dan tinta */
+  --sheet:#FBF7F0;
+  --sheet-2:#F3EADC;
+  --ink:#241C14;
+  --soft:#6D5D4C;
+  --faint:#7E6F5E;      /* 4.5:1 di atas kertas */
+  --line:#E3D8C6;
+
+  /* aksen brand TJR */
+  --burg:#5F1D1D;
+  --rose:#E7BFB9;
+  --rose-deep:#7E5753;  /* latar strip, teks krem 4.7:1 */
+  --rose-text:#81403A;  /* 4.6:1 di atas rose */
+  --olive:#454E3C;
+  --kraft:#81572D;      /* latar strip, teks krem 4.7:1 */
+  --kraft-soft:#EBD9BE;
+
+  /* jarak */
+  /* skala jarak, semua kelipatan 8 */
+  --g1:8px; --g2:16px; --g3:24px; --g4:40px; --g5:64px; --g6:96px; --g7:144px;
+  --r-sheet:24px; --r-lg:20px; --r-md:16px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.7; color:var(--ink);
+  background:#E8DCC8 url("../../wordpress/foto-hd/latar-meja.jpg") center/cover fixed no-repeat;
+  -webkit-font-smoothing:antialiased;
+}
+/* peredam tipis: latar meja tetap kebaca tapi tidak melawan lembar kertas */
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 40%,rgb(60 48 34 / .12),rgb(46 37 26 / .38))}
+
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--burg);outline-offset:3px;border-radius:4px}
+
+/* ---------- lembar ---------- */
+.sheet{--mat:clamp(10px,3vw,78px);
+  position:relative;z-index:1;background:var(--sheet);
+  width:min(1580px,calc(100% - var(--mat) * 2));
+  margin:14px auto;border-radius:var(--r-sheet);
+  padding:0 clamp(18px,3.2vw,46px) var(--g4);overflow:clip;
+  box-shadow:0 26px 64px rgb(40 30 18 / .34)}
+@media(max-width:720px){.sheet{--mat:8px;margin:8px auto;border-radius:20px}}
+/* background-attachment fixed memaksa gambar ulang tiap gulir di ponsel */
+@media(max-width:900px){body{background-attachment:scroll}}
+
+/* ---------- tipografi ---------- */
+.d{font-family:"Playfair Display",Georgia,"Times New Roman",serif;
+  font-style:italic;font-weight:400;color:var(--burg);
+  margin:0;line-height:.98;letter-spacing:-.012em;text-wrap:balance}
+.d-xxl{font-size:clamp(38px,6.2vw,92px)}
+.d-xl{font-size:clamp(30px,4vw,58px)}
+.d-lg{font-size:clamp(26px,2.9vw,42px)}
+.d-md{font-size:clamp(21px,2vw,29px)}
+
+.lbl{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--faint);margin:0}
+.lead{font-size:clamp(15px,1.15vw,17px);line-height:1.75;color:var(--soft);
+  max-width:52ch;margin:0;text-wrap:pretty}
+p{margin:0}
+
+/* ---------- pil ---------- */
+.pill{position:relative;display:inline-flex;align-items:center;gap:12px;
+  /* kunci lebar ke isi, jadi tidak melar waktu jadi anak flex kolom atau grid */
+  max-width:max-content;
+  padding:12px 20px;border:1px solid var(--ink);border-radius:999px;
+  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink);background:transparent;overflow:hidden;
+  transition:color .4s cubic-bezier(.16,1,.3,1),border-color .4s}
+.pill::before{content:"";position:absolute;inset:0;background:var(--ink);
+  transform:translateY(101%);transition:transform .5s cubic-bezier(.16,1,.3,1);z-index:-1}
+.pill:hover,.pill:focus-visible{color:var(--sheet)}
+.pill:hover::before,.pill:focus-visible::before{transform:translateY(0)}
+.pill span{position:relative;z-index:1}
+.pill svg{position:relative;z-index:1;width:12px;height:12px;flex:none;
+  transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.pill:hover svg{transform:translate(4px,-4px)}
+
+.pill.solid{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.pill .ig-wa,.chip .aksi .ig-wa{width:16px;height:16px}
+.pill:hover .ig-wa,.chip .aksi:hover .ig-wa{transform:scale(1.12)}
+.pill.solid::before{background:var(--burg)}
+.pill.solid:hover{color:#fff;border-color:var(--burg)}
+
+.pill.rose{border-color:var(--rose-deep);color:var(--rose-text)}
+.pill.rose::before{background:var(--burg)}
+.pill.rose:hover{color:var(--sheet);border-color:var(--burg)}
+
+/* ---------- bar ---------- */
+.bar{position:sticky;top:0;z-index:60;display:flex;align-items:center;
+  justify-content:space-between;gap:var(--g3);
+  padding:clamp(24px,2.6vw,40px) 0 var(--g3);
+  background:linear-gradient(var(--sheet) 66%,rgb(251 247 240 / 0))}
+.bar .mark img{height:clamp(40px,3.6vw,52px);width:auto}
+.nav{display:flex;gap:clamp(14px,2vw,32px)}
+.nav a{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--soft);text-decoration:none;position:relative;padding-bottom:4px}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--burg);transform:scaleX(0);transform-origin:right;
+  transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.nav a:hover{color:var(--ink)}
+.nav a:hover::after{transform:scaleX(1);transform-origin:left}
+@media(max-width:900px){.nav{display:none}}
+
+/* menu untuk layar kecil, karena nav utama disembunyikan di bawah 900px */
+.menu-btn{display:none}
+.menu-btn .garis{display:block;width:16px;height:1.5px;background:currentColor;border-radius:2px;
+  transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .3s}
+.menu-btn .bungkus{display:grid;gap:4px}
+.menu-btn[aria-expanded="true"] .garis:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] .garis:nth-child(2){opacity:0}
+.menu-btn[aria-expanded="true"] .garis:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
+.menu-panel{position:absolute;left:0;right:0;top:100%;z-index:70;
+  background:var(--sheet);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:12px;display:grid;gap:2px;box-shadow:0 20px 48px rgb(36 28 20 / .22)}
+.menu-panel a{padding:14px 12px;border-radius:12px;text-decoration:none;
+  font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);
+  transition:background .3s,color .3s}
+.menu-panel a:hover,.menu-panel a:focus-visible{background:var(--sheet-2);color:var(--burg)}
+/* display:grid di atas mengalahkan [hidden] bawaan browser, jadi harus ditulis ulang */
+.menu-panel[hidden]{display:none}
+@media(min-width:901px){.menu-panel{display:none}}
+@media(max-width:900px){.menu-btn{display:inline-flex;align-items:center;gap:12px}}
+@media(max-width:420px){
+  .pill{padding:12px 16px;font-size:9.5px;letter-spacing:.14em;gap:8px}
+  .hero-acts{gap:8px}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding:var(--g5) 0 0}
+.hero-top{display:flex;align-items:flex-end;justify-content:space-between;
+  gap:var(--g4);flex-wrap:wrap-reverse}
+.hero-acts{display:flex;gap:12px;flex-wrap:wrap;padding-bottom:8px;flex:0 0 auto}
+.hero-judul{flex:1 1 460px;min-width:0}
+.hero h1{text-align:right;max-width:16ch;margin-left:auto}
+/* susunan dua kolom cuma masuk akal kalau pil dan judul benar benar berdampingan.
+   Di bawah 1280px judulnya sudah memakan satu baris penuh, jadi semuanya dirata kiri. */
+.hero-lbl{text-align:right;margin-bottom:16px}
+@media(max-width:1280px){
+  .hero-top{flex-direction:column-reverse;align-items:flex-start;gap:var(--g4);flex-wrap:nowrap}
+  .hero-judul{flex:0 0 auto;width:100%}
+  .hero h1{text-align:left;margin-left:0;max-width:22ch}
+  .hero-lbl{text-align:left}
+  .hero-acts{padding-bottom:0}
+}
+@media(max-width:560px){.hero h1{max-width:none}}
+
+.stage{position:relative;margin-top:var(--g3);border-radius:var(--r-lg);overflow:hidden;
+  aspect-ratio:16/9;background:var(--sheet-2)}
+.stage img{width:100%;height:100%;object-fit:cover}
+.stage::after{content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(96deg,rgb(19 14 9 / .88) 0%,rgb(19 14 9 / .84) 24%,rgb(19 14 9 / .66) 40%,
+      rgb(19 14 9 / .38) 55%,rgb(19 14 9 / .14) 70%,rgb(19 14 9 / 0) 86%),
+    linear-gradient(0deg,rgb(19 14 9 / .32),rgb(19 14 9 / 0) 46%)}
+.stage-txt{position:absolute;left:clamp(24px,3.4vw,56px);top:50%;translate:0 -50%;z-index:2;
+  width:min(34ch,40%);color:#FBF7F0}
+.stage-txt h2{margin:0;font-weight:500;font-size:clamp(23px,2.4vw,38px);
+  line-height:1.2;letter-spacing:-.028em;color:#FBF7F0;text-wrap:balance}
+.stage-txt p:last-child{margin-top:16px;font-size:13.5px;line-height:1.65;color:#F7F1E7}
+@media(max-width:900px){
+  .stage-txt{width:min(34ch,58%)}
+  .chip{width:min(260px,52vw);padding:20px}
+  .chip h2{font-size:15px}
+}
+@media(max-width:640px){
+  .stage{aspect-ratio:4/5}
+  .stage::after{content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(96deg,rgb(19 14 9 / .88) 0%,rgb(19 14 9 / .84) 24%,rgb(19 14 9 / .66) 40%,
+      rgb(19 14 9 / .38) 55%,rgb(19 14 9 / .14) 70%,rgb(19 14 9 / 0) 86%),
+    linear-gradient(0deg,rgb(19 14 9 / .32),rgb(19 14 9 / 0) 46%)}
+  .stage-txt{top:auto;bottom:clamp(20px,5vw,32px);translate:0 0;
+    left:clamp(20px,5vw,28px);right:clamp(20px,5vw,28px);width:auto;max-width:none}
+  .stage-txt h2{font-size:clamp(22px,6.4vw,30px)}
+}
+
+/* kartu sesi terdekat yang menempel di foto */
+.chip{position:absolute;right:clamp(16px,2.4vw,32px);bottom:clamp(16px,2.4vw,32px);z-index:3;
+  width:min(296px,74vw);background:rgb(251 247 240 / .93);backdrop-filter:blur(9px);
+  border-radius:var(--r-lg);padding:24px;border:1px solid rgb(94 29 29 / .1);
+  box-shadow:0 20px 48px rgb(28 20 12 / .3)}
+.chip .lbl{display:flex;align-items:center;gap:10px;color:var(--kraft);letter-spacing:.16em}
+.chip .judul{font-size:17px;font-weight:700;letter-spacing:-.015em;margin:12px 0 0;line-height:1.32}
+.chip p{font-size:12px;color:var(--soft)}
+.chip .aksi{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  margin-top:20px;padding:12px 16px;border-radius:12px;
+  background:var(--burg);color:#F7F1E7;text-decoration:none;
+  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  transition:background .4s}
+.chip .aksi:hover,.chip .aksi:focus-visible{background:var(--ink)}
+.chip .aksi svg{width:12px;height:12px;flex:none;
+  transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.chip .aksi:hover svg{transform:translate(4px,-4px)}
+@media(max-width:760px){
+  .chip{position:relative;inset:auto;width:auto;margin-top:var(--g2);backdrop-filter:none;
+    background:var(--sheet);box-shadow:0 12px 30px rgb(36 28 20 / .12)}
+}
+
+/* ---------- ikon kecil ---------- */
+.ikon{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;
+  stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round}
+.baris{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
+.baris li{display:flex;align-items:center;gap:12px;font-size:13px;line-height:1.4;color:var(--soft)}
+.baris .ikon{color:var(--kraft)}
+
+/* titik denyut di label kartu */
+.titik{position:relative;width:8px;height:8px;border-radius:50%;
+  background:var(--burg);flex:none}
+.titik::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--burg)}
+@media (prefers-reduced-motion: no-preference){
+  .titik::after{animation:denyut 2.4s cubic-bezier(.2,.6,.3,1) infinite}
+}
+@keyframes denyut{from{opacity:.55;scale:1}to{opacity:0;scale:2.8}}
+
+/* ---------- kartu sesi ditempel selotip washi ----------
+   Selotip washi ada di hampir semua foto dokumentasi TJR, jadi ini bahasa yang
+   sudah mereka pakai sendiri. Fungsinya dua: menandai kartu ini sebagai sesuatu
+   yang sengaja ditempel, dan menarik mata tanpa perlu panah atau teks tambahan. */
+.chip{rotate:-1.1deg}
+.chip::before,.chip::after{content:"";position:absolute;z-index:4;
+  height:clamp(19px,1.9vw,24px);border-radius:2px;
+  box-shadow:0 2px 7px rgb(36 28 20 / .22), inset 0 0 0 1px rgb(255 255 255 / .3)}
+/* selotip kiri: garis miring tipis, warna rose */
+.chip::before{width:clamp(62px,6.6vw,88px);top:-10px;left:-16px;rotate:-24deg;
+  background:
+    repeating-linear-gradient(58deg,rgb(255 255 255 / .34) 0 2px,rgb(255 255 255 / 0) 2px 7px),
+    rgb(231 191 185 / .88)}
+/* selotip kanan: titik titik halus, warna kraft muda */
+.chip::after{width:clamp(54px,5.8vw,76px);top:-12px;right:-12px;rotate:19deg;
+  background:
+    radial-gradient(rgb(255 255 255 / .42) 1px,rgb(255 255 255 / 0) 1.6px) 0 0/7px 7px,
+    rgb(214 186 146 / .9)}
+
+@media (prefers-reduced-motion: no-preference){
+  .chip{animation:apung 5.5s ease-in-out 2.6s infinite alternate}
+}
+@keyframes apung{from{translate:0 0;rotate:-1.1deg}to{translate:0 -5px;rotate:-.4deg}}
+
+@media(max-width:760px){
+  .chip{rotate:-.6deg}
+  .chip::before{left:-10px;top:-9px}
+  .chip::after{right:-8px;top:-11px}
+}
+
+/* ---------- sticker bulat ---------- */
+.badge{position:absolute;z-index:4;width:clamp(64px,6.4vw,88px);aspect-ratio:1;
+  border-radius:50%;background:var(--rose);display:grid;place-items:center;
+  padding:16px;rotate:-9deg;box-shadow:0 8px 20px rgb(36 28 20 / .18)}
+.badge img{width:100%;height:auto;opacity:.86}
+@media(prefers-reduced-motion: no-preference){
+  .badge{animation:bob 5.5s ease-in-out infinite alternate}
+}
+@keyframes bob{to{rotate:4deg;translate:0 -6px}}
+
+/* ---------- dua kolom pengantar ---------- */
+.duo{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--g5);
+  align-items:start;margin-top:var(--g6)}
+.duo-r{display:flex;flex-direction:column;align-items:flex-start;gap:var(--g3);padding-top:8px}
+@media(max-width:900px){.duo{grid-template-columns:1fr;gap:var(--g3);margin-top:var(--g5)}}
+
+.pair{display:grid;grid-template-columns:1.32fr .68fr;gap:var(--g2);margin-top:var(--g4)}
+.pair figure{margin:0;border-radius:var(--r-lg);overflow:hidden;background:var(--sheet-2)}
+.pair figure img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.quote{background:var(--rose);border-radius:var(--r-lg);padding:clamp(22px,2.6vw,38px);
+  display:flex;flex-direction:column;justify-content:flex-end;min-height:100%}
+.quote .qm{font-family:"Playfair Display",serif;font-style:italic;
+  font-size:clamp(56px,5.6vw,88px);line-height:.55;color:var(--burg);opacity:.34}
+.quote .d{color:var(--burg);margin-top:clamp(20px,2vw,30px)}
+@media(max-width:760px){.pair{grid-template-columns:1fr}
+  .pair figure img{aspect-ratio:16/10}}
+
+/* ---------- kepala seksi ---------- */
+.head{position:relative;display:flex;align-items:flex-end;justify-content:space-between;
+  gap:var(--g3);flex-wrap:wrap;margin-bottom:var(--g4)}
+.head-c{text-align:center;flex-direction:column;align-items:center;gap:12px}
+.head-c .lead{margin-inline:auto;text-align:center;max-width:46ch}
+.sec{margin-top:var(--g7)}
+@media(max-width:900px){.sec{margin-top:var(--g6)}}
+
+/* ---------- kartu acara ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--g2)}
+@media(max-width:900px){.cards{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.cards{grid-template-columns:1fr}}
+
+.card{position:relative;display:block;border-radius:var(--r-lg);overflow:hidden;
+  text-decoration:none;color:inherit;background:var(--sheet-2);isolation:isolate}
+.card .shot{aspect-ratio:3/4;overflow:hidden}
+.card .shot img{width:100%;height:100%;object-fit:cover;
+  transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.card:hover .shot img{transform:scale(1.055)}
+.card .top{position:absolute;left:20px;top:20px;right:20px;z-index:2}
+.card .top h3{margin:0;font-weight:600;font-size:clamp(17px,1.5vw,21px);
+  line-height:1.25;letter-spacing:-.02em;color:#FBF7F0;text-wrap:balance;
+  text-shadow:0 2px 16px rgb(24 17 10 / .6)}
+.card::before{content:"";position:absolute;inset:0 0 auto;height:48%;z-index:1;
+  background:linear-gradient(rgb(24 17 10 / .68),rgb(24 17 10 / .18) 62%,transparent)}
+.foot{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 20px;
+  background:var(--olive);color:#EFE9DD;
+  transition:background .45s}
+.foot.k{background:var(--kraft)}
+.foot.r{background:var(--rose-deep)}
+.card:hover .foot{background:var(--burg)}
+.foot .lbl{display:flex;align-items:center;gap:7px;color:#EAE4D6}
+.foot .lbl .ikon{width:12px;height:12px;opacity:.85}
+.foot p{font-size:12.5px;line-height:1.55;margin-top:4px}
+/* tinggi kaki kartu tidak boleh ikut panjang teks, karena isinya nanti diketik
+   dari CMS. Deskripsi dipotong rapi di baris kedua, baris detail di satu baris. */
+.foot .desk{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;min-height:calc(2 * 1.55em);text-wrap:pretty}
+.foot .mini span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---------- sesi terdekat yang detail ---------- */
+.next{display:grid;grid-template-columns:.82fr 1.18fr;
+  border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--sheet)}
+.next-ph{position:relative;min-height:100%;background:var(--sheet-2)}
+.next-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.next-tag{position:absolute;left:0;top:24px;z-index:2;padding:8px 16px;
+  border-top-right-radius:var(--r-md);border-bottom-right-radius:var(--r-md);
+  background:var(--burg);color:#F4EFE5;
+  font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+.next-in{padding:clamp(26px,3vw,46px);display:flex;flex-direction:column;
+  align-items:flex-start;justify-content:center;gap:var(--g2)}
+.next-in .lead{max-width:46ch}
+.fact{display:grid;grid-template-columns:1fr 1fr;gap:16px var(--g3);width:100%;margin:6px 0 0;
+  padding-top:var(--g3);border-top:1px solid var(--line)}
+.fact dt{display:flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.fact dt .ikon{width:12px;height:12px;color:var(--kraft)}
+.fact dd{margin:4px 0 0;font-size:14px;line-height:1.5;color:var(--ink)}
+
+/* alamat menuju Google Maps. Garis bawahnya tipis supaya tidak berteriak,
+   tapi cukup buat menandai bahwa ini bisa diklik. */
+.tempat{color:inherit;text-decoration:none;
+  border-bottom:1px solid var(--rose);padding-bottom:2px;
+  transition:border-color .35s,color .35s}
+.tempat:hover,.tempat:focus-visible{color:var(--burg);border-color:var(--burg)}
+.slot{width:100%;height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:var(--g3)}
+.slot i{display:block;height:100%;width:var(--p);background:var(--burg);border-radius:2px}
+.slotnote{font-size:12.5px;color:var(--soft)}
+@media(max-width:900px){
+  .next{grid-template-columns:1fr}
+  .next-ph{aspect-ratio:16/10;min-height:0}
+  .fact{grid-template-columns:1fr 1fr;gap:14px var(--g2)}
+}
+@media(max-width:520px){.fact{grid-template-columns:1fr}}
+
+.foot .mini{display:flex;align-items:center;gap:8px;min-height:1.5em;
+  font-size:11px;line-height:1.5;margin-top:8px;color:#E6DFD0;letter-spacing:.01em}
+.foot .mini .ikon{width:12px;height:12px;flex:none;opacity:.85}
+
+/* ---------- bento galeri ---------- */
+/* tinggi baris dikunci lewat tinggi kontainer, jadi foto potret tidak menarik
+   petaknya ke bawah dan setiap strip judul kelihatan tanpa perlu scroll. */
+.bento{display:grid;gap:var(--g2);
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:1fr 1fr;
+  height:clamp(432px,45vw,656px);
+  grid-template-areas:
+    "a a b c"
+    "a a d d";}
+.bento > *{position:relative;border-radius:var(--r-lg);overflow:hidden;
+  background:var(--sheet-2);min-height:0;min-width:0;margin:0}
+.bento .t1{grid-area:a} .bento .t2{grid-area:b}
+.bento .t3{grid-area:c} .bento .t4{grid-area:d}
+.bento img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.bento .t1 img{object-position:center 62%}
+.bento > *:hover img{transform:scale(1.05)}
+.strip{position:absolute;left:0;bottom:0;z-index:2;padding:8px 16px;
+  border-top-right-radius:var(--r-md);background:var(--olive);color:#F2EDE3;
+  font-family:"Playfair Display",serif;font-style:italic;font-size:15px;line-height:1.2;
+  transition:background .45s}
+.strip.k{background:var(--kraft)} .strip.r{background:var(--rose-deep)}
+.strip.b{background:var(--burg)}
+.bento > *:hover .strip{background:var(--ink)}
+@media(max-width:820px){
+  .bento{grid-template-columns:1fr 1fr;grid-template-rows:auto;height:auto;
+    grid-template-areas:"a a" "b c" "d d"}
+  .bento .t1{aspect-ratio:4/3}
+  .bento .t2,.bento .t3{aspect-ratio:1}
+  .bento .t4{aspect-ratio:16/9}
+}
+
+/* ---------- tumpukan cetakan ---------- */
+/* posisi tiap cetakan diatur lewat custom property biar gampang digeser,
+   dan waktu digulir mereka membuka dari satu tumpukan di tengah. */
+.pile{position:relative;height:clamp(432px,44vw,624px);margin-top:var(--g3)}
+.pile .pola{position:absolute;left:var(--x);top:var(--y);--w:var(--pw,clamp(104px,10.5vw,164px))}
+.pile .pola:hover{z-index:20}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .pile{view-timeline-name:--pile;view-timeline-axis:block}
+    .pile .pola{animation:sebar linear both;animation-timeline:--pile;
+      animation-range:entry 12% cover 52%}
+  }
+}
+@keyframes sebar{
+  from{translate:var(--fx) var(--fy);rotate:calc(var(--rot) * .18);opacity:0;scale:.86}
+  to{translate:0 0;rotate:var(--rot);opacity:1;scale:1}
+}
+@media(max-width:820px){
+  .pile{height:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--g2);
+    view-timeline-name:none}
+  .pile .pola{position:static;--w:100%;--rot:0deg;rotate:0deg!important;
+    animation:none!important;translate:none!important;scale:1!important;opacity:1!important}
+}
+@media(max-width:520px){.pile{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- baris arsip ---------- */
+.rows{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:170px 1fr auto;gap:var(--g3);
+  align-items:center;padding:var(--g3) 8px;border-bottom:1px solid var(--line);
+  text-decoration:none;color:inherit;transition:background .4s,padding-inline .4s}
+.row:hover{background:var(--sheet-2);padding-inline:20px}
+.row .yr{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.row h3{margin:0;font-weight:500;font-size:clamp(17px,1.55vw,23px);
+  letter-spacing:-.015em;color:var(--ink);line-height:1.3;transition:color .35s}
+.row:hover h3{color:var(--burg)}
+
+/* "TJR" berganti jadi logo waktu barisnya disentuh. Kotaknya dikunci selebar
+   teks aslinya, jadi tidak ada yang bergeser waktu keduanya bertukar. */
+.tjr{position:relative;display:inline-block;width:1.66em;height:1.25em;
+  vertical-align:-.3em;overflow:visible;
+  transition:width .52s cubic-bezier(.16,1,.3,1)}
+.row:hover .tjr,.row:focus-visible .tjr{width:2.44em}
+.tjr i,.tjr img{position:absolute;left:0;top:50%;
+  transition:opacity .38s ease,translate .5s cubic-bezier(.16,1,.3,1)}
+.tjr i{font-style:normal;translate:0 -50%}
+.tjr img{height:100%;width:auto;opacity:0;translate:0 -20%}
+.row:hover .tjr i,.row:focus-visible .tjr i{opacity:0;translate:0 -110%}
+.row:hover .tjr img,.row:focus-visible .tjr img{opacity:1;translate:0 -50%}
+@media (prefers-reduced-motion: reduce){
+  .tjr i,.tjr img{transition:none}
+}
+.row .go{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--burg);white-space:nowrap}
+.row .go svg{width:12px;height:12px;transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.row:hover .go svg{transform:translate(4px,-4px)}
+@media(max-width:820px){
+  .row{grid-template-columns:1fr auto;gap:10px 16px;padding:var(--g3) 6px}
+  .row .yr{grid-column:1/-1;order:-1}
+  .row h3{grid-column:1/-1}
+  .row .n{order:3}
+}
+
+/* ---------- logo kolaborator ---------- */
+.logos{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.logos div{background:var(--sheet);display:grid;place-items:center;
+  min-height:120px;padding:var(--g3) var(--g2);transition:background .4s}
+.logos div:hover{background:var(--sheet-2)}
+.logos img{max-width:120px;max-height:48px;width:auto;height:auto;object-fit:contain;
+  opacity:.55;transition:opacity .45s}
+.logos div:hover img{opacity:1}
+@media(max-width:1100px){.logos{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:640px){.logos{grid-template-columns:repeat(2,1fr)}
+  .logos div{min-height:98px}}
+
+/* ---------- ajakan ---------- */
+.cta{position:relative;margin-top:var(--g7);background:#F1DCD7;
+  border-radius:var(--r-lg);overflow:hidden;
+  display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:var(--g4);
+  padding:clamp(32px,4vw,72px)}
+/* lengkung yang jadi ciri arah ini */
+.cta::before{content:"";position:absolute;left:-6%;top:-28%;width:66%;height:156%;
+  background:var(--rose);border-radius:50%;z-index:0}
+.cta-l{position:relative;z-index:2;display:flex;flex-direction:column;
+  align-items:flex-start;gap:var(--g3)}
+.cta-l .lead{color:#5A4C3D}
+.cta-r{position:relative;z-index:1;border-radius:var(--r-md);overflow:hidden;
+  aspect-ratio:4/3}
+.cta-r img{width:100%;height:100%;object-fit:cover}
+.pola{position:absolute;z-index:5;margin:0;width:var(--w,clamp(92px,9.5vw,132px));
+  background:var(--sheet);padding:8px 8px 28px;border-radius:4px;rotate:var(--rot,-7deg);
+  box-shadow:0 14px 32px rgb(36 28 20 / .26);
+  transition:rotate .6s cubic-bezier(.16,1,.3,1),translate .6s cubic-bezier(.16,1,.3,1)}
+.pola img{width:100%;border-radius:4px;aspect-ratio:1;object-fit:cover}
+.pola figcaption{position:absolute;left:8px;right:8px;bottom:8px;text-align:center;
+  font-family:"Playfair Display",serif;font-style:italic;font-size:11.5px;
+  color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pola:hover{rotate:0deg;translate:0 -8px}
+.pola.p1{left:37%;bottom:24px;--rot:-7deg}
+.pola.p2{left:50%;bottom:104px;--rot:6deg}
+@media(max-width:900px){
+  .cta{grid-template-columns:1fr}
+  .cta::before{left:-30%;top:-42%;width:150%;height:96%}
+  .cta .pola{display:none}
+}
+@media(max-width:1100px){.pola.tuck{display:none}}
+
+/* ---------- footer ---------- */
+.ft{margin-top:var(--g6);padding-top:var(--g4);border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;gap:var(--g4)}
+.ft .mark img{height:64px;width:auto;opacity:.92}
+.ft ul{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.ft ul a{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--soft);text-decoration:none;transition:color .3s}
+.ft ul a:hover{color:var(--burg)}
+.ft-bot{margin-top:var(--g4);padding-top:var(--g2);border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:var(--g2);flex-wrap:wrap}
+.ft-bot p{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+@media(max-width:900px){.ft{grid-template-columns:1fr 1fr;gap:var(--g3)}
+  .ft .mark{grid-column:1/-1}}
+
+/* ---------- tombol WhatsApp mengambang ---------- */
+.fab{position:fixed;right:24px;bottom:24px;z-index:90;display:flex;align-items:center;gap:0;
+  height:56px;padding:0 20px;border-radius:999px;background:var(--burg);color:var(--sheet);
+  text-decoration:none;box-shadow:0 12px 30px rgb(36 28 20 / .3);
+  opacity:0;visibility:hidden;translate:0 14px;
+  transition:opacity .5s,visibility .5s,translate .5s cubic-bezier(.16,1,.3,1),
+    background .4s,gap .45s,padding .45s}
+.fab.on{opacity:1;visibility:visible;translate:0 0}
+.fab svg{width:24px;height:24px;flex:none}
+.fab span{max-width:0;overflow:hidden;white-space:nowrap;
+  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  transition:max-width .55s cubic-bezier(.16,1,.3,1)}
+.fab:hover,.fab:focus-visible{background:var(--ink);gap:12px}
+.fab:hover span,.fab:focus-visible span{max-width:150px}
+@media(max-width:600px){.fab{right:16px;bottom:16px;height:52px;padding:0 16px}}
+
+/* ---------- pembuka halaman: sampul buku dibuka ----------
+   Tanpa pustaka animasi. Timeline dipegang Web Animations API, jadi tetap bisa
+   diatur bertahap seperti GSAP tapi tambahan bobotnya nol. Semua keadaan awal
+   dipasang lewat kelas .intro yang cuma ada kalau JS jalan, jadi tanpa JS
+   halaman langsung tampil utuh.
+
+   Sampulnya berputar pada sumbu kiri, persis seperti membuka jurnal. Yang bikin
+   terbaca sebagai buku bukan rotasinya, tapi dua hal kecil: bayangan yang
+   menggelap di sampul waktu dia berputar menjauh dari cahaya, dan bayangan
+   jatuh di halaman yang menipis sambil terbuka. */
+.tirai{position:fixed;inset:0;z-index:400;display:none;pointer-events:none;
+  perspective:1900px;perspective-origin:2% 50%}
+html.intro .tirai{display:block}
+
+
+.jatuh{position:absolute;left:0;top:0;bottom:0;width:34vw;z-index:1;
+  background:linear-gradient(90deg,rgb(26 18 9 / .5),rgb(26 18 9 / .16) 38%,rgb(26 18 9 / 0));
+  opacity:0}
+
+.sampul{position:absolute;inset:0;transform-origin:left center;
+  transform-style:preserve-3d;backface-visibility:hidden;z-index:3;
+  display:grid;place-items:center;will-change:transform;
+  background:
+    repeating-linear-gradient(94deg,rgb(120 92 58 / .05) 0 2px,rgb(120 92 58 / 0) 2px 5px),
+    linear-gradient(102deg,#E9DAC1 0%,#F4ECDD 30%,#EADCC4 66%,#DCC9A8 100%);
+  box-shadow:0 0 70px rgb(28 19 9 / .34)}
+.sampul img{height:clamp(74px,9.4vw,140px);width:auto;opacity:0;
+  filter:drop-shadow(0 1px 0 rgb(255 252 246 / .6))}
+/* garis emboss tipis, bikin sampulnya terasa punya ketebalan */
+.sampul::before{content:"";position:absolute;inset:clamp(16px,2.4vw,34px);
+  border:1px solid rgb(120 92 58 / .22);border-radius:4px}
+/* bayangan yang menggelap waktu sampul berputar menjauh */
+.sampul::after{content:"";position:absolute;inset:0;background:#20160B;opacity:0}
+
+html.intro .bar,
+html.intro .hero .lbl,
+html.intro .hero-acts,
+html.intro .stage,
+html.intro .chip,
+html.intro .hero > .pola{opacity:0}
+html.intro .hero h1 .kata{display:inline-block;overflow:hidden;vertical-align:bottom}
+html.intro .hero h1 .kata > i{display:inline-block;font-style:italic;translate:0 106%}
+@media (prefers-reduced-motion: reduce){
+  html.intro .tirai{display:none}
+  html.intro .bar,html.intro .hero .lbl,html.intro .hero-acts,html.intro .stage,
+  html.intro .chip,html.intro .hero > .pola{opacity:1}
+  html.intro .hero h1 .kata > i{translate:0 0}
+}
+@media(max-width:640px){.tirai{perspective:1100px}}
+
+/* ---------- gerak masuk ---------- */
+@keyframes rise{from{opacity:0;translate:0 24px}to{opacity:1;translate:0 0}}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .up{animation:rise linear both;animation-timeline:view();animation-range:entry 4% cover 24%}
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  .badge,.pill,.card .shot img,.bento img{transition:none!important;animation:none!important}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-kalender" viewBox="0 0 16 16"><rect x="2.2" y="3.4" width="11.6" height="10.4" rx="1.6"/><path d="M2.2 6.8h11.6M5.4 1.9v2.6M10.6 1.9v2.6"/></symbol>
+<symbol id="i-jam" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.9"/><path d="M8 4.5V8l2.5 1.7"/></symbol>
+<symbol id="i-pin" viewBox="0 0 16 16"><path d="M8 14.4s5-4.3 5-7.7a5 5 0 0 0-10 0c0 3.4 5 7.7 5 7.7Z"/><circle cx="8" cy="6.7" r="1.9"/></symbol>
+<symbol id="i-orang" viewBox="0 0 16 16"><circle cx="8" cy="5.2" r="2.5"/><path d="M3.1 13.7a4.9 4.9 0 0 1 9.8 0"/></symbol>
+<symbol id="i-kotak" viewBox="0 0 16 16"><path d="M2.6 5.4 8 2.5l5.4 2.9v5.2L8 13.5l-5.4-2.9z"/><path d="M2.6 5.4 8 8.3l5.4-2.9M8 8.3v5.2"/></symbol>
+<symbol id="i-tas" viewBox="0 0 16 16"><path d="M4.2 5.4h7.6l.8 8.2H3.4z"/><path d="M6 5.4a2 2 0 0 1 4 0"/></symbol>
+<symbol id="i-foto" viewBox="0 0 16 16"><rect x="2.2" y="3.6" width="11.6" height="9.4" rx="1.6"/><circle cx="6" cy="7" r="1.2"/><path d="M2.6 12 6.4 8.6l2.3 2 2-1.7 2.6 2.4"/></symbol>
+</defs></svg>
+
+<div class="tirai" id="tirai" aria-hidden="true">
+  <div class="jatuh" id="jatuh"></div>
+  <div class="sampul" id="sampul">
+    <img src="../../wordpress/logo-web/tjr-black.png" alt="">
+  </div>
+</div>
+<script>document.documentElement.lang='id';document.documentElement.classList.add('intro')</script>
+
+<div class="sheet">
+
+<header class="bar">
+  <a class="mark" href="#" aria-label="The Journaling Room, ke atas">
+    <img src="../../wordpress/logo-web/tjr-black.png" alt="The Journaling Room"></a>
+  <nav class="nav">
+    <a href="#tentang">Tentang</a>
+    <a href="#jadwal">Jadwal</a>
+    <a href="#galeri">Galeri</a>
+    <a href="#cetakan">Cetakan</a>
+    <a href="#arsip">Arsip</a>
+    <a href="#kolaborator">Kolaborator</a>
+  </nav>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a class="pill solid wa" href="https://wa.me/6285720225369?text=Halo%2C%20kakmin%20TJR%2C%20aku%20mau%20daftar%20journaling%20workshop%2C%20dong%21%20%2A%5C%28%5Eo%5E%29%2F%2A%20%3C3" target="_blank" rel="noopener">
+      <span>Hubungi kami</span>
+      <svg class="ig-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.21-8.24 8.21z"/></svg></a>
+    <button class="pill menu-btn" id="menuBtn" type="button"
+            aria-expanded="false" aria-controls="menuPanel" aria-label="Buka menu">
+      <span>Menu</span>
+      <span class="bungkus" aria-hidden="true">
+        <span class="garis"></span><span class="garis"></span><span class="garis"></span>
+      </span>
+    </button>
+  </div>
+  <div class="menu-panel" id="menuPanel" hidden>
+    <a href="#tentang">Tentang</a>
+    <a href="#jadwal">Jadwal</a>
+    <a href="#galeri">Galeri</a>
+    <a href="#cetakan">Cetakan</a>
+    <a href="#arsip">Arsip</a>
+    <a href="#kolaborator">Kolaborator</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-top">
+    <div class="hero-acts">
+      <a class="pill" href="#jadwal"><span>Jadwal terdekat</span>
+        <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      <a class="pill" href="#galeri"><span>Lihat dokumentasi</span>
+        <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></a>
+    </div>
+    <div class="hero-judul">
+      <p class="lbl hero-lbl">Workshop journaling &middot; Yogyakarta</p>
+      <h1 class="d d-xxl">Your kind journaling companion</h1>
+    </div>
+  </div>
+
+  <figure class="pola tuck" style="left:2.2%;top:calc(100% - 96px);--rot:-8deg;--w:clamp(96px,8.4vw,124px);z-index:6" aria-hidden="true"><img src="../../wordpress/foto-hd/sundayreads-27.jpg"
+        srcset="../../wordpress/foto-hd/sundayreads-27@400.jpg 400w, ../../wordpress/foto-hd/sundayreads-27@800.jpg 800w, ../../wordpress/foto-hd/sundayreads-27.jpg 1300w, ../../wordpress/foto-hd/sundayreads-27@2x.jpg 2600w"
+        sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>Nov 2025</figcaption></figure>
+  <div class="stage">
+    <img src="../../wordpress/foto-hd/snapobox-11.jpg"
+         srcset="../../wordpress/foto-hd/snapobox-11.jpg 1300w, ../../wordpress/foto-hd/snapobox-11@2x.jpg 2600w, ../../wordpress/foto-hd/snapobox-11@3x.jpg 3200w"
+         sizes="(max-width:1620px) calc(100vw - 92px), 1490px"
+         alt="Peserta workshop The Journaling Room memegang jurnal masing masing di bawah lampion" fetchpriority="high">
+    <div class="stage-txt">
+      <h2>Kelas journaling di Jogja untuk yang belum tahu mau menulis apa</h2>
+      <p>Kertasnya kosong, jamnya pelan. Alat tulis sudah kami siapkan, dan tidak ada giliran
+        bercerita di depan orang.</p>
+    </div>
+  </div>
+  <div class="chip">
+    <p class="lbl"><span class="titik"></span>Sesi terdekat</p>
+    <p class="judul">Tracing Shadows, Mapping Stars</p>
+    <ul class="baris">
+      <li><svg class="ikon" aria-hidden="true"><use href="#i-kalender"/></svg>Sabtu, 20 September</li>
+      <li><svg class="ikon" aria-hidden="true"><use href="#i-jam"/></svg>15.00 sampai 18.00</li>
+      <li><svg class="ikon" aria-hidden="true"><use href="#i-pin"/></svg><a class="tempat" href="https://www.google.com/maps/search/?api=1&amp;query=Kupiku%20Coffee%2C%20Mantrijeron%2C%20Yogyakarta" target="_blank" rel="noopener">Kupiku Coffee, Jogja</a></li>
+      <li><svg class="ikon" aria-hidden="true"><use href="#i-orang"/></svg>11 dari 15 kursi terisi</li>
+    </ul>
+    <a class="aksi" href="https://wa.me/6285720225369?text=Halo%20kakmin%20TJR%2C%20apakah%20slotnya%20masih%20ada%20untuk%20sesi%20terdekat%3F%20%5C%28%2A%5E_%5E%2A%29%2F%20%3C3"
+       target="_blank" rel="noopener" aria-label="Tanyakan slotnya ke kami lewat WhatsApp">Tanyakan slotnya ke kami
+      <svg class="ig-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.21-8.24 8.21z"/></svg></a>
+  </div>
+
+</section>
+
+<!-- ============ PENGANTAR ============ -->
+<section class="duo sec" id="tentang" style="margin-top:var(--g6)">
+  <div class="up">
+    <p class="lbl">Tentang ruangnya</p>
+    <h2 class="d d-xl" style="margin-top:16px">Yang tumbuh di meja panjang</h2>
+  </div>
+  <div class="duo-r up">
+    <p class="lead">The Journaling Room menggelar workshop journaling dan kelas menulis jurnal
+      di Yogyakarta sejak November 2025. Sepuluh kali, dari kedai kopi sampai pendopo tua,
+      selalu dengan pola yang sama: satu meja panjang, bahan yang sudah ditata rapi, dan waktu
+      yang tidak diburu.</p>
+    <p class="lead">Tidak ada sesi perkenalan yang membuat kaku. Kamu boleh menulis, menempel,
+      atau hanya memegang gunting sambil menonton orang lain bekerja. Sorenya selesai
+      ketika kamu merasa selesai.</p>
+    <a class="pill" href="#arsip"><span>Sepuluh kolaborasi</span>
+      <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></a>
+  </div>
+</section>
+
+<div class="pair up" style="position:relative">
+  <figure><img src="../../wordpress/foto-hd/artotel-16.jpg"
+         srcset="../../wordpress/foto-hd/artotel-16.jpg 1300w, ../../wordpress/foto-hd/artotel-16@2x.jpg 2600w"
+         sizes="(max-width:760px) calc(100vw - 92px), 60vw"
+    alt="Jurnal peserta digelar berjajar di lantai setelah sesi" loading="lazy"></figure>
+  <div class="quote">
+    <span class="qm" aria-hidden="true">&ldquo;</span>
+    <p class="d d-lg">Halaman kosong tidak pernah menuntut apa apa</p>
+  </div>
+  <figure class="pola tuck" style="right:3.5%;top:-34px;--rot:7deg;--w:clamp(96px,8.6vw,130px)" aria-hidden="true"><img src="../../wordpress/foto-hd/radian-24.jpg"
+        srcset="../../wordpress/foto-hd/radian-24@400.jpg 400w, ../../wordpress/foto-hd/radian-24@800.jpg 800w, ../../wordpress/foto-hd/radian-24.jpg 1300w, ../../wordpress/foto-hd/radian-24@2x.jpg 2600w"
+        sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>Pendopo Radian</figcaption></figure>
+  <div class="badge" style="left:calc(64% - 40px);top:-26px">
+    <img src="../../wordpress/logo-web/tjr-black.png" alt="" loading="lazy"></div>
+</div>
+
+<!-- ============ JADWAL ============ -->
+<section class="sec" id="jadwal">
+  <div class="head head-c">
+    <p class="lbl">Jadwal</p>
+    <h2 class="d d-xl">Sesi berikutnya</h2>
+    <p class="lead">Satu sesi dibuka dalam satu waktu, supaya persiapannya matang. Kursinya
+      dibatasi agar semua mendapat tempat di meja, jadi tanyakan dulu ke kami.</p>
+  </div>
+
+  <article class="next up">
+    <div class="next-ph">
+      <p class="next-tag">Sesi terdekat</p>
+      <img src="../../wordpress/foto-hd/kupiku-01.jpg"
+           srcset="../../wordpress/foto-hd/kupiku-01.jpg 1300w, ../../wordpress/foto-hd/kupiku-01@2x.jpg 2600w"
+           sizes="(max-width:900px) calc(100vw - 92px), 40vw"
+           alt="Peserta menulis jurnal di sesi Kupiku Coffee" loading="lazy">
+    </div>
+    <div class="next-in">
+      <h3 class="d d-lg">Tracing Shadows, Mapping Stars</h3>
+      <p class="lead">Tiga jam untuk yang belum pernah journaling sama sekali. Kami mulai dari
+        satu pertanyaan pendek, lanjut ke tata halaman, lalu waktu bebas sampai lemnya kering.
+        Tidak ada giliran bercerita, tidak ada halaman yang salah.</p>
+      <dl class="fact">
+        <div><dt><svg class="ikon" aria-hidden="true"><use href="#i-kalender"/></svg>Tanggal</dt><dd><time datetime="2026-09-20">Sabtu, 20 September 2026</time></dd></div>
+        <div><dt><svg class="ikon" aria-hidden="true"><use href="#i-jam"/></svg>Waktu</dt><dd>15.00 sampai 18.00 WIB</dd></div>
+        <div><dt><svg class="ikon" aria-hidden="true"><use href="#i-pin"/></svg>Tempat</dt><dd><a class="tempat" href="https://www.google.com/maps/search/?api=1&amp;query=Kupiku%20Coffee%2C%20Mantrijeron%2C%20Yogyakarta" target="_blank" rel="noopener">Kupiku Coffee, Mantrijeron, Yogyakarta</a></dd></div>
+        <div><dt><svg class="ikon" aria-hidden="true"><use href="#i-orang"/></svg>Format</dt><dd>Workshop dipandu, 15 kursi</dd></div>
+        <div><dt><svg class="ikon" aria-hidden="true"><use href="#i-kotak"/></svg>Yang disediakan</dt><dd>Jurnal, stiker, booklet prompt, deco station, satu minuman</dd></div>
+        <div><dt><svg class="ikon" aria-hidden="true"><use href="#i-tas"/></svg>Yang perlu dibawa</dt><dd>Tidak ada. Jurnal sendiri boleh dibawa kalau ingin</dd></div>
+      </dl>
+      <div class="slot" role="img" aria-label="11 dari 15 kursi sudah terisi"><i style="--p:73%"></i></div>
+      <p class="slotnote">11 dari 15 kursi sudah terisi</p>
+      <a class="pill solid" href="https://wa.me/6285720225369?text=Halo%20kakmin%20TJR%2C%20apakah%20slotnya%20masih%20ada%20untuk%20sesi%20terdekat%3F%20%5C%28%2A%5E_%5E%2A%29%2F%20%3C3" target="_blank" rel="noopener">
+        <span>Tanyakan slotnya ke kami</span><svg class="ig-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.21-8.24 8.21z"/></svg></a>
+    </div>
+  </article>
+
+</section>
+
+<!-- ============ BARU SAJA LEWAT ============ -->
+<section class="sec" id="baru-lewat" style="margin-top:var(--g6)">
+  <div class="head">
+    <div>
+      <p class="lbl">Baru saja lewat</p>
+      <h2 class="d d-lg" style="margin-top:16px">Tiga sore terakhir</h2>
+    </div>
+    <a class="pill" href="#arsip"><span>Semua arsip</span><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></a>
+  </div>
+  <div class="cards">
+    <a class="card up" href="#arsip">
+      <div class="top"><h3>TJR &times; Snapobox</h3></div>
+      <div class="shot"><img src="../../wordpress/foto-hd/snapobox-02.jpg"
+        srcset="../../wordpress/foto-hd/snapobox-02.jpg 1300w, ../../wordpress/foto-hd/snapobox-02@2x.jpg 2600w"
+        sizes="(max-width:600px) calc(100vw - 92px), (max-width:900px) 46vw, 31vw" alt="Suasana ruangan Snapobox saat sesi journaling berlangsung" loading="lazy"></div>
+      <div class="foot ">
+        <p class="lbl"><svg class="ikon" aria-hidden="true"><use href="#i-kalender"/></svg>30 Agustus 2026</p>
+        <p class="desk">Di bawah lampion kertas, di meja kayu yang panjang, jurnal digelar sampai malam.</p>
+        <p class="mini"><svg class="ikon" aria-hidden="true"><use href="#i-pin"/></svg><span>Snapobox, Yogyakarta &middot; 14 foto dokumentasi</span></p>
+      </div>
+    </a>
+    <a class="card up" href="#arsip">
+      <div class="top"><h3>TJR &times; Pasar Jakal</h3></div>
+      <div class="shot"><img src="../../wordpress/foto-hd/pasar-jakal-05.jpg"
+        srcset="../../wordpress/foto-hd/pasar-jakal-05.jpg 1300w, ../../wordpress/foto-hd/pasar-jakal-05@2x.jpg 2600w"
+        sizes="(max-width:600px) calc(100vw - 92px), (max-width:900px) 46vw, 31vw" alt="Meja panjang peserta di bawah atap joglo Pasar Jakal" loading="lazy"></div>
+      <div class="foot k">
+        <p class="lbl"><svg class="ikon" aria-hidden="true"><use href="#i-kalender"/></svg>29 Agustus 2026</p>
+        <p class="desk">Satu meja panjang di bawah atap joglo, penuh dari ujung ke ujung.</p>
+        <p class="mini"><svg class="ikon" aria-hidden="true"><use href="#i-pin"/></svg><span>Pasar Jakal, Yogyakarta &middot; 15 foto dokumentasi</span></p>
+      </div>
+    </a>
+    <a class="card up" href="#arsip">
+      <div class="top"><h3>TJR &times; AMCO Bakehouse &times; Naoki Pics</h3></div>
+      <div class="shot"><img src="../../wordpress/foto-hd/amco-naoki-06.jpg"
+        srcset="../../wordpress/foto-hd/amco-naoki-06.jpg 1300w, ../../wordpress/foto-hd/amco-naoki-06@2x.jpg 2600w"
+        sizes="(max-width:600px) calc(100vw - 92px), (max-width:900px) 46vw, 31vw" alt="Peserta belajar brush lettering di AMCO Bakehouse" loading="lazy"></div>
+      <div class="foot r">
+        <p class="lbl"><svg class="ikon" aria-hidden="true"><use href="#i-kalender"/></svg>2 Agustus 2026</p>
+        <p class="desk">Kelas brush lettering. Setiap peserta pulang membawa sertifikat tulisan tangan.</p>
+        <p class="mini"><svg class="ikon" aria-hidden="true"><use href="#i-pin"/></svg><span>AMCO Bakehouse, Yogyakarta &middot; 8 foto dokumentasi</span></p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ============ GALERI ============ -->
+<section class="sec" id="galeri">
+  <div class="head">
+    <div>
+      <p class="lbl">Dokumentasi</p>
+      <h2 class="d d-xl" style="margin-top:16px">Apa yang tertinggal di meja</h2>
+      <p class="lead" style="margin-top:16px;max-width:42ch">Dokumentasi dari sepuluh workshop journaling
+        yang sudah kami gelar di Yogyakarta.</p>
+    </div>
+    <a class="pill" href="#arsip"><span>Semua kolaborasi</span>
+      <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></a>
+  </div>
+
+  <div class="bento up">
+    <figure class="t1"><img src="../../wordpress/foto-hd/radian-11.jpg"
+         srcset="../../wordpress/foto-hd/radian-11.jpg 1300w, ../../wordpress/foto-hd/radian-11@2x.jpg 2600w"
+         sizes="(max-width:820px) calc(100vw - 92px), 47vw"
+      alt="Sesi journaling di pendopo bersama Radian" loading="lazy">
+      <figcaption class="strip">Radian</figcaption></figure>
+    <figure class="t2"><img src="../../wordpress/foto-hd/sundayreads-08.jpg"
+         srcset="../../wordpress/foto-hd/sundayreads-08.jpg 1300w, ../../wordpress/foto-hd/sundayreads-08@2x.jpg 2600w"
+         sizes="(max-width:820px) 46vw, 23vw"
+      alt="Bahan journaling ditata dari atas meja" loading="lazy">
+      <figcaption class="strip k">Sunday Reads Club</figcaption></figure>
+    <figure class="t3"><img src="../../wordpress/foto-hd/wardah-09.jpg"
+         srcset="../../wordpress/foto-hd/wardah-09.jpg 1300w, ../../wordpress/foto-hd/wardah-09@2x.jpg 2600w"
+         sizes="(max-width:820px) 46vw, 23vw"
+      alt="Kit alat tulis Wardah di atas meja" loading="lazy">
+      <figcaption class="strip r">Wardah</figcaption></figure>
+    <figure class="t4"><img src="../../wordpress/foto-hd/pasar-jakal-06.jpg"
+         srcset="../../wordpress/foto-hd/pasar-jakal-06.jpg 1300w, ../../wordpress/foto-hd/pasar-jakal-06@2x.jpg 2600w"
+         sizes="(max-width:820px) calc(100vw - 92px), 47vw"
+      alt="Tangan peserta menempel bahan di halaman jurnal" loading="lazy">
+      <figcaption class="strip b">Pasar Jakal</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============ TUMPUKAN CETAKAN ============ -->
+<section class="sec" id="cetakan">
+  <div class="head head-c">
+    <p class="lbl">Cetakan</p>
+    <h2 class="d d-xl">Sore yang tersimpan</h2>
+    <p class="lead">Setiap kelas meninggalkan setumpuk cetakan di atas meja.
+      Ini sebagiannya, dari sembilan kolaborasi yang berbeda.</p>
+  </div>
+  <div class="pile">
+    <figure class="pola" style="--x:2%;--y:18%;--rot:-9deg;--fx:26vw;--fy:8%"><img src="../../wordpress/foto-hd/sundayreads-12.jpg" srcset="../../wordpress/foto-hd/sundayreads-12@400.jpg 400w, ../../wordpress/foto-hd/sundayreads-12@800.jpg 800w, ../../wordpress/foto-hd/sundayreads-12.jpg 1300w, ../../wordpress/foto-hd/sundayreads-12@2x.jpg 2600w" sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>Sunday Reads</figcaption></figure>
+    <figure class="pola" style="--x:15%;--y:54%;--rot:6deg;--fx:18vw;--fy:-6%"><img src="../../wordpress/foto-hd/radian-30.jpg" srcset="../../wordpress/foto-hd/radian-30@400.jpg 400w, ../../wordpress/foto-hd/radian-30@800.jpg 800w, ../../wordpress/foto-hd/radian-30.jpg 1300w, ../../wordpress/foto-hd/radian-30@2x.jpg 2600w" sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>Radian</figcaption></figure>
+    <figure class="pola" style="--x:27%;--y:6%;--rot:4deg;--fx:12vw;--fy:12%"><img src="../../wordpress/foto-hd/wardah-04.jpg" srcset="../../wordpress/foto-hd/wardah-04@400.jpg 400w, ../../wordpress/foto-hd/wardah-04@800.jpg 800w, ../../wordpress/foto-hd/wardah-04.jpg 1300w, ../../wordpress/foto-hd/wardah-04@2x.jpg 2600w" sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>Wardah</figcaption></figure>
+    <figure class="pola" style="--x:38%;--y:44%;--rot:-6deg;--fx:6vw;--fy:-8%"><img src="../../wordpress/foto-hd/artotel-19.jpg" srcset="../../wordpress/foto-hd/artotel-19@400.jpg 400w, ../../wordpress/foto-hd/artotel-19@800.jpg 800w, ../../wordpress/foto-hd/artotel-19.jpg 1300w, ../../wordpress/foto-hd/artotel-19@2x.jpg 2600w" sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>Artotel</figcaption></figure>
+    <figure class="pola" style="--x:50%;--y:12%;--rot:8deg;--fx:0vw;--fy:10%"><img src="../../wordpress/foto-hd/kolondjono-20.jpg" srcset="../../wordpress/foto-hd/kolondjono-20@400.jpg 400w, ../../wordpress/foto-hd/kolondjono-20@800.jpg 800w, ../../wordpress/foto-hd/kolondjono-20.jpg 1300w, ../../wordpress/foto-hd/kolondjono-20@2x.jpg 2600w" sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>Kolondjono</figcaption></figure>
+    <figure class="pola" style="--x:60%;--y:56%;--rot:-4deg;--fx:-8vw;--fy:-6%"><img src="../../wordpress/foto-hd/amco-naoki-03.jpg" srcset="../../wordpress/foto-hd/amco-naoki-03@400.jpg 400w, ../../wordpress/foto-hd/amco-naoki-03@800.jpg 800w, ../../wordpress/foto-hd/amco-naoki-03.jpg 1300w, ../../wordpress/foto-hd/amco-naoki-03@2x.jpg 2600w" sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>AMCO x Naoki</figcaption></figure>
+    <figure class="pola" style="--x:71%;--y:20%;--rot:7deg;--fx:-14vw;--fy:10%"><img src="../../wordpress/foto-hd/snapobox-08.jpg" srcset="../../wordpress/foto-hd/snapobox-08@400.jpg 400w, ../../wordpress/foto-hd/snapobox-08@800.jpg 800w, ../../wordpress/foto-hd/snapobox-08.jpg 1300w, ../../wordpress/foto-hd/snapobox-08@2x.jpg 2600w" sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>Snapobox</figcaption></figure>
+    <figure class="pola" style="--x:81%;--y:50%;--rot:-8deg;--fx:-20vw;--fy:-8%"><img src="../../wordpress/foto-hd/pasar-jakal-02.jpg" srcset="../../wordpress/foto-hd/pasar-jakal-02@400.jpg 400w, ../../wordpress/foto-hd/pasar-jakal-02@800.jpg 800w, ../../wordpress/foto-hd/pasar-jakal-02.jpg 1300w, ../../wordpress/foto-hd/pasar-jakal-02@2x.jpg 2600w" sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>Pasar Jakal</figcaption></figure>
+    <figure class="pola" style="--x:88%;--y:8%;--rot:5deg;--fx:-26vw;--fy:12%"><img src="../../wordpress/foto-hd/kupiku-04.jpg" srcset="../../wordpress/foto-hd/kupiku-04@400.jpg 400w, ../../wordpress/foto-hd/kupiku-04@800.jpg 800w, ../../wordpress/foto-hd/kupiku-04.jpg 1300w, ../../wordpress/foto-hd/kupiku-04@2x.jpg 2600w" sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>Kupiku</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============ ARSIP ============ -->
+<section class="sec" id="arsip">
+  <div class="head">
+    <div>
+      <p class="lbl">Sudah lewat</p>
+      <h2 class="d d-xl" style="margin-top:16px">Sepuluh kali duduk bersama</h2>
+    </div>
+    <p class="lead" style="max-width:34ch">Dari November 2025 sampai hari ini. Tempatnya berpindah,
+      orangnya berganti, mejanya tetap satu.</p>
+  </div>
+
+  <div class="rows">
+    <a class="row" href="#galeri"><span class="yr">30 Agu 2026</span>
+      <h3><span class="tjr"><i>TJR</i><img src="../../wordpress/logo-web/tjr-black.png" alt="" aria-hidden="true" loading="lazy"></span> &times; Snapobox</h3><span class="go">Lihat dokumentasi<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></span></a>
+    <a class="row" href="#galeri"><span class="yr">29 Agu 2026</span>
+      <h3><span class="tjr"><i>TJR</i><img src="../../wordpress/logo-web/tjr-black.png" alt="" aria-hidden="true" loading="lazy"></span> &times; Pasar Jakal</h3><span class="go">Lihat dokumentasi<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></span></a>
+    <a class="row" href="#galeri"><span class="yr">2 Agu 2026</span>
+      <h3><span class="tjr"><i>TJR</i><img src="../../wordpress/logo-web/tjr-black.png" alt="" aria-hidden="true" loading="lazy"></span> &times; AMCO Bakehouse &times; Naoki Pics</h3><span class="go">Lihat dokumentasi<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></span></a>
+    <a class="row" href="#galeri"><span class="yr">4 Jul 2026</span>
+      <h3><span class="tjr"><i>TJR</i><img src="../../wordpress/logo-web/tjr-black.png" alt="" aria-hidden="true" loading="lazy"></span> &times; Kolondjono</h3><span class="go">Lihat dokumentasi<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></span></a>
+    <a class="row" href="#galeri"><span class="yr">18 Jun 2026</span>
+      <h3><span class="tjr"><i>TJR</i><img src="../../wordpress/logo-web/tjr-black.png" alt="" aria-hidden="true" loading="lazy"></span> &times; Statement Beauty</h3><span class="go">Lihat dokumentasi<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></span></a>
+    <a class="row" href="#galeri"><span class="yr">11 Apr 2026</span>
+      <h3><span class="tjr"><i>TJR</i><img src="../../wordpress/logo-web/tjr-black.png" alt="" aria-hidden="true" loading="lazy"></span> &times; Artotel</h3><span class="go">Lihat dokumentasi<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></span></a>
+    <a class="row" href="#galeri"><span class="yr">21 Feb 2026</span>
+      <h3><span class="tjr"><i>TJR</i><img src="../../wordpress/logo-web/tjr-black.png" alt="" aria-hidden="true" loading="lazy"></span> &times; Wardah</h3><span class="go">Lihat dokumentasi<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></span></a>
+    <a class="row" href="#galeri"><span class="yr">11 Jan 2026</span>
+      <h3><span class="tjr"><i>TJR</i><img src="../../wordpress/logo-web/tjr-black.png" alt="" aria-hidden="true" loading="lazy"></span> &times; Kupiku Coffee</h3><span class="go">Lihat dokumentasi<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></span></a>
+    <a class="row" href="#galeri"><span class="yr">30 Nov 2025</span>
+      <h3><span class="tjr"><i>TJR</i><img src="../../wordpress/logo-web/tjr-black.png" alt="" aria-hidden="true" loading="lazy"></span> &times; Radian</h3><span class="go">Lihat dokumentasi<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></span></a>
+    <a class="row" href="#galeri"><span class="yr">9 Nov 2025</span>
+      <h3><span class="tjr"><i>TJR</i><img src="../../wordpress/logo-web/tjr-black.png" alt="" aria-hidden="true" loading="lazy"></span> &times; Sunday Reads Club</h3><span class="go">Lihat dokumentasi<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.4"/></svg></span></a>
+  </div>
+</section>
+
+<!-- ============ KOLABORATOR ============ -->
+<section class="sec" id="kolaborator">
+  <div class="head">
+    <div>
+      <p class="lbl">Yang pernah bersama</p>
+      <h2 class="d d-xl" style="margin-top:16px">Sebelas nama di meja</h2>
+    </div>
+    <figure class="pola tuck" style="right:2%;bottom:-46px;--rot:7deg;--w:clamp(96px,8.2vw,120px)" aria-hidden="true"><img src="../../wordpress/foto-hd/artotel-16.jpg"
+        srcset="../../wordpress/foto-hd/artotel-16@400.jpg 400w, ../../wordpress/foto-hd/artotel-16@800.jpg 800w, ../../wordpress/foto-hd/artotel-16.jpg 1300w, ../../wordpress/foto-hd/artotel-16@2x.jpg 2600w"
+        sizes="(max-width:820px) 32vw, 164px" alt="" loading="lazy"><figcaption>Artotel, Apr 2026</figcaption></figure>
+  </div>
+  <div class="logos up">
+    <div><img src="../../wordpress/logo-web/sundayreads.png" alt="Sunday Reads Club" loading="lazy"></div>
+    <div><img src="../../wordpress/logo-web/radian.png" alt="Radian" loading="lazy"></div>
+    <div><img src="../../wordpress/logo-web/kupiku.png" alt="Kupiku Coffee" loading="lazy"></div>
+    <div><img src="../../wordpress/logo-web/wardah.png" alt="Wardah" loading="lazy"></div>
+    <div><img src="../../wordpress/logo-web/artotel.png" alt="Artotel" loading="lazy"></div>
+    <div><img src="../../wordpress/logo-web/hanasui.png" alt="Hanasui" loading="lazy"></div>
+    <div><img src="../../wordpress/logo-web/heejaz.png" alt="Heejaz" loading="lazy"></div>
+    <div><img src="../../wordpress/logo-web/statement-beauty.png" alt="Statement Beauty" loading="lazy"></div>
+    <div><img src="../../wordpress/logo-web/amco.png" alt="AMCO Bakehouse" loading="lazy"></div>
+    <div><img src="../../wordpress/logo-web/pasar-jakal.png" alt="Pasar Jakal" loading="lazy"></div>
+    <div><img src="../../wordpress/logo-web/snapobox.png" alt="Snapobox" loading="lazy"></div>
+    <div><img src="../../wordpress/logo-web/tjr-black.png" alt="The Journaling Room" loading="lazy"></div>
+  </div>
+</section>
+
+<!-- ============ AJAKAN ============ -->
+<section class="cta up">
+  <div class="cta-l">
+    <p class="lbl" style="color:var(--rose-text)">Sampai bertemu di ruangnya</p>
+    <h2 class="d d-xl">Bawa dirimu saja</h2>
+    <p class="lead">Jurnal, alat tulis, dan bahan tempel sudah menunggu di meja. Kalau ingin
+      membawa jurnal sendiri, silakan. Tanyakan slotnya ke kami, dibalas 09.00 sampai 21.00.</p>
+    <a class="pill solid" href="https://wa.me/6285720225369?text=Halo%20kakmin%20TJR%2C%20apakah%20slotnya%20masih%20ada%20untuk%20sesi%20terdekat%3F%20%5C%28%2A%5E_%5E%2A%29%2F%20%3C3" target="_blank" rel="noopener">
+      <span>Tanyakan slotnya ke kami</span>
+      <svg class="ig-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.21-8.24 8.21z"/></svg></a>
+  </div>
+  <div class="cta-r">
+    <img src="../../wordpress/foto-hd/artotel-13.jpg"
+         srcset="../../wordpress/foto-hd/artotel-13.jpg 1300w, ../../wordpress/foto-hd/artotel-13@2x.jpg 2600w"
+         sizes="(max-width:900px) calc(100vw - 92px), 52vw"
+      alt="Foto bersama peserta workshop TJR di Artotel" loading="lazy">
+  </div>
+  <figure class="pola p1" aria-hidden="true"><img src="../../wordpress/foto-hd/sundayreads-27.jpg"
+         srcset="../../wordpress/foto-hd/sundayreads-27@400.jpg 400w, ../../wordpress/foto-hd/sundayreads-27@800.jpg 800w, ../../wordpress/foto-hd/sundayreads-27.jpg 1300w, ../../wordpress/foto-hd/sundayreads-27@2x.jpg 2600w"
+         sizes="124px" alt="" loading="lazy"><figcaption>Sunday Reads</figcaption></figure>
+  <figure class="pola p2" aria-hidden="true"><img src="../../wordpress/foto-hd/radian-24.jpg"
+         srcset="../../wordpress/foto-hd/radian-24@400.jpg 400w, ../../wordpress/foto-hd/radian-24@800.jpg 800w, ../../wordpress/foto-hd/radian-24.jpg 1300w, ../../wordpress/foto-hd/radian-24@2x.jpg 2600w"
+         sizes="124px" alt="" loading="lazy"><figcaption>Radian</figcaption></figure>
+</section>
+
+</main>
+
+<footer class="ft">
+  <div>
+    <a class="mark" href="#" aria-label="The Journaling Room, ke atas">
+      <img src="../../wordpress/logo-web/tjr-black.png" alt="The Journaling Room" loading="lazy"></a>
+  </div>
+  <div>
+    <p class="lbl">Halaman</p>
+    <ul>
+      <li><a href="#tentang">Tentang kami</a></li>
+      <li><a href="#jadwal">Jadwal sesi</a></li>
+      <li><a href="#galeri">Galeri dokumentasi</a></li>
+      <li><a href="#cetakan">Cetakan</a></li>
+    </ul>
+  </div>
+  <div>
+    <p class="lbl">Dokumentasi</p>
+    <ul>
+      <li><a href="#arsip">Sepuluh kolaborasi</a></li>
+      <li><a href="#kolaborator">Daftar kolaborator</a></li>
+    </ul>
+  </div>
+  <div>
+    <p class="lbl">Hubungi kami</p>
+    <ul>
+      <li><a href="https://wa.me/6285720225369?text=Halo%2C%20kakmin%20TJR%2C%20aku%20mau%20daftar%20journaling%20workshop%2C%20dong%21%20%2A%5C%28%5Eo%5E%29%2F%2A%20%3C3" target="_blank" rel="noopener">Chat ke 0857 2022 5369</a></li>
+      <li><a href="https://instagram.com/thejournalingroom" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://maps.app.goo.gl/mKEPpLZVdHgChrCu5" target="_blank" rel="noopener">Mantrijeron, Yogyakarta</a></li>
+    </ul>
+  </div>
+  <div class="ft-bot" style="grid-column:1/-1">
+    <p>2026 &middot; The Journaling Room</p>
+    <p>Yogyakarta</p>
+  </div>
+</footer>
+
+</div>
+
+<a class="fab" id="fab" href="https://wa.me/6285720225369?text=Halo%20kakmin%20TJR%2C%20apakah%20slotnya%20masih%20ada%20untuk%20sesi%20terdekat%3F%20%5C%28%2A%5E_%5E%2A%29%2F%20%3C3" target="_blank" rel="noopener"
+   aria-label="Tanyakan slot lewat WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.21-8.24 8.21z"/></svg>
+  <span>Tanyakan slot</span>
+</a>
+
+<script>
+/* ---- pembuka halaman, kira kira 1,6 detik ---- */
+(function(){
+  var root = document.documentElement;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var E = 'cubic-bezier(.16,1,.3,1)';
+  var h1 = document.querySelector('.hero h1');
+
+  // judul dipecah per kata supaya bisa naik bergantian dari balik garis
+  if (h1) h1.innerHTML = h1.textContent.trim().split(/\s+/)
+    .map(function(k){ return '<span class="kata"><i>' + k + '</i></span>'; }).join(' ');
+
+  var tirai   = document.getElementById('tirai');
+  var sampul  = document.getElementById('sampul');
+  var jatuh   = document.getElementById('jatuh');
+  var mark    = tirai ? tirai.querySelector('img') : null;
+  var lembar  = document.querySelector('.sheet');
+  var anims   = [];
+
+  // kalau animasi tidak sempat jalan, misalnya tab di latar belakang atau
+  // browser membekukan timeline, semuanya dipaksa ke keadaan akhir.
+  function selesai(){
+    root.classList.remove('intro');
+    anims.forEach(function(a){ try { a.finish(); } catch (e) {} });
+    if (tirai && tirai.parentNode) tirai.remove();
+  }
+  setTimeout(selesai, 4200);
+  addEventListener('pagehide', selesai);
+
+  if (reduce || !document.body.animate || document.visibilityState !== 'visible') {
+    selesai(); return;
+  }
+
+  function gerak(el, dari, ke, ms, tunda){
+    if (!el) return;
+    anims.push(el.animate([dari, ke], {duration: ms, delay: tunda||0, easing: E, fill: 'both'}));
+  }
+
+  function bukaHalaman(){
+    var t = 0;
+    gerak(document.querySelector('.bar'), {opacity:0, transform:'translateY(-12px)'},
+          {opacity:1, transform:'none'}, 700, t);
+    gerak(document.querySelector('.hero .lbl'), {opacity:0, transform:'translateY(14px)'},
+          {opacity:1, transform:'none'}, 700, t + 90);
+
+    document.querySelectorAll('.hero h1 .kata > i').forEach(function(k, i){
+      anims.push(k.animate([{translate:'0 106%'}, {translate:'0 0'}],
+        {duration: 900, delay: t + 150 + i*80, easing: E, fill:'both'}));
+    });
+
+    gerak(document.querySelector('.hero-acts'), {opacity:0, transform:'translateY(16px)'},
+          {opacity:1, transform:'none'}, 760, t + 420);
+
+    var stage = document.querySelector('.stage');
+    if (stage){
+      anims.push(stage.animate([{opacity:0, clipPath:'inset(100% 0 0 0)'},
+                     {opacity:1, clipPath:'inset(0 0 0 0)'}],
+                    {duration: 1100, delay: t + 380, easing: E, fill:'both'}));
+      var f = stage.querySelector('img');
+      if (f) anims.push(f.animate([{transform:'scale(1.14)'}, {transform:'scale(1)'}],
+                       {duration: 1600, delay: t + 380, easing: E, fill:'both'}));
+    }
+    gerak(document.querySelector('.chip'), {opacity:0, transform:'translateY(20px) scale(.97)'},
+          {opacity:1, transform:'none'}, 820, t + 900);
+    var pol = document.querySelector('.hero > .pola');
+    if (pol) anims.push(pol.animate([{opacity:0, transform:'translateY(26px) rotate(-22deg)'},
+                          {opacity:1, transform:'none'}],
+                         {duration: 950, delay: t + 1020, easing: E, fill:'both'}));
+    setTimeout(selesai, 1400);
+  }
+
+  var mulai = Date.now();
+  var siap = document.fonts ? document.fonts.ready : Promise.resolve();
+  var batas = new Promise(function(r){ setTimeout(r, 1400); });   // jangan sandera halaman
+
+  Promise.race([siap, batas]).then(function(){
+    var tahan = Math.max(0, 420 - (Date.now() - mulai));
+
+    // 1. logo naik pelan di sampul yang masih tertutup
+    anims.push(mark.animate(
+      [{opacity:0, transform:'translateY(12px) scale(.96)'}, {opacity:1, transform:'none'}],
+      {duration: 660, easing: E, fill:'both'}));
+
+    setTimeout(function(){
+      var BUKA = 1180;                                    // lama sampul membuka
+      var LAJU = 'cubic-bezier(.58,.04,.22,1)';           // berat di awal, ringan di akhir
+
+      // 2. sampul berputar pada sumbu kiri
+      var sa = sampul.animate(
+        [{transform:'rotateY(0deg)'}, {transform:'rotateY(-118deg)'}],
+        {duration: BUKA, easing: LAJU, fill:'both'});
+      anims.push(sa);
+
+      // logo ikut memudar begitu sampul mulai miring
+      anims.push(mark.animate([{opacity:1}, {opacity:0}],
+        {duration: 420, delay: 120, easing:'linear', fill:'both'}));
+
+      // 3. sampul menggelap sambil berputar menjauh dari cahaya
+      anims.push(sampul.animate(
+        [{opacity:0}, {opacity:.1, offset:.25}, {opacity:.62}],
+        {duration: BUKA, easing:'linear', fill:'both', pseudoElement:'::after'}));
+
+      // 4. bayangan sampul yang jatuh di halaman, muncul lalu menipis
+      anims.push(jatuh.animate(
+        [{opacity:0}, {opacity:.9, offset:.22}, {opacity:.45, offset:.6}, {opacity:0}],
+        {duration: BUKA + 260, easing:'linear', fill:'both'}));
+
+      // 5. halaman ikut turun sedikit, seperti kertas yang mendarat
+      if (lembar) anims.push(lembar.animate(
+        [{transform:'scale(.986) translateY(8px)'}, {transform:'none'}],
+        {duration: BUKA + 320, easing: E, fill:'both'}));
+
+      sa.onfinish = function(){ if (tirai.parentNode) tirai.remove(); };
+
+      // isi halaman mulai sebelum sampulnya selesai, biar tidak terasa berurutan
+      setTimeout(bukaHalaman, 340);
+    }, tahan + 520);
+  });
+})();
+
+/* ---- menu layar kecil ---- */
+(function(){
+  var btn = document.getElementById('menuBtn'), panel = document.getElementById('menuPanel');
+  if (!btn || !panel) return;
+  function tutup(){ btn.setAttribute('aria-expanded','false'); panel.hidden = true; }
+  btn.addEventListener('click', function(){
+    var buka = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!buka));
+    panel.hidden = buka;
+  });
+  panel.addEventListener('click', function(e){ if (e.target.tagName === 'A') tutup(); });
+  addEventListener('keydown', function(e){ if (e.key === 'Escape') tutup(); });
+  matchMedia('(min-width:901px)').addEventListener('change', tutup);
+})();
+
+/* ---- tombol WhatsApp mengambang ---- */
+(function(){
+  var fab = document.getElementById('fab');
+  var show = function(){ fab.classList.toggle('on', scrollY > innerHeight * 0.6); };
+  addEventListener('scroll', show, {passive:true}); show();
+})();
+</script>

@@ -1,0 +1,209 @@
+{
+  "_baca_dulu": [
+    "JSON-LD untuk The Journaling Room. Tempel di dalam <script type=\"application/ld+json\"> di wp_head, atau isi lewat Rank Math bagian Custom Schema.",
+    "Semua kunci yang diawali garis bawah, misalnya _catatan, adalah komentar untuk manusia. Schema.org mengabaikannya dan Google juga, tapi lebih rapi kalau dihapus sebelum terbit.",
+    "Node Organization dan LocalBusiness dipasang sekali di semua halaman. Node Event cuma dipasang di halaman detail acara, dan isinya dibangun dari field ACF per acara.",
+    "Yang wajib diganti sebelum terbit: streetAddress, geo, dan seluruh isi node Event.",
+    "Setelah dipasang, uji di https://validator.schema.org dan di Rich Results Test milik Google."
+  ],
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://thejournalingroom.id/#organisasi",
+      "name": "The Journaling Room",
+      "alternateName": ["TJR", "thejournalingroom"],
+      "url": "https://thejournalingroom.id/",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://thejournalingroom.id/#logo",
+        "url": "https://thejournalingroom.id/wp-content/uploads/logo-web/tjr-black.png",
+        "caption": "The Journaling Room",
+        "_catatan": "Ganti URL-nya setelah logo diunggah ke Media Library. Logo persegi minimal 112 x 112 piksel, PNG latar transparan."
+      },
+      "image": "https://thejournalingroom.id/wp-content/uploads/foto-hd/snapobox-11.jpg",
+      "description": "Penyelenggara workshop journaling di Yogyakarta. Sesi dipandu, alat tulis dan bahan disediakan, tidak ada giliran bercerita di depan orang.",
+      "slogan": "Your kind journaling companions",
+      "foundingDate": "2025-11",
+      "_catatan_foundingDate": "Sesi pertama yang terdokumentasi adalah kolaborasi dengan Sunday Reads Club, 9 November 2025.",
+      "sameAs": ["https://instagram.com/thejournalingroom"],
+      "_catatan_sameAs": "Tambahkan URL Google Business Profile dan TikTok kalau nanti ada. Jangan masukkan link wa.me di sini, tempatnya di contactPoint.",
+      "knowsLanguage": ["id", "en"],
+      "areaServed": {
+        "@type": "City",
+        "name": "Yogyakarta",
+        "sameAs": "https://id.wikipedia.org/wiki/Kota_Yogyakarta"
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "@id": "https://thejournalingroom.id/#whatsapp",
+          "contactType": "customer service",
+          "name": "WhatsApp The Journaling Room",
+          "telephone": "+62-857-2022-5369",
+          "url": "https://wa.me/6285720225369",
+          "availableLanguage": ["id", "en"],
+          "areaServed": "ID",
+          "hoursAvailable": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "https://schema.org/Monday",
+              "https://schema.org/Tuesday",
+              "https://schema.org/Wednesday",
+              "https://schema.org/Thursday",
+              "https://schema.org/Friday",
+              "https://schema.org/Saturday",
+              "https://schema.org/Sunday"
+            ],
+            "opens": "09:00",
+            "closes": "21:00"
+          },
+          "_catatan": "Jam 09.00 sampai 21.00 diambil dari copy di halaman. Kalau jam balas sebenarnya berbeda, ubah di sini juga supaya tidak ada janji yang meleset."
+        }
+      ]
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://thejournalingroom.id/#bisnis",
+      "name": "The Journaling Room",
+      "url": "https://thejournalingroom.id/",
+      "image": [
+        "https://thejournalingroom.id/wp-content/uploads/foto-hd/snapobox-11.jpg",
+        "https://thejournalingroom.id/wp-content/uploads/foto-hd/radian-11.jpg",
+        "https://thejournalingroom.id/wp-content/uploads/foto-hd/kupiku-01.jpg"
+      ],
+      "logo": {"@id": "https://thejournalingroom.id/#logo"},
+      "description": "Workshop journaling dan kelas menulis jurnal di Yogyakarta. Venue berpindah tiap sesi, dari kedai kopi sampai pendopo. Kursi dibatasi, kit disediakan.",
+      "parentOrganization": {"@id": "https://thejournalingroom.id/#organisasi"},
+      "telephone": "+62-857-2022-5369",
+      "sameAs": ["https://instagram.com/thejournalingroom"],
+      "priceRange": "Rp75.000 sampai Rp125.000",
+      "_catatan_priceRange": "Rentang diambil dari harga sesi yang sudah pernah jalan. Perbarui kalau harga berubah.",
+      "currenciesAccepted": "IDR",
+      "paymentAccepted": "Transfer bank, QRIS, tunai",
+      "_catatan_paymentAccepted": "Konfirmasi dulu ke Caca dan Dhanty. Kalau QRIS belum ada, hapus dari daftar.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "GANTI: alamat jalan sesuai Google Business Profile",
+        "addressLocality": "Yogyakarta",
+        "addressRegion": "Daerah Istimewa Yogyakarta",
+        "addressCountry": "ID",
+        "_catatan": "TJR berpindah venue tiap acara dan tidak punya toko yang bisa didatangi. Dua pilihan. Satu, isi alamat basis operasional di Mantrijeron persis seperti yang didaftarkan di Google Business Profile, huruf per huruf. Dua, hapus seluruh blok address dan geo ini lalu andalkan Google Business Profile saja. Yang dilarang adalah mengarang alamat, karena alamat di schema yang berbeda dengan di GBP justru bikin Google ragu."
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "GANTI",
+        "longitude": "GANTI",
+        "_catatan": "Ambil dari pin Google Business Profile, bukan dari pencarian Maps biasa. Kalau blok address dihapus, hapus blok geo ini juga."
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Yogyakarta",
+          "sameAs": "https://id.wikipedia.org/wiki/Kota_Yogyakarta"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Daerah Istimewa Yogyakarta"
+        }
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "https://schema.org/Monday",
+            "https://schema.org/Tuesday",
+            "https://schema.org/Wednesday",
+            "https://schema.org/Thursday",
+            "https://schema.org/Friday",
+            "https://schema.org/Saturday",
+            "https://schema.org/Sunday"
+          ],
+          "opens": "09:00",
+          "closes": "21:00",
+          "_catatan": "Ini jam balas pesan, bukan jam sesi. Sesi berjalan sesuai tanggal di tiap acara, dan itu diurus node Event."
+        }
+      ],
+      "contactPoint": {"@id": "https://thejournalingroom.id/#whatsapp"},
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "name": "Journaling Workshop",
+          "description": "Sesi tiga jam dengan tema, kit lengkap, dan pendampingan."
+        },
+        {
+          "@type": "Offer",
+          "name": "Brush Lettering Class dan Journaling",
+          "description": "Kelas lettering digabung sesi journaling, kursi terbatas."
+        },
+        {
+          "@type": "Offer",
+          "name": "Journaling Playdate",
+          "description": "Sesi santai tanpa materi, bawa jurnal sendiri boleh."
+        },
+        {
+          "@type": "Offer",
+          "name": "Brand Activation",
+          "description": "Sesi journaling untuk brand, komunitas, dan tim kantor."
+        }
+      ]
+    },
+    {
+      "@type": "Event",
+      "@id": "https://thejournalingroom.id/jadwal/tracing-shadows-mapping-stars/#acara",
+      "_catatan": "CONTOH SAJA. Seluruh nilai di node Event ini karangan untuk memperlihatkan bentuknya. Jangan pernah menempel node ini apa adanya. Bangun sendiri dari field ACF di CPT acara, satu node per acara, cuma di halaman detail acara yang bersangkutan. Jadwal mendatang di prototipe v5 juga masih placeholder, jadi bukan sumber data.",
+      "name": "Tracing Shadows, Mapping Stars",
+      "_catatan_name": "Dari judul post CPT acara.",
+      "description": "Sesi journaling tiga jam untuk yang belum pernah menulis jurnal. Mulai dari satu pertanyaan pendek, lanjut ke tata halaman, lalu waktu bebas.",
+      "_catatan_description": "Dari field ACF deskripsi singkat. Batasi sekitar 150 karakter dan jangan menyalin mentah isi halaman.",
+      "url": "https://thejournalingroom.id/jadwal/tracing-shadows-mapping-stars/",
+      "_catatan_url": "Pakai get_permalink(). Wajib URL halaman detail acara, bukan link WhatsApp.",
+      "image": [
+        "https://thejournalingroom.id/wp-content/uploads/foto-hd/kupiku-01.jpg",
+        "https://thejournalingroom.id/wp-content/uploads/foto-hd/kupiku-04.jpg"
+      ],
+      "_catatan_image": "Dari featured image plus galeri sesi di ACF. Google lebih suka beberapa rasio: 16:9, 4:3, dan 1:1. Minimal 720 piksel sisi terpendek.",
+      "startDate": "2026-09-20T15:00:00+07:00",
+      "endDate": "2026-09-20T18:00:00+07:00",
+      "_catatan_tanggal": "Dari field tanggal mulai plus durasi. Format ISO 8601 dengan zona waktu +07:00 wajib, tanpa itu Google menganggap acaranya UTC dan jamnya meleset tujuh jam.",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "_catatan_eventStatus": "Ganti jadi EventPostponed, EventRescheduled, atau EventCancelled kalau statusnya berubah. Kalau EventRescheduled, tambahkan previousStartDate.",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "inLanguage": "id-ID",
+      "isAccessibleForFree": false,
+      "maximumAttendeeCapacity": 15,
+      "remainingAttendeeCapacity": 4,
+      "_catatan_kapasitas": "Dari field kapasitas dan slot terisi. remainingAttendeeCapacity dihitung, bukan diketik. Kalau nol, ubah availability di offers jadi SoldOut.",
+      "location": {
+        "@type": "Place",
+        "name": "Kupiku Coffee",
+        "url": "https://maps.app.goo.gl/CONTOH",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "GANTI: alamat venue",
+          "addressLocality": "Yogyakarta",
+          "addressRegion": "Daerah Istimewa Yogyakarta",
+          "addressCountry": "ID"
+        },
+        "_catatan": "Dari field venue plus link Maps di ACF. Alamat venue lengkap wajib diisi, karena inilah yang bikin acara muncul di panel acara Google untuk pencarian lokal."
+      },
+      "organizer": {"@id": "https://thejournalingroom.id/#organisasi"},
+      "performer": [
+        {"@type": "Person", "name": "Caca"},
+        {"@type": "Person", "name": "Dhanty"}
+      ],
+      "_catatan_performer": "Boleh dihapus kalau tidak ingin nama founder muncul di hasil pencarian.",
+      "offers": {
+        "@type": "Offer",
+        "name": "Kursi workshop, kit lengkap",
+        "price": "75000",
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock",
+        "url": "https://thejournalingroom.id/jadwal/tracing-shadows-mapping-stars/",
+        "validFrom": "2026-08-20T09:00:00+07:00",
+        "_catatan": "price ditulis angka polos tanpa titik, tanpa Rp. availability: InStock kalau masih ada kursi, LimitedAvailability kalau sisa di bawah 25 persen, SoldOut kalau penuh. url di Offer harus halaman tempat orang bisa memesan. Karena pemesanan TJR lewat WhatsApp, arahkan ke halaman detail acaranya, dan taruh tombol WhatsApp di halaman itu. Mengisi url Offer dengan link wa.me sering ditolak validator."
+      },
+      "_catatan_penutup": "Jangan pasang node Event untuk acara yang sudah lewat lebih dari beberapa hari, dan jangan pernah mengubah tanggal acara lama lalu memakainya ulang untuk sesi baru. Itu bikin schema menunjuk tanggal yang salah dan memutus link yang sudah tersebar."
+    }
+  ]
+}

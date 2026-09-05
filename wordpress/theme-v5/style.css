@@ -1,0 +1,1118 @@
+/*
+Theme Name: TJR v5
+Theme URI: https://thejournalingroom.id/
+Author: The Journaling Room
+Author URI: https://thejournalingroom.id/
+Description: Tema blok untuk The Journaling Room. Lembar kertas krem melayang di atas foto meja kerja, display serif italic kontras tinggi, sudut membulat, dan strip warna. Port dari prototipe v5 Fieldtime.
+Version: 1.0.0
+Requires at least: 6.5
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: tjr-v5
+Tags: block-theme, full-site-editing, one-column, custom-colors, custom-menu, editor-style, featured-images, block-patterns
+*/
+
+/* ============================================================
+   Isi file ini hanya hal yang tidak bisa diucapkan theme.json:
+   posisi, animasi, grid khusus, dan efek hover.
+   Semua warna dan jarak diambil dari preset yang digenerate
+   theme.json, jadi tidak ada nilai hex yang ditulis dua kali.
+   ============================================================ */
+
+/* ===== 1. Dasar ===== */
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  background:var(--wp--preset--color--meja) url("assets/img/latar-meja.jpg") center/cover fixed no-repeat;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* peredam tipis: latar meja tetap kebaca tapi tidak melawan lembar kertas */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 40%,rgb(60 48 34 / .12),rgb(46 37 26 / .38));
+}
+
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--wp--preset--color--burgundy);outline-offset:3px;border-radius:4px}
+
+/* Lembar kertas. WordPress membungkus seluruh isi template
+   dalam .wp-site-blocks, jadi pembungkus itulah lembarnya. */
+.wp-site-blocks{
+  position:relative;z-index:1;
+  background:var(--wp--preset--color--kertas);
+  max-width:var(--wp--custom--lebar-lembar);
+  margin:14px auto;
+  border-radius:var(--wp--custom--radius--lembar);
+  padding:0 clamp(18px,3.2vw,46px) var(--wp--preset--spacing--jarak-4);
+  overflow:clip;
+  box-shadow:var(--wp--preset--shadow--lembar);
+}
+@media(max-width:720px){
+  .wp-site-blocks{margin:8px;border-radius:20px}
+}
+
+/* ===== 2. Tipografi ===== */
+
+/* Kelas .d dipakai untuk paragraf yang tampil sebagai teks display.
+   Heading asli sudah diatur lewat elements.heading di theme.json. */
+.d{
+  font-family:var(--wp--preset--font-family--display);
+  font-style:italic;font-weight:400;
+  color:var(--wp--preset--color--burgundy);
+  margin:0;line-height:.98;letter-spacing:-.012em;text-wrap:balance;
+}
+.d-xxl{font-size:var(--wp--preset--font-size--display-xxl)}
+.d-xl{font-size:var(--wp--preset--font-size--display-xl)}
+.d-lg{font-size:var(--wp--preset--font-size--display-lg)}
+.d-md{font-size:var(--wp--preset--font-size--display-md)}
+
+.lbl{
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--wp--preset--color--tinta-samar);margin:0;
+}
+
+.lead{
+  font-size:var(--wp--preset--font-size--sedang);line-height:1.75;
+  color:var(--wp--preset--color--tinta-lembut);
+  max-width:52ch;margin:0;text-wrap:pretty;
+}
+
+/* ===== 3. Ikon ===== */
+
+/* Dua jalur, sengaja. Kelas .ikon dipakai oleh SVG sprite yang
+   dicetak functions.php, kelas .ik dipakai blok inti yang tidak
+   bisa menampung SVG, misalnya butir daftar dan paragraf. */
+.ikon{
+  width:14px;height:14px;flex:none;fill:none;stroke:currentColor;
+  stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round;
+}
+
+[class*="ik-"]::before{
+  content:"";width:14px;height:14px;flex:none;
+  background:currentColor;
+  -webkit-mask:var(--ik) center/contain no-repeat;
+  mask:var(--ik) center/contain no-repeat;
+}
+.ik-kalender{--ik:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.2' y='3.4' width='11.6' height='10.4' rx='1.6'/%3E%3Cpath d='M2.2 6.8h11.6M5.4 1.9v2.6M10.6 1.9v2.6'/%3E%3C/svg%3E")}
+.ik-jam{--ik:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='5.9'/%3E%3Cpath d='M8 4.5V8l2.5 1.7'/%3E%3C/svg%3E")}
+.ik-pin{--ik:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 14.4s5-4.3 5-7.7a5 5 0 0 0-10 0c0 3.4 5 7.7 5 7.7Z'/%3E%3Ccircle cx='8' cy='6.7' r='1.9'/%3E%3C/svg%3E")}
+.ik-orang{--ik:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='5.2' r='2.5'/%3E%3Cpath d='M3.1 13.7a4.9 4.9 0 0 1 9.8 0'/%3E%3C/svg%3E")}
+.ik-kotak{--ik:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.6 5.4 8 2.5l5.4 2.9v5.2L8 13.5l-5.4-2.9z'/%3E%3Cpath d='M2.6 5.4 8 8.3l5.4-2.9M8 8.3v5.2'/%3E%3C/svg%3E")}
+.ik-tas{--ik:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.2 5.4h7.6l.8 8.2H3.4z'/%3E%3Cpath d='M6 5.4a2 2 0 0 1 4 0'/%3E%3C/svg%3E")}
+.ik-foto{--ik:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.2' y='3.6' width='11.6' height='9.4' rx='1.6'/%3E%3Ccircle cx='6' cy='7' r='1.2'/%3E%3Cpath d='M2.6 12 6.4 8.6l2.3 2 2-1.7 2.6 2.4'/%3E%3C/svg%3E")}
+
+/* ===== 4. Pil, varian gaya blok tombol ===== */
+
+.wp-block-button.is-style-pil > .wp-block-button__link,
+.wp-block-button.is-style-pil-isi > .wp-block-button__link,
+.wp-block-button.is-style-pil-rose > .wp-block-button__link{
+  position:relative;z-index:0;
+  display:inline-flex;align-items:center;gap:12px;
+  max-width:max-content;
+  padding:12px 20px;
+  border:1px solid var(--wp--preset--color--tinta);
+  border-radius:var(--wp--custom--radius--pil);
+  font-family:var(--wp--preset--font-family--teks);
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  text-decoration:none;
+  color:var(--wp--preset--color--tinta);
+  background:transparent;overflow:hidden;
+  transition:color .4s var(--wp--custom--lengkung--halus),border-color .4s;
+}
+
+/* sapuan yang naik dari bawah waktu kursor lewat */
+.wp-block-button.is-style-pil > .wp-block-button__link::before,
+.wp-block-button.is-style-pil-isi > .wp-block-button__link::before,
+.wp-block-button.is-style-pil-rose > .wp-block-button__link::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:var(--wp--preset--color--tinta);
+  transform:translateY(101%);
+  transition:transform .5s var(--wp--custom--lengkung--halus);
+}
+.wp-block-button.is-style-pil > .wp-block-button__link:hover::before,
+.wp-block-button.is-style-pil > .wp-block-button__link:focus-visible::before,
+.wp-block-button.is-style-pil-isi > .wp-block-button__link:hover::before,
+.wp-block-button.is-style-pil-isi > .wp-block-button__link:focus-visible::before,
+.wp-block-button.is-style-pil-rose > .wp-block-button__link:hover::before,
+.wp-block-button.is-style-pil-rose > .wp-block-button__link:focus-visible::before{
+  transform:translateY(0);
+}
+.wp-block-button.is-style-pil > .wp-block-button__link:hover,
+.wp-block-button.is-style-pil > .wp-block-button__link:focus-visible{
+  color:var(--wp--preset--color--kertas);
+}
+
+/* panah sudut kanan atas, ikut bergerak waktu hover */
+.wp-block-button.is-style-pil > .wp-block-button__link::after,
+.wp-block-button.is-style-pil-isi > .wp-block-button__link::after,
+.wp-block-button.is-style-pil-rose > .wp-block-button__link::after{
+  content:"";width:12px;height:12px;flex:none;position:relative;z-index:1;
+  background:currentColor;
+  --ik:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23000' stroke-width='1.4'%3E%3Cpath d='M1 11L11 1M11 1H3.5M11 1V8.5'/%3E%3C/svg%3E");
+  -webkit-mask:var(--ik) center/contain no-repeat;
+  mask:var(--ik) center/contain no-repeat;
+  transition:transform .45s var(--wp--custom--lengkung--halus);
+}
+.wp-block-button.is-style-pil > .wp-block-button__link:hover::after,
+.wp-block-button.is-style-pil-isi > .wp-block-button__link:hover::after,
+.wp-block-button.is-style-pil-rose > .wp-block-button__link:hover::after{
+  transform:translate(4px,-4px);
+}
+
+/* pil isi: latar tinta, sapuannya burgundy */
+.wp-block-button.is-style-pil-isi > .wp-block-button__link{
+  background:var(--wp--preset--color--tinta);
+  color:var(--wp--preset--color--kertas);
+  border-color:var(--wp--preset--color--tinta);
+}
+.wp-block-button.is-style-pil-isi > .wp-block-button__link::before{
+  background:var(--wp--preset--color--burgundy);
+}
+.wp-block-button.is-style-pil-isi > .wp-block-button__link:hover,
+.wp-block-button.is-style-pil-isi > .wp-block-button__link:focus-visible{
+  color:#fff;border-color:var(--wp--preset--color--burgundy);
+}
+
+/* pil rose: garis dan teks rose, sapuannya burgundy */
+.wp-block-button.is-style-pil-rose > .wp-block-button__link{
+  border-color:var(--wp--preset--color--rose-tua);
+  color:var(--wp--preset--color--rose-teks);
+}
+.wp-block-button.is-style-pil-rose > .wp-block-button__link::before{
+  background:var(--wp--preset--color--burgundy);
+}
+.wp-block-button.is-style-pil-rose > .wp-block-button__link:hover,
+.wp-block-button.is-style-pil-rose > .wp-block-button__link:focus-visible{
+  color:var(--wp--preset--color--kertas);border-color:var(--wp--preset--color--burgundy);
+}
+
+/* ===== 5. Bar atas ===== */
+
+.bar,
+header.wp-block-template-part{
+  position:sticky;top:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:var(--wp--preset--spacing--jarak-3);
+  padding:clamp(24px,2.6vw,40px) 0 var(--wp--preset--spacing--jarak-3);
+  background:linear-gradient(var(--wp--preset--color--kertas) 66%,rgb(251 247 240 / 0));
+}
+.bar .wp-block-site-logo img,
+.bar .mark img{height:clamp(40px,3.6vw,52px);width:auto}
+.bar .wp-block-site-logo a{display:block;line-height:0}
+
+.bar .wp-block-navigation{
+  display:flex;gap:clamp(14px,2vw,32px);
+}
+.bar .wp-block-navigation .wp-block-navigation__container{
+  gap:clamp(14px,2vw,32px);
+}
+.bar .wp-block-navigation a{
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--wp--preset--color--tinta-lembut);
+  text-decoration:none;position:relative;padding-bottom:4px;
+}
+.bar .wp-block-navigation a::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--wp--preset--color--burgundy);
+  transform:scaleX(0);transform-origin:right;
+  transition:transform .45s var(--wp--custom--lengkung--halus);
+}
+.bar .wp-block-navigation a:hover{color:var(--wp--preset--color--tinta)}
+.bar .wp-block-navigation a:hover::after{transform:scaleX(1);transform-origin:left}
+@media(max-width:900px){
+  .bar .wp-block-navigation:not(.is-responsive){display:none}
+}
+
+/* ===== 6. Hero ===== */
+
+.hero{position:relative;padding:var(--wp--preset--spacing--jarak-5) 0 0}
+.hero-atas{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:var(--wp--preset--spacing--jarak-4);flex-wrap:wrap-reverse;
+}
+.hero-aksi{display:flex;gap:12px;flex-wrap:wrap;padding-bottom:8px}
+.hero-aksi .wp-block-button{margin:0}
+.hero-judul{text-align:right}
+.hero-judul .lbl{text-align:right;margin-bottom:16px}
+.hero h1,.hero .d-xxl{text-align:right;max-width:16ch;margin-left:auto}
+@media(max-width:760px){
+  .hero-judul,.hero-judul .lbl{text-align:left}
+  .hero h1,.hero .d-xxl{text-align:left;margin-left:0;max-width:none}
+}
+
+/* Panggung, dibangun dari blok Cover supaya fotonya bisa diganti dari editor. */
+.panggung{
+  position:relative;margin-top:var(--wp--preset--spacing--jarak-3);
+  border-radius:var(--wp--custom--radius--besar);overflow:hidden;
+  aspect-ratio:16/9;min-height:0;
+  background:var(--wp--preset--color--kertas-tua);
+}
+.panggung > .wp-block-image{
+  position:absolute;inset:0;z-index:0;margin:0;border-radius:0;overflow:hidden;
+}
+.panggung .wp-block-cover__image-background,
+.panggung > .wp-block-image img,
+.panggung > img{width:100%;height:100%;object-fit:cover;border-radius:0}
+.panggung .wp-block-cover__background{display:none}
+.panggung::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(96deg,rgb(19 14 9 / .88) 0%,rgb(19 14 9 / .84) 24%,rgb(19 14 9 / .66) 40%,
+      rgb(19 14 9 / .38) 55%,rgb(19 14 9 / .14) 70%,rgb(19 14 9 / 0) 86%),
+    linear-gradient(0deg,rgb(19 14 9 / .32),rgb(19 14 9 / 0) 46%);
+}
+.panggung > .wp-block-cover__inner-container{
+  position:static;width:100%;height:100%;padding:0;
+}
+
+.panggung-teks{
+  position:absolute;left:clamp(24px,3.4vw,56px);top:50%;translate:0 -50%;z-index:2;
+  width:min(34ch,40%);color:var(--wp--preset--color--kertas);
+}
+.panggung-teks h2,.panggung-teks .d{
+  margin:0;font-family:var(--wp--preset--font-family--teks);font-style:normal;
+  font-weight:500;font-size:clamp(23px,2.4vw,38px);
+  line-height:1.2;letter-spacing:-.028em;
+  color:var(--wp--preset--color--kertas);text-wrap:balance;
+}
+.panggung-teks p:last-child{
+  margin-top:16px;font-size:var(--wp--preset--font-size--kecil);line-height:1.65;
+  color:var(--wp--preset--color--kertas);
+}
+@media(max-width:640px){
+  .panggung{aspect-ratio:4/5}
+  .panggung-teks{
+    top:auto;bottom:clamp(18px,5vw,32px);translate:0 0;
+    right:clamp(20px,5vw,32px);max-width:none;width:auto;
+  }
+}
+
+/* Kartu sesi terdekat yang menempel di foto */
+.kartu-sesi{
+  position:absolute;right:clamp(16px,2.4vw,32px);bottom:clamp(16px,2.4vw,32px);z-index:3;
+  width:min(296px,74vw);
+  background:rgb(251 247 240 / .93);backdrop-filter:blur(9px);
+  border-radius:var(--wp--custom--radius--besar);padding:24px;
+  box-shadow:var(--wp--preset--shadow--kartu);
+}
+.kartu-sesi .lbl{color:var(--wp--preset--color--kraft);letter-spacing:.16em}
+.kartu-sesi h2,.kartu-sesi .kartu-sesi-judul{
+  font-family:var(--wp--preset--font-family--teks);font-style:normal;
+  font-size:17px;font-weight:700;letter-spacing:-.015em;
+  margin:12px 0 0;line-height:1.32;color:var(--wp--preset--color--tinta);
+}
+.kartu-sesi p{font-size:var(--wp--preset--font-size--mikro);color:var(--wp--preset--color--tinta-lembut)}
+.kartu-sesi .wp-block-buttons{margin-top:20px}
+.kartu-sesi .aksi > .wp-block-button__link,
+.kartu-sesi a.aksi{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;
+  padding:12px 16px;border:0;border-radius:var(--wp--custom--radius--kecil);
+  background:var(--wp--preset--color--burgundy);color:var(--wp--preset--color--kertas);
+  text-decoration:none;
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  transition:background .4s;max-width:none;
+}
+.kartu-sesi .aksi > .wp-block-button__link:hover,
+.kartu-sesi .aksi > .wp-block-button__link:focus-visible{
+  background:var(--wp--preset--color--tinta);
+}
+@media(max-width:640px){
+  .kartu-sesi{
+    position:static;width:auto;margin-top:12px;box-shadow:none;
+    border:1px solid var(--wp--preset--color--garis);
+    background:var(--wp--preset--color--kertas);
+  }
+}
+
+/* Daftar baris berikon di dalam kartu sesi */
+.baris{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
+.baris li,.baris > p{
+  display:flex;align-items:center;gap:12px;margin:0;
+  font-size:var(--wp--preset--font-size--kecil);line-height:1.4;
+  color:var(--wp--preset--color--tinta-lembut);
+}
+.baris li::before,.baris > p::before{color:var(--wp--preset--color--kraft)}
+.baris .ikon{color:var(--wp--preset--color--kraft)}
+
+/* ===== 7. Panah penunjuk kartu ===== */
+
+/* digambar sekali waktu halaman terbuka, lalu bergerak pelan ke arah kartu */
+.panah{
+  position:absolute;z-index:4;pointer-events:none;
+  right:calc(clamp(16px,2.4vw,32px) + min(296px,74vw) + 12px);
+  bottom:calc(clamp(16px,2.4vw,32px) + 56px);
+  width:clamp(88px,9.5vw,140px);height:auto;
+  color:#F2D9D4;fill:none;stroke:currentColor;stroke-width:2.6;
+  stroke-linecap:round;stroke-linejoin:round;
+  filter:drop-shadow(0 2px 6px rgb(20 14 8 / .45));
+}
+.panah path{stroke-dasharray:220;stroke-dashoffset:0}
+@media (prefers-reduced-motion: no-preference){
+  .panah path{stroke-dashoffset:220;animation:gores .9s var(--wp--custom--lengkung--halus) 2.2s forwards}
+  .panah{animation:tunjuk 2.4s ease-in-out 3s infinite alternate}
+}
+@keyframes gores{to{stroke-dashoffset:0}}
+@keyframes tunjuk{from{translate:0 0}to{translate:7px 7px}}
+@media(max-width:1100px){.panah{display:none}}
+
+/* ===== 8. Sticker bulat ===== */
+
+.sticker{
+  position:absolute;z-index:4;width:clamp(64px,6.4vw,88px);aspect-ratio:1;
+  border-radius:50%;background:var(--wp--preset--color--rose);
+  display:grid;place-items:center;padding:16px;rotate:-9deg;
+  box-shadow:var(--wp--preset--shadow--sticker);
+  left:calc(64% - 40px);top:-26px;margin:0;
+}
+.sticker img{width:100%;height:auto;opacity:.86;border-radius:0}
+@media(prefers-reduced-motion: no-preference){
+  .sticker{animation:goyang 5.5s ease-in-out infinite alternate}
+}
+@keyframes goyang{to{rotate:4deg;translate:0 -6px}}
+
+/* ===== 9. Dua kolom pengantar ===== */
+
+.duo{
+  display:grid;grid-template-columns:1.15fr .85fr;
+  gap:var(--wp--preset--spacing--jarak-5);align-items:start;
+  margin-top:var(--wp--preset--spacing--jarak-6);
+}
+.duo > *{min-width:0}
+.duo-kanan{
+  display:flex;flex-direction:column;align-items:flex-start;
+  gap:var(--wp--preset--spacing--jarak-3);padding-top:8px;
+}
+@media(max-width:900px){
+  .duo{grid-template-columns:1fr;gap:var(--wp--preset--spacing--jarak-3);
+    margin-top:var(--wp--preset--spacing--jarak-5)}
+}
+
+.pasangan{
+  position:relative;
+  display:grid;grid-template-columns:1.32fr .68fr;
+  gap:var(--wp--preset--spacing--jarak-2);
+  margin-top:var(--wp--preset--spacing--jarak-4);
+}
+.pasangan > *{min-width:0}
+.pasangan figure,
+.pasangan .wp-block-image{
+  margin:0;border-radius:var(--wp--custom--radius--besar);overflow:hidden;
+  background:var(--wp--preset--color--kertas-tua);
+}
+.pasangan .wp-block-image img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;border-radius:0}
+
+.kutipan{
+  background:var(--wp--preset--color--rose);
+  border-radius:var(--wp--custom--radius--besar);
+  padding:clamp(22px,2.6vw,38px);
+  display:flex;flex-direction:column;justify-content:flex-end;min-height:100%;
+}
+.kutipan .qm{
+  font-family:var(--wp--preset--font-family--display);font-style:italic;
+  font-size:clamp(56px,5.6vw,88px);line-height:.55;
+  color:var(--wp--preset--color--burgundy);opacity:.34;
+}
+.kutipan .d,.kutipan p{
+  color:var(--wp--preset--color--burgundy);
+  margin-top:clamp(20px,2vw,30px);
+}
+@media(max-width:760px){
+  .pasangan{grid-template-columns:1fr}
+  .pasangan .wp-block-image img{aspect-ratio:16/10}
+}
+
+/* ===== 10. Kepala seksi ===== */
+
+.kepala{
+  position:relative;display:flex;align-items:flex-end;justify-content:space-between;
+  gap:var(--wp--preset--spacing--jarak-3);flex-wrap:wrap;
+  margin-bottom:var(--wp--preset--spacing--jarak-4);
+}
+.kepala > *{min-width:0}
+.kepala-tengah{
+  text-align:center;flex-direction:column;align-items:center;gap:12px;
+}
+.kepala-tengah .lead{margin-inline:auto;text-align:center;max-width:46ch}
+
+.seksi{margin-top:var(--wp--preset--spacing--jarak-7)}
+@media(max-width:900px){.seksi{margin-top:var(--wp--preset--spacing--jarak-6)}}
+
+.jarak-atas-besar{margin-top:var(--wp--preset--spacing--jarak-6)}
+
+/* ===== 11. Kartu acara ===== */
+
+.kartu-kartu{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:var(--wp--preset--spacing--jarak-2);
+}
+@media(max-width:900px){.kartu-kartu{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.kartu-kartu{grid-template-columns:1fr}}
+
+.kartu{
+  position:relative;display:block;
+  border-radius:var(--wp--custom--radius--besar);overflow:hidden;
+  text-decoration:none;color:inherit;
+  background:var(--wp--preset--color--kertas-tua);isolation:isolate;
+  min-width:0;margin:0;aspect-ratio:3/4;
+}
+.kartu > .wp-block-image{
+  position:absolute;inset:0;z-index:0;margin:0;border-radius:0;overflow:hidden;
+}
+.kartu .wp-block-cover__image-background,
+.kartu img{
+  width:100%;height:100%;object-fit:cover;border-radius:0;
+  transition:transform .8s var(--wp--custom--lengkung--halus);
+}
+.kartu:hover .wp-block-cover__image-background,
+.kartu:hover img{transform:scale(1.055)}
+.kartu .wp-block-cover__background{display:none}
+.kartu > .wp-block-cover__inner-container{position:static;width:100%;height:100%;padding:0}
+
+.kartu::before{
+  content:"";position:absolute;inset:0 0 auto;height:44%;z-index:1;pointer-events:none;
+  background:linear-gradient(rgb(36 28 20 / .5),transparent);
+}
+.kartu-judul{
+  position:absolute;left:20px;top:20px;right:20px;z-index:2;
+  color:var(--wp--preset--color--kertas);
+  font-family:var(--wp--preset--font-family--display);font-style:italic;font-weight:400;
+  font-size:clamp(20px,1.8vw,26px);line-height:1.05;margin:0;
+  text-shadow:0 2px 14px rgb(36 28 20 / .45);
+}
+.kartu-judul a{text-decoration:none;color:inherit}
+/* seluruh kartu jadi target klik, tapi tautannya tetap satu dan tetap kebaca */
+.kartu-judul a::after{content:"";position:absolute;inset:0;z-index:4}
+
+.kaki-kartu{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;padding:16px 20px;
+  background:var(--wp--preset--color--zaitun);
+  color:var(--wp--preset--color--kertas-redup);
+  transition:background .45s;
+}
+.kaki-kartu.kraft{background:var(--wp--preset--color--kraft)}
+.kaki-kartu.rose{background:var(--wp--preset--color--rose-tua)}
+/* Kartu di Query Loop dicetak dari satu cetakan yang sama, jadi warna strip
+   kakinya tidak bisa diketik per kartu. Urutannya dipakai sebagai gantinya,
+   supaya tiga kartu tetap zaitun, kraft, rose seperti di desain. */
+.kartu-kartu > *:nth-child(2) .kaki-kartu{background:var(--wp--preset--color--kraft)}
+.kartu-kartu > *:nth-child(3) .kaki-kartu{background:var(--wp--preset--color--rose-tua)}
+.kartu-kartu > * .kartu:hover .kaki-kartu{background:var(--wp--preset--color--burgundy)}
+.kartu:hover .kaki-kartu{background:var(--wp--preset--color--burgundy)}
+.kaki-kartu .lbl{
+  display:flex;align-items:center;gap:7px;
+  color:var(--wp--preset--color--kertas-redup);
+}
+.kaki-kartu .lbl::before,.kaki-kartu .mini::before{width:12px;height:12px;opacity:.85}
+.kaki-kartu p{font-size:12.5px;line-height:1.55;margin-top:4px;color:var(--wp--preset--color--kertas-redup)}
+.kaki-kartu .mini{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;line-height:1.5;margin-top:8px;letter-spacing:.01em;
+}
+
+/* ===== 12. Sesi terdekat, kartu besar ===== */
+
+.sesi-terdekat{
+  display:grid;grid-template-columns:.82fr 1.18fr;
+  border:1px solid var(--wp--preset--color--garis);
+  border-radius:var(--wp--custom--radius--besar);overflow:hidden;
+  background:var(--wp--preset--color--kertas);
+}
+.sesi-terdekat > *{min-width:0}
+.sesi-foto{
+  position:relative;min-height:100%;margin:0;
+  background:var(--wp--preset--color--kertas-tua);
+}
+.sesi-foto > .wp-block-image{position:absolute;inset:0;margin:0;border-radius:0;overflow:hidden}
+.sesi-foto img{width:100%;height:100%;object-fit:cover;display:block;border-radius:0}
+.sesi-tag{
+  position:absolute;left:0;top:24px;z-index:2;padding:8px 16px;
+  border-top-right-radius:var(--wp--custom--radius--sedang);
+  border-bottom-right-radius:var(--wp--custom--radius--sedang);
+  background:var(--wp--preset--color--burgundy);
+  color:var(--wp--preset--color--kertas);
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;margin:0;
+}
+.sesi-isi{
+  padding:clamp(26px,3vw,46px);
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+  gap:var(--wp--preset--spacing--jarak-2);
+}
+.sesi-isi .lead{max-width:46ch}
+
+.fakta{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:16px var(--wp--preset--spacing--jarak-3);
+  width:100%;margin:6px 0 0;
+  padding-top:var(--wp--preset--spacing--jarak-3);
+  border-top:1px solid var(--wp--preset--color--garis);
+}
+.fakta > *{min-width:0}
+.fakta .dt,.fakta dt{
+  display:flex;align-items:center;gap:8px;margin:0;
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--wp--preset--color--tinta-samar);
+}
+.fakta .dt::before{width:12px;height:12px;color:var(--wp--preset--color--kraft)}
+.fakta .dd,.fakta dd{
+  margin:4px 0 0;font-size:14px;line-height:1.5;
+  color:var(--wp--preset--color--tinta);
+}
+
+/* Alamat menuju Google Maps. Garis bawahnya tipis supaya tidak berteriak,
+   tapi cukup buat menandai bahwa ini bisa diklik. */
+.tempat{
+  color:inherit;text-decoration:none;
+  border-bottom:1px solid var(--wp--preset--color--rose);padding-bottom:2px;
+  transition:border-color .35s,color .35s;
+}
+.tempat:hover,.tempat:focus-visible{
+  color:var(--wp--preset--color--burgundy);
+  border-color:var(--wp--preset--color--burgundy);
+}
+
+.slot{
+  width:100%;height:4px;background:var(--wp--preset--color--garis);
+  border-radius:2px;overflow:hidden;margin-top:var(--wp--preset--spacing--jarak-3);
+}
+.slot i{display:block;height:100%;width:var(--p,0%);background:var(--wp--preset--color--burgundy);border-radius:2px}
+.slot-catatan{font-size:12.5px;color:var(--wp--preset--color--tinta-lembut)}
+
+@media(max-width:900px){
+  .sesi-terdekat{grid-template-columns:1fr}
+  .sesi-foto{aspect-ratio:16/10;min-height:0}
+  .fakta{grid-template-columns:1fr 1fr;gap:14px var(--wp--preset--spacing--jarak-2)}
+}
+@media(max-width:520px){.fakta{grid-template-columns:1fr}}
+
+/* ===== 13. Bento galeri ===== */
+
+/* tinggi baris dikunci lewat tinggi kontainer, jadi foto potret tidak menarik
+   petaknya ke bawah dan setiap strip judul kelihatan tanpa perlu scroll */
+.bento{
+  display:grid;gap:var(--wp--preset--spacing--jarak-2);
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:1fr 1fr;
+  height:var(--wp--custom--tinggi-bento);
+  grid-template-areas:
+    "a a b c"
+    "a a d d";
+}
+.bento > *{
+  position:relative;border-radius:var(--wp--custom--radius--besar);overflow:hidden;
+  background:var(--wp--preset--color--kertas-tua);
+  min-height:0;min-width:0;margin:0;
+}
+.bento .t1{grid-area:a}
+.bento .t2{grid-area:b}
+.bento .t3{grid-area:c}
+.bento .t4{grid-area:d}
+.bento img{
+  width:100%;height:100%;object-fit:cover;display:block;border-radius:0;
+  transition:transform .9s var(--wp--custom--lengkung--halus);
+}
+.bento .t1 img{object-position:center 62%}
+.bento > *:hover img{transform:scale(1.05)}
+
+/* strip judul, dipakai figcaption blok Image supaya bisa diedit langsung */
+.bento figcaption,
+.bento .wp-element-caption,
+.strip{
+  position:absolute;left:0;bottom:0;z-index:2;margin:0;padding:8px 16px;
+  border-top-right-radius:var(--wp--custom--radius--sedang);
+  background:var(--wp--preset--color--zaitun);
+  color:var(--wp--preset--color--kertas);
+  font-family:var(--wp--preset--font-family--display);font-style:italic;
+  font-size:15px;line-height:1.2;text-align:left;
+  transition:background .45s;
+}
+.bento .strip-kraft figcaption,.bento .strip-kraft .wp-element-caption,.strip.kraft{background:var(--wp--preset--color--kraft)}
+.bento .strip-rose figcaption,.bento .strip-rose .wp-element-caption,.strip.rose{background:var(--wp--preset--color--rose-tua)}
+.bento .strip-burgundy figcaption,.bento .strip-burgundy .wp-element-caption,.strip.burgundy{background:var(--wp--preset--color--burgundy)}
+.bento > *:hover figcaption,
+.bento > *:hover .wp-element-caption{background:var(--wp--preset--color--tinta)}
+
+@media(max-width:820px){
+  .bento{
+    grid-template-columns:1fr 1fr;grid-template-rows:auto;height:auto;
+    grid-template-areas:"a a" "b c" "d d";
+  }
+  .bento .t1{aspect-ratio:4/3}
+  .bento .t2,.bento .t3{aspect-ratio:1}
+  .bento .t4{aspect-ratio:16/9}
+}
+
+/* ===== 14. Cetakan polaroid dan tumpukannya ===== */
+
+.cetakan{
+  position:absolute;z-index:5;margin:0;
+  width:var(--w,clamp(92px,9.5vw,132px));
+  background:var(--wp--preset--color--kertas);
+  padding:8px 8px 28px;border-radius:var(--wp--custom--radius--cetakan);
+  rotate:var(--rot,-7deg);
+  box-shadow:var(--wp--preset--shadow--cetakan);
+  transition:rotate .6s var(--wp--custom--lengkung--halus),
+             translate .6s var(--wp--custom--lengkung--halus);
+}
+.cetakan img{
+  width:100%;border-radius:var(--wp--custom--radius--cetakan);
+  aspect-ratio:1;object-fit:cover;
+}
+.cetakan figcaption,
+.cetakan .wp-element-caption{
+  position:absolute;left:8px;right:8px;bottom:8px;text-align:center;margin:0;
+  font-family:var(--wp--preset--font-family--display);font-style:italic;
+  font-size:11.5px;color:var(--wp--preset--color--tinta-lembut);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cetakan:hover{rotate:0deg;translate:0 -8px}
+@media(max-width:1100px){.cetakan.selip{display:none}}
+
+/* posisi cetakan yang diselipkan di antara seksi */
+.cetakan.selip-hero{left:2.2%;top:calc(100% - 96px);--rot:-8deg;--w:clamp(96px,8.4vw,124px);z-index:6}
+.cetakan.selip-pasangan{right:3.5%;top:-34px;--rot:7deg;--w:clamp(96px,8.6vw,130px)}
+.cetakan.selip-kolaborator{right:2%;bottom:-46px;--rot:7deg;--w:clamp(96px,8.2vw,120px)}
+.cetakan.ajakan-1{left:37%;bottom:24px;--rot:-7deg}
+.cetakan.ajakan-2{left:50%;bottom:104px;--rot:6deg}
+
+/* Tumpukan cetakan. Posisi tiap cetakan diatur lewat custom property biar
+   gampang digeser, dan waktu digulir mereka membuka dari satu tumpukan. */
+.tumpukan{
+  position:relative;height:var(--wp--custom--tinggi-tumpukan);
+  margin-top:var(--wp--preset--spacing--jarak-3);
+}
+.tumpukan .cetakan{
+  left:var(--x);top:var(--y);
+  width:var(--pw,clamp(104px,10.5vw,164px));
+}
+.tumpukan .cetakan:hover{z-index:20}
+
+.tumpukan .cetakan:nth-child(1){--x:2%;--y:18%;--rot:-9deg;--fx:26vw;--fy:8%}
+.tumpukan .cetakan:nth-child(2){--x:15%;--y:54%;--rot:6deg;--fx:18vw;--fy:-6%}
+.tumpukan .cetakan:nth-child(3){--x:27%;--y:6%;--rot:4deg;--fx:12vw;--fy:12%}
+.tumpukan .cetakan:nth-child(4){--x:38%;--y:44%;--rot:-6deg;--fx:6vw;--fy:-8%}
+.tumpukan .cetakan:nth-child(5){--x:50%;--y:12%;--rot:8deg;--fx:0vw;--fy:10%}
+.tumpukan .cetakan:nth-child(6){--x:60%;--y:56%;--rot:-4deg;--fx:-8vw;--fy:-6%}
+.tumpukan .cetakan:nth-child(7){--x:71%;--y:20%;--rot:7deg;--fx:-14vw;--fy:10%}
+.tumpukan .cetakan:nth-child(8){--x:81%;--y:50%;--rot:-8deg;--fx:-20vw;--fy:-8%}
+.tumpukan .cetakan:nth-child(9){--x:88%;--y:8%;--rot:5deg;--fx:-26vw;--fy:12%}
+
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .tumpukan{view-timeline-name:--pile;view-timeline-axis:block}
+    .tumpukan .cetakan{
+      animation:sebar linear both;animation-timeline:--pile;
+      animation-range:entry 12% cover 52%;
+    }
+  }
+}
+@keyframes sebar{
+  from{translate:var(--fx) var(--fy);rotate:calc(var(--rot) * .18);opacity:0;scale:.86}
+  to{translate:0 0;rotate:var(--rot);opacity:1;scale:1}
+}
+
+@media(max-width:820px){
+  .tumpukan{
+    height:auto;display:grid;grid-template-columns:repeat(3,1fr);
+    gap:var(--wp--preset--spacing--jarak-2);view-timeline-name:none;
+  }
+  .tumpukan .cetakan{
+    position:static;width:100%;--rot:0deg;rotate:0deg!important;
+    animation:none!important;translate:none!important;scale:1!important;opacity:1!important;
+  }
+}
+@media(max-width:520px){.tumpukan{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== 15. Baris arsip ===== */
+
+.arsip{border-top:1px solid var(--wp--preset--color--garis)}
+.arsip-baris{
+  display:grid;grid-template-columns:150px 1fr auto auto;
+  gap:var(--wp--preset--spacing--jarak-3);align-items:center;
+  padding:var(--wp--preset--spacing--jarak-3) 8px;
+  border-bottom:1px solid var(--wp--preset--color--garis);
+  text-decoration:none;color:inherit;
+  transition:background .4s,padding-inline .4s;
+}
+.arsip-baris > *{min-width:0;margin:0}
+.arsip-baris:hover{background:var(--wp--preset--color--kertas-tua);padding-inline:20px}
+.arsip-tahun{
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--wp--preset--color--tinta-samar);
+}
+.arsip-baris h3,.arsip-nama{
+  margin:0;font-family:var(--wp--preset--font-family--teks);font-style:normal;
+  font-weight:500;font-size:clamp(17px,1.55vw,23px);
+  letter-spacing:-.015em;color:var(--wp--preset--color--tinta);
+  line-height:1.3;transition:color .35s;
+}
+.arsip-baris:hover h3,.arsip-baris:hover .arsip-nama{color:var(--wp--preset--color--burgundy)}
+.arsip-jumlah{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--wp--preset--color--tinta-samar);white-space:nowrap;
+}
+.arsip-jumlah::before{width:12px;height:12px}
+.arsip-buka{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--wp--preset--color--burgundy);white-space:nowrap;
+}
+.arsip-buka::after{
+  content:"";width:12px;height:12px;flex:none;background:currentColor;
+  --ik:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23000' stroke-width='1.4'%3E%3Cpath d='M1 11L11 1M11 1H3.5M11 1V8.5'/%3E%3C/svg%3E");
+  -webkit-mask:var(--ik) center/contain no-repeat;
+  mask:var(--ik) center/contain no-repeat;
+  transition:transform .45s var(--wp--custom--lengkung--halus);
+}
+.arsip-baris:hover .arsip-buka::after{transform:translate(4px,-4px)}
+@media(max-width:820px){
+  .arsip-baris{grid-template-columns:1fr auto;gap:10px 16px;
+    padding:var(--wp--preset--spacing--jarak-3) 6px}
+  .arsip-tahun{grid-column:1/-1;order:-1}
+  .arsip-baris h3,.arsip-nama{grid-column:1/-1}
+  .arsip-jumlah{order:3}
+}
+
+/* ===== 16. Pita kolaborator ===== */
+
+.logos{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:1px;
+  background:var(--wp--preset--color--garis);
+  border:1px solid var(--wp--preset--color--garis);
+  border-radius:var(--wp--custom--radius--besar);overflow:hidden;
+}
+.logos > *{
+  background:var(--wp--preset--color--kertas);
+  display:grid;place-items:center;min-height:120px;
+  padding:var(--wp--preset--spacing--jarak-3) var(--wp--preset--spacing--jarak-2);
+  transition:background .4s;margin:0;border-radius:0;
+}
+.logos > *:hover{background:var(--wp--preset--color--kertas-tua)}
+.logos img{
+  max-width:120px;max-height:48px;width:auto;height:auto;object-fit:contain;
+  opacity:.55;transition:opacity .45s;border-radius:0;
+}
+.logos > *:hover img{opacity:1}
+@media(max-width:1100px){.logos{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:640px){
+  .logos{grid-template-columns:repeat(2,1fr)}
+  .logos > *{min-height:98px}
+}
+
+/* ===== 17. Ajakan WhatsApp ===== */
+
+.ajakan{
+  position:relative;margin-top:var(--wp--preset--spacing--jarak-7);
+  background:var(--wp--preset--color--rose-pucat);
+  border-radius:var(--wp--custom--radius--besar);overflow:hidden;
+  display:grid;grid-template-columns:1fr 1.1fr;align-items:center;
+  gap:var(--wp--preset--spacing--jarak-4);
+  padding:clamp(32px,4vw,72px);
+}
+.ajakan > *{min-width:0}
+/* lengkung yang jadi ciri arah ini */
+.ajakan::before{
+  content:"";position:absolute;left:-6%;top:-28%;width:66%;height:156%;
+  background:var(--wp--preset--color--rose);border-radius:50%;z-index:0;
+}
+.ajakan-kiri{
+  position:relative;z-index:2;display:flex;flex-direction:column;
+  align-items:flex-start;gap:var(--wp--preset--spacing--jarak-3);
+}
+.ajakan-kiri .lbl{color:var(--wp--preset--color--rose-teks)}
+.ajakan-kiri .lead{color:#5A4C3D}
+.ajakan-kanan{
+  position:relative;z-index:1;margin:0;
+  border-radius:var(--wp--custom--radius--sedang);overflow:hidden;aspect-ratio:4/3;
+}
+.ajakan-kanan img{width:100%;height:100%;object-fit:cover;border-radius:0}
+@media(max-width:900px){
+  .ajakan{grid-template-columns:1fr}
+  .ajakan::before{left:-30%;top:-42%;width:150%;height:96%}
+  .ajakan .cetakan{display:none}
+}
+
+/* ===== 18. Kaki halaman ===== */
+
+.kaki,
+footer.wp-block-template-part{
+  margin-top:var(--wp--preset--spacing--jarak-6);
+  padding-top:var(--wp--preset--spacing--jarak-4);
+  border-top:1px solid var(--wp--preset--color--garis);
+  display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;
+  gap:var(--wp--preset--spacing--jarak-4);
+}
+.kaki > *{min-width:0}
+.kaki .wp-block-site-logo img,
+.kaki .mark img{height:64px;width:auto;opacity:.92}
+.kaki ul{
+  list-style:none;margin:16px 0 0;padding:0;
+  display:flex;flex-direction:column;gap:8px;
+}
+.kaki ul a{
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--wp--preset--color--tinta-lembut);text-decoration:none;
+  transition:color .3s;
+}
+.kaki ul a:hover{color:var(--wp--preset--color--burgundy)}
+.kaki-bawah{
+  grid-column:1/-1;
+  margin-top:var(--wp--preset--spacing--jarak-4);
+  padding-top:var(--wp--preset--spacing--jarak-2);
+  border-top:1px solid var(--wp--preset--color--garis);
+  display:flex;justify-content:space-between;
+  gap:var(--wp--preset--spacing--jarak-2);flex-wrap:wrap;
+}
+.kaki-bawah p{
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--wp--preset--color--tinta-samar);
+}
+@media(max-width:900px){
+  .kaki{grid-template-columns:1fr 1fr;gap:var(--wp--preset--spacing--jarak-3)}
+  .kaki > *:first-child{grid-column:1/-1}
+}
+
+/* ===== 19. Tombol WhatsApp mengambang ===== */
+
+.fab{
+  position:fixed;right:24px;bottom:24px;z-index:90;
+  display:flex;align-items:center;gap:0;height:56px;padding:0 20px;
+  border-radius:var(--wp--custom--radius--pil);
+  background:var(--wp--preset--color--burgundy);
+  color:var(--wp--preset--color--kertas);
+  text-decoration:none;box-shadow:var(--wp--preset--shadow--mengambang);
+  opacity:0;visibility:hidden;translate:0 14px;
+  transition:opacity .5s,visibility .5s,
+    translate .5s var(--wp--custom--lengkung--halus),
+    background .4s,gap .45s,padding .45s;
+}
+.fab.tampil{opacity:1;visibility:visible;translate:0 0}
+.fab svg{width:24px;height:24px;flex:none}
+.fab span{
+  max-width:0;overflow:hidden;white-space:nowrap;
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  transition:max-width .55s var(--wp--custom--lengkung--halus);
+}
+.fab:hover,.fab:focus-visible{background:var(--wp--preset--color--tinta);gap:12px}
+.fab:hover span,.fab:focus-visible span{max-width:150px}
+@media(max-width:600px){.fab{right:16px;bottom:16px;height:52px;padding:0 16px}}
+
+/* ===== 20. Pembuka halaman =====
+   Tanpa pustaka animasi. Timeline dipegang Web Animations API, jadi tetap bisa
+   diatur bertahap seperti GSAP tapi tambahan bobotnya nol. Semua keadaan awal
+   dipasang lewat kelas .intro yang cuma ada kalau JS jalan, jadi tanpa JS
+   halaman langsung tampil utuh. */
+
+.tirai{
+  position:fixed;inset:0;z-index:400;display:none;place-items:center;
+  background:var(--wp--preset--color--kertas);clip-path:inset(0 0 0 0);
+}
+html.intro .tirai{display:grid}
+.tirai img{height:clamp(66px,8.4vw,112px);width:auto;opacity:0}
+
+html.intro .bar,
+html.intro .hero .lbl,
+html.intro .hero-aksi,
+html.intro .panggung,
+html.intro .kartu-sesi,
+html.intro .hero > .cetakan{opacity:0}
+html.intro .hero h1 .kata,
+html.intro .hero .d-xxl .kata{display:inline-block;overflow:hidden;vertical-align:bottom}
+html.intro .hero h1 .kata > i,
+html.intro .hero .d-xxl .kata > i{display:inline-block;font-style:italic;translate:0 106%}
+
+@media (prefers-reduced-motion: reduce){
+  html.intro .tirai{display:none}
+  html.intro .bar,html.intro .hero .lbl,html.intro .hero-aksi,html.intro .panggung,
+  html.intro .kartu-sesi,html.intro .hero > .cetakan{opacity:1}
+  html.intro .hero h1 .kata > i,
+  html.intro .hero .d-xxl .kata > i{translate:0 0}
+}
+
+/* ===== 21. Gerak masuk ===== */
+
+@keyframes naik{from{opacity:0;translate:0 24px}to{opacity:1;translate:0 0}}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .naik{animation:naik linear both;animation-timeline:view();animation-range:entry 4% cover 24%}
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  .sticker,.wp-block-button__link,.kartu img,.bento img{
+    transition:none!important;animation:none!important;
+  }
+}
+
+/* ===== 22. Halaman isi biasa ===== */
+
+/* Halaman tunggal, hasil pencarian, arsip blog, dan 404 memakai lebar baca
+   yang lebih sempit supaya barisnya tidak terlalu panjang. */
+.isi-halaman{
+  max-width:760px;margin-inline:auto;
+  padding-block:var(--wp--preset--spacing--jarak-5) var(--wp--preset--spacing--jarak-6);
+}
+.isi-halaman h1,.isi-halaman h2,.isi-halaman h3{margin-block:var(--wp--preset--spacing--jarak-3) var(--wp--preset--spacing--jarak-2)}
+.isi-halaman p{margin-block:0 var(--wp--preset--spacing--jarak-2);color:var(--wp--preset--color--tinta-lembut)}
+.isi-halaman .wp-block-post-content p{line-height:1.8}
+
+.daftar-tulisan .wp-block-post-template{
+  display:grid;gap:var(--wp--preset--spacing--jarak-4);list-style:none;margin:0;padding:0;
+}
+.daftar-tulisan li{
+  padding-bottom:var(--wp--preset--spacing--jarak-3);
+  border-bottom:1px solid var(--wp--preset--color--garis);
+}
+
+.wp-block-query-pagination{
+  margin-top:var(--wp--preset--spacing--jarak-4);
+  font-size:var(--wp--preset--font-size--label);font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;
+}
+.wp-block-search__button{border-radius:var(--wp--custom--radius--pil)}
+.wp-block-search__input{
+  border:1px solid var(--wp--preset--color--garis);
+  border-radius:var(--wp--custom--radius--kecil);
+  padding:12px 16px;background:var(--wp--preset--color--kertas);
+}
+
+/* Detail acara, kolom kanan berisi ringkasan fakta */
+.acara-detail{
+  display:grid;grid-template-columns:1.18fr .82fr;
+  gap:var(--wp--preset--spacing--jarak-5);
+  margin-top:var(--wp--preset--spacing--jarak-5);
+  align-items:start;
+}
+.acara-detail > *{min-width:0}
+.acara-samping{
+  border:1px solid var(--wp--preset--color--garis);
+  border-radius:var(--wp--custom--radius--besar);
+  padding:var(--wp--preset--spacing--jarak-3);
+  background:var(--wp--preset--color--kertas);
+  position:sticky;top:120px;
+}
+@media(max-width:900px){
+  .acara-detail{grid-template-columns:1fr}
+  .acara-samping{position:static}
+}
+
+/* ===== 23. Alias varian gaya blok =====
+   register_block_style() memasang kelas berawalan is-style-, jadi tiap kelas
+   polos yang dipakai pattern diberi pasangan is-style-nya di sini. */
+
+.wp-block-image.is-style-cetakan{
+  position:absolute;z-index:5;margin:0;
+  width:var(--w,clamp(92px,9.5vw,132px));
+  background:var(--wp--preset--color--kertas);
+  padding:8px 8px 28px;border-radius:var(--wp--custom--radius--cetakan);
+  rotate:var(--rot,-7deg);
+  box-shadow:var(--wp--preset--shadow--cetakan);
+  transition:rotate .6s var(--wp--custom--lengkung--halus),
+             translate .6s var(--wp--custom--lengkung--halus);
+}
+.wp-block-image.is-style-cetakan img{
+  width:100%;border-radius:var(--wp--custom--radius--cetakan);
+  aspect-ratio:1;object-fit:cover;
+}
+.wp-block-image.is-style-cetakan .wp-element-caption{
+  position:absolute;left:8px;right:8px;bottom:8px;text-align:center;margin:0;
+  font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.wp-block-image.is-style-cetakan:hover{rotate:0deg;translate:0 -8px}
+
+.bento .is-style-strip-zaitun .wp-element-caption{background:var(--wp--preset--color--zaitun)}
+.bento .is-style-strip-kraft .wp-element-caption{background:var(--wp--preset--color--kraft)}
+.bento .is-style-strip-rose .wp-element-caption{background:var(--wp--preset--color--rose-tua)}
+.bento .is-style-strip-burgundy .wp-element-caption{background:var(--wp--preset--color--burgundy)}
+
+.wp-block-group.is-style-seksi{margin-top:var(--wp--preset--spacing--jarak-7)}
+@media(max-width:900px){.wp-block-group.is-style-seksi{margin-top:var(--wp--preset--spacing--jarak-6)}}
+.wp-block-group.is-style-kepala-tengah{
+  text-align:center;flex-direction:column;align-items:center;gap:12px;
+}
+.wp-block-group.is-style-kepala-tengah .lead{margin-inline:auto;text-align:center;max-width:46ch}
+
+/* ===== 24. Penyeimbang jarak blok =====
+   Layout alir bawaan WordPress memberi margin-block-start ke setiap anak.
+   Di kontainer yang jaraknya sudah diatur grid atau flex, margin itu dibuang. */
+
+.hero-atas > *,.hero-aksi > *,.hero-judul > *,.duo > *,.duo-kanan > *,
+.pasangan > *,.kepala > *,.kepala > * > *,.kartu-kartu > *,.bento > *,
+.logos > *,.arsip > *,.arsip-baris > *,.fakta > *,.fakta > * > *,
+.ajakan > *,.ajakan-kiri > *,.kaki > *,.kaki-bawah > *,.sesi-terdekat > *,
+.sesi-isi > *,.tumpukan > *,.panggung > *,.panggung-teks > *,
+.kartu-sesi > *,.kutipan > *{
+  margin-block-start:0;margin-block-end:0;
+}
+
+/* ===== 25. Jembatan ke blok dinamis =====
+   Blok Post Featured Image, Post Template, dan Post Title punya markup sendiri.
+   Bagian ini menyambungkannya ke kelas tata letak yang sudah ada di atas. */
+
+.panggung > .wp-block-post-featured-image,
+.kartu > .wp-block-post-featured-image,
+.sesi-foto > .wp-block-post-featured-image{
+  position:absolute;inset:0;z-index:0;margin:0;border-radius:0;overflow:hidden;
+}
+.panggung > .wp-block-post-featured-image img,
+.kartu > .wp-block-post-featured-image img,
+.sesi-foto > .wp-block-post-featured-image img{
+  width:100%;height:100%;object-fit:cover;border-radius:0;
+}
+
+.wp-block-post-template{list-style:none;margin:0;padding:0}
+.wp-block-post-template.kartu-kartu > li,
+.arsip .wp-block-post-template > li{margin:0;min-width:0}
+.wp-block-post-template.kartu-kartu > li{display:block}
+
+.arsip .wp-block-post-template{border-top:1px solid var(--wp--preset--color--garis)}
+.arsip-baris{position:relative}
+/* seluruh baris jadi target klik, tautannya tetap satu */
+.arsip-baris .wp-block-post-title a::after{content:"";position:absolute;inset:0;z-index:1}
+.arsip-baris .wp-block-post-title a{text-decoration:none;color:inherit}
+.arsip-buka{position:relative;z-index:2}
+
+.kaki-kartu .wp-block-post-date,
+.kaki-kartu .wp-block-post-terms,
+.kaki-kartu .wp-block-post-excerpt{margin:0}
+.kaki-kartu .wp-block-post-excerpt p{
+  font-size:12.5px;line-height:1.55;margin:4px 0 0;
+  color:var(--wp--preset--color--kertas-redup);
+}
+.kaki-kartu .wp-block-post-excerpt__more-text{display:none}
+
+.sesi-isi .wp-block-post-title{margin:0}
+.sesi-isi .wp-block-post-excerpt p{margin:0}
+.sesi-isi .wp-block-post-excerpt__more-text{display:none}
+.fakta .wp-block-post-date,
+.fakta .wp-block-post-terms{
+  margin:4px 0 0;font-size:14px;line-height:1.5;font-weight:400;
+  letter-spacing:0;text-transform:none;
+  color:var(--wp--preset--color--tinta);
+}
+
+/* Panggung tanpa teks di atasnya, dipakai halaman detail acara.
+   Gradasi gelapnya dimatikan karena tidak ada teks yang perlu dinaungi. */
+.panggung-polos::after{display:none}
+
+/* Pengantar pendek di kepala seksi arsip, dibatasi supaya barisnya tidak
+   lebih panjang dari judul di sebelahnya. */
+.lead-sempit{max-width:32ch;text-wrap:pretty}

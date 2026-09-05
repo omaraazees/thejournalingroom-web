@@ -1,0 +1,50 @@
+<!-- wp:template-part {"slug":"header","tagName":"header","className":"bar","area":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"default"}} -->
+<main class="wp-block-group">
+
+<!-- wp:group {"tagName":"section","className":"hero","layout":{"type":"default"}} -->
+<section class="wp-block-group hero">
+<!-- wp:group {"className":"kepala kepala-tengah","layout":{"type":"default"}} -->
+<div class="wp-block-group kepala kepala-tengah">
+<!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Jadwal</p><!-- /wp:paragraph -->
+<!-- wp:query-title {"type":"archive","showPrefix":false,"className":"d d-xl"} /-->
+<!-- wp:paragraph {"className":"lead"} --><p class="lead">Semua sesi journaling The Journaling Room, dari yang paling dekat sampai yang sudah lewat. Kursinya dibatasi, jadi tanyakan slotnya dulu ke kami.</p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</section>
+<!-- /wp:group -->
+
+<!-- wp:query {"queryId":3,"query":{"perPage":24,"pages":0,"offset":0,"postType":"acara","order":"asc","orderBy":"date","inherit":true},"className":"arsip"} -->
+<div class="wp-block-query arsip">
+
+<!-- wp:post-template {"className":"arsip-daftar"} -->
+<!-- wp:group {"className":"arsip-baris","layout":{"type":"default"}} -->
+<div class="wp-block-group arsip-baris">
+<!-- wp:post-date {"format":"j M Y","className":"arsip-tahun","isLink":false} /-->
+<!-- wp:post-title {"level":2,"isLink":true,"className":"arsip-nama"} /-->
+<!-- wp:post-terms {"term":"kota","className":"arsip-jumlah ik-pin"} /-->
+<!-- wp:paragraph {"className":"arsip-buka"} --><p class="arsip-buka">Lihat sesi</p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+
+<!-- wp:query-pagination -->
+<!-- wp:query-pagination-previous /-->
+<!-- wp:query-pagination-numbers /-->
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph {"className":"lead"} --><p class="lead">Belum ada acara yang terbit. Tambahkan lewat menu Acara di dasbor.</p><!-- /wp:paragraph -->
+<!-- /wp:query-no-results -->
+
+</div>
+<!-- /wp:query -->
+
+<!-- wp:pattern {"slug":"tjr-v5/ajakan-whatsapp"} /-->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"kaki","area":"footer"} /-->

@@ -1,0 +1,1079 @@
+[
+  {
+    "nama": "amco-naoki-03",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/amco-naoki-03.jpg",
+    "jpg_2x": "wordpress/foto-hd/amco-naoki-03@2x.jpg",
+    "webp": "wordpress/foto-webp/amco-naoki-03.webp",
+    "webp_2x": "wordpress/foto-webp/amco-naoki-03@2x.webp",
+    "lebar": 731,
+    "tinggi": 1300,
+    "rasio": 0.5623,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 248718,
+      "jpg_2x": 774631,
+      "webp": 159678,
+      "webp_2x": 404604
+    },
+    "lebar_2x": 1462,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_3298.heic",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "cetakan"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "amco-naoki-06",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/amco-naoki-06.jpg",
+    "jpg_2x": "wordpress/foto-hd/amco-naoki-06@2x.jpg",
+    "webp": "wordpress/foto-webp/amco-naoki-06.webp",
+    "webp_2x": "wordpress/foto-webp/amco-naoki-06@2x.webp",
+    "lebar": 731,
+    "tinggi": 1300,
+    "rasio": 0.5623,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 168783,
+      "jpg_2x": 562772,
+      "webp": 88210,
+      "webp_2x": 239048
+    },
+    "lebar_2x": 1462,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_3323.heic",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "baru-lewat"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "artotel-01",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/artotel-01.jpg",
+    "jpg_2x": "wordpress/foto-hd/artotel-01@2x.jpg",
+    "webp": "wordpress/foto-webp/artotel-01.webp",
+    "webp_2x": "wordpress/foto-webp/artotel-01@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 266842,
+      "jpg_2x": 800800,
+      "webp": 138574,
+      "webp_2x": 346224
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_6830.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [],
+    "dipakai_di_v5": false,
+    "muat_awal": false
+  },
+  {
+    "nama": "artotel-13",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/artotel-13.jpg",
+    "jpg_2x": "wordpress/foto-hd/artotel-13@2x.jpg",
+    "webp": "wordpress/foto-webp/artotel-13.webp",
+    "webp_2x": "wordpress/foto-webp/artotel-13@2x.webp",
+    "lebar": 1300,
+    "tinggi": 731,
+    "rasio": 1.7784,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 218819,
+      "jpg_2x": 622161,
+      "webp": 107484,
+      "webp_2x": 250306
+    },
+    "lebar_2x": 2600,
+    "tinggi_2x": 1462,
+    "sumber_asli": "IMG_6859.JPG",
+    "sisi_terpanjang_asli": 3520,
+    "dipakai_di": [
+      "cta"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "artotel-16",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/artotel-16.jpg",
+    "jpg_2x": "wordpress/foto-hd/artotel-16@2x.jpg",
+    "webp": "wordpress/foto-webp/artotel-16.webp",
+    "webp_2x": "wordpress/foto-webp/artotel-16@2x.webp",
+    "lebar": 731,
+    "tinggi": 1300,
+    "rasio": 0.5623,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 281957,
+      "jpg_2x": 932305,
+      "webp": 199668,
+      "webp_2x": 586900
+    },
+    "lebar_2x": 1462,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_6863.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "tentang",
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "artotel-19",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/artotel-19.jpg",
+    "jpg_2x": "wordpress/foto-hd/artotel-19@2x.jpg",
+    "webp": "wordpress/foto-webp/artotel-19.webp",
+    "webp_2x": "wordpress/foto-webp/artotel-19@2x.webp",
+    "lebar": 731,
+    "tinggi": 1300,
+    "rasio": 0.5623,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 220240,
+      "jpg_2x": 785398,
+      "webp": 124240,
+      "webp_2x": 423154
+    },
+    "lebar_2x": 1462,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_6868.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "cetakan"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "kolondjono-09",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/kolondjono-09.jpg",
+    "jpg_2x": "wordpress/foto-hd/kolondjono-09@2x.jpg",
+    "webp": "wordpress/foto-webp/kolondjono-09.webp",
+    "webp_2x": "wordpress/foto-webp/kolondjono-09@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 207749,
+      "jpg_2x": 606485,
+      "webp": 94992,
+      "webp_2x": 229650
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_1286.heic",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [],
+    "dipakai_di_v5": false,
+    "muat_awal": false
+  },
+  {
+    "nama": "kolondjono-20",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/kolondjono-20.jpg",
+    "jpg_2x": "wordpress/foto-hd/kolondjono-20@2x.jpg",
+    "webp": "wordpress/foto-webp/kolondjono-20.webp",
+    "webp_2x": "wordpress/foto-webp/kolondjono-20@2x.webp",
+    "lebar": 731,
+    "tinggi": 1300,
+    "rasio": 0.5623,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 255377,
+      "jpg_2x": 801809,
+      "webp": 155058,
+      "webp_2x": 414278
+    },
+    "lebar_2x": 1462,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_1305.jpg",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "cetakan"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "kupiku-01",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/kupiku-01.jpg",
+    "jpg_2x": "wordpress/foto-hd/kupiku-01@2x.jpg",
+    "webp": "wordpress/foto-webp/kupiku-01.webp",
+    "webp_2x": "wordpress/foto-webp/kupiku-01@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 161504,
+      "jpg_2x": 471923,
+      "webp": 71084,
+      "webp_2x": 174672
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_3997.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "jadwal"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "kupiku-04",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/kupiku-04.jpg",
+    "jpg_2x": "wordpress/foto-hd/kupiku-04@2x.jpg",
+    "webp": "wordpress/foto-webp/kupiku-04.webp",
+    "webp_2x": "wordpress/foto-webp/kupiku-04@2x.webp",
+    "lebar": 1300,
+    "tinggi": 731,
+    "rasio": 1.7784,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 161358,
+      "jpg_2x": 513117,
+      "webp": 86128,
+      "webp_2x": 235354
+    },
+    "lebar_2x": 2600,
+    "tinggi_2x": 1462,
+    "sumber_asli": "IMG_4010.JPG",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "cetakan"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "latar-meja",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/latar-meja.jpg",
+    "jpg_2x": "wordpress/foto-hd/latar-meja@2x.jpg",
+    "webp": "wordpress/foto-webp/latar-meja.webp",
+    "webp_2x": "wordpress/foto-webp/latar-meja@2x.webp",
+    "lebar": 1300,
+    "tinggi": 731,
+    "rasio": 1.7784,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 123681,
+      "jpg_2x": 182126,
+      "webp": 47370,
+      "webp_2x": 72788
+    },
+    "lebar_2x": 1900,
+    "tinggi_2x": 1069,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "global"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "pasar-jakal-02",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/pasar-jakal-02.jpg",
+    "jpg_2x": "wordpress/foto-hd/pasar-jakal-02@2x.jpg",
+    "webp": "wordpress/foto-webp/pasar-jakal-02.webp",
+    "webp_2x": "wordpress/foto-webp/pasar-jakal-02@2x.webp",
+    "lebar": 1300,
+    "tinggi": 731,
+    "rasio": 1.7784,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 307713,
+      "jpg_2x": 934735,
+      "webp": 203342,
+      "webp_2x": 532356
+    },
+    "lebar_2x": 2600,
+    "tinggi_2x": 1462,
+    "sumber_asli": "31ad1426-a121-4b28-8f33-ec6c4d2babac.JPG",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "cetakan"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "pasar-jakal-05",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/pasar-jakal-05.jpg",
+    "jpg_2x": "wordpress/foto-hd/pasar-jakal-05@2x.jpg",
+    "webp": "wordpress/foto-webp/pasar-jakal-05.webp",
+    "webp_2x": "wordpress/foto-webp/pasar-jakal-05@2x.webp",
+    "lebar": 731,
+    "tinggi": 1300,
+    "rasio": 0.5623,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 205962,
+      "jpg_2x": 696158,
+      "webp": 109608,
+      "webp_2x": 323738
+    },
+    "lebar_2x": 1462,
+    "tinggi_2x": 2600,
+    "sumber_asli": "d9ba1ead-66b2-4769-b3e2-0caed7955d41.JPG",
+    "sisi_terpanjang_asli": 4096,
+    "dipakai_di": [
+      "baru-lewat"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "pasar-jakal-06",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/pasar-jakal-06.jpg",
+    "jpg_2x": "wordpress/foto-hd/pasar-jakal-06@2x.jpg",
+    "webp": "wordpress/foto-webp/pasar-jakal-06.webp",
+    "webp_2x": "wordpress/foto-webp/pasar-jakal-06@2x.webp",
+    "lebar": 731,
+    "tinggi": 1300,
+    "rasio": 0.5623,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 210375,
+      "jpg_2x": 714071,
+      "webp": 112390,
+      "webp_2x": 337490
+    },
+    "lebar_2x": 1462,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_3964.JPG",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "galeri"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "radian-11",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/radian-11.jpg",
+    "jpg_2x": "wordpress/foto-hd/radian-11@2x.jpg",
+    "webp": "wordpress/foto-webp/radian-11.webp",
+    "webp_2x": "wordpress/foto-webp/radian-11@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 216734,
+      "jpg_2x": 640851,
+      "webp": 98086,
+      "webp_2x": 234468
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_1622.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "galeri"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "radian-24",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/radian-24.jpg",
+    "jpg_2x": "wordpress/foto-hd/radian-24@2x.jpg",
+    "webp": "wordpress/foto-webp/radian-24.webp",
+    "webp_2x": "wordpress/foto-webp/radian-24@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 166044,
+      "jpg_2x": 508172,
+      "webp": 66834,
+      "webp_2x": 158374
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_1644.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "tentang",
+      "cta"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "radian-30",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/radian-30.jpg",
+    "jpg_2x": "wordpress/foto-hd/radian-30@2x.jpg",
+    "webp": "wordpress/foto-webp/radian-30.webp",
+    "webp_2x": "wordpress/foto-webp/radian-30@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 197714,
+      "jpg_2x": 682761,
+      "webp": 85960,
+      "webp_2x": 246674
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_1659.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "cetakan"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "radian-33",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/radian-33.jpg",
+    "jpg_2x": "wordpress/foto-hd/radian-33@2x.jpg",
+    "webp": "wordpress/foto-webp/radian-33.webp",
+    "webp_2x": "wordpress/foto-webp/radian-33@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 304189,
+      "jpg_2x": 1025891,
+      "webp": 181368,
+      "webp_2x": 542324
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_1673.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [],
+    "dipakai_di_v5": false,
+    "muat_awal": false
+  },
+  {
+    "nama": "snapobox-02",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/snapobox-02.jpg",
+    "jpg_2x": "wordpress/foto-hd/snapobox-02@2x.jpg",
+    "webp": "wordpress/foto-webp/snapobox-02.webp",
+    "webp_2x": "wordpress/foto-webp/snapobox-02@2x.webp",
+    "lebar": 733,
+    "tinggi": 1300,
+    "rasio": 0.5638,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 197922,
+      "jpg_2x": 625378,
+      "webp": 99656,
+      "webp_2x": 264718
+    },
+    "lebar_2x": 1467,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_4042.jpg",
+    "sisi_terpanjang_asli": 3520,
+    "dipakai_di": [
+      "baru-lewat"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "snapobox-08",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/snapobox-08.jpg",
+    "jpg_2x": "wordpress/foto-hd/snapobox-08@2x.jpg",
+    "webp": "wordpress/foto-webp/snapobox-08.webp",
+    "webp_2x": "wordpress/foto-webp/snapobox-08@2x.webp",
+    "lebar": 731,
+    "tinggi": 1300,
+    "rasio": 0.5623,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 229854,
+      "jpg_2x": 739183,
+      "webp": 127782,
+      "webp_2x": 352990
+    },
+    "lebar_2x": 1462,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_4050.JPG",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "cetakan"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "snapobox-11",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/snapobox-11.jpg",
+    "jpg_2x": "wordpress/foto-hd/snapobox-11@2x.jpg",
+    "webp": "wordpress/foto-webp/snapobox-11.webp",
+    "webp_2x": "wordpress/foto-webp/snapobox-11@2x.webp",
+    "lebar": 1300,
+    "tinggi": 731,
+    "rasio": 1.7784,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 270252,
+      "jpg_2x": 845258,
+      "webp": 163938,
+      "webp_2x": 442488
+    },
+    "lebar_2x": 2600,
+    "tinggi_2x": 1462,
+    "sumber_asli": "IMG_4054.JPG",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "hero"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": true
+  },
+  {
+    "nama": "statement-beauty-01",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/statement-beauty-01.jpg",
+    "jpg_2x": "wordpress/foto-hd/statement-beauty-01@2x.jpg",
+    "webp": "wordpress/foto-webp/statement-beauty-01.webp",
+    "webp_2x": "wordpress/foto-webp/statement-beauty-01@2x.webp",
+    "lebar": 731,
+    "tinggi": 1300,
+    "rasio": 0.5623,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 171511,
+      "jpg_2x": 516416,
+      "webp": 93810,
+      "webp_2x": 245694
+    },
+    "lebar_2x": 1462,
+    "tinggi_2x": 2600,
+    "sumber_asli": "D55B7D6E-C32C-4779-AD7F-7181CB193297.JPG",
+    "sisi_terpanjang_asli": 3840,
+    "dipakai_di": [],
+    "dipakai_di_v5": false,
+    "muat_awal": false
+  },
+  {
+    "nama": "sundayreads-08",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/sundayreads-08.jpg",
+    "jpg_2x": "wordpress/foto-hd/sundayreads-08@2x.jpg",
+    "webp": "wordpress/foto-webp/sundayreads-08.webp",
+    "webp_2x": "wordpress/foto-webp/sundayreads-08@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 300662,
+      "jpg_2x": 933025,
+      "webp": 168614,
+      "webp_2x": 436962
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_3965.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "galeri"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "sundayreads-12",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/sundayreads-12.jpg",
+    "jpg_2x": "wordpress/foto-hd/sundayreads-12@2x.jpg",
+    "webp": "wordpress/foto-webp/sundayreads-12.webp",
+    "webp_2x": "wordpress/foto-webp/sundayreads-12@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 162799,
+      "jpg_2x": 488580,
+      "webp": 73994,
+      "webp_2x": 186336
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_4002.HEIC",
+    "sisi_terpanjang_asli": 8064,
+    "dipakai_di": [
+      "cetakan"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "sundayreads-20",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/sundayreads-20.jpg",
+    "jpg_2x": "wordpress/foto-hd/sundayreads-20@2x.jpg",
+    "webp": "wordpress/foto-webp/sundayreads-20.webp",
+    "webp_2x": "wordpress/foto-webp/sundayreads-20@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 185704,
+      "jpg_2x": 533878,
+      "webp": 83344,
+      "webp_2x": 206416
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_4017.HEIC",
+    "sisi_terpanjang_asli": 5712,
+    "dipakai_di": [],
+    "dipakai_di_v5": false,
+    "muat_awal": false
+  },
+  {
+    "nama": "sundayreads-27",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/sundayreads-27.jpg",
+    "jpg_2x": "wordpress/foto-hd/sundayreads-27@2x.jpg",
+    "webp": "wordpress/foto-webp/sundayreads-27.webp",
+    "webp_2x": "wordpress/foto-webp/sundayreads-27@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 259225,
+      "jpg_2x": 791282,
+      "webp": 135648,
+      "webp_2x": 332674
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_4040.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "hero",
+      "cta"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "wardah-04",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/wardah-04.jpg",
+    "jpg_2x": "wordpress/foto-hd/wardah-04@2x.jpg",
+    "webp": "wordpress/foto-webp/wardah-04.webp",
+    "webp_2x": "wordpress/foto-webp/wardah-04@2x.webp",
+    "lebar": 975,
+    "tinggi": 1300,
+    "rasio": 0.75,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 168969,
+      "jpg_2x": 502731,
+      "webp": 68486,
+      "webp_2x": 159034
+    },
+    "lebar_2x": 1950,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_5390.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "cetakan"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "wardah-09",
+    "tipe": "foto",
+    "jpg_1x": "wordpress/foto-hd/wardah-09.jpg",
+    "jpg_2x": "wordpress/foto-hd/wardah-09@2x.jpg",
+    "webp": "wordpress/foto-webp/wardah-09.webp",
+    "webp_2x": "wordpress/foto-webp/wardah-09@2x.webp",
+    "lebar": 731,
+    "tinggi": 1300,
+    "rasio": 0.5623,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 244776,
+      "jpg_2x": 781689,
+      "webp": 144436,
+      "webp_2x": 391164
+    },
+    "lebar_2x": 1462,
+    "tinggi_2x": 2600,
+    "sumber_asli": "IMG_5407.HEIC",
+    "sisi_terpanjang_asli": 4032,
+    "dipakai_di": [
+      "galeri"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "amco",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/amco.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 367,
+    "tinggi": 300,
+    "rasio": 1.2233,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 33203,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "artotel",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/artotel.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 1208,
+    "tinggi": 300,
+    "rasio": 4.0267,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 75148,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "hanasui",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/hanasui.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 1910,
+    "tinggi": 300,
+    "rasio": 6.3667,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 76078,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "heejaz",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/heejaz.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 377,
+    "tinggi": 300,
+    "rasio": 1.2567,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 21010,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "kupiku",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/kupiku.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 978,
+    "tinggi": 300,
+    "rasio": 3.26,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 39428,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "pasar-jakal",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/pasar-jakal.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 480,
+    "tinggi": 300,
+    "rasio": 1.6,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 37363,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "radian",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/radian.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 256,
+    "tinggi": 300,
+    "rasio": 0.8533,
+    "orientasi": "potret",
+    "byte": {
+      "jpg_1x": 32942,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "snapobox",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/snapobox.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 1118,
+    "tinggi": 300,
+    "rasio": 3.7267,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 46772,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "statement-beauty",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/statement-beauty.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 901,
+    "tinggi": 300,
+    "rasio": 3.0033,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 23068,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "sundayreads",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/sundayreads.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 457,
+    "tinggi": 300,
+    "rasio": 1.5233,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 32856,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  },
+  {
+    "nama": "tjr-black",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/tjr-black.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 900,
+    "tinggi": 465,
+    "rasio": 1.9355,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 47238,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "global",
+      "tentang",
+      "arsip",
+      "kolaborator",
+      "cta"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": true
+  },
+  {
+    "nama": "wardah",
+    "tipe": "logo",
+    "jpg_1x": "wordpress/logo-web/wardah.png",
+    "jpg_2x": null,
+    "webp": null,
+    "webp_2x": null,
+    "lebar": 1556,
+    "tinggi": 300,
+    "rasio": 5.1867,
+    "orientasi": "lanskap",
+    "byte": {
+      "jpg_1x": 95300,
+      "jpg_2x": null,
+      "webp": null,
+      "webp_2x": null
+    },
+    "lebar_2x": null,
+    "tinggi_2x": null,
+    "sumber_asli": null,
+    "sisi_terpanjang_asli": null,
+    "dipakai_di": [
+      "kolaborator"
+    ],
+    "dipakai_di_v5": true,
+    "muat_awal": false
+  }
+]

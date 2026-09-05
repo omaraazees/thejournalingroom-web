@@ -1,0 +1,354 @@
+[
+  {
+    "key": "group_tjr_acara",
+    "title": "Detail Acara",
+    "fields": [
+      {
+        "key": "field_tjr_tab_waktu",
+        "label": "Waktu dan tempat",
+        "name": "",
+        "aria-label": "",
+        "type": "tab",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "placement": "top",
+        "endpoint": 0
+      },
+      {
+        "key": "field_tjr_tanggal_mulai",
+        "label": "Tanggal dan jam mulai",
+        "name": "tanggal_mulai",
+        "aria-label": "",
+        "type": "date_time_picker",
+        "instructions": "Kapan sesi dimulai. Ini yang menentukan urutan di halaman Jadwal dan kapan acara pindah sendiri ke arsip.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "display_format": "d/m/Y H:i",
+        "return_format": "Y-m-d H:i:s",
+        "first_day": 1
+      },
+      {
+        "key": "field_tjr_durasi_jam",
+        "label": "Durasi (jam)",
+        "name": "durasi_jam",
+        "aria-label": "",
+        "type": "number",
+        "instructions": "Berapa jam sesinya. Boleh setengah, misalnya 2.5.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": 3,
+        "min": 0.5,
+        "max": 12,
+        "step": 0.5,
+        "prepend": "",
+        "append": "jam",
+        "placeholder": ""
+      },
+      {
+        "key": "field_tjr_venue_nama",
+        "label": "Nama venue",
+        "name": "venue_nama",
+        "aria-label": "",
+        "type": "text",
+        "instructions": "Tulis seperti yang orang cari, misalnya Kupiku Coffee atau ROCCA Artotel.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": 80,
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_tjr_venue_maps",
+        "label": "Link Google Maps",
+        "name": "venue_maps",
+        "aria-label": "",
+        "type": "url",
+        "instructions": "Buka Google Maps, cari venuenya, tekan Bagikan, lalu tempel link di sini. Kalau dikosongkan, tombol Lihat peta tidak muncul.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "https://maps.app.goo.gl/..."
+      },
+      {
+        "key": "field_tjr_alamat",
+        "label": "Alamat singkat",
+        "name": "venue_alamat",
+        "aria-label": "",
+        "type": "text",
+        "instructions": "Satu baris saja, misalnya Jl. Kaliurang KM 5, Sleman. Dipakai Google untuk menampilkan acara di hasil pencarian.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "100",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": 140,
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_tjr_tab_harga",
+        "label": "Harga",
+        "name": "",
+        "aria-label": "",
+        "type": "tab",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "placement": "top",
+        "endpoint": 0
+      },
+      {
+        "key": "field_tjr_harga",
+        "label": "Harga per orang",
+        "name": "harga",
+        "aria-label": "",
+        "type": "number",
+        "instructions": "Angka saja, tanpa titik dan tanpa Rp. Contoh: 75000.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "min": 0,
+        "max": "",
+        "step": 1000,
+        "prepend": "Rp",
+        "append": "",
+        "placeholder": "75000"
+      },
+      {
+        "key": "field_tjr_catatan_harga",
+        "label": "Catatan harga",
+        "name": "catatan_harga",
+        "aria-label": "",
+        "type": "text",
+        "instructions": "Muncul kecil di sebelah harga. Contoh: termasuk buku, atau minimum spend.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": 60,
+        "placeholder": "termasuk buku",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_tjr_tab_slot",
+        "label": "Slot",
+        "name": "",
+        "aria-label": "",
+        "type": "tab",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "placement": "top",
+        "endpoint": 0
+      },
+      {
+        "key": "field_tjr_kapasitas",
+        "label": "Kapasitas",
+        "name": "kapasitas",
+        "aria-label": "",
+        "type": "number",
+        "instructions": "Berapa orang maksimal yang muat di sesi ini.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": 15,
+        "min": 1,
+        "max": 200,
+        "step": 1,
+        "prepend": "",
+        "append": "orang",
+        "placeholder": ""
+      },
+      {
+        "key": "field_tjr_slot_terisi",
+        "label": "Slot terisi",
+        "name": "slot_terisi",
+        "aria-label": "",
+        "type": "number",
+        "instructions": "Berapa orang yang sudah bayar. Angka ini yang menggerakkan bar slot dan status acara. Update tiap ada yang transfer.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": 0,
+        "min": 0,
+        "max": 200,
+        "step": 1,
+        "prepend": "",
+        "append": "orang",
+        "placeholder": ""
+      },
+      {
+        "key": "field_tjr_pesan_status",
+        "label": "Status acara",
+        "name": "",
+        "aria-label": "",
+        "type": "message",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "100",
+          "class": "",
+          "id": ""
+        },
+        "message": "Status dihitung otomatis, tidak ada yang perlu diisi di sini.\r\n\r\nBuka, kalau sisa slot masih banyak.\r\nHampir penuh, kalau sisa slot tinggal di bawah 25 persen.\r\nPenuh, kalau slot terisi sudah sama dengan kapasitas.\r\nSelesai, kalau tanggal acara sudah lewat.",
+        "new_lines": "wpautop",
+        "esc_html": 0
+      },
+      {
+        "key": "field_tjr_tab_kit",
+        "label": "Isi kit",
+        "name": "",
+        "aria-label": "",
+        "type": "tab",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "placement": "top",
+        "endpoint": 0
+      },
+      {
+        "key": "field_tjr_isi_kit",
+        "label": "Yang didapat peserta",
+        "name": "isi_kit",
+        "aria-label": "",
+        "type": "checkbox",
+        "instructions": "Centang yang termasuk di sesi ini. Kalau ada yang belum ada di daftar, ketik sendiri lewat tombol Tambah pilihan baru.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "100",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "Notebook A6": "Notebook A6",
+          "Sticker sheet": "Sticker sheet",
+          "Booklet panduan": "Booklet panduan",
+          "Foto cetak": "Foto cetak",
+          "Akses deco station": "Akses deco station",
+          "Minuman": "Minuman",
+          "Dokumentasi foto": "Dokumentasi foto",
+          "Teman baru": "Teman baru"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 1,
+        "save_custom": 1,
+        "layout": "vertical",
+        "toggle": 0,
+        "allow_in_bindings": 1,
+        "custom_choice_button_text": "Tambah pilihan baru"
+      },
+      {
+        "key": "field_tjr_pesan_galeri",
+        "label": "Galeri sesi",
+        "name": "",
+        "aria-label": "",
+        "type": "message",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "100",
+          "class": "",
+          "id": ""
+        },
+        "message": "Foto sesi tidak ditaruh di sini, tapi di kotak tulisan besar di atas.\r\n\r\nSetelah acara selesai, buka acara ini lagi, klik tanda tambah di kotak tulisan, pilih Galeri, lalu tarik semua fotonya ke situ. Halaman Galeri mengambil foto dari situ sendiri.",
+        "new_lines": "wpautop",
+        "esc_html": 0
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "acara"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+      "excerpt",
+      "custom_fields",
+      "discussion",
+      "comments",
+      "tags",
+      "send-trackbacks"
+    ],
+    "active": true,
+    "description": "Semua yang berubah tiap sesi. Judul acara, foto utama, kota, dan format tidak ada di sini karena sudah jadi bagian bawaan WordPress.",
+    "show_in_rest": 1,
+    "modified": 1788480000
+  }
+]

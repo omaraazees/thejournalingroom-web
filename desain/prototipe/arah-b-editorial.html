@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arah B · Editorial Tenang — The Journaling Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+.bar{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;transition:.25s}
+.bar.solid{background:rgba(250,246,240,.94);backdrop-filter:blur(8px);border-bottom:var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;gap:var(--sp-3)}
+.brand{font-family:var(--font-display);font-size:19px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.nav{display:flex;gap:var(--sp-4);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.nav a{text-decoration:none;color:var(--ink-soft)}
+.nav a:hover{color:var(--ink)}
+main{padding-top:0}
+
+/* hero: terpusat, tipografi dulu, gambar lebar di bawah */
+.hero{padding:calc(76px + var(--sp-8)) 0 0;text-align:center}
+.hero h1{font-size:clamp(44px,7vw,var(--step-6));max-width:14ch;margin:var(--sp-3) auto var(--sp-4)}
+.hero .lead{max-width:52ch;margin:0 auto}
+.hero-cta{display:flex;gap:var(--sp-2);justify-content:center;flex-wrap:wrap;margin:var(--sp-5) 0 var(--sp-7)}
+.bleed{max-width:1400px;margin:0 auto;padding:0 var(--sp-3)}
+.bleed .ph{height:min(58vh,520px);border-radius:20px}
+
+/* penanda bab */
+.chap{display:flex;align-items:baseline;gap:var(--sp-3);border-top:var(--line);
+  padding-top:var(--sp-3);margin-bottom:var(--sp-5)}
+.chap .no{font-family:var(--font-display);font-size:var(--step-2);color:var(--kraft-text);min-width:52px}
+.chap h2{flex:1}
+
+/* acara sebagai baris, bukan kartu */
+.row{display:grid;grid-template-columns:130px 1fr 180px 130px 130px;gap:var(--sp-3);
+  align-items:center;padding:var(--sp-4) 0;border-bottom:var(--line);transition:.18s}
+.row:hover{background:rgba(241,232,220,.55)}
+.row .d{font-family:var(--font-display);font-size:var(--step-1);color:var(--burgundy)}
+.row h3{font-size:var(--step-1);margin-bottom:4px}
+.row .v{font-size:14px;color:var(--ink-soft)}
+.row .p{font-family:var(--font-display);font-size:var(--step-1)}
+.row .s{font-size:13px;color:var(--sage-text)}
+.row .go{text-align:right;font-size:14px;text-decoration:none;border-bottom:1px solid var(--kraft);padding-bottom:2px}
+
+/* tentang: satu kolom lebar + pull quote */
+.about p{font-size:var(--step-1);line-height:1.75;color:var(--ink-soft)}
+.pull{font-family:var(--font-display);font-size:clamp(26px,3.4vw,var(--step-3));
+  line-height:1.3;color:var(--ink);border-left:2px solid var(--rose);
+  padding-left:var(--sp-4);margin:var(--sp-5) 0}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);margin-top:var(--sp-5)}
+.duo .ph{height:300px}
+
+/* format sebagai daftar bernomor */
+.fmt{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp-5) var(--sp-6)}
+.fmt article{border-top:var(--line);padding-top:var(--sp-3)}
+.fmt .no{font-family:var(--font-display);font-size:var(--step-1);color:var(--kraft-text)}
+.fmt h3{font-size:var(--step-2);margin:var(--sp-1) 0 var(--sp-2)}
+.fmt p{color:var(--ink-soft);font-size:15px}
+.fmt .price{font-size:var(--step-1);display:block;margin-top:var(--sp-2)}
+
+/* galeri strip */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-2)}
+.strip .ph{height:220px}
+.strip .ph:nth-child(2){margin-top:var(--sp-4)}
+.strip .ph:nth-child(4){margin-top:var(--sp-4)}
+
+/* kutipan besar */
+.big{text-align:center;padding:var(--sp-8) 0}
+.big blockquote{font-family:var(--font-display);font-size:clamp(28px,4.4vw,52px);
+  line-height:1.25;max-width:16ch;margin:0 auto var(--sp-4)}
+
+.posts{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)}
+.post .ph{height:200px;margin-bottom:var(--sp-3)}
+.post h3{font-size:var(--step-1);line-height:1.3;margin-bottom:6px}
+
+.partners{display:flex;flex-wrap:wrap;gap:var(--sp-2) var(--sp-5);justify-content:center;
+  font-size:14px;letter-spacing:.08em;color:var(--ink-soft)}
+
+.faq details{border-bottom:var(--line);padding:var(--sp-3) 0}
+.faq summary{cursor:pointer;font-family:var(--font-display);font-size:var(--step-1);list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";float:right;color:var(--kraft-text)}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin-top:var(--sp-2);color:var(--ink-soft)}
+
+.closing{text-align:center;padding:var(--sp-8) 0}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:var(--sp-4)}
+.fgrid ul{list-style:none;padding:0;margin:0;font-size:14px}
+.fgrid li{margin-bottom:8px}
+.toggle{position:fixed;right:16px;bottom:16px;z-index:200;font-size:12px;
+  background:var(--ink);color:var(--paper);border:0;padding:10px 14px;border-radius:999px;cursor:pointer}
+
+@media(max-width:900px){
+  .row{grid-template-columns:1fr;gap:var(--sp-1);text-align:left}
+  .row .go{text-align:left;justify-self:start}
+  .fmt,.duo,.posts{grid-template-columns:1fr}
+  .strip{grid-template-columns:1fr 1fr}
+  .strip .ph{margin-top:0!important}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .nav{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bar wp-host" id="bar"><span class="wp">template-part: header</span>
+  <div class="wrap">
+    <a class="brand" href="#">The Journaling Room</a>
+    <nav class="nav"><a href="#acara">Jadwal</a><a href="#tentang">Tentang</a><a href="#format">Format</a><a href="#cerita">Cerita</a></nav>
+    <a class="btn btn-primary" href="#acara">Daftar</a>
+  </div>
+</div>
+
+<main>
+
+<section class="hero wp-host"><span class="wp">pattern: tjr/hero-center</span>
+  <div class="wrap">
+    <p class="eyebrow">Yogyakarta</p>
+    <h1>Dua jam untuk kembali ke halaman sendiri</h1>
+    <p class="lead">The Journaling Room mengadakan sesi journaling bersama di kafe, hotel, dan ruang kecil di seputar Yogyakarta. Datang sendiri boleh. Diam sepanjang sesi juga boleh.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#acara">Lihat jadwal</a>
+      <a class="btn btn-ghost" href="#tentang">Kenalan dulu</a>
+    </div>
+  </div>
+  <div class="bleed"><div class="ph" data-label="Foto lebar: meja panjang, banyak tangan menulis"></div></div>
+</section>
+
+<section class="wp-host" id="acara"><span class="wp">query loop: CPT acara</span>
+  <div class="wrap">
+    <div class="chap"><span class="no">01</span><h2>Jadwal terdekat</h2></div>
+    <div class="row"><span class="d">20 Sep</span>
+      <div><h3>Tracing Shadows, Mapping Stars</h3><p class="v">Workshop tiga jam, kit lengkap</p></div>
+      <span class="v">Kupiku Coffee</span><span class="p">75K</span><a class="go" href="#">4 slot lagi</a></div>
+    <div class="row"><span class="d">28 Sep</span>
+      <div><h3>Brush Lettering &amp; Journaling</h3><p class="v">Kelas lettering digabung sesi journaling</p></div>
+      <span class="v">ROCCA Artotel</span><span class="p">98K</span><a class="go" href="#">9 slot lagi</a></div>
+    <div class="row"><span class="d">4 Okt</span>
+      <div><h3>Journaling Playdate</h3><p class="v">Enam orang, bawa notebook sendiri</p></div>
+      <span class="v">Kopi Kalandjana</span><span class="p">40K</span><a class="go" href="#">2 slot lagi</a></div>
+    <div class="row"><span class="d">18 Okt</span>
+      <div><h3>A Moment Between Chapters</h3><p class="v">Refleksi tengah tahun, termasuk buku</p></div>
+      <span class="v">Copenhagen</span><span class="p">100K</span><a class="go" href="#">Buka waitlist</a></div>
+    <p style="margin-top:var(--sp-5)"><a class="btn btn-ghost" href="#">Arsip semua sesi</a></p>
+  </div>
+</section>
+
+<section class="alt wp-host" id="tentang"><span class="wp">pattern: tjr/about-editorial</span>
+  <div class="wrap">
+    <div class="chap"><span class="no">02</span><h2>Kenapa kami ada</h2></div>
+    <div class="narrow about">
+      <p>Dhanty bilang kepalanya sering penuh, dan journaling jadi cara mengosongkannya. Caca bilang journaling itu ritual kecil yang bantu dia melewati naik turun sambil makin kenal diri sendiri. Dari dua alasan itu The Journaling Room dimulai.</p>
+      <blockquote class="pull">Kami tidak mengajari cara menulis yang benar. Kami cuma menyiapkan meja, kertas, dan orang-orang yang nggak akan menghakimi.</blockquote>
+      <p>Setiap sesi punya tema, dan tiap tema disiapkan supaya siapa pun bisa mulai walau belum pernah journaling. Kit-nya lengkap: notebook, sticker, booklet, akses deco station, minuman. Yang tidak ada di paket, dan justru paling sering disebut peserta, adalah teman baru.</p>
+    </div>
+    <div class="wrap duo" style="padding:0">
+      <div class="ph" data-label="Caca &amp; Dhanty"></div>
+      <div class="ph" data-label="Suasana sesi berlangsung"></div>
+    </div>
+  </div>
+</section>
+
+<section class="wp-host" id="format"><span class="wp">pattern: tjr/formats</span>
+  <div class="wrap">
+    <div class="chap"><span class="no">03</span><h2>Enam cara ikut</h2></div>
+    <div class="fmt">
+      <article><span class="no">01</span><h3>Journaling Workshop</h3>
+        <p>Tema besar, kit lengkap, tiga jam. Format paling sering dan paling ramai.</p><span class="price">75K sampai 125K</span></article>
+      <article><span class="no">02</span><h3>Brush Lettering Class</h3>
+        <p>Kelas lettering digabung sesi journaling. Seat terbatas karena butuh pendampingan.</p><span class="price">98K</span></article>
+      <article><span class="no">03</span><h3>Journaling Playdate</h3>
+        <p>Enam orang, tanpa tema, bawa notebook sendiri. Paling santai.</p><span class="price">Min spend 40K</span></article>
+      <article><span class="no">04</span><h3>Sunday Reads Club</h3>
+        <p>Baca bareng lalu journaling. Kolaborasi rutin dengan komunitas baca.</p><span class="price">Kolaborasi</span></article>
+      <article><span class="no">05</span><h3>Inner Circle</h3>
+        <p>Sesi tertutup untuk komunitas atau kelompok yang sudah saling kenal.</p><span class="price">Atas permintaan</span></article>
+      <article><span class="no">06</span><h3>Brand Activation</h3>
+        <p>Workshop untuk brand, kit dikustom, dokumentasi termasuk.</p><span class="price">Kirim brief</span></article>
+    </div>
+  </div>
+</section>
+
+<section class="alt wp-host"><span class="wp">pattern: tjr/gallery-strip</span>
+  <div class="wrap">
+    <div class="chap"><span class="no">04</span><h2>Dari sesi sebelumnya</h2></div>
+    <div class="strip">
+      <div class="ph" data-label="Halaman jurnal"></div>
+      <div class="ph" data-label="Deco station"></div>
+      <div class="ph" data-label="Peserta"></div>
+      <div class="ph" data-label="Kit workshop"></div>
+    </div>
+    <p style="margin-top:var(--sp-4)"><a class="btn btn-ghost" href="#">Buka galeri</a></p>
+  </div>
+</section>
+
+<section class="big wp-host"><span class="wp">pattern: tjr/quote-big</span>
+  <div class="wrap">
+    <blockquote>Some pages feel better when shared in kind company.</blockquote>
+    <p class="script">Your kind, journaling companions</p>
+  </div>
+</section>
+
+<section class="wp-host" id="cerita"><span class="wp">query loop: post</span>
+  <div class="wrap">
+    <div class="chap"><span class="no">05</span><h2>Cerita</h2></div>
+    <div class="posts">
+      <article class="post"><div class="ph" data-label="Gambar artikel"></div>
+        <h3>Cara mulai journaling kalau halaman kosong bikin takut</h3><p class="v muted">5 menit baca</p></article>
+      <article class="post"><div class="ph" data-label="Gambar artikel"></div>
+        <h3>Tujuh pertanyaan yang kami pakai di sesi refleksi</h3><p class="v muted">4 menit baca</p></article>
+      <article class="post"><div class="ph" data-label="Gambar artikel"></div>
+        <h3>Apa yang sebenarnya terjadi di workshop tiga jam</h3><p class="v muted">6 menit baca</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="alt wp-host"><span class="wp">pattern: tjr/partners</span>
+  <div class="wrap" style="text-align:center">
+    <p class="eyebrow">Pernah bareng</p>
+    <div class="partners" style="margin-top:var(--sp-4)">
+      <span>Wardah</span><span>Artotel</span><span>AMCO Bakehouse</span><span>Kupiku Coffee</span>
+      <span>Copenhagen</span><span>Heejaz</span><span>collective28</span><span>Radian</span><span>Sunday Reads Club</span>
+    </div>
+  </div>
+</section>
+
+<section class="faq wp-host">
+  <div class="wrap narrow"><span class="wp">pattern: tjr/faq (FAQ schema)</span>
+    <div class="chap"><span class="no">06</span><h2>Sering ditanya</h2></div>
+    <details open><summary>Belum pernah journaling sama sekali, boleh ikut?</summary>
+      <p>Boleh. Sebagian besar peserta baru pertama kali, dan tiap sesi selalu dimulai dari nol.</p></details>
+    <details><summary>Perlu bawa apa?</summary>
+      <p>Untuk workshop semua sudah disediakan. Untuk playdate, bawa notebook dan alat tulis favoritmu.</p></details>
+    <details><summary>Harus ngomong atau baca tulisan di depan orang?</summary>
+      <p>Tidak pernah. Kalau mau berbagi silakan, kalau tidak juga aman.</p></details>
+    <details><summary>Cara daftarnya gimana?</summary>
+      <p>Pilih sesi di halaman jadwal, lalu lanjut ke WhatsApp untuk konfirmasi slot dan pembayaran.</p></details>
+  </div>
+</section>
+
+<section class="closing alt wp-host"><span class="wp">pattern: tjr/cta</span>
+  <div class="wrap">
+    <h2 style="margin-bottom:var(--sp-3)">Meja sudah disiapkan</h2>
+    <p class="lead" style="max-width:44ch;margin:0 auto var(--sp-5)">Tinggal satu kursi yang belum diisi, dan itu punya kamu.</p>
+    <a class="btn btn-primary" href="#acara">Lihat jadwal terdekat</a>
+    <a class="btn btn-ghost" href="#">Tanya via WhatsApp</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="wp-host"><span class="wp">template-part: footer</span>
+  <div class="wrap fgrid">
+    <div>
+      <p class="brand" style="color:var(--paper)">The Journaling Room</p>
+      <p style="opacity:.7;font-size:14px;max-width:280px">Ruang journaling bareng di Yogyakarta. Berpindah venue tiap acara.</p>
+    </div>
+    <div><h4>Acara</h4><ul><li><a href="#">Jadwal</a></li><li><a href="#">Workshop</a></li><li><a href="#">Playdate</a></li><li><a href="#">Inner Circle</a></li></ul></div>
+    <div><h4>Tentang</h4><ul><li><a href="#">Cerita kami</a></li><li><a href="#">Galeri</a></li><li><a href="#">Blog</a></li><li><a href="#">FAQ</a></li></ul></div>
+    <div><h4>Kontak</h4><ul><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Kolaborasi brand</a></li></ul></div>
+  </div>
+  <div class="wrap" style="margin-top:var(--sp-6);padding-top:var(--sp-3);border-top:1px solid rgba(237,227,215,.15);font-size:13px;opacity:.6">
+    2026 The Journaling Room · Yogyakarta
+  </div>
+</footer>
+
+<button class="toggle" onclick="document.body.classList.toggle('show-wp')">Tampilkan blok WordPress</button>
+<script>
+addEventListener('scroll',()=>document.getElementById('bar').classList.toggle('solid',scrollY>40));
+</script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tracing Shadows, Mapping Stars · The Journaling Room</title>
+<meta name="description" content="Workshop journaling tiga jam di Kupiku Coffee Yogyakarta, Sabtu 20 September. Kit lengkap, tanpa pengalaman. IDR 75.000, sisa 4 slot.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../prototipe/tokens.css">
+<link rel="stylesheet" href="pages.css">
+<style>
+.ev-grid{display:grid;grid-template-columns:1fr 390px;gap:var(--sp-6);align-items:start}
+.ev-grid h1{font-size:clamp(34px,5vw,64px);line-height:1.02;letter-spacing:-.03em;
+  text-wrap:balance;margin:var(--sp-2) 0 var(--sp-3)}
+.shot{height:clamp(260px,34vw,420px);margin:var(--sp-4) 0 var(--sp-5)}
+.book{position:relative;background:var(--paper);border:1.5px solid var(--burgundy);
+  border-radius:20px;padding:var(--sp-4);box-shadow:0 10px 34px rgba(62,47,36,.1);
+  transform:rotate(-1.2deg);position:sticky;top:88px}
+.book::before,.book::after{content:"";position:absolute;top:-11px;width:82px;height:24px;
+  background:rgba(224,183,180,.6);border-left:1px dashed rgba(176,137,104,.55);
+  border-right:1px dashed rgba(176,137,104,.55)}
+.book::before{left:14%;transform:rotate(-7deg)}
+.book::after{right:11%;transform:rotate(6deg)}
+.book .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--burgundy);font-weight:600}
+.book h2{font-size:var(--step-1);margin:var(--sp-2) 0 var(--sp-3);letter-spacing:-.01em}
+.kv{display:flex;justify-content:space-between;gap:var(--sp-2);font-size:14px;
+  padding:9px 0;border-bottom:var(--line)}
+.kv:last-of-type{border-bottom:0}
+.kv span:first-child{color:var(--ink-soft)}
+.kv b{font-weight:500;text-align:right}
+.kv a{text-decoration:none;border-bottom:1px solid rgba(176,137,104,.5)}
+.slotbar{height:6px;border-radius:99px;background:rgba(176,137,104,.24);margin-top:var(--sp-3);overflow:hidden}
+.slotbar i{display:block;height:100%;width:73%;background:var(--rose-deep)}
+.note{font-size:12px;color:var(--ink-soft);margin-top:8px}
+.book .btn{width:100%;justify-content:center;margin-top:var(--sp-3)}
+.gets{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4) var(--sp-5)}
+.get{display:flex;gap:var(--sp-2);align-items:flex-start}
+.get .ic{width:28px;height:28px;border-radius:9px;background:rgba(147,161,129,.28);flex:0 0 28px}
+.get b{display:block;font-weight:600;font-size:15px;margin-bottom:2px}
+.get p{color:var(--ink-soft);font-size:14px;margin:0}
+.run{list-style:none;padding:0;margin:0;counter-reset:r}
+.run li{counter-increment:r;display:grid;grid-template-columns:52px 1fr;gap:var(--sp-3);
+  padding:var(--sp-3) 0;border-bottom:var(--line)}
+.run li::before{content:counter(r);font-family:var(--font-display);font-size:var(--step-2);
+  color:var(--burgundy);line-height:1}
+.run b{display:block;font-weight:600;margin-bottom:3px}
+.run p{margin:0;color:var(--ink-soft);font-size:15px}
+@media(max-width:900px){.ev-grid,.gets{grid-template-columns:1fr}.book{position:static;transform:none}}
+</style>
+</head>
+<body class="has-sticky">
+
+<a class="skip" href="#isi">Lompat ke isi</a>
+<header class="bar wp-host"><span class="wp">template-part: header</span>
+  <div class="wrap">
+    <a class="brand" href="../wp-prototype/final-beranda.html">The Journaling Room</a>
+    <nav class="nav" aria-label="Utama">
+      <a href="jadwal.html">Jadwal</a>
+      <a href="tentang.html">Tentang</a>
+      <a href="cerita.html">Cerita</a>
+      <a href="kolaborasi.html">Kolaborasi</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+    <a class="btn btn-primary" href="#ambil">Ambil slot</a>
+  </div>
+</header>
+
+<main id="isi">
+
+<article>
+
+<section class="phead wp-host" style="padding-bottom:0"><span class="wp">single: CPT acara + pattern tjr/event-hero</span>
+  <div class="wrap ev-grid">
+    <div>
+      <p class="crumb"><a href="../wp-prototype/final-beranda.html">Beranda</a><span>/</span><a href="jadwal.html">Jadwal</a><span>/</span>Tracing Shadows, Mapping Stars</p>
+      <p class="tag" style="margin-top:var(--sp-3)">Journaling Workshop</p>
+      <h1>Tracing Shadows, Mapping Stars</h1>
+      <p class="lead">Sesi tiga jam untuk menelusuri hal-hal yang selama ini cuma lewat di kepala, lalu menaruhnya di kertas. Nggak ada teknik yang harus dikuasai dulu. Datang, duduk, mulai dari satu baris.</p>
+      <div class="ph shot" data-label="Foto sesi, tangan menulis di meja penuh alat tulis"></div>
+    </div>
+
+    <aside class="book" id="ambil" aria-labelledby="book-h">
+      <span class="lbl">Ambil slot</span>
+      <h2 id="book-h">Sabtu, 20 September</h2>
+      <div class="kv"><span>Waktu</span><b>15.00 sampai 18.00 WIB</b></div>
+      <div class="kv"><span>Durasi</span><b>3 jam</b></div>
+      <div class="kv"><span>Venue</span><b><a href="https://maps.google.com/?q=Kupiku+Coffee+Yogyakarta" rel="noopener">Kupiku Coffee, Yogyakarta</a></b></div>
+      <div class="kv"><span>Harga</span><b class="price" style="font-size:var(--step-1)">IDR 75.000</b></div>
+      <div class="kv"><span>Sudah termasuk</span><b>Kit lengkap dan minuman</b></div>
+      <div class="slotbar" role="img" aria-label="11 dari 15 slot sudah terisi"><i></i></div>
+      <p class="note">11 dari 15 slot sudah terisi</p>
+      <a class="btn btn-primary" href="https://wa.me/6285728225369?text=Halo%20TJR%2C%20saya%20mau%20ambil%20slot%20Tracing%20Shadows%2C%20Mapping%20Stars%20pada%20Sabtu%2020%20September." rel="noopener">Ambil slot lewat WhatsApp</a>
+      <p class="note" style="text-align:center">Dibalas 09.00 sampai 21.00</p>
+    </aside>
+  </div>
+</section>
+
+<section class="wp-host"><span class="wp">pattern: tjr/inclusions (ACF: isi kit)</span>
+  <div class="wrap">
+    <div class="head"><div><p class="eyebrow">Sudah termasuk</p><h2>Yang kamu bawa pulang</h2></div></div>
+    <div class="gets">
+      <div class="get"><span class="ic"></span><div><b>Notebook A6</b><p>Isinya punya kamu, nggak dibaca siapa pun</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Sticker sheet dan booklet</b><p>Panduan tema sesi hari itu</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Akses deco station</b><p>Washi, pita, stempel, gunting pola</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Minuman</b><p>Dari Kupiku Coffee</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Foto cetak</b><p>Dokumentasi sesi, dicetak di tempat</p></div></div>
+      <div class="get"><span class="ic"></span><div><b>Teman baru</b><p>Ini yang paling sering disebut peserta</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt wp-host"><span class="wp">pattern: tjr/event-rundown</span>
+  <div class="wrap narrow">
+    <p class="eyebrow">Jalannya sesi</p>
+    <h2 style="font-size:clamp(28px,4vw,52px);letter-spacing:-.03em;margin-bottom:var(--sp-4)">Tiga jam, tanpa kejutan</h2>
+    <ol class="run">
+      <li><div><b>Datang dan ambil kit</b><p>Nggak ada perkenalan yang bikin canggung. Ambil tempat, ambil minum, lihat-lihat isi meja dulu.</p></div></li>
+      <li><div><b>Pemanasan menulis</b><p>Satu latihan pendek supaya tangan jalan. Sepuluh menit, hasilnya nggak dibaca siapa pun.</p></div></li>
+      <li><div><b>Masuk tema</b><p>Booklet tema dibuka bareng. Kami baca pelan-pelan, kamu isi sesuai kecepatanmu sendiri.</p></div></li>
+      <li><div><b>Deco dan tempel</b><p>Bagian paling ramai. Washi, sticker, foto cetak, semuanya boleh dipakai.</p></div></li>
+      <li><div><b>Tutup</b><p>Yang mau cerita silakan, yang mau diam juga aman. Foto bareng cuma kalau semua setuju.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="wp-host"><span class="wp">pattern: tjr/gallery-rail (ACF: galeri sesi)</span>
+  <div class="wrap">
+    <div class="head"><div><p class="eyebrow">Dari sesi ini</p><h2>Yang terjadi di meja</h2></div></div>
+    <div class="rail">
+      <figure><div class="ph wipe" data-label="Meja penuh alat tulis"></div><figcaption>Meja sebelum mulai</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Tangan menulis"></div><figcaption>Pemanasan menulis</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Deco station"></div><figcaption>Deco station</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Halaman jurnal peserta"></div><figcaption>Halaman peserta</figcaption></figure>
+      <figure><div class="ph wipe" data-label="Peserta bareng"></div><figcaption>Penutup sesi</figcaption></figure>
+    </div>
+    <p class="muted" style="font-size:13px">Geser ke samping. Galeri diisi setelah acara selesai.</p>
+  </div>
+</section>
+
+<section class="alt wp-host"><span class="wp">query loop: CPT acara, format sama, kecuali yang sedang dibuka</span>
+  <div class="wrap">
+    <div class="head"><div><p class="eyebrow">Sesi lain</p><h2>Yang mirip ini</h2></div>
+      <a class="btn btn-ghost" href="jadwal.html">Semua jadwal</a></div>
+    <div class="rows">
+      <a class="ev" href="acara-detail.html">
+        <div class="cal"><div class="m">Okt</div><div class="dd">18</div></div>
+        <div><h3>A Moment Between Chapters</h3><p class="v">Refleksi tengah tahun, termasuk buku</p></div>
+        <span class="v">Copenhagen, Yogyakarta</span>
+        <div class="r"><div class="p">100K</div><div class="s">Waitlist</div></div></a>
+      <a class="ev" href="acara-detail.html">
+        <div class="cal"><div class="m">Nov</div><div class="dd">09</div></div>
+        <div><h3>Between the Pages</h3><p class="v">Baca bareng Sunday Reads Club</p></div>
+        <span class="v">Heejaz, Yogyakarta</span>
+        <div class="r"><div class="p">89K</div><div class="s">12 slot lagi</div></div></a>
+      <a class="ev past" href="acara-detail.html">
+        <div class="cal"><div class="m">Agu</div><div class="dd">23</div></div>
+        <div><h3>About Myself</h3><p class="v">Workshop tiga jam, kit lengkap</p></div>
+        <span class="v">AMCO Bakehouse, Yogyakarta</span>
+        <div class="r"><div class="p">75K</div><div class="s">Selesai</div></div></a>
+    </div>
+  </div>
+</section>
+
+</article>
+
+</main>
+
+<footer class="wp-host"><span class="wp">template-part: footer</span>
+  <div class="wrap fgrid">
+    <div>
+      <p class="brand" style="color:var(--paper)">The Journaling Room</p>
+      <p style="opacity:.7;font-size:14px;max-width:290px">Ruang journaling bareng di Yogyakarta. Berpindah venue tiap acara.</p>
+    </div>
+    <div><h2>Acara</h2><ul><li><a href="jadwal.html">Jadwal</a></li><li><a href="jadwal.html#mendatang">Mendatang</a></li><li><a href="jadwal.html#arsip">Arsip</a></li><li><a href="kolaborasi.html">Inner Circle</a></li></ul></div>
+    <div><h2>Tentang</h2><ul><li><a href="tentang.html">Cerita kami</a></li><li><a href="cerita.html">Cerita</a></li><li><a href="kontak.html#faq">FAQ</a></li></ul></div>
+    <div><h2>Kontak</h2><ul><li><a href="https://wa.me/6285728225369">WhatsApp</a></li><li><a href="https://instagram.com/thejournalingroom">Instagram</a></li><li><a href="kolaborasi.html">Kolaborasi brand</a></li></ul></div>
+  </div>
+  <div class="wrap" style="margin-top:var(--sp-6);padding-top:var(--sp-3);border-top:1px solid rgba(237,227,215,.15);font-size:13px;opacity:.6">
+    2026 The Journaling Room · Yogyakarta
+  </div>
+</footer>
+
+<div class="sticky">
+  <div class="t"><b>Tracing Shadows, Mapping Stars</b>Sab 20 Sep · Kupiku Coffee · 75K · 4 slot lagi</div>
+  <a class="btn btn-primary" href="https://wa.me/6285728225369?text=Halo%20TJR%2C%20saya%20mau%20ambil%20slot%20Tracing%20Shadows%2C%20Mapping%20Stars%20pada%20Sabtu%2020%20September." rel="noopener">Ambil slot</a>
+</div>
+
+<button class="toggle" onclick="document.body.classList.toggle('show-wp')">Blok WordPress</button>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>V2 Serif Maximalism — The Journaling Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================
+   V2 · SERIF MAXIMALISM
+   Display : Fraunces variabel, sumbu opsz + SOFT + WONK
+   UI      : Inter, hanya untuk label, meta, dan tombol
+   Gerak   : scroll-driven CSS murni, nol library
+   Struktur acara dipertahankan dari versi sebelumnya
+   ========================================================== */
+:root{
+  --paper:#F7F1E8;
+  --paper-deep:#EDE2D2;
+  --ink:#241C16;
+  --ink-soft:#5C4B3D;
+  --rose:#E0B7B4;
+  --rose-text:#9F534E;
+  --sage-text:#616D52;
+  --kraft-line:#A87D59;
+  --burgundy:#6E2222;
+
+  --d:"Fraunces",Georgia,"Times New Roman",serif;
+  --u:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+  --wide:1280px; --content:660px;
+  --s1:8px; --s2:16px; --s3:24px; --s4:40px; --s5:64px; --s6:96px; --s7:140px; --s8:200px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--u);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+.wrap{max-width:var(--wide);margin:0 auto;padding:0 var(--s3)}
+.narrow{max-width:var(--content);margin:0 auto}
+section{padding:var(--s7) 0;position:relative}
+
+/* ---------- TIPOGRAFI MAKSIMALIS ---------- */
+.d{font-family:var(--d);font-variation-settings:"opsz" 144,"SOFT" 30,"WONK" 1;
+  font-weight:600;letter-spacing:-.03em;line-height:.86;margin:0}
+.xxl{font-size:clamp(56px,12.5vw,200px)}
+.xl {font-size:clamp(40px,7.4vw,110px)}
+.lg {font-size:clamp(30px,4.4vw,66px)}
+.md {font-size:clamp(24px,2.8vw,40px);line-height:1.05}
+.it{font-style:italic;font-variation-settings:"opsz" 144,"SOFT" 60,"WONK" 1}
+.thin{font-weight:300}
+.lead{font-family:var(--d);font-variation-settings:"opsz" 40,"SOFT" 40,"WONK" 0;
+  font-size:clamp(19px,2.1vw,27px);line-height:1.4;font-weight:400;color:var(--ink-soft)}
+.lbl{font-family:var(--u);font-size:11px;text-transform:uppercase;letter-spacing:.2em;
+  font-weight:600;color:var(--rose-text)}
+.meta{font-family:var(--u);font-size:13px;color:var(--ink-soft)}
+
+/* ---------- NAV ---------- */
+.bar{position:fixed;inset:0 0 auto;z-index:120;padding:var(--s3) 0;
+  transition:background .3s,padding .3s,border-color .3s;border-bottom:1px solid transparent}
+.bar.on{background:rgba(247,241,232,.93);backdrop-filter:blur(12px);padding:14px 0;
+  border-color:rgba(168,125,89,.28)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--s3)}
+.brand{font-family:var(--d);font-variation-settings:"opsz" 40,"SOFT" 20,"WONK" 1;
+  font-size:20px;font-weight:600;letter-spacing:-.01em;text-decoration:none;color:var(--ink);white-space:nowrap}
+.nav{display:flex;gap:var(--s3);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.nav a{color:var(--ink-soft);text-decoration:none}
+.nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--u);font-size:14px;font-weight:500;
+  padding:13px 26px;border-radius:2px;text-decoration:none;border:1px solid transparent;
+  min-height:46px;transition:.2s;cursor:pointer}
+.btn-p{background:var(--burgundy);color:var(--paper)}
+.btn-p:hover{background:var(--ink)}
+.btn-g{border-color:var(--kraft-line);color:var(--ink)}
+.btn-g:hover{background:rgba(168,125,89,.14)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--burgundy);outline-offset:3px}
+
+/* ---------- HERO ---------- */
+.hero{padding:calc(var(--s8) + 40px) 0 var(--s6);overflow:hidden}
+.hero h1{position:relative;z-index:2}
+.hero h1 span{display:block}
+.h-2{margin-left:6vw}
+.h-3{margin-left:16vw}
+.hero-foot{display:grid;grid-template-columns:1fr auto;gap:var(--s5);
+  align-items:end;margin-top:var(--s5)}
+.hero-foot .lead{max-width:34ch}
+.stats{display:flex;gap:var(--s5);flex-wrap:wrap}
+.stat b{font-family:var(--d);font-variation-settings:"opsz" 144,"SOFT" 20,"WONK" 1;
+  font-size:clamp(34px,4vw,56px);font-weight:500;color:var(--burgundy);display:block;line-height:.9}
+.stat span{font-family:var(--u);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ---------- MARQUEE ---------- */
+.marq{border-block:1px solid rgba(168,125,89,.3);padding:var(--s3) 0;overflow:hidden;background:var(--paper-deep)}
+.marq-t{display:flex;gap:var(--s5);width:max-content;animation:sl 46s linear infinite}
+.marq-t span{font-family:var(--d);font-variation-settings:"opsz" 96,"SOFT" 50,"WONK" 1;
+  font-size:clamp(26px,3.6vw,54px);font-weight:400;white-space:nowrap;color:var(--ink)}
+.marq-t span::after{content:"·";margin-left:var(--s5);color:var(--rose)}
+@keyframes sl{to{transform:translateX(-50%)}}
+
+/* ---------- GERAK ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
+@keyframes wipeUp{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes zoomOut{from{transform:scale(1.22)}to{transform:scale(1)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .r{animation:rise linear both;animation-timeline:view();animation-range:entry 4% cover 24%}
+    .w{animation:wipeUp linear both;animation-timeline:view();animation-range:entry 0% cover 26%}
+    .z img,.z .ph{animation:zoomOut linear both;animation-timeline:view();animation-range:entry 0% cover 70%}
+    .si{animation:slideIn linear both;animation-timeline:view();animation-range:entry 6% cover 26%}
+    .hero h1 span:nth-child(1){animation:rise linear both;animation-timeline:view();animation-range:cover 0% cover 14%}
+    .hero h1 span:nth-child(2){animation:rise linear both;animation-timeline:view();animation-range:cover 2% cover 17%}
+    .hero h1 span:nth-child(3){animation:rise linear both;animation-timeline:view();animation-range:cover 4% cover 20%}
+  }
+}
+@media (prefers-reduced-motion: reduce){.marq-t{animation:none}}
+
+/* ---------- FOTO ---------- */
+.ph{position:relative;overflow:hidden;background:
+  linear-gradient(135deg,rgba(224,183,180,.55),rgba(97,109,82,.3)),var(--paper-deep);
+  display:grid;place-items:center}
+.ph::after{content:attr(data-l);font-family:var(--u);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(36,28,22,.42);text-align:center;padding:0 14px}
+
+/* ---------- JADWAL ---------- */
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:var(--s4)}
+.chip{font-family:var(--u);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  padding:11px 20px;border-radius:2px;border:1px solid rgba(168,125,89,.4);background:transparent;
+  color:var(--ink-soft);cursor:pointer;min-height:44px}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rows{border-top:1px solid rgba(168,125,89,.3)}
+.ev{display:grid;grid-template-columns:96px 1fr 200px 128px;gap:var(--s3);align-items:baseline;
+  padding:var(--s4) var(--s2);border-bottom:1px solid rgba(168,125,89,.3);
+  text-decoration:none;color:inherit;transition:padding .4s cubic-bezier(.2,.8,.2,1),background .4s}
+.ev:hover{padding-inline:var(--s4);background:var(--paper-deep)}
+.ev .dt{font-family:var(--d);font-variation-settings:"opsz" 60,"SOFT" 20,"WONK" 1;
+  font-size:24px;font-weight:500;color:var(--burgundy);line-height:1}
+.ev .dt small{display:block;font-family:var(--u);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-soft);margin-top:5px}
+.ev h3{font-family:var(--d);font-variation-settings:"opsz" 96,"SOFT" 40,"WONK" 1;
+  font-size:clamp(22px,2.4vw,34px);font-weight:500;letter-spacing:-.02em;line-height:1.05;margin:0 0 6px}
+.ev .p{font-family:var(--d);font-size:24px;font-weight:500;text-align:right}
+.ev .s{font-family:var(--u);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--sage-text);text-align:right;display:block;margin-top:5px}
+.ev .s.low{color:var(--burgundy);font-weight:600}
+.ev.past{opacity:.42}
+
+/* ---------- KARTU SESI TERDEKAT ---------- */
+.next{background:var(--ink);color:var(--paper);padding:var(--s6) 0;overflow:hidden}
+.next .lbl{color:var(--rose)}
+.next-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s6);align-items:center}
+.next h2{color:var(--paper)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:10px var(--s3);font-family:var(--u);
+  font-size:14px;margin-top:var(--s4);align-items:baseline}
+.kv dt{color:rgba(247,241,232,.55);text-transform:uppercase;letter-spacing:.12em;font-size:11px}
+.kv dd{margin:0;color:var(--paper)}
+.slot{height:3px;background:rgba(247,241,232,.22);margin-top:var(--s4);overflow:hidden}
+.slot i{display:block;height:100%;width:73%;background:var(--rose)}
+.next .ph{aspect-ratio:3/4}
+.next .btn-p{background:var(--rose);color:var(--ink);margin-top:var(--s4)}
+.next .btn-p:hover{background:var(--paper)}
+
+/* ---------- ISI KIT ---------- */
+.kit{display:grid;grid-template-columns:repeat(2,1fr);gap:0}
+.kit div{border-top:1px solid rgba(168,125,89,.3);padding:var(--s4) 0 var(--s4) var(--s3)}
+.kit div:nth-child(odd){padding-left:0;padding-right:var(--s3)}
+.kit b{font-family:var(--d);font-variation-settings:"opsz" 60,"SOFT" 30,"WONK" 1;
+  font-size:clamp(21px,2.2vw,30px);font-weight:500;display:block;margin-bottom:6px;letter-spacing:-.01em}
+.kit p{margin:0;color:var(--ink-soft);font-size:15px;max-width:38ch}
+
+/* ---------- GALERI ---------- */
+.rail{display:flex;gap:var(--s2);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:var(--s3)}
+.rail figure{flex:0 0 clamp(260px,34vw,460px);scroll-snap-align:center;margin:0}
+.rail .ph{height:clamp(340px,46vw,600px)}
+.rail figcaption{font-family:var(--u);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-soft);margin-top:14px}
+
+/* ---------- TENTANG ---------- */
+.split{display:grid;grid-template-columns:.85fr 1.15fr;gap:var(--s6);align-items:start}
+.stick{position:sticky;top:110px}
+.stick .ph{aspect-ratio:3/4}
+.split p{font-size:17px;line-height:1.75;color:var(--ink-soft);margin:0 0 var(--s3)}
+.pull{font-family:var(--d);font-variation-settings:"opsz" 96,"SOFT" 50,"WONK" 1;
+  font-size:clamp(24px,3.2vw,44px);font-weight:400;line-height:1.12;letter-spacing:-.02em;
+  color:var(--ink);margin:var(--s5) 0;padding-left:var(--s4);border-left:2px solid var(--rose)}
+
+/* ---------- FAQ ---------- */
+.faq details{border-bottom:1px solid rgba(168,125,89,.3)}
+.faq summary{cursor:pointer;list-style:none;padding:var(--s4) 40px var(--s4) 0;position:relative;
+  font-family:var(--d);font-variation-settings:"opsz" 60,"SOFT" 30,"WONK" 1;
+  font-size:clamp(20px,2.2vw,30px);font-weight:500;letter-spacing:-.015em;min-height:44px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:0;top:50%;translate:0 -50%;
+  font-family:var(--u);font-size:22px;color:var(--kraft-line)}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin:0 0 var(--s4);color:var(--ink-soft);max-width:60ch}
+
+/* ---------- PENUTUP ---------- */
+.end{background:var(--burgundy);color:var(--paper);text-align:center;padding:var(--s8) 0}
+.end h2{color:var(--paper)}
+.end .lead{color:rgba(247,241,232,.75)}
+.end .btn-p{background:var(--paper);color:var(--burgundy)}
+.end .btn-p:hover{background:var(--rose)}
+.end .btn-g{border-color:rgba(247,241,232,.5);color:var(--paper)}
+
+footer{background:var(--ink);color:#D9CCBC;padding:var(--s6) 0 var(--s4)}
+.fg{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:var(--s4)}
+footer a{color:#D9CCBC;text-decoration:none;font-size:14px}
+footer a:hover{color:var(--paper)}
+footer h4{font-family:var(--u);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  opacity:.5;margin:0 0 var(--s2);font-weight:600}
+footer ul{list-style:none;padding:0;margin:0}
+footer li{margin-bottom:9px}
+
+@media(max-width:900px){
+  .hero{padding-top:calc(var(--s7) + 30px)}
+  .h-2,.h-3{margin-left:0}
+  .hero-foot,.next-grid,.split,.kit{grid-template-columns:1fr}
+  .stick{position:static}
+  .ev{grid-template-columns:74px 1fr;row-gap:8px}
+  .ev .v{grid-column:2}
+  .ev .p,.ev .s{text-align:left;grid-column:2}
+  .fg{grid-template-columns:1fr 1fr}
+  .nav{display:none}
+  .kit div{padding-left:0!important;padding-right:0!important}
+}
+</style>
+</head>
+<body>
+
+<header class="bar" id="bar"><div class="wrap">
+  <a class="brand" href="#">The Journaling Room</a>
+  <nav class="nav"><a href="#jadwal">Jadwal</a><a href="#kit">Isi kit</a><a href="#galeri">Galeri</a><a href="#tentang">Tentang</a></nav>
+  <a class="btn btn-p" href="#next">Ambil slot</a>
+</div></header>
+
+<main>
+
+<section class="hero"><div class="wrap">
+  <p class="lbl r">Yogyakarta · sejak 2026</p>
+  <h1 class="d xxl">
+    <span>Menulis</span>
+    <span class="h-2 it thin">lebih enak</span>
+    <span class="h-3">bareng.</span>
+  </h1>
+  <div class="hero-foot">
+    <p class="lead r">Sesi journaling bersama di kafe, hotel, dan ruang kecil di seputar Jogja. Datang tanpa pengalaman, tanpa alat, tanpa harus ngomong.</p>
+    <div class="stats r">
+      <div class="stat"><b>22</b><span>sesi</span></div>
+      <div class="stat"><b>240</b><span>peserta</span></div>
+      <div class="stat"><b>9</b><span>partner</span></div>
+    </div>
+  </div>
+</div></section>
+
+<div class="marq" aria-hidden="true"><div class="marq-t">
+  <span>Tracing Shadows, Mapping Stars</span><span>About Myself</span><span>Between the Pages</span>
+  <span>A Moment Between Chapters</span><span>Much Between the Lines</span><span>A Gentle Space to Write and Glow</span>
+  <span>Tracing Shadows, Mapping Stars</span><span>About Myself</span><span>Between the Pages</span>
+  <span>A Moment Between Chapters</span><span>Much Between the Lines</span><span>A Gentle Space to Write and Glow</span>
+</div></div>
+
+<section class="next" id="next"><div class="wrap next-grid">
+  <div>
+    <p class="lbl si">Sesi terdekat</p>
+    <h2 class="d xl si" style="margin-top:var(--s2)">Tracing Shadows,<br><span class="it thin">Mapping Stars</span></h2>
+    <dl class="kv si">
+      <dt>Tanggal</dt><dd>Sabtu, 20 September 2026</dd>
+      <dt>Waktu</dt><dd>15.00 sampai 18.00</dd>
+      <dt>Lokasi</dt><dd>Kupiku Coffee, Yogyakarta</dd>
+      <dt>Harga</dt><dd>Rp 75.000, kit lengkap</dd>
+    </dl>
+    <div class="slot" role="img" aria-label="11 dari 15 slot terisi"><i></i></div>
+    <p class="meta si" style="color:rgba(247,241,232,.6);margin-top:10px">11 dari 15 slot sudah terisi</p>
+    <a class="btn btn-p si" href="#">Ambil slot lewat WhatsApp</a>
+  </div>
+  <div class="z"><div class="ph w" data-l="Foto sesi, potret"></div></div>
+</div></section>
+
+<section id="jadwal"><div class="wrap">
+  <p class="lbl r">Jadwal</p>
+  <h2 class="d xl r" style="margin:var(--s2) 0 var(--s5)">Pilih yang<br><span class="it thin">paling pas</span></h2>
+  <div class="chips r" role="group" aria-label="Saring format">
+    <button class="chip on">Semua</button><button class="chip">Workshop</button>
+    <button class="chip">Lettering</button><button class="chip">Playdate</button><button class="chip">Kolaborasi</button>
+  </div>
+  <div class="rows">
+    <a class="ev r" href="#"><span class="dt">20<small>Sep</small></span>
+      <div><h3>Tracing Shadows, Mapping Stars</h3><p class="meta v">Workshop tiga jam · kit lengkap</p></div>
+      <span class="meta v">Kupiku Coffee</span>
+      <div><span class="p">75K</span><span class="s low">4 slot lagi</span></div></a>
+    <a class="ev r" href="#"><span class="dt">28<small>Sep</small></span>
+      <div><h3>Much Between the Lines</h3><p class="meta v">Brush lettering digabung journaling</p></div>
+      <span class="meta v">ROCCA Artotel</span>
+      <div><span class="p">98K</span><span class="s">2 slot lagi</span></div></a>
+    <a class="ev r" href="#"><span class="dt">04<small>Okt</small></span>
+      <div><h3>Journaling Playdate</h3><p class="meta v">Enam orang · bawa notebook sendiri</p></div>
+      <span class="meta v">Kopi Kalandjana</span>
+      <div><span class="p">40K</span><span class="s low">Penuh</span></div></a>
+    <a class="ev r" href="#"><span class="dt">18<small>Okt</small></span>
+      <div><h3>A Moment Between Chapters</h3><p class="meta v">Refleksi tengah tahun · termasuk buku</p></div>
+      <span class="meta v">Copenhagen</span>
+      <div><span class="p">100K</span><span class="s">15 slot lagi</span></div></a>
+    <a class="ev r past" href="#"><span class="dt">23<small>Agu</small></span>
+      <div><h3>Between the Pages</h3><p class="meta v">Kolaborasi Sunday Reads Club</p></div>
+      <span class="meta v">Heejaz</span>
+      <div><span class="p">89K</span><span class="s">Selesai</span></div></a>
+  </div>
+  <p style="margin-top:var(--s5)"><a class="btn btn-g" href="#">Arsip semua sesi</a></p>
+</div></section>
+
+<section id="kit" style="background:var(--paper-deep)"><div class="wrap">
+  <p class="lbl r">Sudah termasuk</p>
+  <h2 class="d xl r" style="margin:var(--s2) 0 var(--s5)">Yang kamu<br><span class="it thin">bawa pulang</span></h2>
+  <div class="kit">
+    <div class="r"><b>Notebook A6</b><p>Isinya punya kamu. Nggak dibaca siapa pun, nggak dinilai siapa pun.</p></div>
+    <div class="r"><b>Sticker &amp; booklet</b><p>Panduan tema sesi hari itu, plus lembar stiker untuk menghias.</p></div>
+    <div class="r"><b>Deco station</b><p>Washi tape, pita, stempel, gunting pola. Bebas dipakai sepuasnya.</p></div>
+    <div class="r"><b>Minuman</b><p>Dari venue partner hari itu, sudah masuk harga.</p></div>
+    <div class="r"><b>Foto cetak</b><p>Dokumentasi sesi, dicetak di tempat sebelum kamu pulang.</p></div>
+    <div class="r"><b>Teman baru</b><p>Ini yang paling sering disebut peserta waktu ditanya apa yang dibawa pulang.</p></div>
+  </div>
+</div></section>
+
+<section id="galeri"><div class="wrap">
+  <p class="lbl r">Dari sesi sebelumnya</p>
+  <h2 class="d xl r" style="margin:var(--s2) 0 var(--s5)">Yang terjadi<br><span class="it thin">di meja</span></h2>
+</div>
+<div class="wrap"><div class="rail">
+  <figure><div class="ph w" data-l="Tangan menulis"></div><figcaption>About Myself · Agustus</figcaption></figure>
+  <figure><div class="ph w" data-l="Deco station"></div><figcaption>Deco station</figcaption></figure>
+  <figure><div class="ph w" data-l="Halaman peserta"></div><figcaption>Halaman peserta</figcaption></figure>
+  <figure><div class="ph w" data-l="Peserta bareng"></div><figcaption>Between the Pages · Juli</figcaption></figure>
+  <figure><div class="ph w" data-l="Isi kit"></div><figcaption>Isi kit</figcaption></figure>
+</div><p class="meta">Geser ke samping</p></div>
+</section>
+
+<section id="tentang" style="background:var(--paper-deep)"><div class="wrap split">
+  <div class="stick z"><div class="ph" data-l="Caca &amp; Dhanty"></div></div>
+  <div>
+    <p class="lbl r">Tentang</p>
+    <h2 class="d lg r" style="margin:var(--s2) 0 var(--s4)">Ruang ini kami bikin karena kami sendiri butuh</h2>
+    <p class="r">Dhanty bilang kepalanya sering penuh. Journaling jadi cara mengosongkannya, satu halaman setiap kali isinya sudah terlalu ramai.</p>
+    <p class="r">Caca bilang journaling itu ritual kecil. Bukan untuk menyelesaikan apa apa, tapi untuk melewati naik turun sambil pelan pelan makin kenal diri sendiri.</p>
+    <blockquote class="pull r">Kami tidak mengajari cara menulis yang benar, karena menurut kami memang tidak ada yang benar.</blockquote>
+    <p class="r">Kami cuma menyiapkan meja, kertas, dan orang orang yang tidak akan menghakimi. Tiap sesi punya tema, dan tiap tema disiapkan supaya siapa pun bisa mulai walau belum pernah journaling sekali pun.</p>
+    <p class="r">Kami berpindah venue tiap acara, dari kafe sampai hotel, di Yogyakarta dan sekitarnya.</p>
+  </div>
+</div></section>
+
+<section class="faq"><div class="wrap narrow">
+  <p class="lbl r">Sering ditanya</p>
+  <h2 class="d lg r" style="margin:var(--s2) 0 var(--s4)">Sebelum ambil slot</h2>
+  <details open><summary>Belum pernah journaling sama sekali, boleh ikut?</summary>
+    <p>Boleh. Sebagian besar peserta baru pertama kali, dan tiap sesi selalu dimulai dari nol.</p></details>
+  <details><summary>Datang sendiri aneh nggak?</summary>
+    <p>Nggak. Sebagian besar peserta datang sendiri, dan sesinya memang dirancang supaya itu nyaman.</p></details>
+  <details><summary>Harus baca tulisan di depan orang?</summary>
+    <p>Tidak pernah. Kalau mau berbagi silakan, kalau tidak juga aman.</p></details>
+  <details><summary>Bayarnya gimana?</summary>
+    <p>Konfirmasi slot lewat WhatsApp, lalu transfer. Slot dikunci setelah pembayaran masuk.</p></details>
+</div></section>
+
+<section class="end"><div class="wrap">
+  <p class="lbl" style="color:var(--rose)">Sampai ketemu di ruangnya</p>
+  <h2 class="d xxl" style="margin:var(--s3) 0 var(--s4)">Kursinya<br><span class="it thin">masih ada</span></h2>
+  <p class="lead" style="max-width:40ch;margin:0 auto var(--s5)">Slot tiap sesi terbatas karena ruangnya memang sengaja kecil.</p>
+  <a class="btn btn-p" href="#jadwal">Lihat jadwal</a>
+  <a class="btn btn-g" href="#">Tanya via WhatsApp</a>
+</div></section>
+
+</main>
+
+<footer><div class="wrap fg">
+  <div>
+    <p class="brand" style="color:var(--paper);font-size:26px">The Journaling Room</p>
+    <p style="opacity:.65;font-size:14px;max-width:30ch">Ruang journaling bareng di Yogyakarta. Berpindah venue tiap acara.</p>
+  </div>
+  <div><h4>Acara</h4><ul><li><a href="#">Jadwal</a></li><li><a href="#">Workshop</a></li><li><a href="#">Playdate</a></li><li><a href="#">Inner Circle</a></li></ul></div>
+  <div><h4>Tentang</h4><ul><li><a href="#">Cerita kami</a></li><li><a href="#">Galeri</a></li><li><a href="#">Blog</a></li><li><a href="#">FAQ</a></li></ul></div>
+  <div><h4>Kontak</h4><ul><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Kolaborasi brand</a></li></ul></div>
+</div>
+<div class="wrap" style="margin-top:var(--s5);padding-top:var(--s3);border-top:1px solid rgba(217,204,188,.16);font-size:13px;opacity:.55">
+  2026 The Journaling Room · Yogyakarta
+</div></footer>
+
+<script>
+addEventListener('scroll',()=>document.getElementById('bar').classList.toggle('on',scrollY>60));
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');});
+</script>
+</body>
+</html>
