@@ -314,11 +314,6 @@
           "shadow": "0 14px 32px rgb(36 28 20 / .26)"
         },
         {
-          "slug": "sticker",
-          "name": "Sticker bulat",
-          "shadow": "0 8px 20px rgb(36 28 20 / .18)"
-        },
-        {
           "slug": "mengambang",
           "name": "Tombol mengambang",
           "shadow": "0 12px 30px rgb(36 28 20 / .3)"

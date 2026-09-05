@@ -3,7 +3,7 @@
  * Title: Pengantar dan kutipan
  * Slug: tjr-v5/pengantar-kutipan
  * Categories: tjr, tjr-beranda
- * Description: Dua kolom pengantar tentang ruangnya, disusul sepasang foto lebar dan kotak kutipan rose, plus cetakan polaroid dan sticker bulat yang diselipkan di antaranya.
+ * Description: Dua kolom pengantar tentang ruangnya, disusul sepasang foto lebar dan kotak kutipan rose, plus satu cetakan polaroid yang diselipkan di antaranya.
  * Keywords: tentang, pengantar, kutipan, cerita
  * Viewport Width: 1400
  */
@@ -60,10 +60,6 @@ $tjr_tombol = ( 0 === $tjr_n ) ? 'Lihat arsip' : tjr_v5_angka_kata( $tjr_n ) . '
 
 <!-- wp:image {"className":"cetakan selip selip-pasangan","sizeSlug":"full","linkDestination":"none"} -->
 <figure class="wp-block-image size-full cetakan selip selip-pasangan"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/radian-24.jpg' ) ); ?>" alt=""/><figcaption class="wp-element-caption">Pendopo Radian</figcaption></figure>
-<!-- /wp:image -->
-
-<!-- wp:image {"className":"sticker","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full sticker"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/tjr-mark.png' ) ); ?>" alt=""/></figure>
 <!-- /wp:image -->
 
 </div>
