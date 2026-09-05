@@ -553,7 +553,11 @@ function tjr_v5_logo_cadangan( $konten, $parsed ) {
 		return $konten;
 	}
 
-	$berkas = get_theme_file_path( '/assets/img/tjr-black.png' );
+	// tjr-mark, bukan tjr-black. Logonya tulisan tangan, dan di bar atas dia
+	// dicat cuma 52 piksel tinggi. Berkas 900 piksel diturunkan sembilan kali
+	// oleh browser, dan garis rambut di huruf sambungnya hilang. tjr-mark sudah
+	// diperkecil lebih dulu dengan goresan yang ditebalkan sedikit.
+	$berkas = get_theme_file_path( '/assets/img/tjr-mark.png' );
 
 	if ( ! file_exists( $berkas ) ) {
 		return $konten;
@@ -563,10 +567,11 @@ function tjr_v5_logo_cadangan( $konten, $parsed ) {
 	$lebar = isset( $parsed['attrs']['width'] ) ? (int) $parsed['attrs']['width'] : 0;
 
 	return sprintf(
-		'<div class="wp-block-site-logo %1$s"><a href="%2$s" class="custom-logo-link" rel="home"><img class="custom-logo" src="%3$s" alt="%4$s"%5$s></a></div>',
+		'<div class="wp-block-site-logo %1$s"><a href="%2$s" class="custom-logo-link" rel="home"><img class="custom-logo" src="%3$s" srcset="%3$s 400w, %4$s 800w" sizes="110px" alt="%5$s"%6$s></a></div>',
 		esc_attr( $kelas ),
 		esc_url( home_url( '/' ) ),
-		esc_url( get_theme_file_uri( '/assets/img/tjr-black.png' ) ),
+		esc_url( get_theme_file_uri( '/assets/img/tjr-mark.png' ) ),
+		esc_url( get_theme_file_uri( '/assets/img/tjr-mark@2x.png' ) ),
 		esc_attr( get_bloginfo( 'name' ) ),
 		$lebar ? ' width="' . $lebar . '"' : ''
 	);

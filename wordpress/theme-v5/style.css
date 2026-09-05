@@ -464,7 +464,10 @@ header.wp-block-template-part{
   box-shadow:var(--wp--preset--shadow--sticker);
   left:calc(64% - 40px);top:-26px;margin:0;
 }
-.sticker img{width:100%;height:auto;opacity:.86;border-radius:0}
+.sticker img{
+  width:100%;height:auto;aspect-ratio:auto;object-fit:contain;
+  opacity:.86;border-radius:0;
+}
 @media(prefers-reduced-motion: no-preference){
   .sticker{animation:goyang 5.5s ease-in-out infinite alternate}
 }
@@ -494,12 +497,18 @@ header.wp-block-template-part{
   margin-top:var(--wp--preset--spacing--jarak-4);
 }
 .pasangan > *{min-width:0}
-.pasangan figure,
-.pasangan .wp-block-image{
+/* Dua dekorasi diselipkan di atas pasangan ini, cetakan polaroid dan sticker
+   bulat. Keduanya punya bentuk sendiri, jadi harus dikecualikan. Tanpa :not(),
+   keduanya ikut dipaksa jadi kotak 4/3 dengan object-fit cover, dan logo di
+   sticker terpotong kiri kanan. */
+.pasangan > figure:not(.cetakan):not(.sticker),
+.pasangan > .wp-block-image:not(.cetakan):not(.sticker){
   margin:0;border-radius:var(--wp--custom--radius--besar);overflow:hidden;
   background:var(--wp--preset--color--kertas-tua);
 }
-.pasangan .wp-block-image img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;border-radius:0}
+.pasangan > .wp-block-image:not(.cetakan):not(.sticker) img{
+  width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;border-radius:0;
+}
 
 .kutipan{
   background:var(--wp--preset--color--rose);

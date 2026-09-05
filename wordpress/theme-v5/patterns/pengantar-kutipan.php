@@ -63,7 +63,7 @@ $tjr_tombol = ( 0 === $tjr_n ) ? 'Lihat arsip' : tjr_v5_angka_kata( $tjr_n ) . '
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"sticker","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full sticker"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/tjr-black.png' ) ); ?>" alt=""/></figure>
+<figure class="wp-block-image size-full sticker"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/tjr-mark.png' ) ); ?>" alt=""/></figure>
 <!-- /wp:image -->
 
 </div>

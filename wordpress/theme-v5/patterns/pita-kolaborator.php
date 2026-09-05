@@ -20,7 +20,7 @@ $tjr_logo = array(
 	array( 'amco', 'AMCO Bakehouse' ),
 	array( 'pasar-jakal', 'Pasar Jakal' ),
 	array( 'snapobox', 'Snapobox' ),
-	array( 'tjr-black', 'The Journaling Room' ),
+	array( 'tjr-mark', 'The Journaling Room' ),
 );
 
 // Judulnya menghitung nama kolaborator saja, logo TJR sendiri tidak ikut.
@@ -28,7 +28,7 @@ $tjr_logo = array(
 // menambah atau mengurangi logo.
 $tjr_kolab = 0;
 foreach ( $tjr_logo as $tjr_satu ) {
-	if ( 'tjr-black' !== $tjr_satu[0] ) {
+	if ( 'tjr-mark' !== $tjr_satu[0] ) {
 		$tjr_kolab++;
 	}
 }
