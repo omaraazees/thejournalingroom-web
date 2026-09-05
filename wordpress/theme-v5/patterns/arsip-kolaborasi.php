@@ -8,9 +8,9 @@
  * Viewport Width: 1400
  */
 
-$tjr_n = tjr_v5_jumlah_acara( 'semua' );
-// Judulnya menyebut angka, jadi angkanya harus ikut isi. Kalau arsipnya baru
-// enam, judulnya berbunyi "Enam kali duduk bersama", bukan sepuluh.
+$tjr_n = tjr_v5_jumlah_acara( 'lewat' );
+// Arsip ini isinya acara yang tanggalnya sudah lewat saja. Judulnya menyebut
+// angka, jadi angkanya dihitung dari acara yang sama, bukan dari semua acara.
 $tjr_judul = ( 0 === $tjr_n )
 	? 'Arsipnya baru mau dimulai'
 	: tjr_v5_angka_kata( $tjr_n ) . ' kali duduk bersama';
@@ -30,7 +30,7 @@ $tjr_judul = ( 0 === $tjr_n )
 </div>
 <!-- /wp:group -->
 
-<!-- wp:query {"queryId":13,"query":{"perPage":10,"pages":1,"offset":0,"postType":"acara","order":"desc","orderBy":"date","search":"","exclude":[],"sticky":"","inherit":false},"className":"arsip"} -->
+<!-- wp:query {"queryId":13,"query":{"perPage":24,"pages":1,"offset":0,"postType":"acara","order":"desc","orderBy":"date","search":"","exclude":[],"sticky":"","inherit":false},"namespace":"tjr/arsip","className":"arsip"} -->
 <div class="wp-block-query arsip">
 
 <!-- wp:post-template {"className":"arsip-daftar"} -->

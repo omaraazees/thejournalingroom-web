@@ -8,9 +8,10 @@
  * Viewport Width: 1400
  */
 
-// Dua tempat di bawah menyebut berapa kali TJR sudah duduk bersama. Angkanya
-// diambil dari jumlah acara supaya tidak perlu diedit tiap ada sesi baru.
-$tjr_n = tjr_v5_jumlah_acara( 'semua' );
+// Dua tempat di bawah menyebut berapa kali TJR sudah duduk bersama. Yang
+// dihitung cuma acara yang tanggalnya sudah lewat, karena sesi yang belum
+// terjadi tidak bisa disebut sudah duduk bersama.
+$tjr_n = tjr_v5_jumlah_acara( 'lewat' );
 // Kalimatnya dimulai dengan angka, jadi hurufnya besar. Kalau arsipnya masih
 // kosong, klausa angkanya dibuang seluruhnya supaya kalimatnya tetap utuh.
 $tjr_kali   = ( 0 === $tjr_n )

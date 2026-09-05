@@ -531,6 +531,102 @@ function tjr_v5_seed_terms() {
 add_action( 'after_switch_theme', 'tjr_v5_seed_terms' );
 
 /**
+ * Logo cadangan untuk blok Site Logo.
+ *
+ * Blok Site Logo bawaan tidak mencetak apa apa kalau logo situs belum diatur,
+ * dan di instalasi yang Media Library-nya masih kosong itu artinya bar atas
+ * tampil tanpa merek sama sekali. Filter ini menambal lubang itu dengan berkas
+ * logo yang ikut di dalam tema. Begitu logo asli diunggah lewat editor situs,
+ * filter ini berhenti ikut campur dengan sendirinya.
+ *
+ * @param string $konten Hasil render blok.
+ * @param array  $parsed Blok yang sudah diurai.
+ * @return string
+ */
+function tjr_v5_logo_cadangan( $konten, $parsed ) {
+	if ( ! isset( $parsed['blockName'] ) || 'core/site-logo' !== $parsed['blockName'] ) {
+		return $konten;
+	}
+
+	// Logo situs sudah ada, biarkan blok bawaan yang bekerja.
+	if ( get_theme_mod( 'custom_logo' ) ) {
+		return $konten;
+	}
+
+	$berkas = get_theme_file_path( '/assets/img/tjr-black.png' );
+
+	if ( ! file_exists( $berkas ) ) {
+		return $konten;
+	}
+
+	$kelas = isset( $parsed['attrs']['className'] ) ? $parsed['attrs']['className'] : '';
+	$lebar = isset( $parsed['attrs']['width'] ) ? (int) $parsed['attrs']['width'] : 0;
+
+	return sprintf(
+		'<div class="wp-block-site-logo %1$s"><a href="%2$s" class="custom-logo-link" rel="home"><img class="custom-logo" src="%3$s" alt="%4$s"%5$s></a></div>',
+		esc_attr( $kelas ),
+		esc_url( home_url( '/' ) ),
+		esc_url( get_theme_file_uri( '/assets/img/tjr-black.png' ) ),
+		esc_attr( get_bloginfo( 'name' ) ),
+		$lebar ? ' width="' . $lebar . '"' : ''
+	);
+}
+add_filter( 'render_block', 'tjr_v5_logo_cadangan', 10, 2 );
+
+/**
+ * Tanggal acara yang tampil adalah tanggal sesinya, bukan tanggal posting.
+ *
+ * Blok Post Date bawaan cuma tahu post_date. Untuk tipe konten acara, tanggal
+ * yang berarti buat pembaca adalah field ACF tanggal_mulai. Isi elemen time
+ * ditukar di sini supaya markup dan kelasnya tetap sama persis.
+ *
+ * @param string   $konten Hasil render blok.
+ * @param array    $parsed Blok yang sudah diurai.
+ * @param WP_Block $blok   Instance blok, dipakai untuk membaca postId.
+ * @return string
+ */
+function tjr_v5_tanggal_acara( $konten, $parsed, $blok = null ) {
+	if ( ! isset( $parsed['blockName'] ) || 'core/post-date' !== $parsed['blockName'] ) {
+		return $konten;
+	}
+
+	$id = ( $blok && isset( $blok->context['postId'] ) ) ? (int) $blok->context['postId'] : 0;
+
+	if ( ! $id || 'acara' !== get_post_type( $id ) ) {
+		return $konten;
+	}
+
+	$mulai = get_post_meta( $id, TJR_FIELD_MULAI, true );
+	$stempel = $mulai ? strtotime( $mulai ) : false;
+
+	if ( ! $stempel ) {
+		return $konten;
+	}
+
+	$format = isset( $parsed['attrs']['format'] ) ? $parsed['attrs']['format'] : get_option( 'date_format' );
+
+	// Atribut datetime ikut ditukar, bukan cuma teks yang dibaca orang. Isinya
+	// dipakai mesin, jadi kalau dibiarkan menunjuk tanggal posting, data
+	// terstrukturnya ikut salah.
+	$konten = preg_replace(
+		'#(<time\b[^>]*\bdatetime=")[^"]*(")#',
+		'${1}' . esc_attr( wp_date( 'c', $stempel ) ) . '${2}',
+		$konten,
+		1
+	);
+
+	// Kurung kurawal wajib. Tanpa itu, '$1' . '23 Aug 2026' terbaca PCRE sebagai
+	// referensi grup 123, dan angka pertama tanggalnya ikut hilang.
+	return preg_replace(
+		'#(<time\b[^>]*>).*?(</time>)#s',
+		'${1}' . esc_html( wp_date( $format, $stempel ) ) . '${2}',
+		$konten,
+		1
+	);
+}
+add_filter( 'render_block', 'tjr_v5_tanggal_acara', 10, 3 );
+
+/**
  * Arsip acara diurut dari tanggal mulai, bukan tanggal publikasi.
  *
  * Acara yang belum lewat naik ke atas dan diurut dari yang paling dekat.
@@ -580,15 +676,23 @@ function tjr_v5_query_acara( $args, $block ) {
 		$ns = (string) $block->context['query']['namespace'];
 	}
 
-	if ( 'tjr/sesi-terdekat' !== $ns && 'tjr/baru-lewat' !== $ns ) {
+	$dikenal = array( 'tjr/sesi-terdekat', 'tjr/baru-lewat', 'tjr/arsip' );
+
+	if ( ! in_array( $ns, $dikenal, true ) ) {
 		return $args;
 	}
 
-	$sekarang = current_datetime()->format( 'Y-m-d H:i:s' );
+	$sekarang  = current_datetime()->format( 'Y-m-d H:i:s' );
 	$mendatang = ( 'tjr/sesi-terdekat' === $ns );
 
+	$jumlah = array(
+		'tjr/sesi-terdekat' => 1,
+		'tjr/baru-lewat'    => 3,
+		'tjr/arsip'         => 24,
+	);
+
 	$args['post_type']      = 'acara';
-	$args['posts_per_page'] = $mendatang ? 1 : 3;
+	$args['posts_per_page'] = $jumlah[ $ns ];
 	$args['meta_key']       = TJR_FIELD_MULAI;
 	$args['orderby']        = 'meta_value';
 	$args['order']          = $mendatang ? 'ASC' : 'DESC';
