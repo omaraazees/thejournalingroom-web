@@ -41,3 +41,29 @@ Lalu buka `http://127.0.0.1:8811/desain/prototipe/v5-fieldtime.html`
 
 Jadwal sesi mendatang di prototipe masih data contoh. Tanggal, tempat, dan jumlah kursi
 harus diisi dari WordPress sebelum situs dipakai.
+
+## Deploy tema ke WordPress lewat Git
+
+Tema hidup di `wordpress/theme-v5/`, tapi WordPress mencari `style.css` persis di
+akar folder tema. Jadi ada repo kedua yang isinya cuma tema, dengan akar repo
+sama dengan akar tema:
+
+**https://github.com/omaraazees/tjr-v5-theme**
+
+Repo itu tidak diedit langsung. Isinya didorong dari sini:
+
+```
+./bin/dorong-tema.sh
+```
+
+### Sekali saja, di hPanel Hostinger
+
+1. Buka **Website, thejournalingroom.id, Tingkat lanjut, GIT**
+2. Klik **Hubungkan dengan GitHub**, izinkan aksesnya
+3. Pilih repositori `tjr-v5-theme`, branch `main`
+4. Isi direktori tujuan: `public_html/wp-content/themes/tjr-v5`
+5. Nyalakan **Auto deployment** kalau mau tema ikut berubah tiap kali didorong
+6. Aktifkan tema TJR v5 dari **wp-admin, Tampilan, Tema**
+
+Setelah itu alurnya: edit tema di repo ini, commit, jalankan `./bin/dorong-tema.sh`,
+lalu Hostinger menarik sendiri.
