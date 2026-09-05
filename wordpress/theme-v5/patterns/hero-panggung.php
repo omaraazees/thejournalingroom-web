@@ -9,6 +9,17 @@
  */
 
 $tjr_wa_slot = esc_url( tjr_v5_link_wa_slot() );
+
+// Isi diambil dari halaman depan lewat ACF. Kalau kolomnya belum diisi, yang
+// dipakai aset dan kalimat yang sekarang ada di tema.
+$tjr_label   = tjr_v5_isi( 'hero_label', 'Workshop journaling' );
+$tjr_judul   = tjr_v5_isi( 'hero_judul', 'Your kind journaling companion' );
+$tjr_foto    = tjr_v5_foto( 'hero_foto', 'snapobox-11.jpg' );
+$tjr_alt     = tjr_v5_foto_alt( 'hero_foto', 'Peserta workshop The Journaling Room memegang jurnal masing masing di bawah lampion' );
+$tjr_f_judul = tjr_v5_isi( 'hero_foto_judul', 'Kelas journaling di Jogja untuk yang belum tahu mau menulis apa' );
+$tjr_f_isi   = tjr_v5_isi( 'hero_foto_isi', 'Kertasnya kosong, jamnya pelan. Alat tulis sudah kami siapkan, dan tidak ada giliran bercerita di depan orang.' );
+$tjr_cetak   = tjr_v5_foto( 'hero_cetakan', 'sundayreads-27.jpg' );
+$tjr_cetak_t = tjr_v5_isi( 'hero_cetakan_teks', 'Nov 2025' );
 ?>
 <!-- wp:group {"tagName":"section","className":"hero","layout":{"type":"default"}} -->
 <section class="wp-block-group hero">
@@ -25,8 +36,8 @@ $tjr_wa_slot = esc_url( tjr_v5_link_wa_slot() );
 
 <!-- wp:group {"className":"hero-judul","layout":{"type":"default"}} -->
 <div class="wp-block-group hero-judul">
-<!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Workshop journaling &middot; Yogyakarta</p><!-- /wp:paragraph -->
-<!-- wp:heading {"level":1,"className":"d d-xxl"} --><h1 class="wp-block-heading d d-xxl">Your kind journaling companion</h1><!-- /wp:heading -->
+<!-- wp:paragraph {"className":"lbl"} --><p class="lbl"><?php echo esc_html( $tjr_label ); ?></p><!-- /wp:paragraph -->
+<!-- wp:heading {"level":1,"className":"d d-xxl"} --><h1 class="wp-block-heading d d-xxl"><?php echo esc_html( $tjr_judul ); ?></h1><!-- /wp:heading -->
 </div>
 <!-- /wp:group -->
 
@@ -34,20 +45,20 @@ $tjr_wa_slot = esc_url( tjr_v5_link_wa_slot() );
 <!-- /wp:group -->
 
 <!-- wp:image {"className":"cetakan selip selip-hero","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan selip selip-hero"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/sundayreads-27.jpg' ) ); ?>" alt=""/><figcaption class="wp-element-caption">Nov 2025</figcaption></figure>
+<figure class="wp-block-image size-full cetakan selip selip-hero"><img src="<?php echo esc_url( $tjr_cetak ); ?>" alt=""/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_cetak_t ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"panggung","layout":{"type":"default"}} -->
 <div class="wp-block-group panggung">
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/snapobox-11.jpg' ) ); ?>" alt="Peserta workshop The Journaling Room memegang jurnal masing masing di bawah lampion"/></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( $tjr_foto ); ?>" alt="<?php echo esc_attr( $tjr_alt ); ?>"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"panggung-teks","layout":{"type":"default"}} -->
 <div class="wp-block-group panggung-teks">
-<!-- wp:heading {"level":2} --><h2 class="wp-block-heading">Kelas journaling di Jogja untuk yang belum tahu mau menulis apa</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>Kertasnya kosong, jamnya pelan. Alat tulis sudah kami siapkan, dan tidak ada giliran bercerita di depan orang.</p><!-- /wp:paragraph -->
+<!-- wp:heading {"level":2} --><h2 class="wp-block-heading"><?php echo esc_html( $tjr_f_judul ); ?></h2><!-- /wp:heading -->
+<!-- wp:paragraph --><p><?php echo esc_html( $tjr_f_isi ); ?></p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 

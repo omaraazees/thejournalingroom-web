@@ -8,7 +8,7 @@
  * Viewport Width: 1400
  */
 
-$tjr_cetakan = array(
+$tjr_bawaan = array(
 	array( 'sundayreads-12', 'Sunday Reads', 'Dokumentasi sesi TJR bersama Sunday Reads' ),
 	array( 'radian-30', 'Radian', 'Dokumentasi sesi TJR bersama Radian' ),
 	array( 'wardah-04', 'Wardah', 'Dokumentasi sesi TJR bersama Wardah' ),
@@ -19,6 +19,19 @@ $tjr_cetakan = array(
 	array( 'pasar-jakal-02', 'Pasar Jakal', 'Dokumentasi sesi TJR bersama Pasar Jakal' ),
 	array( 'kupiku-04', 'Kupiku', 'Dokumentasi sesi TJR bersama Kupiku' ),
 );
+
+// Tiap cetakan boleh diganti dari tab Cetakan di halaman depan. Yang dibiarkan
+// kosong memakai foto bawaan di atas.
+$tjr_cetakan = array();
+
+foreach ( $tjr_bawaan as $tjr_i => $tjr_satu ) {
+	$tjr_n = $tjr_i + 1;
+	$tjr_cetakan[] = array(
+		tjr_v5_foto( 'cetakan_' . $tjr_n, $tjr_satu[0] . '.jpg' ),
+		tjr_v5_isi( 'cetakan_' . $tjr_n . '_nama', $tjr_satu[1] ),
+		tjr_v5_foto_alt( 'cetakan_' . $tjr_n, $tjr_satu[2] ),
+	);
+}
 ?>
 <!-- wp:group {"tagName":"section","className":"seksi","anchor":"cetakan","layout":{"type":"default"}} -->
 <section class="wp-block-group seksi" id="cetakan">
@@ -35,7 +48,7 @@ $tjr_cetakan = array(
 <div class="wp-block-group tumpukan">
 <?php foreach ( $tjr_cetakan as $tjr_satu ) : ?>
 <!-- wp:image {"className":"cetakan","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/' . $tjr_satu[0] . '.jpg' ) ); ?>" alt="<?php echo esc_attr( $tjr_satu[2] ); ?>"/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_satu[1] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full cetakan"><img src="<?php echo esc_url( $tjr_satu[0] ); ?>" alt="<?php echo esc_attr( $tjr_satu[2] ); ?>"/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_satu[1] ); ?></figcaption></figure>
 <!-- /wp:image -->
 <?php endforeach; ?>
 </div>

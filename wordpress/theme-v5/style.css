@@ -49,9 +49,9 @@ a{color:inherit}
   position:relative;z-index:1;
   background:var(--wp--preset--color--kertas);
   max-width:var(--wp--custom--lebar-lembar);
-  margin:14px auto;
+  margin:16px auto;
   border-radius:var(--wp--custom--radius--lembar);
-  padding:0 clamp(18px,3.2vw,46px) var(--wp--preset--spacing--jarak-4);
+  padding:0 clamp(16px,3.2vw,48px) var(--wp--preset--spacing--jarak-4);
   overflow:clip;
   box-shadow:var(--wp--preset--shadow--lembar);
 }
@@ -217,10 +217,10 @@ header.wp-block-template-part{
 .bar .wp-block-site-logo a{display:block;line-height:0}
 
 .bar .wp-block-navigation{
-  display:flex;gap:clamp(14px,2vw,32px);
+  display:flex;gap:clamp(16px,2vw,32px);
 }
 .bar .wp-block-navigation .wp-block-navigation__container{
-  gap:clamp(14px,2vw,32px);
+  gap:clamp(16px,2vw,32px);
 }
 .bar .wp-block-navigation a{
   font-size:var(--wp--preset--font-size--label);font-weight:700;
@@ -253,27 +253,29 @@ header.wp-block-template-part{
 }
 
 /* Menu layar kecil.
-   Di bawah 900px logo disembunyikan dan tombol Menu mengambil tempatnya di
-   kiri, jadi bar cuma berisi dua tombol: Menu dan Hubungi kami.
+   Susunannya ikut prototipe: logo di kiri, lalu Hubungi kami dan Menu
+   berdampingan di kanan. Di DOM urutannya logo, menu, tombol, jadi dua yang
+   terakhir ditukar lewat order.
 
-   Panel menunya digantung di bawah bar, bukan menutup layar. Blok Navigation
-   bawaan memakai position:fixed inset:0, tapi lembar kertas .wp-site-blocks
-   memakai overflow:clip, dan itu mengurung elemen fixed di dalamnya. Hasilnya
-   panel setinggi 94px yang isinya harus digulir. Diubah jadi absolute terhadap
-   .bar yang memang sticky, tingginya ikut isi, tidak pernah perlu digulir. */
+   Panel menunya menutup penuh. Blok Navigation bawaan memakai position:fixed
+   inset:0, tapi lembar kertas .wp-site-blocks memakai overflow:clip dan itu
+   mengurung elemen fixed di dalamnya, hasilnya panel setinggi 94px yang isinya
+   harus digulir. Diubah jadi absolute terhadap .bar yang memang sticky di
+   puncak layar. */
 @media(max-width:900px){
   .bar{gap:var(--wp--preset--spacing--jarak-2)}
   .bar > .wp-block-site-logo,
-  .bar > .mark{display:none}
+  .bar > .mark{order:1;margin-right:auto;flex:0 0 auto}
+  .bar > .wp-block-buttons{order:2;flex:0 0 auto}
   /* position:static wajib. Blok Navigation memasang position:relative pada
      dirinya sendiri, dan panel di bawah ini absolute. Kalau dibiarkan, panelnya
      mengukur diri terhadap tombol burger yang cuma selebar 114px. */
-  .bar .wp-block-navigation{flex:0 0 auto;margin-right:auto;position:static}
+  .bar .wp-block-navigation{order:3;flex:0 0 auto;position:static}
 
   /* tombol burger dibentuk jadi pil, sebaris dengan tombol di sebelahnya */
   .bar .wp-block-navigation__responsive-container-open{
-    display:inline-flex;align-items:center;gap:10px;
-    padding:12px 18px;margin:0;
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 16px;margin:0;
     border:1px solid var(--wp--preset--color--tinta);
     border-radius:var(--wp--custom--radius--pil);
     background:transparent;color:var(--wp--preset--color--tinta);
@@ -292,21 +294,22 @@ header.wp-block-template-part{
     width:16px;height:16px;fill:currentColor;
   }
 
-  /* panel yang terbuka */
+  /* Menu terbuka menutup penuh, bukan kartu melayang.
+     Blok Navigation memakai position:fixed, tapi lembar kertas .wp-site-blocks
+     memakai overflow:clip dan itu mengurung elemen fixed. Jadi dipakai absolute
+     terhadap .bar yang sticky di puncak layar, ditarik sampai tepi lembar lewat
+     inset negatif sebesar padding lembar, lalu ditinggikan satu layar penuh. */
   .bar .wp-block-navigation__responsive-container.is-menu-open{
-    position:absolute;inset:auto 0 auto 0;top:100%;
-    width:auto;min-width:0;height:auto;min-height:0;max-height:none;
-    overflow:visible;z-index:90;
-    padding:12px;
+    --tepi:clamp(18px,3.2vw,46px);
+    position:absolute;top:0;bottom:auto;
+    left:calc(-1 * var(--tepi));right:calc(-1 * var(--tepi));
+    width:auto;min-width:0;height:100svh;min-height:0;max-height:none;
+    overflow:auto;z-index:90;
+    display:flex;align-items:center;
+    padding:clamp(72px,16vw,120px) calc(var(--tepi) + clamp(16px,4vw,40px));
     background:var(--wp--preset--color--kertas);
-    border:1px solid var(--wp--preset--color--garis);
-    border-radius:var(--wp--custom--radius--besar);
-    box-shadow:0 20px 48px rgb(36 28 20 / .22);
-    display:block;
+    border:0;border-radius:0;box-shadow:none;
   }
-  /* Blok Navigation membungkus isinya dua lapis lagi, responsive-close dan
-     responsive-dialog, dan keduanya membawa jarak bawaan untuk mode layar
-     penuh. Di panel gantung ini jaraknya dibuang. */
   .bar .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__responsive-close,
   .bar .wp-block-navigation__responsive-container.is-menu-open
@@ -319,39 +322,38 @@ header.wp-block-template-part{
   }
   .bar .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__container{
-    display:flex;flex-direction:column;align-items:stretch;gap:2px;
+    display:flex;flex-direction:column;align-items:stretch;
+    gap:clamp(8px,1.6vw,12px);
   }
+  /* di layar penuh judulnya boleh besar, pakai serif display seperti hero */
   .bar .wp-block-navigation__responsive-container.is-menu-open a{
-    display:block;width:100%;padding:14px 12px;border-radius:12px;text-align:left;
-    font-size:var(--wp--preset--font-size--mikro);
-    letter-spacing:.2em;text-transform:uppercase;
-    color:var(--wp--preset--color--tinta-lembut);text-decoration:none;
-    transition:background .3s,color .3s;
+    display:block;width:100%;padding:8px 0;
+    font-family:var(--wp--preset--font-family--display);
+    font-style:italic;font-weight:400;text-transform:none;
+    font-size:clamp(30px,9vw,54px);line-height:1.06;letter-spacing:-.02em;
+    color:var(--wp--preset--color--tinta);text-decoration:none;text-align:left;
+    transition:color .3s;
   }
   .bar .wp-block-navigation__responsive-container.is-menu-open a:hover,
   .bar .wp-block-navigation__responsive-container.is-menu-open a:focus-visible{
-    background:var(--wp--preset--color--kertas-tua);
     color:var(--wp--preset--color--burgundy);
   }
-  /* garis bawah animasi di menu desktop tidak dipakai di panel */
   .bar .wp-block-navigation__responsive-container.is-menu-open a::after{content:none}
 
-  /* tombol tutup diletakkan di sudut panel, kecil dan tidak berteriak */
+  /* tombol tutup duduk di sudut kanan atas, sejajar tempat tombol Hubungi kami */
   .bar .wp-block-navigation__responsive-container-close{
-    position:absolute;top:2px;right:2px;z-index:2;
-    width:36px;height:36px;display:grid;place-items:center;
-    color:var(--wp--preset--color--tinta-lembut);
+    position:fixed;top:clamp(24px,5vw,40px);right:clamp(24px,6vw,56px);z-index:2;
+    width:44px;height:44px;display:grid;place-items:center;
+    color:var(--wp--preset--color--tinta);
   }
-  /* link pertama diberi ruang supaya tidak tertimpa tombol tutup */
-  .bar .wp-block-navigation__responsive-container.is-menu-open
-    .wp-block-navigation__container > li:first-child a{padding-right:48px}
-  .bar .wp-block-navigation__responsive-container-close svg{width:18px;height:18px}
+  .bar .wp-block-navigation__responsive-container-close svg{width:26px;height:26px}
+
 }
 
 /* Di layar paling sempit label Menu dibuang, sisakan ikonnya saja, supaya
    tombol Hubungi kami tetap kebagian ruang. */
 @media(max-width:480px){
-  .bar .wp-block-navigation__responsive-container-open{padding:12px 14px}
+  .bar .wp-block-navigation__responsive-container-open{padding:12px 16px}
   .bar .wp-block-navigation__responsive-container-open::before{content:none}
 }
 
@@ -427,7 +429,7 @@ header.wp-block-template-part{
 @media(max-width:640px){
   .panggung{aspect-ratio:4/5}
   .panggung-teks{
-    top:auto;bottom:clamp(18px,5vw,32px);translate:0 0;
+    top:auto;bottom:clamp(16px,5vw,32px);translate:0 0;
     right:clamp(20px,5vw,32px);max-width:none;width:auto;
   }
 }
@@ -437,21 +439,21 @@ header.wp-block-template-part{
   position:absolute;right:clamp(16px,2.4vw,32px);bottom:clamp(16px,2.4vw,32px);z-index:3;
   width:min(296px,74vw);
   background:rgb(251 247 240 / .93);backdrop-filter:blur(9px);
-  border-radius:var(--wp--custom--radius--besar);padding:24px;
+  border-radius:var(--wp--custom--radius--besar);padding:28px;
   border:1px solid rgb(94 29 29 / .1);
   box-shadow:var(--wp--preset--shadow--kartu);
 }
 .kartu-sesi .lbl{
-  display:flex;align-items:center;gap:10px;
+  display:flex;align-items:center;gap:8px;
   color:var(--wp--preset--color--kraft);letter-spacing:.16em;
 }
 .kartu-sesi h2,.kartu-sesi .kartu-sesi-judul{
   font-family:var(--wp--preset--font-family--teks);font-style:normal;
   font-size:17px;font-weight:700;letter-spacing:-.015em;
-  margin:12px 0 0;line-height:1.32;color:var(--wp--preset--color--tinta);
+  margin:16px 0 0;line-height:1.32;color:var(--wp--preset--color--tinta);
 }
 .kartu-sesi p{font-size:var(--wp--preset--font-size--mikro);color:var(--wp--preset--color--tinta-lembut)}
-.kartu-sesi .wp-block-buttons{margin-top:20px}
+.kartu-sesi .wp-block-buttons{margin-top:24px}
 .kartu-sesi .aksi > .wp-block-button__link,
 .kartu-sesi a.aksi{
   display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;
@@ -517,7 +519,7 @@ header.wp-block-template-part{
 }
 /* selotip kiri: garis miring tipis, warna rose */
 .kartu-sesi::before{
-  width:clamp(62px,6.6vw,88px);top:-10px;left:-16px;rotate:-24deg;
+  width:clamp(62px,6.6vw,88px);top:-8px;left:-16px;rotate:-24deg;
   background:
     repeating-linear-gradient(58deg,rgb(255 255 255 / .34) 0 2px,rgb(255 255 255 / 0) 2px 7px),
     rgb(231 191 185 / .88);
@@ -535,12 +537,12 @@ header.wp-block-template-part{
 @keyframes apung{from{translate:0 0;rotate:-1.1deg}to{translate:0 -5px;rotate:-.4deg}}
 @media(max-width:760px){
   .kartu-sesi{rotate:-.6deg}
-  .kartu-sesi::before{left:-10px;top:-9px}
-  .kartu-sesi::after{right:-8px;top:-11px}
+  .kartu-sesi::before{left:-8px;top:-8px}
+  .kartu-sesi::after{right:-8px;top:-12px}
 }
 
 /* Daftar baris berikon di dalam kartu sesi */
-.baris{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
+.baris{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:16px}
 .baris li,.baris > p{
   display:flex;align-items:center;gap:12px;margin:0;
   font-size:var(--wp--preset--font-size--kecil);line-height:1.4;
@@ -587,7 +589,7 @@ header.wp-block-template-part{
 .kutipan{
   background:var(--wp--preset--color--rose);
   border-radius:var(--wp--custom--radius--besar);
-  padding:clamp(22px,2.6vw,38px);
+  padding:clamp(24px,2.6vw,40px);
   display:flex;flex-direction:column;justify-content:flex-end;min-height:100%;
 }
 .kutipan .qm{
@@ -597,7 +599,7 @@ header.wp-block-template-part{
 }
 .kutipan .d,.kutipan p{
   color:var(--wp--preset--color--burgundy);
-  margin-top:clamp(20px,2vw,30px);
+  margin-top:clamp(20px,2vw,32px);
 }
 @media(max-width:760px){
   .pasangan{grid-template-columns:1fr}
@@ -682,7 +684,7 @@ header.wp-block-template-part{
 .kartu-kartu > * .kartu:hover .kaki-kartu{background:var(--wp--preset--color--burgundy)}
 .kartu:hover .kaki-kartu{background:var(--wp--preset--color--burgundy)}
 .kaki-kartu .lbl{
-  display:flex;align-items:center;gap:7px;
+  display:flex;align-items:center;gap:8px;
   color:var(--wp--preset--color--kertas-redup);
 }
 .kaki-kartu .lbl::before,.kaki-kartu .mini::before{width:12px;height:12px;opacity:.85}
@@ -717,7 +719,7 @@ header.wp-block-template-part{
   letter-spacing:.2em;text-transform:uppercase;margin:0;
 }
 .sesi-isi{
-  padding:clamp(26px,3vw,46px);
+  padding:clamp(24px,3vw,48px);
   display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
   gap:var(--wp--preset--spacing--jarak-2);
 }
@@ -726,7 +728,7 @@ header.wp-block-template-part{
 .fakta{
   display:grid;grid-template-columns:1fr 1fr;
   gap:16px var(--wp--preset--spacing--jarak-3);
-  width:100%;margin:6px 0 0;
+  width:100%;margin:8px 0 0;
   padding-top:var(--wp--preset--spacing--jarak-3);
   border-top:1px solid var(--wp--preset--color--garis);
 }
@@ -747,7 +749,7 @@ header.wp-block-template-part{
    tapi cukup buat menandai bahwa ini bisa diklik. */
 .tempat{
   color:inherit;text-decoration:none;
-  border-bottom:1px solid var(--wp--preset--color--rose);padding-bottom:2px;
+  border-bottom:1px solid var(--wp--preset--color--rose);padding-bottom:4px;
   transition:border-color .35s,color .35s;
 }
 .tempat:hover,.tempat:focus-visible{
@@ -765,7 +767,7 @@ header.wp-block-template-part{
 @media(max-width:900px){
   .sesi-terdekat{grid-template-columns:1fr}
   .sesi-foto{aspect-ratio:16/10;min-height:0}
-  .fakta{grid-template-columns:1fr 1fr;gap:14px var(--wp--preset--spacing--jarak-2)}
+  .fakta{grid-template-columns:1fr 1fr;gap:16px var(--wp--preset--spacing--jarak-2)}
 }
 @media(max-width:520px){.fakta{grid-template-columns:1fr}}
 
@@ -842,11 +844,15 @@ header.wp-block-template-part{
   width:100%;border-radius:var(--wp--custom--radius--cetakan);
   aspect-ratio:1;object-fit:cover;
 }
+/* Caption cetakan ditulis tangan, Pinyon Script. Tinggi huruf kecilnya jauh di
+   bawah Playfair, jadi ukurannya dinaikkan sekitar satu setengah kali supaya
+   terbaca di kartu selebar seratus piksel. */
 .cetakan figcaption,
 .cetakan .wp-element-caption{
   position:absolute;left:8px;right:8px;bottom:8px;text-align:center;margin:0;
-  font-family:var(--wp--preset--font-family--display);font-style:italic;
-  font-size:11.5px;color:var(--wp--preset--color--tinta-lembut);
+  font-family:var(--wp--preset--font-family--tangan);font-style:normal;
+  font-size:17px;line-height:1.25;letter-spacing:.01em;
+  color:var(--wp--preset--color--tinta-lembut);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .cetakan:hover{rotate:0deg;translate:0 -8px}
@@ -854,8 +860,8 @@ header.wp-block-template-part{
 
 /* posisi cetakan yang diselipkan di antara seksi */
 .cetakan.selip-hero{left:2.2%;top:calc(100% - 96px);--rot:-8deg;--w:clamp(96px,8.4vw,124px);z-index:6}
-.cetakan.selip-pasangan{right:3.5%;top:-34px;--rot:7deg;--w:clamp(96px,8.6vw,130px)}
-.cetakan.selip-kolaborator{right:2%;bottom:-46px;--rot:7deg;--w:clamp(96px,8.2vw,120px)}
+.cetakan.selip-pasangan{right:3.5%;top:-32px;--rot:7deg;--w:clamp(96px,8.6vw,130px)}
+.cetakan.selip-kolaborator{right:2%;bottom:-48px;--rot:7deg;--w:clamp(96px,8.2vw,120px)}
 .cetakan.ajakan-1{left:37%;bottom:24px;--rot:-7deg}
 .cetakan.ajakan-2{left:50%;bottom:104px;--rot:6deg}
 
@@ -869,6 +875,11 @@ header.wp-block-template-part{
   left:var(--x);top:var(--y);
   width:var(--pw,clamp(104px,10.5vw,164px));
 }
+/* cetakan di tumpukan lebih besar dari yang diselipkan, jadi tulisan tangannya
+   ikut dinaikkan dan alasnya diberi ruang lebih */
+.tumpukan .cetakan{padding:8px 8px 32px}
+.tumpukan .cetakan figcaption,
+.tumpukan .cetakan .wp-element-caption{font-size:20px;bottom:8px}
 .tumpukan .cetakan:hover{z-index:20}
 
 .tumpukan .cetakan:nth-child(1){--x:2%;--y:18%;--rot:-9deg;--fx:26vw;--fy:8%}
@@ -933,7 +944,7 @@ header.wp-block-template-part{
 }
 .arsip-baris:hover h3,.arsip-baris:hover .arsip-nama{color:var(--wp--preset--color--burgundy)}
 .arsip-jumlah{
-  display:inline-flex;align-items:center;gap:7px;
+  display:inline-flex;align-items:center;gap:8px;
   font-size:var(--wp--preset--font-size--label);font-weight:700;
   letter-spacing:.2em;text-transform:uppercase;
   color:var(--wp--preset--color--tinta-samar);white-space:nowrap;
@@ -954,8 +965,8 @@ header.wp-block-template-part{
 }
 .arsip-baris:hover .arsip-buka::after{transform:translate(4px,-4px)}
 @media(max-width:820px){
-  .arsip-baris{grid-template-columns:1fr auto;gap:10px 16px;
-    padding:var(--wp--preset--spacing--jarak-3) 6px}
+  .arsip-baris{grid-template-columns:1fr auto;gap:8px 16px;
+    padding:var(--wp--preset--spacing--jarak-3) 8px}
   .arsip-tahun{grid-column:1/-1;order:-1}
   .arsip-baris h3,.arsip-nama{grid-column:1/-1}
   .arsip-jumlah{order:3}
@@ -1124,7 +1135,7 @@ html.intro .tirai{display:block}
 }
 /* garis emboss tipis, bikin sampulnya terasa punya ketebalan */
 .sampul::before{
-  content:"";position:absolute;inset:clamp(16px,2.4vw,34px);
+  content:"";position:absolute;inset:clamp(16px,2.4vw,32px);
   border:1px solid rgb(120 92 58 / .22);border-radius:4px;
 }
 /* bayangan yang menggelap waktu sampul berputar menjauh */

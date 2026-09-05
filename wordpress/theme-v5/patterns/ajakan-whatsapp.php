@@ -17,7 +17,7 @@ $tjr_wa = esc_url( tjr_v5_link_wa() );
 <div class="wp-block-group ajakan-kiri">
 <!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Sampai bertemu di ruangnya</p><!-- /wp:paragraph -->
 <!-- wp:heading {"level":2,"className":"d d-xl"} --><h2 class="wp-block-heading d d-xl">Bawa dirimu saja</h2><!-- /wp:heading -->
-<!-- wp:paragraph {"className":"lead"} --><p class="lead">Jurnal, alat tulis, dan bahan tempel sudah menunggu di meja. Kalau ingin membawa jurnal sendiri, silakan. Tanyakan slotnya ke kami, dibalas 09.00 sampai 21.00.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"lead"} --><p class="lead">Jurnal, alat tulis, dan bahan tempel sudah menunggu di meja. Kalau ingin membawa jurnal sendiri, silakan. Tanyakan slotnya ke kami kapan saja.</p><!-- /wp:paragraph -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
 <!-- wp:button {"className":"is-style-pil-isi"} --><div class="wp-block-button is-style-pil-isi"><a class="wp-block-button__link wp-element-button" href="<?php echo $tjr_wa; ?>" target="_blank" rel="noopener">Tanyakan slotnya ke kami</a></div><!-- /wp:button -->

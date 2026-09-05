@@ -171,6 +171,11 @@
               ]
             }
           ]
+        },
+        {
+          "slug": "tangan",
+          "name": "Pinyon Script",
+          "fontFamily": "\"Pinyon Script\", \"Snell Roundhand\", \"Apple Chancery\", cursive"
         }
       ],
       "fontSizes": [

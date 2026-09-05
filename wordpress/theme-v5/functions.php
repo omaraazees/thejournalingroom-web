@@ -52,6 +52,13 @@ if ( ! defined( 'TJR_PESAN_WA_SLOT' ) ) {
 }
 
 
+/**
+ * Isi beranda yang bisa diurus dari dasbor. Field-nya didaftarkan lewat kode,
+ * pattern membacanya dengan aset tema sebagai bawaan.
+ */
+require_once get_theme_file_path( '/inc/isi-beranda.php' );
+
+
 /* =====================================================================
  * 1. Dukungan tema
  * ===================================================================== */
@@ -97,6 +104,7 @@ function tjr_v5_url_font_google() {
 	return 'https://fonts.googleapis.com/css2'
 		. '?family=Playfair+Display:ital,wght@1,400;1,500;1,600'
 		. '&family=Manrope:wght@400;500;700'
+		. '&family=Pinyon+Script'
 		. '&display=swap';
 }
 
