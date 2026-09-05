@@ -106,9 +106,13 @@ u952235165
 <password ftp>
 ```
 
-Skrip ini hanya menyentuh `/public_html/wp-content/themes/tjr-v5`, tidak bisa
-menghapus instalasi WordPress. Berkas yang ukurannya sama dilewati, jadi
-pengiriman kedua dan seterusnya cepat.
+Sambungannya FTPS, port 21, dengan AUTH TLS. Perhatikan bahwa akar FTP itu home
+akun, bukan `public_html`. Situsnya ada di
+`/domains/thejournalingroom.id/public_html/`, dan itu yang dipakai skrip.
+
+Skrip ini hanya menyentuh folder tema `tjr-v5`, tidak bisa menghapus instalasi
+WordPress. Berkas yang ukurannya sama dilewati, jadi pengiriman kedua dan
+seterusnya selesai dalam hitungan detik.
 
 ## Pemulihan darurat
 

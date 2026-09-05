@@ -13,7 +13,8 @@ Hanya menyentuh folder tema. Tidak bisa menghapus instalasi WordPress.
 import ftplib, hashlib, os, pathlib, ssl, sys
 
 LOKAL = pathlib.Path(__file__).resolve().parent.parent / "wordpress" / "theme-v5"
-REMOTE = "/public_html/wp-content/themes/tjr-v5"
+# Akar FTP itu home akun, bukan public_html. Situsnya ada di bawah domains/.
+REMOTE = "/domains/thejournalingroom.id/public_html/wp-content/themes/tjr-v5"
 LEWATI = {".DS_Store", "CATATAN.md"}
 
 
