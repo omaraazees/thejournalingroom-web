@@ -8,7 +8,7 @@
  * Viewport Width: 1400
  */
 
-$tjr_wa = esc_url( tjr_v5_link_wa() );
+$tjr_wa = esc_url( tjr_v5_link_wa_slot() );
 ?>
 <!-- wp:group {"tagName":"section","className":"seksi","anchor":"jadwal","layout":{"type":"default"}} -->
 <section class="wp-block-group seksi" id="jadwal">
@@ -42,7 +42,9 @@ $tjr_wa = esc_url( tjr_v5_link_wa() );
 <!-- wp:post-title {"level":3,"isLink":true,"className":"d d-lg"} /-->
 <!-- wp:post-excerpt {"className":"lead","excerptLength":52,"showMoreOnNewLine":false} /-->
 
-<?php /* Enam baris fakta. Nilainya diisi lane CMS dari field ACF: tanggal_mulai, durasi_jam, venue_nama, kapasitas, isi_kit. */ ?>
+<?php /* Enam baris fakta. Yang bertanda kelas dd-waktu, dd-tempat, dd-kit, dan
+   dd-kursi isinya ditukar tjr_v5_fakta_acara() dengan field acara yang sedang
+   dirender. Teks yang tertulis di bawah cuma contoh yang tampil di editor. */ ?>
 <!-- wp:group {"className":"fakta","layout":{"type":"default"}} -->
 <div class="wp-block-group fakta">
 
@@ -56,14 +58,14 @@ $tjr_wa = esc_url( tjr_v5_link_wa() );
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
 <!-- wp:paragraph {"className":"dt ik-jam"} --><p class="dt ik-jam">Waktu</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"dd"} --><p class="dd">15.00 sampai 18.00 WIB</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"dd dd-waktu"} --><p class="dd dd-waktu">15.00 sampai 18.00 WIB</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
 <!-- wp:paragraph {"className":"dt ik-pin"} --><p class="dt ik-pin">Tempat</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"dd"} --><p class="dd"><a class="tempat" href="https://www.google.com/maps/search/?api=1&amp;query=Kupiku%20Coffee%2C%20Mantrijeron%2C%20Yogyakarta" target="_blank" rel="noopener">Kupiku Coffee, Mantrijeron, Yogyakarta</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"dd dd-tempat"} --><p class="dd dd-tempat"><a class="tempat" href="https://www.google.com/maps/search/?api=1&amp;query=Kupiku%20Coffee%2C%20Mantrijeron%2C%20Yogyakarta" target="_blank" rel="noopener">Kupiku Coffee, Mantrijeron, Yogyakarta</a></p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
@@ -77,7 +79,7 @@ $tjr_wa = esc_url( tjr_v5_link_wa() );
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
 <!-- wp:paragraph {"className":"dt ik-kotak"} --><p class="dt ik-kotak">Yang disediakan</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"dd"} --><p class="dd">Jurnal, stiker, booklet prompt, deco station, satu minuman</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"dd dd-kit"} --><p class="dd dd-kit">Jurnal, stiker, booklet prompt, deco station, satu minuman</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
@@ -91,12 +93,12 @@ $tjr_wa = esc_url( tjr_v5_link_wa() );
 </div>
 <!-- /wp:group -->
 
-<?php /* Bar sisa kursi. Satu satunya HTML mentah di pattern ini, karena batang warna bukan konten teks. Angka persennya nanti dihitung fungsi tjr_bar_slot() dari lane CMS. */ ?>
+<?php /* Bar sisa kursi. Satu satunya HTML mentah di pattern ini, karena batang warna bukan konten teks. Angka persennya ditukar tjr_v5_fakta_acara() dari field kapasitas dan slot terisi. */ ?>
 <!-- wp:html -->
 <div class="slot" role="img" aria-label="11 dari 15 kursi sudah terisi"><i style="--p:73%"></i></div>
 <!-- /wp:html -->
 
-<!-- wp:paragraph {"className":"slot-catatan"} --><p class="slot-catatan">11 dari 15 kursi sudah terisi</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"slot-catatan dd-kursi"} --><p class="slot-catatan dd-kursi">11 dari 15 kursi sudah terisi</p><!-- /wp:paragraph -->
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons">

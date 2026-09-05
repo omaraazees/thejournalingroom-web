@@ -447,6 +447,96 @@ function tjr_v5_register_acara() {
 }
 add_action( 'init', 'tjr_v5_register_acara', 0 );
 
+
+/**
+ * Tipe konten Kolaborator.
+ *
+ * Satu entri sama dengan satu logo di pita kolaborator. Judulnya nama brand,
+ * logonya diunggah sebagai Featured image. Dibuat tipe konten sendiri, bukan
+ * daftar di kode, karena partnernya akan bertambah dan pemilik brand harus
+ * bisa menambah tanpa menyentuh tema.
+ *
+ * public dibuat false karena logo tidak butuh halamannya sendiri. Yang
+ * dinyalakan cuma layar dasbornya. Urutannya ikut kolom Order, jadi bisa
+ * digeser tanpa mengubah nama.
+ */
+function tjr_v5_register_kolaborator() {
+	register_post_type(
+		'kolaborator',
+		array(
+			'labels'                => array(
+				'name'                  => 'Kolaborator',
+				'singular_name'         => 'Kolaborator',
+				'add_new'               => 'Tambah kolaborator',
+				'add_new_item'          => 'Tambah kolaborator baru',
+				'edit_item'             => 'Ubah kolaborator',
+				'new_item'              => 'Kolaborator baru',
+				'search_items'          => 'Cari kolaborator',
+				'not_found'             => 'Belum ada kolaborator',
+				'not_found_in_trash'    => 'Tidak ada kolaborator di tong sampah',
+				'all_items'             => 'Semua kolaborator',
+				'menu_name'             => 'Kolaborator',
+				'featured_image'        => 'Logo',
+				'set_featured_image'    => 'Pilih logo',
+				'remove_featured_image' => 'Hapus logo',
+				'use_featured_image'    => 'Pakai sebagai logo',
+			),
+			'description'           => 'Nama dan logo brand yang pernah berkolaborasi. Muncul di pita kolaborator di beranda.',
+			'public'                => false,
+			'show_ui'               => true,
+			'show_in_menu'          => true,
+			'show_in_rest'          => true,
+			'menu_position'         => 6,
+			'menu_icon'             => 'dashicons-groups',
+			'supports'              => array( 'title', 'thumbnail', 'page-attributes' ),
+			'has_archive'           => false,
+			'rewrite'               => false,
+			'capability_type'       => 'post',
+		)
+	);
+}
+add_action( 'init', 'tjr_v5_register_kolaborator', 0 );
+
+/**
+ * Daftar kolaborator untuk pita di beranda.
+ *
+ * Selama belum ada satu pun entri Kolaborator, hasilnya kosong dan pattern
+ * memakai daftar bawaannya, jadi halaman tidak pernah kehilangan pita logo.
+ *
+ * @return array Daftar array{nama:string,logo:string}.
+ */
+function tjr_v5_kolaborator() {
+	$q = new WP_Query(
+		array(
+			'post_type'      => 'kolaborator',
+			'post_status'    => 'publish',
+			'posts_per_page' => 60,
+			'orderby'        => array(
+				'menu_order' => 'ASC',
+				'title'      => 'ASC',
+			),
+			'no_found_rows'  => true,
+		)
+	);
+
+	$hasil = array();
+
+	foreach ( $q->posts as $satu ) {
+		$logo = get_the_post_thumbnail_url( $satu->ID, 'medium' );
+
+		if ( ! $logo ) {
+			continue;
+		}
+
+		$hasil[] = array(
+			'nama' => get_the_title( $satu->ID ),
+			'logo' => $logo,
+		);
+	}
+
+	return $hasil;
+}
+
 /**
  * Dua taksonomi: format acara dan kota.
  *
@@ -632,7 +722,7 @@ function tjr_v5_tanggal_acara( $konten, $parsed, $blok = null ) {
 	// referensi grup 123, dan angka pertama tanggalnya ikut hilang.
 	return preg_replace(
 		'#(<time\b[^>]*>).*?(</time>)#s',
-		'${1}' . esc_html( wp_date( $format, $stempel ) ) . '${2}',
+		'${1}' . esc_html( tjr_v5_tanggal_id( $format, $stempel ) ) . '${2}',
 		$konten,
 		1
 	);

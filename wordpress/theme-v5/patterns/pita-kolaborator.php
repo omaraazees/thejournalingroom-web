@@ -32,6 +32,32 @@ foreach ( $tjr_logo as $tjr_satu ) {
 		$tjr_kolab++;
 	}
 }
+// Kalau sudah ada entri di menu Kolaborator, itu yang dipakai. Daftar di atas
+// cuma cadangan supaya pita tidak pernah kosong sebelum diisi.
+$tjr_dari_cms = tjr_v5_kolaborator();
+
+if ( $tjr_dari_cms ) {
+	$tjr_kolab = count( $tjr_dari_cms );
+	$tjr_petak = $tjr_dari_cms;
+} else {
+	$tjr_petak = array();
+	foreach ( $tjr_logo as $tjr_satu ) {
+		if ( 'tjr-mark' === $tjr_satu[0] ) {
+			continue;
+		}
+		$tjr_petak[] = array(
+			'nama' => $tjr_satu[1],
+			'logo' => get_theme_file_uri( '/assets/img/' . $tjr_satu[0] . '.png' ),
+		);
+	}
+}
+
+// Logo TJR sendiri selalu jadi petak terakhir, dan tidak ikut dihitung.
+$tjr_petak[] = array(
+	'nama' => 'The Journaling Room',
+	'logo' => get_theme_file_uri( '/assets/img/tjr-mark.png' ),
+);
+
 $tjr_judul = tjr_v5_angka_kata( $tjr_kolab ) . ' nama di meja';
 ?>
 <!-- wp:group {"tagName":"section","className":"seksi","anchor":"kolaborator","layout":{"type":"default"}} -->
@@ -55,9 +81,9 @@ $tjr_judul = tjr_v5_angka_kata( $tjr_kolab ) . ' nama di meja';
 
 <!-- wp:group {"className":"logos naik","layout":{"type":"default"}} -->
 <div class="wp-block-group logos naik">
-<?php foreach ( $tjr_logo as $tjr_satu ) : ?>
+<?php foreach ( $tjr_petak as $tjr_satu ) : ?>
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/' . $tjr_satu[0] . '.png' ) ); ?>" alt="<?php echo esc_attr( $tjr_satu[1] ); ?>"/></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( $tjr_satu['logo'] ); ?>" alt="<?php echo esc_attr( $tjr_satu['nama'] ); ?>"/></figure>
 <!-- /wp:image -->
 <?php endforeach; ?>
 </div>

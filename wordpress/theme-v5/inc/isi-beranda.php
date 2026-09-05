@@ -312,3 +312,307 @@ function tjr_v5_daftar_isi_beranda() {
 	);
 }
 add_action( 'acf/init', 'tjr_v5_daftar_isi_beranda' );
+
+
+/* =====================================================================
+ * Baris fakta acara yang hidup di dalam Query Loop
+ *
+ * Pattern dirender sekali waktu berkasnya dibaca, jadi get_field() di dalam
+ * pattern tidak bisa tahu acara mana yang sedang diulang. Nilainya ditukar di
+ * sini lewat render_block, yang menerima postId dari konteks blok.
+ * ===================================================================== */
+
+/**
+ * Tanggal dalam bahasa Indonesia.
+ *
+ * WordPress di situs ini berjalan dengan berkas terjemahan bawaan Inggris,
+ * jadi wp_date menghasilkan Sunday dan August. Nama hari dan bulan ditukar di
+ * sini, supaya tidak bergantung pada paket bahasa yang mungkin tidak terpasang.
+ *
+ * @param string $format  Format tanggal ala PHP.
+ * @param int    $stempel Timestamp.
+ * @return string
+ */
+function tjr_v5_tanggal_id( $format, $stempel ) {
+	$peta = array(
+		'Sunday'    => 'Minggu',
+		'Monday'    => 'Senin',
+		'Tuesday'   => 'Selasa',
+		'Wednesday' => 'Rabu',
+		'Thursday'  => 'Kamis',
+		'Friday'    => 'Jumat',
+		'Saturday'  => 'Sabtu',
+		'Sun'       => 'Min',
+		'Mon'       => 'Sen',
+		'Tue'       => 'Sel',
+		'Wed'       => 'Rab',
+		'Thu'       => 'Kam',
+		'Fri'       => 'Jum',
+		'Sat'       => 'Sab',
+		'January'   => 'Januari',
+		'February'  => 'Februari',
+		'March'     => 'Maret',
+		'April'     => 'April',
+		'May'       => 'Mei',
+		'June'      => 'Juni',
+		'July'      => 'Juli',
+		'August'    => 'Agustus',
+		'September' => 'September',
+		'October'   => 'Oktober',
+		'November'  => 'November',
+		'December'  => 'Desember',
+		'Jan'       => 'Jan',
+		'Feb'       => 'Feb',
+		'Mar'       => 'Mar',
+		'Apr'       => 'Apr',
+		'Jun'       => 'Jun',
+		'Jul'       => 'Jul',
+		'Aug'       => 'Agu',
+		'Sep'       => 'Sep',
+		'Oct'       => 'Okt',
+		'Nov'       => 'Nov',
+		'Dec'       => 'Des',
+	);
+
+	return strtr( wp_date( $format, $stempel ), $peta );
+}
+
+/**
+ * Jam sesi, dari tanggal mulai plus durasi.
+ *
+ * @param int $id ID acara.
+ * @return string
+ */
+function tjr_v5_jam_acara( $id ) {
+	$mulai = get_post_meta( $id, TJR_FIELD_MULAI, true );
+	$stempel = $mulai ? strtotime( $mulai ) : false;
+
+	if ( ! $stempel ) {
+		return '';
+	}
+
+	$durasi = (float) get_post_meta( $id, 'durasi_jam', true );
+	$selesai = $durasi ? $stempel + (int) round( $durasi * HOUR_IN_SECONDS ) : 0;
+
+	$jam = wp_date( 'H.i', $stempel );
+
+	if ( $selesai ) {
+		$jam .= ' sampai ' . wp_date( 'H.i', $selesai );
+	}
+
+	return $jam . ' WIB';
+}
+
+/**
+ * Nama tempat plus tautannya ke peta.
+ *
+ * @param int $id ID acara.
+ * @return string HTML tautan, atau teks biasa kalau tidak ada tujuan peta.
+ */
+function tjr_v5_tempat_acara( $id ) {
+	$nama   = trim( (string) get_post_meta( $id, 'venue_nama', true ) );
+	$alamat = trim( (string) get_post_meta( $id, 'venue_alamat', true ) );
+	$peta   = trim( (string) get_post_meta( $id, 'venue_maps', true ) );
+
+	if ( '' === $nama ) {
+		return '';
+	}
+
+	$tampil = $alamat ? $nama . ', ' . $alamat : $nama;
+
+	if ( '' === $peta ) {
+		// Tanpa link Maps yang diisi, dibuatkan pencarian dari namanya.
+		$peta = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode( $tampil );
+	}
+
+	return sprintf(
+		'<a class="tempat" href="%s" target="_blank" rel="noopener">%s</a>',
+		esc_url( $peta ),
+		esc_html( $tampil )
+	);
+}
+
+/**
+ * Isi kit, dirangkai jadi satu kalimat.
+ *
+ * @param int $id ID acara.
+ * @return string
+ */
+function tjr_v5_kit_acara( $id ) {
+	$kit = get_post_meta( $id, 'isi_kit', true );
+
+	if ( is_string( $kit ) ) {
+		$kit = maybe_unserialize( $kit );
+	}
+
+	if ( ! is_array( $kit ) || ! $kit ) {
+		return '';
+	}
+
+	$kit = array_map( 'trim', array_filter( array_map( 'strval', $kit ) ) );
+
+	if ( ! $kit ) {
+		return '';
+	}
+
+	// Huruf pertama besar, sisanya apa adanya.
+	$kit[0] = ucfirst( $kit[0] );
+
+	return implode( ', ', $kit );
+}
+
+/**
+ * Angka kursi: terisi, kapasitas, dan persennya.
+ *
+ * @param int $id ID acara.
+ * @return array{terisi:int,kapasitas:int,persen:int}|null
+ */
+function tjr_v5_kursi_acara( $id ) {
+	$kapasitas = (int) get_post_meta( $id, 'kapasitas', true );
+	$terisi    = (int) get_post_meta( $id, 'slot_terisi', true );
+
+	if ( $kapasitas < 1 ) {
+		return null;
+	}
+
+	$terisi = max( 0, min( $terisi, $kapasitas ) );
+
+	return array(
+		'terisi'    => $terisi,
+		'kapasitas' => $kapasitas,
+		'persen'    => (int) round( $terisi / $kapasitas * 100 ),
+	);
+}
+
+/**
+ * Tukar isi baris fakta dan bar kursi dengan nilai acara yang sedang dirender.
+ *
+ * @param string   $konten Hasil render blok.
+ * @param array    $parsed Blok yang sudah diurai.
+ * @param WP_Block $blok   Instance blok.
+ * @return string
+ */
+function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
+	$nama = isset( $parsed['blockName'] ) ? $parsed['blockName'] : '';
+
+	if ( 'core/paragraph' !== $nama && 'core/html' !== $nama ) {
+		return $konten;
+	}
+
+	$id = ( $blok && isset( $blok->context['postId'] ) ) ? (int) $blok->context['postId'] : 0;
+
+	if ( ! $id || 'acara' !== get_post_type( $id ) ) {
+		return $konten;
+	}
+
+	$kelas = isset( $parsed['attrs']['className'] ) ? $parsed['attrs']['className'] : '';
+
+	// Bar kursi, satu satunya HTML mentah, dicocokkan dari isinya.
+	if ( 'core/html' === $nama || false !== strpos( $kelas, 'dd-bar' ) ) {
+		if ( false === strpos( $konten, 'class="slot"' ) ) {
+			return $konten;
+		}
+
+		$kursi = tjr_v5_kursi_acara( $id );
+
+		if ( ! $kursi ) {
+			return '';
+		}
+
+		return sprintf(
+			'<div class="slot" role="img" aria-label="%1$s dari %2$s kursi sudah terisi"><i style="--p:%3$s%%"></i></div>',
+			(int) $kursi['terisi'],
+			(int) $kursi['kapasitas'],
+			(int) $kursi['persen']
+		);
+	}
+
+	$isi = null;
+
+	if ( false !== strpos( $kelas, 'dd-waktu' ) ) {
+		$isi = esc_html( tjr_v5_jam_acara( $id ) );
+	} elseif ( false !== strpos( $kelas, 'dd-tempat' ) ) {
+		$isi = tjr_v5_tempat_acara( $id );
+	} elseif ( false !== strpos( $kelas, 'dd-kit' ) ) {
+		$isi = esc_html( tjr_v5_kit_acara( $id ) );
+	} elseif ( false !== strpos( $kelas, 'dd-kursi' ) ) {
+		$kursi = tjr_v5_kursi_acara( $id );
+		$isi   = $kursi ? esc_html( $kursi['terisi'] . ' dari ' . $kursi['kapasitas'] . ' kursi sudah terisi' ) : '';
+	}
+
+	if ( null === $isi ) {
+		return $konten;
+	}
+
+	// Kalau field-nya kosong, seluruh barisnya dibuang, bukan diisi kalimat lama.
+	if ( '' === $isi ) {
+		return '';
+	}
+
+	return preg_replace( '#(<p\b[^>]*>).*?(</p>)#s', '${1}' . $isi . '${2}', $konten, 1 );
+}
+add_filter( 'render_block', 'tjr_v5_fakta_acara', 10, 3 );
+
+/**
+ * Pastikan blok paragraf dan HTML tahu sedang berada di postingan mana.
+ *
+ * @param array $metadata Metadata block.json.
+ * @return array
+ */
+function tjr_v5_konteks_post_id( $metadata ) {
+	if ( ! isset( $metadata['name'] ) ) {
+		return $metadata;
+	}
+
+	if ( ! in_array( $metadata['name'], array( 'core/paragraph', 'core/html' ), true ) ) {
+		return $metadata;
+	}
+
+	if ( ! isset( $metadata['usesContext'] ) || ! is_array( $metadata['usesContext'] ) ) {
+		$metadata['usesContext'] = array();
+	}
+
+	if ( ! in_array( 'postId', $metadata['usesContext'], true ) ) {
+		$metadata['usesContext'][] = 'postId';
+	}
+
+	if ( ! in_array( 'postType', $metadata['usesContext'], true ) ) {
+		$metadata['usesContext'][] = 'postType';
+	}
+
+	return $metadata;
+}
+add_filter( 'block_type_metadata', 'tjr_v5_konteks_post_id' );
+
+
+/**
+ * Acara terdekat yang tanggalnya belum lewat.
+ *
+ * Dipakai kartu kecil di hero, yang bukan bagian dari Query Loop jadi harus
+ * mencari sendiri.
+ *
+ * @return WP_Post|null
+ */
+function tjr_v5_acara_terdekat() {
+	$q = new WP_Query(
+		array(
+			'post_type'      => 'acara',
+			'post_status'    => 'publish',
+			'posts_per_page' => 1,
+			'meta_key'       => TJR_FIELD_MULAI,
+			'orderby'        => 'meta_value',
+			'order'          => 'ASC',
+			'no_found_rows'  => true,
+			'meta_query'     => array(
+				array(
+					'key'     => TJR_FIELD_MULAI,
+					'value'   => current_datetime()->format( 'Y-m-d H:i:s' ),
+					'compare' => '>=',
+					'type'    => 'DATETIME',
+				),
+			),
+		)
+	);
+
+	return $q->have_posts() ? $q->posts[0] : null;
+}

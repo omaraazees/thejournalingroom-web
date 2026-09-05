@@ -20,6 +20,21 @@ $tjr_f_judul = tjr_v5_isi( 'hero_foto_judul', 'Kelas journaling di Jogja untuk y
 $tjr_f_isi   = tjr_v5_isi( 'hero_foto_isi', 'Kertasnya kosong, jamnya pelan. Alat tulis sudah kami siapkan, dan tidak ada giliran bercerita di depan orang.' );
 $tjr_cetak   = tjr_v5_foto( 'hero_cetakan', 'sundayreads-27.jpg' );
 $tjr_cetak_t = tjr_v5_isi( 'hero_cetakan_teks', 'Nov 2025' );
+
+// Kartu sesi terdekat mengambil acara yang tanggalnya paling dekat dan belum
+// lewat. Kalau belum ada acara sama sekali, kartunya tidak dicetak.
+$tjr_sesi = tjr_v5_acara_terdekat();
+
+if ( $tjr_sesi ) {
+	$tjr_sid    = $tjr_sesi->ID;
+	$tjr_s_mul  = get_post_meta( $tjr_sid, TJR_FIELD_MULAI, true );
+	$tjr_s_cap  = $tjr_s_mul ? strtotime( $tjr_s_mul ) : false;
+	$tjr_s_tgl  = $tjr_s_cap ? tjr_v5_tanggal_id( 'l, j F', $tjr_s_cap ) : '';
+	$tjr_s_jam  = str_replace( ' WIB', '', tjr_v5_jam_acara( $tjr_sid ) );
+	$tjr_s_tpt  = tjr_v5_tempat_acara( $tjr_sid );
+	$tjr_kursi  = tjr_v5_kursi_acara( $tjr_sid );
+	$tjr_s_krs  = $tjr_kursi ? $tjr_kursi['terisi'] . ' dari ' . $tjr_kursi['kapasitas'] . ' kursi terisi' : '';
+}
 ?>
 <!-- wp:group {"tagName":"section","className":"hero","layout":{"type":"default"}} -->
 <section class="wp-block-group hero">
@@ -66,17 +81,26 @@ $tjr_cetak_t = tjr_v5_isi( 'hero_cetakan_teks', 'Nov 2025' );
 </div>
 <!-- /wp:group -->
 
+<?php if ( $tjr_sesi ) : ?>
 <!-- wp:group {"className":"kartu-sesi","layout":{"type":"default"}} -->
 <div class="wp-block-group kartu-sesi">
 <!-- wp:paragraph {"className":"lbl"} --><p class="lbl"><span class="titik"></span>Sesi terdekat</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"kartu-sesi-judul"} --><p class="kartu-sesi-judul">Tracing Shadows, Mapping Stars</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"kartu-sesi-judul"} --><p class="kartu-sesi-judul"><?php echo esc_html( get_the_title( $tjr_sid ) ); ?></p><!-- /wp:paragraph -->
 
 <!-- wp:group {"className":"baris","layout":{"type":"default"}} -->
 <div class="wp-block-group baris">
-<!-- wp:paragraph {"className":"ik-kalender"} --><p class="ik-kalender">Sabtu, 20 September</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"ik-jam"} --><p class="ik-jam">15.00 sampai 18.00</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"ik-pin"} --><p class="ik-pin"><a class="tempat" href="https://www.google.com/maps/search/?api=1&amp;query=Kupiku%20Coffee%2C%20Mantrijeron%2C%20Yogyakarta" target="_blank" rel="noopener">Kupiku Coffee, Jogja</a></p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"ik-orang"} --><p class="ik-orang">11 dari 15 kursi terisi</p><!-- /wp:paragraph -->
+<?php if ( $tjr_s_tgl ) : ?>
+<!-- wp:paragraph {"className":"ik-kalender"} --><p class="ik-kalender"><?php echo esc_html( $tjr_s_tgl ); ?></p><!-- /wp:paragraph -->
+<?php endif; ?>
+<?php if ( $tjr_s_jam ) : ?>
+<!-- wp:paragraph {"className":"ik-jam"} --><p class="ik-jam"><?php echo esc_html( $tjr_s_jam ); ?></p><!-- /wp:paragraph -->
+<?php endif; ?>
+<?php if ( $tjr_s_tpt ) : ?>
+<!-- wp:paragraph {"className":"ik-pin"} --><p class="ik-pin"><?php echo $tjr_s_tpt; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p><!-- /wp:paragraph -->
+<?php endif; ?>
+<?php if ( $tjr_s_krs ) : ?>
+<!-- wp:paragraph {"className":"ik-orang"} --><p class="ik-orang"><?php echo esc_html( $tjr_s_krs ); ?></p><!-- /wp:paragraph -->
+<?php endif; ?>
 </div>
 <!-- /wp:group -->
 
@@ -88,6 +112,7 @@ $tjr_cetak_t = tjr_v5_isi( 'hero_cetakan_teks', 'Nov 2025' );
 
 </div>
 <!-- /wp:group -->
+<?php endif; ?>
 
 </section>
 <!-- /wp:group -->
