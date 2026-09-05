@@ -202,11 +202,11 @@ akan jadi.
 
 ## H2 · WhatsApp
 
-> **+62 857 2822 5369**
+> **+62 857 2022 5369**
 > Dibalas jam 09.00 sampai 21.00.
 > `[PERLU DIKONFIRMASI: jam balas ini diambil dari beranda yang sudah disetujui, tolong pastikan masih benar]`
 
-Tombol: **Chat lewat WhatsApp**, mengarah ke `https://wa.me/6285728225369`.
+Tombol: **Chat lewat WhatsApp**, mengarah ke `https://wa.me/6285720225369`.
 Target sentuh minimal 44px, dan nomornya tetap ditulis sebagai teks supaya bisa disalin manual.
 
 ## H2 · Instagram

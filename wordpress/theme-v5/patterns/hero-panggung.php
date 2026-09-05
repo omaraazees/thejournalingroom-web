@@ -3,12 +3,12 @@
  * Title: Hero panggung
  * Slug: tjr-v5/hero-panggung
  * Categories: tjr, tjr-beranda
- * Description: Judul besar rata kanan, dua pil aksi, foto panggung lebar dengan teks di kiri, panah tulis tangan, dan kartu sesi terdekat yang menempel di sudut kanan bawah foto.
+ * Description: Judul besar rata kanan, dua pil aksi, foto panggung lebar dengan teks di kiri, dan kartu sesi terdekat bertempel selotip washi di sudut kanan bawah foto.
  * Keywords: hero, beranda, panggung, sesi terdekat
  * Viewport Width: 1400
  */
 
-$tjr_wa = esc_url( tjr_v5_link_wa() );
+$tjr_wa_slot = esc_url( tjr_v5_link_wa_slot() );
 ?>
 <!-- wp:group {"tagName":"section","className":"hero","layout":{"type":"default"}} -->
 <section class="wp-block-group hero">
@@ -51,16 +51,13 @@ $tjr_wa = esc_url( tjr_v5_link_wa() );
 </div>
 <!-- /wp:group -->
 
-<!-- wp:html -->
-<svg class="panah" viewBox="0 0 140 100" aria-hidden="true" focusable="false">
-	<path d="M8 16C44 12 72 32 100 70"/>
-	<path d="M100 70 76 64M100 70 94 46"/>
-</svg>
-<!-- /wp:html -->
+
+</div>
+<!-- /wp:group -->
 
 <!-- wp:group {"className":"kartu-sesi","layout":{"type":"default"}} -->
 <div class="wp-block-group kartu-sesi">
-<!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Sesi terdekat</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"lbl"} --><p class="lbl"><span class="titik"></span>Sesi terdekat</p><!-- /wp:paragraph -->
 <!-- wp:paragraph {"className":"kartu-sesi-judul"} --><p class="kartu-sesi-judul">Tracing Shadows, Mapping Stars</p><!-- /wp:paragraph -->
 
 <!-- wp:group {"className":"baris","layout":{"type":"default"}} -->
@@ -74,12 +71,9 @@ $tjr_wa = esc_url( tjr_v5_link_wa() );
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
-<!-- wp:button {"className":"aksi","width":100} --><div class="wp-block-button aksi has-custom-width wp-block-button__width-100"><a class="wp-block-button__link wp-element-button" href="<?php echo $tjr_wa; ?>" target="_blank" rel="noopener">Tanyakan slotnya ke kami</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"aksi","width":100} --><div class="wp-block-button aksi has-custom-width wp-block-button__width-100"><a class="wp-block-button__link wp-element-button" href="<?php echo $tjr_wa_slot; ?>" target="_blank" rel="noopener" aria-label="Tanyakan slotnya ke kami lewat WhatsApp">Tanyakan slotnya ke kami</a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
-
-</div>
-<!-- /wp:group -->
 
 </div>
 <!-- /wp:group -->

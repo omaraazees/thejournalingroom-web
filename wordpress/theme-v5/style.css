@@ -119,6 +119,7 @@ a{color:inherit}
   display:inline-flex;align-items:center;gap:12px;
   max-width:max-content;
   padding:12px 20px;
+  white-space:nowrap;
   border:1px solid var(--wp--preset--color--tinta);
   border-radius:var(--wp--custom--radius--pil);
   font-family:var(--wp--preset--font-family--teks);
@@ -208,6 +209,11 @@ header.wp-block-template-part{
 }
 .bar .wp-block-site-logo img,
 .bar .mark img{height:clamp(40px,3.6vw,52px);width:auto}
+/* Tombol kanan tidak boleh ikut menyusut. Kalau dibiarkan, di layar sempit
+   dia diperas sampai teksnya pecah per suku kata dan pilnya jadi bulat. */
+.bar > .wp-block-buttons,
+.bar .wp-block-buttons{flex:0 0 auto}
+.bar .wp-block-buttons .wp-block-button{flex:0 0 auto}
 .bar .wp-block-site-logo a{display:block;line-height:0}
 
 .bar .wp-block-navigation{
@@ -230,8 +236,29 @@ header.wp-block-template-part{
 }
 .bar .wp-block-navigation a:hover{color:var(--wp--preset--color--tinta)}
 .bar .wp-block-navigation a:hover::after{transform:scaleX(1);transform-origin:left}
+/* Blok Navigation bawaan menukar menu penuh dengan tombol burger di 600px.
+   Prototipenya menukar di 900px, jadi pita 600 sampai 900 dipaksa balik ke
+   burger. Batas bawahnya 600, sama persis dengan batas aturan inti, supaya
+   tidak ada satu piksel pun yang lolos. Selector diberi .bar supaya menang. */
 @media(max-width:900px){
   .bar .wp-block-navigation:not(.is-responsive){display:none}
+}
+@media(min-width:600px) and (max-width:900px){
+  .bar .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open){
+    display:none;
+  }
+  .bar .wp-block-navigation__responsive-container-open:not(.always-shown){
+    display:flex;
+  }
+}
+/* Di layar paling sempit pilnya dikecilkan, bukan dibiarkan meluber. */
+@media(max-width:420px){
+  .wp-block-button.is-style-pil > .wp-block-button__link,
+  .wp-block-button.is-style-pil-isi > .wp-block-button__link,
+  .wp-block-button.is-style-pil-rose > .wp-block-button__link{
+    padding:12px 16px;font-size:9.5px;letter-spacing:.14em;gap:8px;
+  }
+  .hero-aksi{gap:8px}
 }
 
 /* ===== 6. Hero ===== */
@@ -246,9 +273,22 @@ header.wp-block-template-part{
 .hero-judul{text-align:right}
 .hero-judul .lbl{text-align:right;margin-bottom:16px}
 .hero h1,.hero .d-xxl{text-align:right;max-width:16ch;margin-left:auto}
-@media(max-width:760px){
-  .hero-judul,.hero-judul .lbl{text-align:left}
-  .hero h1,.hero .d-xxl{text-align:left;margin-left:0;max-width:none}
+/* Susunan dua kolom cuma masuk akal kalau pil dan judul benar benar
+   berdampingan. Di bawah 1280px judulnya sudah memakan satu baris penuh, jadi
+   semuanya dirata kiri. Perhatikan flex:0 0 auto pada hero-judul: di mode
+   column-reverse, flex-basis membaca tinggi, bukan lebar. */
+@media(max-width:1280px){
+  .hero-atas{
+    flex-direction:column-reverse;align-items:flex-start;
+    gap:var(--wp--preset--spacing--jarak-4);flex-wrap:nowrap;
+  }
+  .hero-judul{flex:0 0 auto;width:100%;text-align:left}
+  .hero-judul .lbl{text-align:left}
+  .hero h1,.hero .d-xxl{text-align:left;margin-left:0;max-width:22ch}
+  .hero-aksi{padding-bottom:0}
+}
+@media(max-width:560px){
+  .hero h1,.hero .d-xxl{max-width:none}
 }
 
 /* Panggung, dibangun dari blok Cover supaya fotonya bisa diganti dari editor. */
@@ -304,9 +344,13 @@ header.wp-block-template-part{
   width:min(296px,74vw);
   background:rgb(251 247 240 / .93);backdrop-filter:blur(9px);
   border-radius:var(--wp--custom--radius--besar);padding:24px;
+  border:1px solid rgb(94 29 29 / .1);
   box-shadow:var(--wp--preset--shadow--kartu);
 }
-.kartu-sesi .lbl{color:var(--wp--preset--color--kraft);letter-spacing:.16em}
+.kartu-sesi .lbl{
+  display:flex;align-items:center;gap:10px;
+  color:var(--wp--preset--color--kraft);letter-spacing:.16em;
+}
 .kartu-sesi h2,.kartu-sesi .kartu-sesi-judul{
   font-family:var(--wp--preset--font-family--teks);font-style:normal;
   font-size:17px;font-weight:700;letter-spacing:-.015em;
@@ -325,15 +369,80 @@ header.wp-block-template-part{
   transition:background .4s;max-width:none;
 }
 .kartu-sesi .aksi > .wp-block-button__link:hover,
-.kartu-sesi .aksi > .wp-block-button__link:focus-visible{
+.kartu-sesi .aksi > .wp-block-button__link:focus-visible,
+.kartu-sesi a.aksi:hover,.kartu-sesi a.aksi:focus-visible{
   background:var(--wp--preset--color--tinta);
 }
-@media(max-width:640px){
+/* Ikon WhatsApp digambar lewat mask, bukan SVG di markup, supaya tombolnya
+   tetap blok Button biasa yang masih bisa disunting dari editor. */
+.kartu-sesi .aksi > .wp-block-button__link::after,
+.kartu-sesi a.aksi::after{
+  content:"";width:15px;height:15px;flex:none;background:currentColor;
+  --wa:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z'/%3E%3Cpath d='M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.21-8.24 8.21z'/%3E%3C/svg%3E");
+  -webkit-mask:var(--wa) center/contain no-repeat;
+  mask:var(--wa) center/contain no-repeat;
+  transition:transform .45s var(--wp--custom--lengkung--halus);
+}
+.kartu-sesi .aksi > .wp-block-button__link:hover::after,
+.kartu-sesi a.aksi:hover::after{transform:translateX(3px)}
+/* Di bawah 760px kartunya turun jadi blok biasa. Dia harus jadi saudara
+   .panggung, bukan anaknya: .panggung punya overflow:hidden, jadi kartu yang
+   di dalamnya hilang sama sekali begitu posisinya tidak lagi absolut. */
+@media(max-width:760px){
   .kartu-sesi{
-    position:static;width:auto;margin-top:12px;box-shadow:none;
-    border:1px solid var(--wp--preset--color--garis);
-    background:var(--wp--preset--color--kertas);
+    position:relative;inset:auto;width:auto;
+    margin-top:var(--wp--preset--spacing--jarak-2);
+    backdrop-filter:none;background:var(--wp--preset--color--kertas);
+    box-shadow:0 12px 30px rgb(36 28 20 / .12);
   }
+}
+
+/* Titik denyut di label kartu. */
+.titik{
+  position:relative;width:8px;height:8px;border-radius:50%;flex:none;
+  background:var(--wp--preset--color--burgundy);
+}
+.titik::after{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:var(--wp--preset--color--burgundy);
+}
+@media (prefers-reduced-motion: no-preference){
+  .titik::after{animation:denyut 2.4s cubic-bezier(.2,.6,.3,1) infinite}
+}
+@keyframes denyut{from{opacity:.55;scale:1}to{opacity:0;scale:2.8}}
+
+/* Kartu sesi ditempel selotip washi.
+   Selotip washi ada di hampir semua foto dokumentasi TJR, jadi ini bahasa yang
+   sudah mereka pakai sendiri. Fungsinya dua: menandai kartu ini sebagai sesuatu
+   yang sengaja ditempel, dan menarik mata tanpa perlu panah atau teks tambahan. */
+.kartu-sesi{rotate:-1.1deg}
+.kartu-sesi::before,.kartu-sesi::after{
+  content:"";position:absolute;z-index:4;
+  height:clamp(19px,1.9vw,24px);border-radius:2px;
+  box-shadow:0 2px 7px rgb(36 28 20 / .22), inset 0 0 0 1px rgb(255 255 255 / .3);
+}
+/* selotip kiri: garis miring tipis, warna rose */
+.kartu-sesi::before{
+  width:clamp(62px,6.6vw,88px);top:-10px;left:-16px;rotate:-24deg;
+  background:
+    repeating-linear-gradient(58deg,rgb(255 255 255 / .34) 0 2px,rgb(255 255 255 / 0) 2px 7px),
+    rgb(231 191 185 / .88);
+}
+/* selotip kanan: titik titik halus, warna kraft muda */
+.kartu-sesi::after{
+  width:clamp(54px,5.8vw,76px);top:-12px;right:-12px;rotate:19deg;
+  background:
+    radial-gradient(rgb(255 255 255 / .42) 1px,rgb(255 255 255 / 0) 1.6px) 0 0/7px 7px,
+    rgb(214 186 146 / .9);
+}
+@media (prefers-reduced-motion: no-preference){
+  .kartu-sesi{animation:apung 5.5s ease-in-out 2.6s infinite alternate}
+}
+@keyframes apung{from{translate:0 0;rotate:-1.1deg}to{translate:0 -5px;rotate:-.4deg}}
+@media(max-width:760px){
+  .kartu-sesi{rotate:-.6deg}
+  .kartu-sesi::before{left:-10px;top:-9px}
+  .kartu-sesi::after{right:-8px;top:-11px}
 }
 
 /* Daftar baris berikon di dalam kartu sesi */
@@ -345,27 +454,6 @@ header.wp-block-template-part{
 }
 .baris li::before,.baris > p::before{color:var(--wp--preset--color--kraft)}
 .baris .ikon{color:var(--wp--preset--color--kraft)}
-
-/* ===== 7. Panah penunjuk kartu ===== */
-
-/* digambar sekali waktu halaman terbuka, lalu bergerak pelan ke arah kartu */
-.panah{
-  position:absolute;z-index:4;pointer-events:none;
-  right:calc(clamp(16px,2.4vw,32px) + min(296px,74vw) + 12px);
-  bottom:calc(clamp(16px,2.4vw,32px) + 56px);
-  width:clamp(88px,9.5vw,140px);height:auto;
-  color:#F2D9D4;fill:none;stroke:currentColor;stroke-width:2.6;
-  stroke-linecap:round;stroke-linejoin:round;
-  filter:drop-shadow(0 2px 6px rgb(20 14 8 / .45));
-}
-.panah path{stroke-dasharray:220;stroke-dashoffset:0}
-@media (prefers-reduced-motion: no-preference){
-  .panah path{stroke-dashoffset:220;animation:gores .9s var(--wp--custom--lengkung--halus) 2.2s forwards}
-  .panah{animation:tunjuk 2.4s ease-in-out 3s infinite alternate}
-}
-@keyframes gores{to{stroke-dashoffset:0}}
-@keyframes tunjuk{from{translate:0 0}to{translate:7px 7px}}
-@media(max-width:1100px){.panah{display:none}}
 
 /* ===== 8. Sticker bulat ===== */
 
@@ -922,12 +1010,44 @@ footer.wp-block-template-part{
    dipasang lewat kelas .intro yang cuma ada kalau JS jalan, jadi tanpa JS
    halaman langsung tampil utuh. */
 
+/* Sampulnya berputar pada sumbu kiri, persis seperti membuka jurnal. Yang bikin
+   terbaca sebagai buku bukan rotasinya, tapi dua hal kecil: bayangan yang
+   menggelap di sampul waktu dia berputar menjauh dari cahaya, dan bayangan
+   jatuh di halaman yang menipis sambil terbuka. */
 .tirai{
-  position:fixed;inset:0;z-index:400;display:none;place-items:center;
-  background:var(--wp--preset--color--kertas);clip-path:inset(0 0 0 0);
+  position:fixed;inset:0;z-index:400;display:none;pointer-events:none;
+  perspective:1900px;perspective-origin:2% 50%;
 }
-html.intro .tirai{display:grid}
-.tirai img{height:clamp(66px,8.4vw,112px);width:auto;opacity:0}
+html.intro .tirai{display:block}
+
+/* bayangan sampul yang jatuh di halaman */
+.jatuh{
+  position:absolute;left:0;top:0;bottom:0;width:34vw;z-index:1;opacity:0;
+  background:linear-gradient(90deg,rgb(26 18 9 / .5),rgb(26 18 9 / .16) 38%,rgb(26 18 9 / 0));
+}
+
+.sampul{
+  position:absolute;inset:0;transform-origin:left center;
+  transform-style:preserve-3d;backface-visibility:hidden;z-index:3;
+  display:grid;place-items:center;will-change:transform;
+  background:
+    repeating-linear-gradient(94deg,rgb(120 92 58 / .05) 0 2px,rgb(120 92 58 / 0) 2px 5px),
+    linear-gradient(102deg,#E9DAC1 0%,#F4ECDD 30%,#EADCC4 66%,#DCC9A8 100%);
+  box-shadow:0 0 70px rgb(28 19 9 / .34);
+}
+.sampul img{
+  height:clamp(74px,9.4vw,140px);width:auto;opacity:0;
+  filter:drop-shadow(0 1px 0 rgb(255 252 246 / .6));
+}
+/* garis emboss tipis, bikin sampulnya terasa punya ketebalan */
+.sampul::before{
+  content:"";position:absolute;inset:clamp(16px,2.4vw,34px);
+  border:1px solid rgb(120 92 58 / .22);border-radius:4px;
+}
+/* bayangan yang menggelap waktu sampul berputar menjauh */
+.sampul::after{content:"";position:absolute;inset:0;background:#20160B;opacity:0}
+
+@media(max-width:640px){.tirai{perspective:1100px}}
 
 html.intro .bar,
 html.intro .hero .lbl,

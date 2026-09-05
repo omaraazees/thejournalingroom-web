@@ -1,7 +1,7 @@
 # Struktur heading v5 · The Journaling Room
 
-Susunan `h1` sampai `h3` yang seharusnya dipakai tiap halaman, plus catatan urutan heading yang
-lompat di `desain/prototipe/v5-fieldtime.html`.
+Susunan `h1` sampai `h3` yang dipakai tiap halaman. Sumber kebenarannya tema `wordpress/theme-v5`,
+yang sudah tayang di thejournalingroom.id, dan prototipe `desain/prototipe/v5-fieldtime.html`.
 
 Kenapa ini penting sampai perlu satu dokumen sendiri: heading itu daftar isi halaman. Pengguna
 pembaca layar melompat antar heading untuk memindai halaman, sama seperti orang lain memindai
@@ -11,79 +11,47 @@ pegangan. Google juga membaca heading untuk menebak isi halaman.
 
 ---
 
-## Bagian satu · Apa yang ada di prototipe sekarang
+## Bagian satu &middot; Keadaan sekarang
 
-Ini hasil pembacaan langsung dari file HTML-nya.
+Temuan audit lama sudah dikerjakan semua. Tujuh judul seksi yang dulu ditulis `<p class="d d-xl">`
+sekarang sudah jadi `h2` sungguhan, dan urutannya tidak lompat lagi. Bagian ini disimpan sebagai
+patokan, bukan sebagai daftar kerja.
+
+Susunan yang keluar dari tema `tjr-v5` di beranda:
 
 ```
-h1   Your kind journaling companion                 baris 590, hero
-h2   Kelas journaling di Jogja untuk yang belum     baris 601, di dalam foto panggung
-     tahu mau menulis apa
-h2   Tracing Shadows, Mapping Stars                 baris 611, kartu kecil di atas foto
-     [ Tentang ruangnya ]  judul seksi pakai <p>
-     [ Jadwal ]            judul seksi pakai <p>
-h3   Tracing Shadows, Mapping Stars                 baris 675, kartu sesi terdekat
-     [ Dokumentasi ]       judul seksi pakai <p>
-     [ Cetakan ]           judul seksi pakai <p>
-     [ Sudah lewat ]       judul seksi pakai <p>
-h3   TJR x Snapobox                                 baris 809
-h3   TJR x Pasar Jakal                              baris 812
-h3   TJR x AMCO Bakehouse x Naoki Pics              baris 815
-h3   TJR x Kolondjono                               baris 818
-h3   TJR x Statement Beauty                         baris 821
-h3   TJR x Artotel                                  baris 824
-h3   TJR x Wardah                                   baris 827
-h3   TJR x Kupiku Coffee                            baris 830
-h3   TJR x Radian                                   baris 833
-h3   TJR x Sunday Reads Club                        baris 836
-     [ Pernah bareng ]     judul seksi pakai <p>
-     [ Sampai ketemu ]     judul seksi pakai <p>
+h1   Your kind journaling companion
+h2   Kelas journaling di Jogja untuk yang belum tahu mau menulis apa    di dalam foto panggung
+h2   Yang tumbuh di meja panjang
+h2   Sesi berikutnya
+     h3   {judul acara terdekat}
+h2   {N} sore terakhir                     angkanya ikut jumlah acara yang sudah lewat
+     h3   {judul acara}                    satu per kartu
+h2   Apa yang tertinggal di meja
+h2   Sore yang tersimpan
+h2   {N} kali duduk bersama                angkanya ikut jumlah acara di arsip
+     h3   {judul acara}                    satu per baris arsip
+h2   {N} nama di meja                      angkanya ikut daftar logo kolaborator
+h2   Bawa dirimu saja
 ```
 
-### Enam temuan
+Satu `h1`, sisanya `h2` dengan `h3` yang selalu punya induk. Kartu sesi terdekat di atas foto
+hero sengaja tidak memakai heading sama sekali: isinya sama dengan seksi `Sesi berikutnya`, dan
+kalau dia juga jadi heading, judul acara yang sama muncul dua kali di daftar heading.
 
-**1. Tujuh judul seksi tidak berbentuk heading sama sekali.**
-`Yang tumbuh di meja panjang`, `Sore yang sudah dijadwalkan`, `Apa yang tertinggal di meja`,
-`Sore sore yang sudah lewat`, `Sepuluh kali duduk bareng`, `Sebelas nama di meja`, dan
-`Bawa dirimu saja` semuanya ditulis `<p class="d d-xl">`. Kelihatan seperti judul karena
-ukurannya besar, tapi bagi pembaca layar dan bagi Google, itu paragraf biasa.
+### Angka di judul tidak boleh mati
 
-Akibatnya, halaman beranda yang panjangnya tujuh seksi cuma punya tiga tingkat heading yang
-semuanya menumpuk di area hero. **Ini temuan yang paling penting di dokumen ini.**
-
-**2. Urutan heading lompat dari h2 ke h3 tanpa induk.**
-Sepuluh `h3` di seksi Arsip menggantung. Heading terdekat di atasnya adalah `h2` berisi
-`Tracing Shadows, Mapping Stars`, yaitu kartu kecil di pojok foto hero. Jadi kalau pengguna
-pembaca layar membuka daftar heading, dia melihat sepuluh nama kolaborasi seolah olah anak
-dari kartu sesi terdekat. Tidak ada hubungannya.
-
-Hal yang sama terjadi pada `h3` sesi terdekat di baris 675.
-
-**3. Satu judul yang sama muncul dua kali, di dua tingkat berbeda.**
-`Tracing Shadows, Mapping Stars` jadi `h2` di kartu hero dan `h3` di kartu sesi terdekat.
-Dua duanya menunjuk acara yang sama. Di daftar heading, ini terbaca seperti dua acara berbeda.
-
-**4. `h2` di dalam foto panggung sebenarnya bukan judul seksi.**
-`Kelas journaling di Jogja untuk yang belum tahu mau menulis apa` posisinya di dalam foto,
-fungsinya subjudul hero. Menulisnya sebagai `h2` bikin dia sejajar dengan judul seksi lain
-padahal isinya bagian dari hero.
-
-**5. `h1` tidak membawa keyword apa pun.**
-`Your kind journaling companion` adalah tagline Instagram. Bahasanya Inggris di situs
-berbahasa Indonesia, dan nol kata yang diketik orang waktu mencari. Kalimat yang membawa
-keyword justru diturunkan jadi `h2` di dalam foto, tempat yang bobotnya lebih ringan.
-
-**6. Judul tiga kartu jadwal berikutnya juga bukan heading.**
-`Much Between the Lines`, `Journaling Playdate`, dan `A Moment Between Chapters` ditulis
-`<p class="d">`. Pengguna yang memindai lewat heading melewatinya begitu saja, padahal tiga
-kartu itu tiga acara yang bisa dipesan.
+Tiga judul menyebut jumlah. Dulu ditulis mati, `Sepuluh kali duduk bersama`, padahal isi CMS-nya
+bisa berubah kapan saja. Sekarang angkanya dihitung di PHP lewat `tjr_v5_jumlah_acara()` dan
+`tjr_v5_angka_kata()`, jadi judulnya tidak pernah menjanjikan sesuatu yang tidak ada di halaman.
+Kalau nanti ada judul baru yang menyebut jumlah, pakai dua fungsi itu, jangan tulis angkanya.
 
 ### Yang sudah benar, jangan diubah
 
 - Cuma ada satu `h1` di halaman.
 - Ikon SVG dekoratif sudah diberi `aria-hidden="true"`.
 - Label kecil di atas judul, `.lbl`, memang **tidak boleh** jadi heading. `Jadwal`,
-  `Dokumentasi`, `Cetakan`, `Sudah lewat`, `Pernah bareng` itu penanda mata, bukan judul.
+  `Dokumentasi`, `Cetakan`, `Sudah lewat`, `Pernah bersama` itu penanda mata, bukan judul.
   Biarkan sebagai `<p>`.
 
 ---

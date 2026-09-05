@@ -7,6 +7,13 @@
  * Keywords: jadwal, arsip, kartu, baru lewat, query loop
  * Viewport Width: 1400
  */
+
+// Query Loop di bawah dibatasi tiga acara yang tanggalnya sudah lewat. Judulnya
+// menyebut angka, jadi angkanya ikut berapa yang benar benar tampil.
+$tjr_lewat = min( 3, tjr_v5_jumlah_acara( 'lewat' ) );
+$tjr_judul = ( 1 === $tjr_lewat )
+	? 'Sore terakhir'
+	: tjr_v5_angka_kata( $tjr_lewat ) . ' sore terakhir';
 ?>
 <!-- wp:group {"tagName":"section","className":"jarak-atas-besar","anchor":"baru-lewat","layout":{"type":"default"}} -->
 <section class="wp-block-group jarak-atas-besar" id="baru-lewat">
@@ -16,7 +23,7 @@
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
 <!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Baru saja lewat</p><!-- /wp:paragraph -->
-<!-- wp:heading {"level":2,"className":"d d-lg","style":{"spacing":{"margin":{"top":"var:preset|spacing|jarak-2"}}}} --><h2 class="wp-block-heading d d-lg" style="margin-top:var(--wp--preset--spacing--jarak-2)">Tiga sore terakhir</h2><!-- /wp:heading -->
+<!-- wp:heading {"level":2,"className":"d d-lg","style":{"spacing":{"margin":{"top":"var:preset|spacing|jarak-2"}}}} --><h2 class="wp-block-heading d d-lg" style="margin-top:var(--wp--preset--spacing--jarak-2)"><?php echo esc_html( $tjr_judul ); ?></h2><!-- /wp:heading -->
 </div>
 <!-- /wp:group -->
 <!-- wp:buttons -->

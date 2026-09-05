@@ -7,6 +7,16 @@
  * Keywords: tentang, pengantar, kutipan, cerita
  * Viewport Width: 1400
  */
+
+// Dua tempat di bawah menyebut berapa kali TJR sudah duduk bersama. Angkanya
+// diambil dari jumlah acara supaya tidak perlu diedit tiap ada sesi baru.
+$tjr_n = tjr_v5_jumlah_acara( 'semua' );
+// Kalimatnya dimulai dengan angka, jadi hurufnya besar. Kalau arsipnya masih
+// kosong, klausa angkanya dibuang seluruhnya supaya kalimatnya tetap utuh.
+$tjr_kali   = ( 0 === $tjr_n )
+	? 'Dari kedai kopi sampai pendopo tua'
+	: tjr_v5_angka_kata( $tjr_n ) . ' kali, dari kedai kopi sampai pendopo tua';
+$tjr_tombol = ( 0 === $tjr_n ) ? 'Lihat arsip' : tjr_v5_angka_kata( $tjr_n ) . ' kolaborasi';
 ?>
 <!-- wp:group {"tagName":"section","className":"duo seksi","anchor":"tentang","layout":{"type":"default"}} -->
 <section class="wp-block-group duo seksi" id="tentang">
@@ -20,11 +30,11 @@
 
 <!-- wp:group {"className":"duo-kanan naik","layout":{"type":"default"}} -->
 <div class="wp-block-group duo-kanan naik">
-<!-- wp:paragraph {"className":"lead"} --><p class="lead">The Journaling Room menggelar workshop journaling dan kelas menulis jurnal di Yogyakarta sejak November 2025. Sepuluh kali, dari kedai kopi sampai pendopo tua, selalu dengan pola yang sama: satu meja panjang, bahan yang sudah ditata rapi, dan waktu yang tidak diburu.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"lead"} --><p class="lead">The Journaling Room menggelar workshop journaling dan kelas menulis jurnal di Yogyakarta sejak November 2025. <?php echo esc_html( $tjr_kali ); ?>, selalu dengan pola yang sama: satu meja panjang, bahan yang sudah ditata rapi, dan waktu yang tidak diburu.</p><!-- /wp:paragraph -->
 <!-- wp:paragraph {"className":"lead"} --><p class="lead">Tidak ada sesi perkenalan yang membuat kaku. Kamu boleh menulis, menempel, atau hanya memegang gunting sambil menonton orang lain bekerja. Sorenya selesai ketika kamu merasa selesai.</p><!-- /wp:paragraph -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
-<!-- wp:button {"className":"is-style-pil"} --><div class="wp-block-button is-style-pil"><a class="wp-block-button__link wp-element-button" href="#arsip">Sepuluh kolaborasi</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-pil"} --><div class="wp-block-button is-style-pil"><a class="wp-block-button__link wp-element-button" href="#arsip"><?php echo esc_html( $tjr_tombol ); ?></a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
 </div>

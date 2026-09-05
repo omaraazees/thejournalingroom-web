@@ -4,7 +4,7 @@
  *
  * Isi file ini cuma hal yang harus hidup di PHP: pemuatan aset, tipe konten
  * Acara, dua taksonomi, kategori pattern, varian gaya blok, dan tiga potong
- * chrome yang bukan konten (sprite ikon, tirai pembuka, tombol WhatsApp).
+ * chrome yang bukan konten (sprite ikon, sampul pembuka, tombol WhatsApp).
  *
  * Warna, jarak, dan tipografi TIDAK diatur di sini. Semuanya di theme.json.
  *
@@ -41,6 +41,14 @@ if ( ! defined( 'TJR_WA_DEFAULT' ) ) {
  */
 if ( ! defined( 'TJR_PESAN_WA_DEFAULT' ) ) {
 	define( 'TJR_PESAN_WA_DEFAULT', 'Halo, kakmin TJR, aku mau daftar journaling workshop, dong! *\\(^o^)/* <3' );
+}
+
+/**
+ * Pesan awal untuk tombol yang menanyakan sisa slot, bukan mendaftar.
+ * Dipakai kartu sesi terdekat, tombol jadwal, dan tombol mengambang.
+ */
+if ( ! defined( 'TJR_PESAN_WA_SLOT' ) ) {
+	define( 'TJR_PESAN_WA_SLOT', 'Halo kakmin TJR, apakah slotnya masih ada untuk sesi terdekat? \\(*^_^*)/ <3' );
 }
 
 
@@ -105,6 +113,25 @@ function tjr_v5_font_lokal_ada() {
 }
 
 /**
+ * Versi berkas untuk cache busting.
+ *
+ * Nomor versi tema jarang dinaikkan, padahal style.css dan pembuka.js sering
+ * berubah. Kalau versinya diam, browser pengunjung lama menyajikan berkas
+ * simpanan dan perubahan desainnya tidak pernah sampai. Jadi versinya diambil
+ * dari waktu berkasnya terakhir diubah, dan turun ke versi tema kalau berkasnya
+ * entah kenapa tidak terbaca.
+ *
+ * @param string $jalur Jalur relatif di dalam tema, contoh '/style.css'.
+ * @return string
+ */
+function tjr_v5_versi_berkas( $jalur ) {
+	$penuh = get_theme_file_path( $jalur );
+	$waktu = file_exists( $penuh ) ? filemtime( $penuh ) : 0;
+
+	return $waktu ? TJR_V5_VERSION . '.' . $waktu : TJR_V5_VERSION;
+}
+
+/**
  * Muat stylesheet tema, font cadangan, dan skrip pembuka halaman.
  */
 function tjr_v5_enqueue() {
@@ -123,14 +150,14 @@ function tjr_v5_enqueue() {
 		'tjr-v5',
 		get_stylesheet_uri(),
 		array(),
-		TJR_V5_VERSION
+		tjr_v5_versi_berkas( '/style.css' )
 	);
 
 	wp_enqueue_script(
 		'tjr-v5-pembuka',
 		get_theme_file_uri( '/assets/js/pembuka.js' ),
 		array(),
-		TJR_V5_VERSION,
+		tjr_v5_versi_berkas( '/assets/js/pembuka.js' ),
 		array(
 			'strategy'  => 'defer',
 			'in_footer' => true,
@@ -192,6 +219,113 @@ function tjr_v5_link_wa( $pesan = '' ) {
 
 	return 'https://wa.me/' . tjr_v5_nomor_wa() . '?text=' . rawurlencode( $pesan );
 }
+
+/**
+ * Link WhatsApp untuk menanyakan sisa slot sesi terdekat.
+ *
+ * @return string
+ */
+function tjr_v5_link_wa_slot() {
+	return tjr_v5_link_wa( TJR_PESAN_WA_SLOT );
+}
+
+
+/* =====================================================================
+ * 3b. Angka yang ikut isi, supaya judul tidak pernah berbohong
+ * ===================================================================== */
+
+/**
+ * Ubah bilangan jadi kata Indonesia. Di atas dua belas dikembalikan sebagai
+ * angka, karena judul yang berbunyi "tiga puluh tujuh kali" jadi terlalu panjang.
+ *
+ * @param int $n Bilangan.
+ * @return string
+ */
+function tjr_v5_angka_kata( $n ) {
+	$kata = array(
+		0  => 'Belum ada',
+		1  => 'Satu',
+		2  => 'Dua',
+		3  => 'Tiga',
+		4  => 'Empat',
+		5  => 'Lima',
+		6  => 'Enam',
+		7  => 'Tujuh',
+		8  => 'Delapan',
+		9  => 'Sembilan',
+		10 => 'Sepuluh',
+		11 => 'Sebelas',
+		12 => 'Dua belas',
+	);
+
+	$n = (int) $n;
+
+	return isset( $kata[ $n ] ) ? $kata[ $n ] : (string) $n;
+}
+
+/**
+ * Jumlah acara yang sudah terbit.
+ *
+ * @param string $kapan 'semua', 'lewat', atau 'depan'.
+ * @return int
+ */
+function tjr_v5_jumlah_acara( $kapan = 'semua' ) {
+	$kunci = 'tjr_v5_jumlah_acara_' . $kapan;
+	$simpan = get_transient( $kunci );
+
+	if ( false !== $simpan ) {
+		return (int) $simpan;
+	}
+
+	$args = array(
+		'post_type'              => 'acara',
+		'post_status'            => 'publish',
+		'posts_per_page'         => 100,
+		'fields'                 => 'ids',
+		'no_found_rows'          => false,
+		'update_post_meta_cache' => false,
+		'update_post_term_cache' => false,
+	);
+
+	if ( 'semua' !== $kapan ) {
+		$args['meta_key']   = TJR_FIELD_MULAI;
+		$args['meta_query'] = array(
+			array(
+				'key'     => TJR_FIELD_MULAI,
+				'value'   => current_datetime()->format( 'Y-m-d H:i:s' ),
+				'compare' => ( 'lewat' === $kapan ) ? '<' : '>=',
+				'type'    => 'DATETIME',
+			),
+		);
+	}
+
+	$q = new WP_Query( $args );
+	$jumlah = (int) $q->found_posts;
+
+	set_transient( $kunci, $jumlah, HOUR_IN_SECONDS );
+
+	return $jumlah;
+}
+
+/**
+ * Buang hitungan yang tersimpan begitu ada acara yang berubah, supaya judulnya
+ * ikut berubah di kunjungan berikutnya.
+ *
+ * @param int $id ID post.
+ */
+function tjr_v5_reset_hitungan( $id = 0 ) {
+	if ( $id && 'acara' !== get_post_type( $id ) ) {
+		return;
+	}
+
+	foreach ( array( 'semua', 'lewat', 'depan' ) as $kapan ) {
+		delete_transient( 'tjr_v5_jumlah_acara_' . $kapan );
+	}
+}
+add_action( 'save_post_acara', 'tjr_v5_reset_hitungan' );
+add_action( 'deleted_post', 'tjr_v5_reset_hitungan' );
+add_action( 'trashed_post', 'tjr_v5_reset_hitungan' );
+add_action( 'untrashed_post', 'tjr_v5_reset_hitungan' );
 
 /**
  * Kolom nomor WhatsApp di Customizer, supaya bisa diganti tanpa menyentuh kode.
@@ -599,7 +733,7 @@ add_filter( 'should_load_remote_block_patterns', '__return_false' );
 
 
 /* =====================================================================
- * 6. Chrome halaman: sprite ikon, tirai pembuka, tombol WhatsApp
+ * 6. Chrome halaman: sprite ikon, sampul pembuka, tombol WhatsApp
  * ===================================================================== */
 
 /**
@@ -627,7 +761,7 @@ function tjr_v5_sprite_ikon() {
 }
 
 /**
- * Tirai pembuka halaman.
+ * Sampul buku yang terbuka waktu halaman dibuka.
  *
  * Kelas intro dipasang lewat skrip sebaris supaya keadaan awal sudah terpasang
  * sebelum gambar pertama dicat. Tanpa JavaScript, kelas itu tidak pernah ada
@@ -645,13 +779,16 @@ function tjr_v5_tirai() {
 		}
 	}
 	?>
-<div class="tirai" id="tirai" aria-hidden="true"><img src="<?php echo esc_url( $logo ); ?>" alt=""></div>
+<div class="tirai" id="tirai" aria-hidden="true">
+	<div class="jatuh" id="jatuh"></div>
+	<div class="sampul" id="sampul"><img src="<?php echo esc_url( $logo ); ?>" alt=""></div>
+</div>
 <script>document.documentElement.classList.add('intro')</script>
 	<?php
 }
 
 /**
- * Cetak sprite dan tirai tepat setelah body dibuka.
+ * Cetak sprite dan sampul tepat setelah body dibuka.
  */
 function tjr_v5_body_open() {
 	tjr_v5_sprite_ikon();
@@ -664,7 +801,7 @@ add_action( 'wp_body_open', 'tjr_v5_body_open' );
  */
 function tjr_v5_fab() {
 	?>
-<a class="fab" id="fab" href="<?php echo esc_url( tjr_v5_link_wa() ); ?>" target="_blank" rel="noopener" aria-label="Hubungi kami lewat WhatsApp">
+<a class="fab" id="fab" href="<?php echo esc_url( tjr_v5_link_wa_slot() ); ?>" target="_blank" rel="noopener" aria-label="Tanyakan slotnya ke kami lewat WhatsApp">
 	<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.21-8.24 8.21z"/></svg>
 	<span>Tanyakan slot</span>
 </a>

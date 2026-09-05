@@ -6,8 +6,9 @@ klik tidak perlu mengetik ulang acara mana yang dia maksud.
 
 ## Nomor yang dipakai
 
-`+62 857 2822 5369` ditulis di brand brief dengan pengelompokan angka yang sedikit berbeda
-(`+62 8572 8225 369`), tapi digitnya sama persis. Untuk link, semua spasi dan tanda plus dibuang:
+Nomornya `+62 857 2022 5369`. Brand brief sempat menuliskannya `+62 857 2822 5369`, dan itu
+salah, digit keempat dari nomornya nol bukan delapan. Untuk link, semua spasi dan tanda plus
+dibuang:
 
 ```
 6285720225369

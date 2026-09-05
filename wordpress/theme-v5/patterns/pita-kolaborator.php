@@ -22,6 +22,17 @@ $tjr_logo = array(
 	array( 'snapobox', 'Snapobox' ),
 	array( 'tjr-black', 'The Journaling Room' ),
 );
+
+// Judulnya menghitung nama kolaborator saja, logo TJR sendiri tidak ikut.
+// Angkanya dihitung dari daftar di atas supaya tidak perlu diingat waktu
+// menambah atau mengurangi logo.
+$tjr_kolab = 0;
+foreach ( $tjr_logo as $tjr_satu ) {
+	if ( 'tjr-black' !== $tjr_satu[0] ) {
+		$tjr_kolab++;
+	}
+}
+$tjr_judul = tjr_v5_angka_kata( $tjr_kolab ) . ' nama di meja';
 ?>
 <!-- wp:group {"tagName":"section","className":"seksi","anchor":"kolaborator","layout":{"type":"default"}} -->
 <section class="wp-block-group seksi" id="kolaborator">
@@ -31,7 +42,7 @@ $tjr_logo = array(
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
 <!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Yang pernah bersama</p><!-- /wp:paragraph -->
-<!-- wp:heading {"level":2,"className":"d d-xl","style":{"spacing":{"margin":{"top":"var:preset|spacing|jarak-2"}}}} --><h2 class="wp-block-heading d d-xl" style="margin-top:var(--wp--preset--spacing--jarak-2)">Sebelas nama di meja</h2><!-- /wp:heading -->
+<!-- wp:heading {"level":2,"className":"d d-xl","style":{"spacing":{"margin":{"top":"var:preset|spacing|jarak-2"}}}} --><h2 class="wp-block-heading d d-xl" style="margin-top:var(--wp--preset--spacing--jarak-2)"><?php echo esc_html( $tjr_judul ); ?></h2><!-- /wp:heading -->
 </div>
 <!-- /wp:group -->
 

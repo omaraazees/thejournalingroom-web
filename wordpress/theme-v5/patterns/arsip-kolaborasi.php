@@ -7,6 +7,13 @@
  * Keywords: arsip, kolaborasi, daftar, riwayat, query loop
  * Viewport Width: 1400
  */
+
+$tjr_n = tjr_v5_jumlah_acara( 'semua' );
+// Judulnya menyebut angka, jadi angkanya harus ikut isi. Kalau arsipnya baru
+// enam, judulnya berbunyi "Enam kali duduk bersama", bukan sepuluh.
+$tjr_judul = ( 0 === $tjr_n )
+	? 'Arsipnya baru mau dimulai'
+	: tjr_v5_angka_kata( $tjr_n ) . ' kali duduk bersama';
 ?>
 <!-- wp:group {"tagName":"section","className":"seksi","anchor":"arsip","layout":{"type":"default"}} -->
 <section class="wp-block-group seksi" id="arsip">
@@ -16,7 +23,7 @@
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
 <!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Sudah lewat</p><!-- /wp:paragraph -->
-<!-- wp:heading {"level":2,"className":"d d-xl","style":{"spacing":{"margin":{"top":"var:preset|spacing|jarak-2"}}}} --><h2 class="wp-block-heading d d-xl" style="margin-top:var(--wp--preset--spacing--jarak-2)">Sepuluh kali duduk bersama</h2><!-- /wp:heading -->
+<!-- wp:heading {"level":2,"className":"d d-xl","style":{"spacing":{"margin":{"top":"var:preset|spacing|jarak-2"}}}} --><h2 class="wp-block-heading d d-xl" style="margin-top:var(--wp--preset--spacing--jarak-2)"><?php echo esc_html( $tjr_judul ); ?></h2><!-- /wp:heading -->
 </div>
 <!-- /wp:group -->
 <!-- wp:paragraph {"className":"lead lead-sempit"} --><p class="lead lead-sempit">Dari November 2025 sampai hari ini. Tempatnya berpindah, orangnya berganti, mejanya tetap satu.</p><!-- /wp:paragraph -->
