@@ -41,6 +41,16 @@ body::before{
 
 img{max-width:100%;display:block}
 a{color:inherit}
+/* SATU SATUNYA cincin fokus di tema ini, dan sengaja :focus-visible supaya cuma
+   muncul untuk keyboard. Sebelumnya bukan ini yang mengecat: theme.json punya
+   ":focus" telanjang di elements.link dan elements.button, dan WordPress
+   mencetaknya jadi :root :where(a:where(:not(.wp-element-button)):focus) dan
+   :root :where(.wp-element-button:focus, .wp-block-button__link:focus).
+   Aturan itu kena SETIAP fokus, termasuk klik mouse, jadi kotak burgundy muncul
+   di logo dan di semua tautan dan tombol. Menyesatkan waktu dicari: berkas ini
+   memang bersih, sumbernya gaya global bawaan WordPress dari theme.json.
+   JANGAN kembalikan ":focus" ke theme.json. Format itu tidak menerima
+   :focus-visible, jadi cincin fokus memang tempatnya di sini. */
 :focus-visible{outline:2px solid var(--wp--preset--color--burgundy);outline-offset:3px;border-radius:4px}
 
 /* Lembar kertas. WordPress membungkus seluruh isi template
@@ -361,7 +371,12 @@ header.wp-block-template-part{
      Bukan kalah spesifisitas, kalah CAKUPAN. Sekarang :focus telanjang diredam
      di semua perangkat, dan cincinnya dikembalikan khusus untuk :focus-visible
      supaya navigasi keyboard tetap punya penanda yang terlihat (WCAG 2.4.7).
-     Gayanya disamakan dengan :focus-visible global di bagian 1. */
+     Gayanya disamakan dengan :focus-visible global di bagian 1.
+
+     Susulan: akar masalahnya ternyata ":focus" telanjang di theme.json, dan itu
+     sudah dibuang. Peredam di bawah jadi tidak lagi menutupi apa apa, tapi
+     dibiarkan sampai perbaikan theme.json terbukti di server, karena panel menu
+     cuma bisa diuji di layar sempit dan perubahan theme.json belum tayang. */
   .bar .wp-block-navigation__responsive-container.is-menu-open a:focus{
     outline:none;
   }
