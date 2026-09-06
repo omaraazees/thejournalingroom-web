@@ -7,15 +7,20 @@
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
 <!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Halaman</p><!-- /wp:paragraph -->
+<!-- Label keenam tautan ini WAJIB sama persis dengan parts/header.html.
+     Satu tujuan satu nama. Sebelum diseragamkan, kaki ini menyebut /jadwal/
+     sebagai "Arsip kolaborasi" padahal itu halaman jadwal, bukan kolaborasi,
+     dan tiga tautan lain punya nama yang lebih panjang dari menu atas.
+
 <!-- Enam tautan di bawah memakai /#seksi, BUKAN #seksi, pola yang sama dengan
      parts/header.html. Id keenam seksi itu cuma ada di pola beranda, sementara
      kaki ini tampil di SEMUA halaman, jadi anchor telanjang mati di tiap URL
      non-beranda. Awalan / membuatnya selalu berarti "seksi itu di beranda". -->
 <!-- wp:list -->
 <ul class="wp-block-list">
-<!-- wp:list-item --><li><a href="/#tentang">Tentang kami</a></li><!-- /wp:list-item -->
+<!-- wp:list-item --><li><a href="/#tentang">Tentang</a></li><!-- /wp:list-item -->
 <!-- wp:list-item --><li><a href="/#jadwal">Sesi terdekat</a></li><!-- /wp:list-item -->
-<!-- wp:list-item --><li><a href="/#galeri">Galeri dokumentasi</a></li><!-- /wp:list-item -->
+<!-- wp:list-item --><li><a href="/#galeri">Galeri</a></li><!-- /wp:list-item -->
 <!-- wp:list-item --><li><a href="/#cetakan">Memori</a></li><!-- /wp:list-item -->
 </ul>
 <!-- /wp:list -->
@@ -27,8 +32,8 @@
 <!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Dokumentasi</p><!-- /wp:paragraph -->
 <!-- wp:list -->
 <ul class="wp-block-list">
-<!-- wp:list-item --><li><a href="/jadwal/">Arsip kolaborasi</a></li><!-- /wp:list-item -->
-<!-- wp:list-item --><li><a href="/#kolaborator">Daftar kolaborator</a></li><!-- /wp:list-item -->
+<!-- wp:list-item --><li><a href="/jadwal/">Jadwal</a></li><!-- /wp:list-item -->
+<!-- wp:list-item --><li><a href="/#kolaborator">Kolaborator</a></li><!-- /wp:list-item -->
 </ul>
 <!-- /wp:list -->
 </div>
