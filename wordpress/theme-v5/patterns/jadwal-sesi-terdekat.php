@@ -16,8 +16,8 @@ $tjr_wa = esc_url( tjr_v5_link_wa_slot() );
 <!-- wp:group {"className":"kepala kepala-tengah","layout":{"type":"default"}} -->
 <div class="wp-block-group kepala kepala-tengah">
 <!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Jadwal</p><!-- /wp:paragraph -->
-<!-- wp:heading {"level":2,"className":"d d-xl"} --><h2 class="wp-block-heading d d-xl">Sesi berikutnya</h2><!-- /wp:heading -->
-<!-- wp:paragraph {"className":"lead"} --><p class="lead">Satu sesi dibuka dalam satu waktu, supaya persiapannya matang. Kursinya dibatasi agar semua mendapat tempat di meja, jadi tanyakan dulu ke kami.</p><!-- /wp:paragraph -->
+<!-- wp:heading {"level":2,"className":"d d-xl"} --><h2 class="wp-block-heading d d-xl">Sesi terdekat</h2><!-- /wp:heading -->
+<!-- wp:paragraph {"className":"lead"} --><p class="lead">Setiap sesi hanya dibuka dalam satu rentang waktu. Jumlah kursi setiap sesi juga tidak selalu sama, harap perhatikan agar tidak kehabisan slot-nya, ya.</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 

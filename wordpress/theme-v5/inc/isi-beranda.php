@@ -1140,6 +1140,9 @@ function tjr_v5_daftar_catatan_sesi() {
 			'label_placement'       => 'top',
 			'instruction_placement' => 'label',
 			'active'                => true,
+			// Tanpa ini kolomnya TIDAK bisa dibaca maupun ditulis lewat REST,
+			// sama seperti group_tjr_isi_beranda di atas.
+			'show_in_rest'          => true,
 		)
 	);
 }
