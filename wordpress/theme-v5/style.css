@@ -938,7 +938,7 @@ header.wp-block-template-part{
   background:var(--wp--preset--color--zaitun);
   color:var(--wp--preset--color--kertas);
   font-family:var(--wp--preset--font-family--display);font-style:italic;
-  font-size:15px;line-height:1.2;text-align:left;
+  font-size:var(--wp--preset--font-size--teks);line-height:1.2;text-align:left;
   transition:background .45s;
 }
 .bento .strip-kraft figcaption,.bento .strip-kraft .wp-element-caption,.strip.kraft{background:var(--wp--preset--color--kraft)}
