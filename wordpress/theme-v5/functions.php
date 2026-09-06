@@ -703,6 +703,56 @@ function tjr_v5_flush_rewrite_sekali() {
 add_action( 'wp_loaded', 'tjr_v5_flush_rewrite_sekali' );
 
 /**
+ * Jangan biarkan WordPress memasang 404 di request sitemap.
+ *
+ * Gejalanya: `/wp-sitemap.xml` mengeluarkan XML sitemapindex yang BENAR dan
+ * lengkap, tapi kepalanya `HTTP 404`. Isinya betul, statusnya salah, dan Google
+ * menolak sitemap yang menjawab 404.
+ *
+ * Sebabnya bukan aturan rewrite. Kalau aturannya tidak ada, query var `sitemap`
+ * tidak akan terisi, dan tanpa itu `WP_Sitemaps::render_sitemaps()` pulang lebih
+ * awal sehingga yang keluar halaman 404 tema berupa HTML, bukan XML. Kita dapat
+ * XML, jadi aturannya ada dan requestnya memang sampai ke perender sitemap.
+ *
+ * Yang memasang 404-nya `WP::handle_404()`, dan itu jalan SEBELUM
+ * `template_redirect`. Perender sitemap tidak pernah memanggil
+ * `status_header( 200 )` untuk membatalkannya; di inti WordPress dia cuma
+ * memasang 404, tidak pernah 200. Jadi statusnya sudah terlanjur waktu XML-nya
+ * dicetak di atasnya.
+ *
+ * `pre_handle_404` adalah kait resmi untuk keadaan ini. Mengembalikan nilai
+ * selain `false` membuat `handle_404()` pulang tanpa menyentuh status sama
+ * sekali, dan status bawaan sebuah respons memang 200.
+ *
+ * Filternya SEMPIT dengan sengaja. Kalau kedua query var sitemap kosong, nilai
+ * aslinya dikembalikan apa adanya, bukan `false`, supaya perilaku 404 halaman
+ * lain dan filter milik pihak lain tidak ikut berubah diam-diam.
+ *
+ * Aman kalau indexing dimatikan lagi: dalam keadaan itu
+ * `WP_Sitemaps::render_sitemaps()` memanggil `set_404()` sendiri, dan filter ini
+ * tidak menghalanginya karena yang dilewati cuma `handle_404()`.
+ *
+ * @param bool     $preempt Nilai bawaan filter.
+ * @param WP_Query $query   Query utama.
+ * @return bool
+ */
+function tjr_v5_sitemap_jangan_404( $preempt, $query ) {
+	if ( ! $query instanceof WP_Query ) {
+		return $preempt;
+	}
+
+	$sitemap = (string) $query->get( 'sitemap' );
+	$gaya    = (string) $query->get( 'sitemap-stylesheet' );
+
+	if ( '' === $sitemap && '' === $gaya ) {
+		return $preempt;
+	}
+
+	return true;
+}
+add_filter( 'pre_handle_404', 'tjr_v5_sitemap_jangan_404', 10, 2 );
+
+/**
  * Logo cadangan untuk blok Site Logo.
  *
  * Blok Site Logo bawaan tidak mencetak apa apa kalau logo situs belum diatur,
