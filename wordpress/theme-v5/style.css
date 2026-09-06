@@ -490,11 +490,15 @@ header.wp-block-template-part{
   aspect-ratio:16/9;min-height:0;
   background:var(--wp--preset--color--kertas-tua);
 }
-.panggung > .wp-block-image{
+/* :not(.cetakan) penting. Cetakan polaroid sekarang tinggal DI DALAM panggung
+   supaya posisinya dihitung dari gambarnya, bukan dari seluruh seksi hero.
+   Tanpa pengecualian ini, aturan full-bleed di bawah akan merentangkannya
+   memenuhi panggung. */
+.panggung > .wp-block-image:not(.cetakan){
   position:absolute;inset:0;z-index:0;margin:0;border-radius:0;overflow:hidden;
 }
 .panggung .wp-block-cover__image-background,
-.panggung > .wp-block-image img,
+.panggung > .wp-block-image:not(.cetakan) img,
 .panggung > img{width:100%;height:100%;object-fit:cover;border-radius:0}
 .panggung .wp-block-cover__background{display:none}
 .panggung::after{
