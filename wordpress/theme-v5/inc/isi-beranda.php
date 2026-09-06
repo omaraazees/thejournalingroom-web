@@ -624,29 +624,48 @@ function tjr_v5_acara_terdekat() {
 
 
 /**
- * Kolom Yang perlu dibawa, disuntikkan ke grup Detail Acara.
+ * Panel Catatan sesi, berisi satu kolom Yang perlu dibawa.
  *
- * Grup itu dibuat lewat layar ACF dan hidup di database, jadi tidak ikut git.
- * acf_add_local_field dengan parent grup itu menambah satu kolom dari kode
- * tanpa menyentuh grupnya, jadi kolom ini ikut versi dan tidak bisa terhapus
- * tidak sengaja dari dasbor.
+ * Dibuat sebagai grup sendiri, bukan disuntikkan ke grup Detail Acara.
+ * acf_add_local_field dengan parent grup yang hidup di database membuat ACF
+ * menganggap grup itu didefinisikan di kode, dan seluruh kolom aslinya hilang
+ * dari layar. Grup terpisah tidak menyentuh grup lain sama sekali.
  */
-function tjr_v5_field_bawa() {
-	if ( ! function_exists( 'acf_add_local_field' ) ) {
+function tjr_v5_daftar_catatan_sesi() {
+	if ( ! function_exists( 'acf_add_local_field_group' ) ) {
 		return;
 	}
 
-	acf_add_local_field(
+	acf_add_local_field_group(
 		array(
-			'key'           => 'field_tjr_bawa_sendiri',
-			'label'         => 'Yang perlu dibawa',
-			'name'          => 'bawa_sendiri',
-			'type'          => 'text',
-			'parent'        => 'group_tjr_acara',
-			'instructions'  => 'Muncul di kartu sesi, sebelah kanan Yang disediakan. Kosongkan untuk memakai kalimat bawaan: Tidak ada. Jurnal sendiri boleh dibawa kalau ingin.',
-			'placeholder'   => 'Tidak ada. Jurnal sendiri boleh dibawa kalau ingin',
-			'menu_order'    => 90,
+			'key'                   => 'group_tjr_catatan_sesi',
+			'title'                 => 'Catatan sesi',
+			'fields'                => array(
+				array(
+					'key'          => 'field_tjr_bawa_sendiri',
+					'label'        => 'Yang perlu dibawa',
+					'name'         => 'bawa_sendiri',
+					'type'         => 'text',
+					'instructions' => 'Muncul di kartu sesi, sebelah kanan Yang disediakan. Kosongkan untuk memakai kalimat bawaan: Tidak ada. Jurnal sendiri boleh dibawa kalau ingin.',
+					'placeholder'  => 'Tidak ada. Jurnal sendiri boleh dibawa kalau ingin',
+				),
+			),
+			'location'              => array(
+				array(
+					array(
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => 'acara',
+					),
+				),
+			),
+			'menu_order'            => 20,
+			'position'              => 'normal',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'label',
+			'active'                => true,
 		)
 	);
 }
-add_action( 'acf/init', 'tjr_v5_field_bawa' );
+add_action( 'acf/init', 'tjr_v5_daftar_catatan_sesi' );
