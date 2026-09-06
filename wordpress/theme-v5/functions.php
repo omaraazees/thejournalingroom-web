@@ -53,6 +53,19 @@ if ( ! defined( 'TJR_PESAN_WA_SLOT' ) ) {
 
 
 /**
+ * Penanda versi aturan rewrite.
+ *
+ * Naikkan nilainya tiap kali ada perubahan yang menyentuh aturan rewrite, lalu
+ * tjr_v5_flush_rewrite_sekali() menyegarkannya sekali di kunjungan berikutnya.
+ * Isinya sengaja tanggal plus sebabnya, bukan angka urut, supaya yang membaca
+ * tahu perubahan mana yang memaksa penyegaran.
+ */
+if ( ! defined( 'TJR_V5_REWRITE_VERSI' ) ) {
+	define( 'TJR_V5_REWRITE_VERSI', '2026-09-06-sitemap' );
+}
+
+
+/**
  * Isi beranda yang bisa diurus dari dasbor. Field-nya didaftarkan lewat kode,
  * pattern membacanya dengan aset tema sebagai bawaan.
  */
@@ -640,6 +653,54 @@ function tjr_v5_seed_terms() {
 	flush_rewrite_rules();
 }
 add_action( 'after_switch_theme', 'tjr_v5_seed_terms' );
+
+/**
+ * Segarkan aturan rewrite sekali, dijaga penanda versi.
+ *
+ * Kenapa ini ada. Aturan rewrite disimpan WordPress di satu option dan cuma
+ * ditulis ulang waktu ada yang memanggil flush. Kalau flush terakhir terjadi
+ * saat pendaftar aturannya belum jalan, aturannya tidak pernah masuk, dan
+ * URL-nya 404 selamanya walau fiturnya sendiri hidup.
+ *
+ * Itu yang terjadi di situs ini: flush terakhir jalan waktu opsi "Discourage
+ * search engines" masih menyala. Selama menyala, WordPress mematikan seluruh
+ * XML sitemap, jadi aturan `wp-sitemap*.xml` tidak ikut terdaftar. Sesudah
+ * opsinya dimatikan, generatornya kembali hidup, `?sitemap=index` mengeluarkan
+ * XML yang benar, dan `robots.txt` sudah menyebut sitemapnya, tapi
+ * `/wp-sitemap.xml` tetap 404 karena aturannya tidak ada di option. Aturan CPT
+ * Acara ikut flush yang sama dan selamat, itu sebabnya `/acara/{slug}/` jalan
+ * sementara sitemap tidak.
+ *
+ * Penanda versinya dinaikkan tiap kali ada perubahan yang menyentuh aturan
+ * rewrite: slug CPT, taksonomi baru, atau hal seperti sitemap yang mendaftarkan
+ * aturannya sendiri.
+ *
+ * Tiga keputusan yang sengaja diambil:
+ *
+ * 1. Hook-nya `wp_loaded`, bukan `init`. Sitemap bawaan mendaftarkan aturannya
+ *    di `init` prioritas 10, dan CPT di sini di prioritas 0. `wp_loaded` jalan
+ *    sesudah seluruh `init` selesai, jadi tidak perlu menebak prioritas.
+ * 2. Flush LUNAK, `flush_rewrite_rules( false )`. Yang perlu diperbarui cuma
+ *    option-nya. Flush keras ikut menulis ulang `.htaccess`, dan menulis ke
+ *    berkas milik hosting bukan risiko yang perlu diambil untuk ini.
+ * 3. Tidak ada penjaga kedua yang memeriksa "kalau aturan sitemap hilang, flush
+ *    lagi". Kelihatannya lebih pintar, tapi kalau suatu saat aturan itu memang
+ *    seharusnya tidak ada, misalnya indexing dimatikan lagi, pemeriksaan itu
+ *    akan memanggil flush di SETIAP request. Penanda versi tidak punya mode
+ *    gagal seperti itu.
+ */
+function tjr_v5_flush_rewrite_sekali() {
+	if ( TJR_V5_REWRITE_VERSI === get_option( 'tjr_v5_rewrite_versi' ) ) {
+		return;
+	}
+
+	flush_rewrite_rules( false );
+
+	// Penanda dipasang SESUDAH flush, supaya percobaan yang gagal di tengah
+	// jalan diulang di request berikutnya, bukan dianggap sudah beres.
+	update_option( 'tjr_v5_rewrite_versi', TJR_V5_REWRITE_VERSI, true );
+}
+add_action( 'wp_loaded', 'tjr_v5_flush_rewrite_sekali' );
 
 /**
  * Logo cadangan untuk blok Site Logo.
