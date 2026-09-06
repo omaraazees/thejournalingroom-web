@@ -854,6 +854,41 @@ function tjr_v5_tanggal_acara( $konten, $parsed, $blok = null ) {
 add_filter( 'render_block', 'tjr_v5_tanggal_acara', 10, 3 );
 
 /**
+ * Label arsip taksonomi di templates/taxonomy.html.
+ *
+ * Satu berkas templat itu dipakai bersama oleh kota DAN format-acara, jadi
+ * labelnya tidak bisa dipatok statis di HTML seperti "Cerita" di index.html.
+ * Diisi di sini dari nama taksonomi yang sedang dilihat.
+ *
+ * @param string $konten Hasil render blok.
+ * @param array  $parsed Blok yang sudah diurai.
+ * @return string
+ */
+function tjr_v5_label_arsip_taksonomi( $konten, $parsed ) {
+	if ( ! isset( $parsed['blockName'] ) || 'core/paragraph' !== $parsed['blockName'] ) {
+		return $konten;
+	}
+
+	$kelas = isset( $parsed['attrs']['className'] ) ? $parsed['attrs']['className'] : '';
+
+	if ( false === strpos( $kelas, 'lbl-taksonomi' ) ) {
+		return $konten;
+	}
+
+	$term = get_queried_object();
+
+	if ( ! ( $term instanceof WP_Term ) ) {
+		return $konten;
+	}
+
+	$taksonomi = get_taxonomy( $term->taxonomy );
+	$label     = $taksonomi ? $taksonomi->labels->singular_name : $term->taxonomy;
+
+	return preg_replace( '#(<p\b[^>]*>).*?(</p>)#s', '${1}' . esc_html( $label ) . '${2}', $konten, 1 );
+}
+add_filter( 'render_block', 'tjr_v5_label_arsip_taksonomi', 10, 2 );
+
+/**
  * Arsip acara diurut dari tanggal mulai, bukan tanggal publikasi.
  *
  * Acara yang belum lewat naik ke atas dan diurut dari yang paling dekat.

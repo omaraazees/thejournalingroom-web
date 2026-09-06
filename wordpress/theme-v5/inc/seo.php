@@ -224,10 +224,11 @@ function tjr_v5_seo_konteks() {
 			$ctx['judul']   = $term->name . ' | ' . $nama_situs;
 			$ctx['kanonik'] = is_wp_error( $tautan ) ? '' : (string) $tautan;
 
-			// Deskripsi term dipakai kalau memang diisi, tidak dibuatkan.
-			if ( '' !== trim( (string) $term->description ) ) {
-				$ctx['deskripsi'] = tjr_v5_seo_ringkas( $term->description );
-			}
+			// Deskripsi term dipakai kalau memang diisi, kalau kosong dibuatkan
+			// dari nama term dan jenis taksonominya, bukan dibiarkan kosong.
+			$ctx['deskripsi'] = ( '' !== trim( (string) $term->description ) )
+				? tjr_v5_seo_ringkas( $term->description )
+				: tjr_v5_seo_deskripsi_taksonomi( $term );
 		}
 
 	} elseif ( is_search() ) {
@@ -295,6 +296,35 @@ function tjr_v5_seo_ringkas( $teks, $batas = 158 ) {
 	}
 
 	return rtrim( $potong, " ,.;:" );
+}
+
+/**
+ * Deskripsi bawaan arsip taksonomi, dipakai kalau term-nya sendiri kosong.
+ *
+ * Menyebut nama term DAN jenis taksonominya, supaya /kota/yogyakarta/ dan
+ * /format/brand-activation/ tidak menghasilkan kalimat berbentuk sama tapi
+ * konteksnya beda.
+ *
+ * @param WP_Term $term Term arsip yang sedang dilihat.
+ * @return string
+ */
+function tjr_v5_seo_deskripsi_taksonomi( $term ) {
+	if ( 'kota' === $term->taxonomy ) {
+		return tjr_v5_seo_ringkas( sprintf(
+			'Jadwal workshop journaling TJR di %s: tanggal, venue, dan sisa kursi tiap sesi. Kursinya dibatasi, jadi tanya slot lewat WhatsApp sebelum datang.',
+			$term->name
+		) );
+	}
+
+	if ( 'format-acara' === $term->taxonomy ) {
+		return tjr_v5_seo_ringkas( sprintf(
+			'Jadwal acara TJR berformat %s: tanggal, venue, dan sisa kursi tiap sesi. Kursinya dibatasi, jadi tanya slot lewat WhatsApp sebelum datang.',
+			$term->name
+		) );
+	}
+
+	// Kategori atau tag bawaan WordPress, kalau situs ini pernah memakainya.
+	return tjr_v5_seo_ringkas( sprintf( '%s di The Journaling Room.', $term->name ) );
 }
 
 

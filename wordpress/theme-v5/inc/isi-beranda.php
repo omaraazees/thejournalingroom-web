@@ -963,6 +963,49 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 add_filter( 'render_block', 'tjr_v5_fakta_acara', 10, 3 );
 
 /**
+ * Baris "Format" di detail acara dibuang utuh kalau acaranya tidak punya term.
+ *
+ * `wp:post-terms` bukan paragraf atau html, jadi tidak kena tjr_v5_fakta_acara
+ * di atas dan tidak punya teks cadangan seperti baris tetangganya. Tanpa ini
+ * label "Format" tercetak menggantung tanpa nilai. Baris ini baris fakta
+ * SATU-SATUNYA yang isinya dari wp:post-terms, jadi pengecekan bentuknya
+ * (paragraf lalu post-terms format-acara) aman dipakai tanpa salah sasaran.
+ *
+ * @param string $konten Hasil render blok.
+ * @param array  $parsed Blok yang sudah diurai.
+ * @return string
+ */
+function tjr_v5_baris_format_kosong( $konten, $parsed ) {
+	if ( 'core/group' !== ( $parsed['blockName'] ?? '' ) ) {
+		return $konten;
+	}
+
+	$anak = $parsed['innerBlocks'] ?? array();
+
+	if ( 2 !== count( $anak ) ) {
+		return $konten;
+	}
+
+	if ( 'core/paragraph' !== ( $anak[0]['blockName'] ?? '' ) || 'core/post-terms' !== ( $anak[1]['blockName'] ?? '' ) ) {
+		return $konten;
+	}
+
+	if ( 'format-acara' !== ( $anak[1]['attrs']['term'] ?? '' ) ) {
+		return $konten;
+	}
+
+	// core/post-terms mencetak '' tanpa pembungkus sama sekali kalau acaranya
+	// tidak punya term, jadi ketiadaan class wp-block-post-terms cukup untuk
+	// tahu barisnya kosong.
+	if ( false === strpos( $konten, 'wp-block-post-terms' ) ) {
+		return '';
+	}
+
+	return $konten;
+}
+add_filter( 'render_block', 'tjr_v5_baris_format_kosong', 9, 2 );
+
+/**
  * Pastikan blok paragraf dan HTML tahu sedang berada di postingan mana.
  *
  * @param array $metadata Metadata block.json.
