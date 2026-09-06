@@ -70,8 +70,8 @@ function tjr_v5_bawaan_teks( $nama = '' ) {
 		/* Hero */
 		'hero_label'             => 'Workshop journaling',
 		'hero_judul'             => 'Your kind journaling companion',
-		'hero_foto_judul'        => 'Kelas journaling di Jogja untuk yang belum tahu mau menulis apa',
-		'hero_foto_isi'          => 'Kertasnya kosong, jamnya pelan. Alat tulis sudah kami siapkan, dan tidak ada giliran bercerita di depan orang.',
+		'hero_foto_judul'        => 'Kelas journaling di Jogja untuk semua kalangan berusia 11-55 tahun',
+		'hero_foto_isi'          => 'Setiap kelas dapat diikuti oleh pemula maupun praktisi karena akan dibersamai oleh para fasilitator',
 		'hero_cetakan_teks'      => 'Nov 2025',
 
 		/* Pengantar */
