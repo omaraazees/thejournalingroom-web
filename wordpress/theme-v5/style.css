@@ -512,13 +512,13 @@ header.wp-block-template-part{
 }
 
 .panggung-teks{
-  /* Ditambatkan ke DASAR panggung, bukan ditengahkan. Teks yang ditengahkan di
-     atas foto mengambang tanpa hubungan dengan tepi mana pun; kartu sesi juga
-     sudah menempel di dasar kanan, jadi keduanya berbagi satu garis dasar.
-     Lebarnya dinaikkan dari 34ch/40% supaya kalimatnya patah jadi tiga baris,
-     bukan lima dengan satu baris yatim berisi kata "berusia" saja. */
-  position:absolute;left:clamp(24px,3.4vw,56px);
-  bottom:clamp(32px,5vw,64px);z-index:2;
+  /* Lebarnya dinaikkan dari 34ch/40% supaya kalimatnya patah jadi tiga baris,
+     bukan lima dengan satu baris yatim berisi kata "berusia" saja.
+     JANGAN ditambatkan ke bawah. Sempat dicoba bottom:clamp(32px,5vw,64px) dan
+     hasilnya buruk: panggung 16/9 setinggi ~750px, jadi di viewport 900px
+     teksnya mulai di y=897 -- cuma 3 piksel yang terlihat di atas lipatan.
+     top:50% menjaganya tetap terbaca tanpa menggulir. */
+  position:absolute;left:clamp(24px,3.4vw,56px);top:50%;translate:0 -50%;z-index:2;
   width:min(40ch,44%);color:var(--wp--preset--color--kertas);
 }
 .panggung-teks h2,.panggung-teks .d{
