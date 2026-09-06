@@ -48,7 +48,7 @@ if ( $tjr_sesi ) {
 
 <!-- wp:buttons {"className":"hero-aksi"} -->
 <div class="wp-block-buttons hero-aksi">
-<!-- wp:button {"className":"is-style-pil"} --><div class="wp-block-button is-style-pil"><a class="wp-block-button__link wp-element-button" href="#jadwal">Jadwal terdekat</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-pil"} --><div class="wp-block-button is-style-pil"><a class="wp-block-button__link wp-element-button" href="#jadwal">Sesi terdekat</a></div><!-- /wp:button -->
 <!-- wp:button {"className":"is-style-pil"} --><div class="wp-block-button is-style-pil"><a class="wp-block-button__link wp-element-button" href="#galeri">Lihat dokumentasi</a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
