@@ -976,3 +976,46 @@ function tjr_v5_seo_head() {
 	);
 }
 add_action( 'wp_head', 'tjr_v5_seo_head', 2 );
+
+
+/* =====================================================================
+ * 6. Sitemap: daftarkan halaman arsip acara
+ * ===================================================================== */
+
+/**
+ * Masukkan /jadwal/ ke sitemap.
+ *
+ * Sitemap bawaan WordPress cuma memuat post INDIVIDUAL sebuah custom post
+ * type, tidak pernah halaman arsipnya. Akibatnya /jadwal/ tidak terdaftar di
+ * mana pun: diperiksa lewat URL Inspection Search Console pada 2026-09-07,
+ * halaman itu satu-satunya yang berstatus "URL is unknown to Google" dengan
+ * "No referring sitemaps detected", sementara URL lain tercatat ditemukan
+ * lewat wp-sitemap.xml.
+ *
+ * Google masih bisa menemukannya lewat tautan internal "Semua jadwal", tapi
+ * jalur itu lebih lambat dan bergantung pada halaman lain ikut ter-crawl.
+ *
+ * Disisipkan di depan halaman pertama saja supaya tidak berulang kalau
+ * acaranya nanti banyak dan sitemap-nya terbagi beberapa halaman.
+ *
+ * @param array  $url_list  Daftar URL yang sudah dirakit inti.
+ * @param string $post_type Tipe konten yang sedang dirender.
+ * @param int    $page_num  Halaman sitemap ke berapa.
+ * @return array
+ */
+function tjr_v5_sitemap_arsip_acara( $url_list, $post_type, $page_num ) {
+	if ( 'acara' !== $post_type || 1 !== (int) $page_num ) {
+		return $url_list;
+	}
+
+	$arsip = get_post_type_archive_link( 'acara' );
+
+	if ( ! $arsip ) {
+		return $url_list;
+	}
+
+	array_unshift( $url_list, array( 'loc' => $arsip ) );
+
+	return $url_list;
+}
+add_filter( 'wp_sitemaps_posts_url_list', 'tjr_v5_sitemap_arsip_acara', 10, 3 );
