@@ -3,7 +3,7 @@
  * Title: Jadwal, sesi terdekat
  * Slug: tjr-v5/jadwal-sesi-terdekat
  * Categories: tjr, tjr-beranda
- * Description: Kepala seksi rata tengah plus satu kartu besar berisi sesi terdekat: foto di kiri, judul, ringkasan, enam baris fakta, bar sisa kursi, dan tombol WhatsApp. Query Loop-nya sudah dikunci ke satu acara terdekat yang tanggalnya belum lewat.
+ * Description: Kepala seksi rata tengah plus satu kartu besar berisi sesi terdekat: foto di kiri, judul, ringkasan, tujuh baris fakta, bar sisa kursi, dan tombol WhatsApp. Query Loop-nya sudah dikunci ke satu acara terdekat yang tanggalnya belum lewat.
  * Keywords: jadwal, acara, sesi terdekat, query loop
  * Viewport Width: 1400
  */
@@ -42,9 +42,11 @@ $tjr_wa = esc_url( tjr_v5_link_wa_slot() );
 <!-- wp:post-title {"level":3,"isLink":true,"className":"d d-lg"} /-->
 <!-- wp:post-excerpt {"className":"lead","excerptLength":52,"showMoreOnNewLine":false} /-->
 
-<?php /* Enam baris fakta. Yang bertanda kelas dd-waktu, dd-tempat, dd-kit, dan
-   dd-kursi isinya ditukar tjr_v5_fakta_acara() dengan field acara yang sedang
-   dirender. Teks yang tertulis di bawah cuma contoh yang tampil di editor. */ ?>
+<?php /* Tujuh baris fakta. Yang bertanda kelas dd-waktu, dd-tempat, dd-harga,
+   dd-kit, dan dd-kursi isinya ditukar tjr_v5_fakta_acara() dengan field acara
+   yang sedang dirender. Teks yang tertulis di bawah cuma contoh yang tampil
+   di editor. Baris dd-harga hilang sendiri kalau harganya belum diisi, lihat
+   tjr_v5_harga_acara() di inc/isi-beranda.php. */ ?>
 <!-- wp:group {"className":"fakta","layout":{"type":"default"}} -->
 <div class="wp-block-group fakta">
 
@@ -66,6 +68,13 @@ $tjr_wa = esc_url( tjr_v5_link_wa_slot() );
 <div class="wp-block-group">
 <!-- wp:paragraph {"className":"dt ik-pin"} --><p class="dt ik-pin">Tempat</p><!-- /wp:paragraph -->
 <!-- wp:paragraph {"className":"dd dd-tempat"} --><p class="dd dd-tempat"><a class="tempat" href="https://www.google.com/maps/search/?api=1&amp;query=Kupiku%20Coffee%2C%20Mantrijeron%2C%20Yogyakarta" target="_blank" rel="noopener">Kupiku Coffee, Mantrijeron, Yogyakarta</a></p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"layout":{"type":"default"}} -->
+<div class="wp-block-group">
+<!-- wp:paragraph {"className":"dt"} --><p class="dt">Harga</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"dd dd-harga"} --><p class="dd dd-harga">Rp75.000</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
