@@ -96,6 +96,25 @@ python3 bin/kirim-tema-ftp.py            # kirim berkas yang berubah
 python3 bin/kirim-tema-ftp.py --hapus    # plus bersihkan berkas usang di server
 ```
 
+### Periksa PHP sebelum mengirim
+
+Deploy di sini FTP, bukan build, jadi satu salah ketik PHP langsung jadi layar
+putih di situs yang tayang. Jalankan ini dulu tiap kali ada berkas PHP berubah:
+
+```
+bin/periksa-php.sh                       # periksa seluruh wordpress/theme-v5
+```
+
+Keluar dengan kode 1 kalau ada yang gagal parse, jadi aman dirangkai:
+`bin/periksa-php.sh && python3 bin/kirim-tema-ftp.py`.
+
+Mesin kerja belum tentu punya biner `php`. Kalau ada, skripnya memakai `php -l`.
+Kalau tidak, dia memakai `php-parser` di npm, parser PHP murni JavaScript, dan
+mengambilnya sekali ke `bin/.cache-lint/` yang sudah masuk `.gitignore`.
+
+Yang tertangkap kesalahan **sintaks**, bukan fatal saat jalan seperti fungsi
+yang tidak ada. Jadi tetap buka situsnya sesudah kirim.
+
 Kredensial dibaca dari `~/.tjr-ftp`, tiga baris: host, user, password.
 Ambil host dan user di hPanel, File, Akun FTP. Passwordnya diatur sendiri lewat
 tombol Ubah password FTP di halaman yang sama.

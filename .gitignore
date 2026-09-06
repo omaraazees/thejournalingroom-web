@@ -25,3 +25,6 @@ scratchpad/
 
 # kredensial FTP lokal
 .tjr-ftp
+
+# Cache pemeriksa sintaks PHP, dibuat ulang sendiri oleh bin/periksa-php.sh
+bin/.cache-lint/
