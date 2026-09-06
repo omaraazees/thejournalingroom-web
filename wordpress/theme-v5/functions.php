@@ -467,6 +467,11 @@ function tjr_v5_register_acara() {
 			'taxonomies'       => array( 'format-acara', 'kota' ),
 			'hierarchical'     => false,
 			'capability_type'  => 'post',
+			// map_meta_cap WAJIB true. Tanpa ini WordPress tidak pernah memetakan
+			// meta cap delete_post ke cap primitif delete_posts, jadi menghapus
+			// acara ditolak untuk SEMUA ORANG, administrator sekalipun: REST
+			// menjawab rest_cannot_delete dan tombol Trash di dasbor pun mati.
+			'map_meta_cap'     => true,
 			'delete_with_user' => false,
 		)
 	);
