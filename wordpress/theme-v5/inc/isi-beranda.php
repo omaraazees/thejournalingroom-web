@@ -534,7 +534,9 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 	} elseif ( false !== strpos( $kelas, 'dd-tempat' ) ) {
 		$isi = tjr_v5_tempat_acara( $id );
 	} elseif ( false !== strpos( $kelas, 'dd-kit' ) ) {
-		$isi = esc_html( tjr_v5_kit_acara( $id ) );
+		// Teks bebas menang atas daftar centang, kalau diisi.
+		$tulis = trim( (string) get_post_meta( $id, 'disediakan_teks', true ) );
+		$isi   = esc_html( '' !== $tulis ? $tulis : tjr_v5_kit_acara( $id ) );
 	} elseif ( false !== strpos( $kelas, 'dd-bawa' ) ) {
 		$bawa = trim( (string) get_post_meta( $id, 'bawa_sendiri', true ) );
 		// Kalimat bawaannya berlaku untuk hampir semua sesi, jadi baris ini tidak
@@ -624,7 +626,12 @@ function tjr_v5_acara_terdekat() {
 
 
 /**
- * Panel Catatan sesi, berisi satu kolom Yang perlu dibawa.
+ * Panel Catatan sesi: Yang disediakan dan Yang perlu dibawa.
+ *
+ * Dua baris di kartu sesi yang tidak punya tempat di grup Detail Acara. Yang
+ * disediakan sebenarnya sudah ada sebagai daftar centang di sana, tapi kolom
+ * teks di sini memberi jalan keluar waktu satu sesi kitnya berbeda dan tidak
+ * cocok dijelaskan lewat centang.
  *
  * Dibuat sebagai grup sendiri, bukan disuntikkan ke grup Detail Acara.
  * acf_add_local_field dengan parent grup yang hidup di database membuat ACF
@@ -641,6 +648,14 @@ function tjr_v5_daftar_catatan_sesi() {
 			'key'                   => 'group_tjr_catatan_sesi',
 			'title'                 => 'Catatan sesi',
 			'fields'                => array(
+				array(
+					'key'          => 'field_tjr_disediakan_teks',
+					'label'        => 'Yang disediakan',
+					'name'         => 'disediakan_teks',
+					'type'         => 'text',
+					'instructions' => 'Kosongkan untuk memakai daftar centang Yang didapat peserta di panel Detail Acara. Isi kalau ingin menulis sendiri, misalnya untuk sesi yang kitnya beda dari biasanya. Pisahkan dengan koma.',
+					'placeholder'  => 'Jurnal, stiker, booklet prompt, deco station, satu minuman',
+				),
 				array(
 					'key'          => 'field_tjr_bawa_sendiri',
 					'label'        => 'Yang perlu dibawa',
