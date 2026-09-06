@@ -28,3 +28,6 @@ scratchpad/
 
 # Cache pemeriksa sintaks PHP, dibuat ulang sendiri oleh bin/periksa-php.sh
 bin/.cache-lint/
+
+# Manifes hash kiriman FTP, dibuat ulang sendiri oleh bin/kirim-tema-ftp.py
+bin/.cache-kirim/

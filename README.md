@@ -94,7 +94,12 @@ Kalau tidak mau memakai Git deployment sama sekali, pakai FTP. Ada skripnya di r
 python3 bin/kirim-tema-ftp.py --coba     # lihat rencana dulu
 python3 bin/kirim-tema-ftp.py            # kirim berkas yang berubah
 python3 bin/kirim-tema-ftp.py --hapus    # plus bersihkan berkas usang di server
+python3 bin/kirim-tema-ftp.py --teliti   # abaikan manifes, unduh dan hash isi di server
 ```
+
+Ujinya: `python3 bin/uji-kirim-tema.py`. Dia memakai FTP palsu di memori, tidak
+menyentuh server, dan membandingkan skrip sekarang dengan versi sebelum
+perbaikan lewat `git show`.
 
 ### Periksa PHP sebelum mengirim
 
@@ -130,8 +135,23 @@ akun, bukan `public_html`. Situsnya ada di
 `/domains/thejournalingroom.id/public_html/`, dan itu yang dipakai skrip.
 
 Skrip ini hanya menyentuh folder tema `tjr-v5`, tidak bisa menghapus instalasi
-WordPress. Berkas yang ukurannya sama dilewati, jadi pengiriman kedua dan
-seterusnya selesai dalam hitungan detik.
+WordPress.
+
+Berkas dianggap sama dari **isinya**, bukan ukurannya. Server ini tidak
+menyediakan hash sama sekali, `FEAT`-nya cuma `SIZE`, `MDTM`, dan `MLST`, jadi
+skrip mencatat sha256 tiap berkas yang berhasil dikirim beserta stempel server
+saat itu ke `bin/.cache-kirim/manifes.json` yang sudah masuk `.gitignore`.
+Sebuah berkas dilewati hanya kalau hash lokalnya cocok dengan catatan **dan**
+`size` plus `modify` di server masih sama seperti waktu dikirim. Perubahan di
+server dari luar skrip ini ikut tertangkap, dan segala yang meragukan dikirim.
+
+Dulu perbandingannya cuma ukuran. Perbaikan CSS satu karakter, `jarak-5` jadi
+`jarak-2`, panjangnya persis sama, jadi dilaporkan sama dan tidak pernah naik.
+
+Kalau manifesnya belum ada, skrip pindah sendiri ke mode teliti sekali itu:
+isi server diunduh dan di-hash, sekitar 25 detik untuk tema sebesar ini. Jalan
+berikutnya kembali ke sekitar 3 detik. `--teliti` memaksa mode itu kapan saja,
+untuk waktu manifesnya dicurigai bohong.
 
 ## Pemulihan darurat
 
