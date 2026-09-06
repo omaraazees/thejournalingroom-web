@@ -19,8 +19,39 @@ $tjr_foto    = tjr_v5_foto( 'hero_foto' );
 $tjr_alt     = tjr_v5_foto_alt( 'hero_foto' );
 $tjr_f_judul = tjr_v5_isi( 'hero_foto_judul' );
 $tjr_f_isi   = tjr_v5_isi( 'hero_foto_isi' );
-$tjr_cetak   = tjr_v5_foto( 'hero_cetakan' );
+
+// Kartu P-3: sama seperti galeri bento, cuma alihkan ke .webp kalau
+// padanannya memang ada di assets/img/; foto ACF di luar situ tidak disentuh.
+$tjr_ke_webp = static function ( $url ) {
+	$webp = preg_replace( '/\.jpe?g$/i', '.webp', (string) $url );
+	if ( $webp === $url ) {
+		return $url;
+	}
+	$jalur = get_theme_file_path( '/assets/img/' . basename( (string) wp_parse_url( $webp, PHP_URL_PATH ) ) );
+	return file_exists( $jalur ) ? $webp : $url;
+};
+
+$tjr_cetak   = $tjr_ke_webp( tjr_v5_foto( 'hero_cetakan' ) );
 $tjr_cetak_t = tjr_v5_isi( 'hero_cetakan_teks' );
+
+// Foto panggung tampil 100% lebar section di dua lebar layar (4:5 di ponsel,
+// 16:9 di desktop), jadi satu berkas saja tidak cukup: ponsel butuh jauh lebih
+// kecil dari desktop. Dua ukuran .webp cadangan cuma dipasang untuk foto
+// bawaan; foto yang sudah diganti dari dasbor lewat ACF tetap satu berkas
+// seperti sebelumnya karena kita tidak tahu ukurannya.
+$tjr_foto_srcset = '';
+if ( $tjr_foto === get_theme_file_uri( '/assets/img/artotel-08.jpg' ) ) {
+	$tjr_kecil = get_theme_file_path( '/assets/img/artotel-08-700.webp' );
+	$tjr_besar = get_theme_file_path( '/assets/img/artotel-08-1600.webp' );
+	if ( file_exists( $tjr_kecil ) && file_exists( $tjr_besar ) ) {
+		$tjr_foto = get_theme_file_uri( '/assets/img/artotel-08-1600.webp' );
+		$tjr_foto_srcset = sprintf(
+			' srcset="%s 700w, %s 1600w" sizes="100vw"',
+			esc_url( get_theme_file_uri( '/assets/img/artotel-08-700.webp' ) ),
+			esc_url( get_theme_file_uri( '/assets/img/artotel-08-1600.webp' ) )
+		);
+	}
+}
 
 // Kartu sesi terdekat mengambil acara yang tanggalnya paling dekat dan belum
 // lewat. Kalau belum ada acara sama sekali, kartunya tidak dicetak.
@@ -72,7 +103,7 @@ if ( $tjr_sesi ) {
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( $tjr_foto ); ?>" alt="<?php echo esc_attr( $tjr_alt ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto, true ); ?>/></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( $tjr_foto ); ?>"<?php echo $tjr_foto_srcset; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> alt="<?php echo esc_attr( $tjr_alt ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto, true ); ?>/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"panggung-teks","layout":{"type":"default"}} -->
