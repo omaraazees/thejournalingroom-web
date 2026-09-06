@@ -963,14 +963,19 @@ header.wp-block-template-part{
   width:100%;border-radius:var(--wp--custom--radius--cetakan);
   aspect-ratio:1;object-fit:cover;
 }
-/* Caption cetakan ditulis tangan, Pinyon Script. Tinggi huruf kecilnya jauh di
-   bawah Playfair, jadi ukurannya dinaikkan sekitar satu setengah kali supaya
-   terbaca di kartu selebar seratus piksel. */
+/* Caption cetakan dulu Pinyon Script, huruf tangan, dan ukurannya dinaikkan
+   sekitar satu setengah kali (17 dan 20) karena tinggi huruf kecil Pinyon
+   jauh di bawah Playfair. Manrope tidak butuh dongkrakan itu, jadi ukurannya
+   turun ke preset caption tema, mikro 12 dan kecil 13.
+   Angkanya diukur, bukan ditebak: di halaman live, dengan Manrope, kartu
+   selipan selebar 108 sampai 114 piksel mulai memotong "Artotel, Apr 2026"
+   pada 14, jadi 12 memberi ruang untuk nama yang lebih panjang nanti.
+   Kartu tumpukan selebar 148 piksel masih muat sampai 16, dipakai 13. */
 .cetakan figcaption,
 .cetakan .wp-element-caption{
   position:absolute;left:8px;right:8px;bottom:8px;text-align:center;margin:0;
-  font-family:var(--wp--preset--font-family--tangan);font-style:normal;
-  font-size:17px;line-height:1.25;letter-spacing:.01em;
+  font-family:var(--wp--preset--font-family--teks);font-style:normal;
+  font-size:var(--wp--preset--font-size--mikro);line-height:1.25;letter-spacing:.01em;
   color:var(--wp--preset--color--tinta-lembut);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
@@ -994,11 +999,11 @@ header.wp-block-template-part{
   left:var(--x);top:var(--y);
   width:var(--pw,clamp(104px,10.5vw,164px));
 }
-/* cetakan di tumpukan lebih besar dari yang diselipkan, jadi tulisan tangannya
-   ikut dinaikkan dan alasnya diberi ruang lebih */
+/* cetakan di tumpukan lebih lebar dari yang diselipkan, jadi captionnya naik
+   satu tingkat dan alasnya diberi ruang lebih */
 .tumpukan .cetakan{padding:8px 8px 32px}
 .tumpukan .cetakan figcaption,
-.tumpukan .cetakan .wp-element-caption{font-size:20px;bottom:8px}
+.tumpukan .cetakan .wp-element-caption{font-size:var(--wp--preset--font-size--kecil);bottom:8px}
 .tumpukan .cetakan:hover{z-index:20}
 
 .tumpukan .cetakan:nth-child(1){--x:2%;--y:18%;--rot:-9deg;--fx:26vw;--fy:8%}
