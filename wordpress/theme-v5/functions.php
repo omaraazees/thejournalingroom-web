@@ -140,6 +140,58 @@ function tjr_v5_font_lokal_ada() {
 }
 
 /**
+ * Buang deklarasi fontFace theme.json yang menunjuk berkas yang tidak ada.
+ *
+ * theme.json mendaftarkan @font-face self-host untuk tiap berat Playfair
+ * Display italic dan Manrope lewat "src": ["file:./assets/fonts/....woff2"],
+ * tapi folder assets/fonts/ kosong (lihat tjr_v5_font_lokal_ada() di atas).
+ * WordPress tetap mencetak keenam @font-face itu ke stylesheet global apa
+ * adanya, jadi browser mencoba memuatnya, gagal 404, lalu baru jatuh ke
+ * family yang sama dari Google Fonts CDN (yang didaftarkan tjr_v5_enqueue()
+ * dan memang berhasil) -- situs tampil benar, tapi tiap page-load membuang
+ * request 404 percuma untuk tiap berat yang dipakai halaman itu.
+ *
+ * Filter ini menyaring fontFace per berkas: begitu satu berkas woff2 lokal
+ * diletakkan di assets/fonts/, deklarasi @font-face-nya otomatis ikut lagi
+ * tanpa perlu ubah theme.json atau filter ini.
+ *
+ * @param WP_Theme_JSON_Data $theme_json Data theme.json tema aktif.
+ * @return WP_Theme_JSON_Data
+ */
+function tjr_v5_buang_font_face_mati( $theme_json ) {
+	$data = $theme_json->get_data();
+
+	if ( empty( $data['settings']['typography']['fontFamilies'] ) ) {
+		return $theme_json;
+	}
+
+	foreach ( $data['settings']['typography']['fontFamilies'] as &$keluarga ) {
+		if ( empty( $keluarga['fontFace'] ) ) {
+			continue;
+		}
+
+		$keluarga['fontFace'] = array_values(
+			array_filter(
+				$keluarga['fontFace'],
+				function ( $wajah ) {
+					foreach ( (array) $wajah['src'] as $sumber ) {
+						$relatif = preg_replace( '#^file:\.?/?#', '/', $sumber );
+						if ( file_exists( get_theme_file_path( $relatif ) ) ) {
+							return true;
+						}
+					}
+					return false;
+				}
+			)
+		);
+	}
+	unset( $keluarga );
+
+	return $theme_json->update_with( $data );
+}
+add_filter( 'wp_theme_json_data_theme', 'tjr_v5_buang_font_face_mati' );
+
+/**
  * Versi berkas untuk cache busting.
  *
  * Nomor versi tema jarang dinaikkan, padahal style.css dan pembuka.js sering
@@ -793,14 +845,21 @@ function tjr_v5_logo_cadangan( $konten, $parsed ) {
 	$kelas = isset( $parsed['attrs']['className'] ) ? $parsed['attrs']['className'] : '';
 	$lebar = isset( $parsed['attrs']['width'] ) ? (int) $parsed['attrs']['width'] : 0;
 
+	// Tinggi dihitung dari rasio ASLI berkasnya (getimagesize), bukan angka
+	// tetap -- kalau tjr-mark.png diganti ukurannya lagi nanti, tinggi ikut
+	// menyesuaikan sendiri dan tidak balik jadi salah.
+	$ukuran = getimagesize( $berkas );
+	$tinggi = ( $lebar && $ukuran ) ? (int) round( $lebar * $ukuran[1] / $ukuran[0] ) : 0;
+
 	return sprintf(
-		'<div class="wp-block-site-logo %1$s"><a href="%2$s" class="custom-logo-link" rel="home"><img class="custom-logo" src="%3$s" srcset="%3$s 400w, %4$s 800w" sizes="110px" alt="%5$s"%6$s></a></div>',
+		'<div class="wp-block-site-logo %1$s"><a href="%2$s" class="custom-logo-link" rel="home"><img class="custom-logo" src="%3$s" srcset="%3$s 400w, %4$s 800w" sizes="110px" alt="%5$s"%6$s%7$s></a></div>',
 		esc_attr( $kelas ),
 		esc_url( home_url( '/' ) ),
 		esc_url( get_theme_file_uri( '/assets/img/tjr-mark.png' ) ),
 		esc_url( get_theme_file_uri( '/assets/img/tjr-mark@2x.png' ) ),
 		esc_attr( get_bloginfo( 'name' ) ),
-		$lebar ? ' width="' . $lebar . '"' : ''
+		$lebar ? ' width="' . $lebar . '"' : '',
+		$tinggi ? ' height="' . $tinggi . '"' : ''
 	);
 }
 add_filter( 'render_block', 'tjr_v5_logo_cadangan', 10, 2 );
