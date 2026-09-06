@@ -61,7 +61,7 @@ if ( ! defined( 'TJR_PESAN_WA_SLOT' ) ) {
  * tahu perubahan mana yang memaksa penyegaran.
  */
 if ( ! defined( 'TJR_V5_REWRITE_VERSI' ) ) {
-	define( 'TJR_V5_REWRITE_VERSI', '2026-09-06-sitemap' );
+	define( 'TJR_V5_REWRITE_VERSI', '2026-09-07-sitemap-arsip' );
 }
 
 
