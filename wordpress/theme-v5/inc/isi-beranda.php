@@ -682,7 +682,7 @@ function tjr_v5_daftar_catatan_sesi() {
 					'label'        => 'Judul acara',
 					'name'         => 'judul_acara',
 					'type'         => 'text',
-					'instructions' => 'Nama sesinya. Ini yang tampil sebagai judul di kartu sesi, di arsip, dan di halaman acara. Sama dengan judul di kotak besar atas, cukup diisi salah satu.',
+					'instructions' => 'Nama sesinya. Ini yang tampil sebagai judul di kartu sesi terdekat, di arsip, dan di halaman acara.',
 					'placeholder'  => 'Tracing Shadows, Mapping Stars',
 					'required'     => 0,
 				),
@@ -734,6 +734,12 @@ add_action( 'acf/init', 'tjr_v5_daftar_catatan_sesi' );
 function tjr_v5_muat_judul_acara( $nilai, $id ) {
 	if ( is_numeric( $id ) && 'acara' === get_post_type( $id ) ) {
 		$judul = get_the_title( $id );
+
+		// Acara baru lahir dengan status auto-draft dan judul "Auto Draft".
+		// Itu judul internal WordPress, bukan isi, jadi kolomnya dibiarkan kosong.
+		if ( 'auto-draft' === get_post_status( $id ) ) {
+			return '';
+		}
 
 		if ( '' !== $judul ) {
 			return $judul;

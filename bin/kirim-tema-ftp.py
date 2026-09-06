@@ -116,8 +116,19 @@ def main():
     for rel in kirim:
         tujuan = f"{REMOTE}/{rel}"
         pastikan_folder(ftp, os.path.dirname(tujuan))
+
+        # Unggah ke nama sementara lalu ditukar. STOR menimpa berkas di tempat,
+        # dan selama beberapa ratus milidetik berkas PHP-nya separuh tertulis.
+        # Kalau ada yang membuka halaman tepat saat itu, PHP gagal mengurai dan
+        # halamannya blank. Rename di server sifatnya seketika.
+        sementara = tujuan + ".tmp-kirim"
         with open(lokal[rel], "rb") as f:
-            ftp.storbinary("STOR " + tujuan, f)
+            ftp.storbinary("STOR " + sementara, f)
+        try:
+            ftp.delete(tujuan)
+        except ftplib.error_perm:
+            pass
+        ftp.rename(sementara, tujuan)
         print("  + " + rel)
 
     for rel in buang:

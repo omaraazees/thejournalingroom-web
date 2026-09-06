@@ -682,6 +682,19 @@ header.wp-block-template-part{
 .kartu-kartu > *:nth-child(2) .kaki-kartu{background:var(--wp--preset--color--kraft)}
 .kartu-kartu > *:nth-child(3) .kaki-kartu{background:var(--wp--preset--color--rose-tua)}
 .kartu-kartu > * .kartu:hover .kaki-kartu{background:var(--wp--preset--color--burgundy)}
+
+/* Acara tanpa foto. Tanpa ini kartunya jadi kotak abu tinggi yang kosong,
+   karena rasio 3/4 tetap dipesan padahal tidak ada yang mengisinya. Kartunya
+   dipendekkan dan scrim gelapnya dimatikan, jadi yang tersisa kertas krem
+   dengan strip keterangan di bawah. Begitu fotonya diunggah, aturan ini
+   berhenti berlaku dengan sendirinya. */
+.kartu:not(:has(img)){aspect-ratio:auto;min-height:0;background:var(--wp--preset--color--kertas-tua)}
+.kartu:not(:has(img))::before{content:none}
+.kartu:not(:has(img)) .kaki-kartu{position:static;border-radius:0}
+.kartu:not(:has(img)) .kartu-judul{
+  position:static;padding:24px 20px 0;color:var(--wp--preset--color--tinta);
+  text-shadow:none;
+}
 .kartu:hover .kaki-kartu{background:var(--wp--preset--color--burgundy)}
 .kaki-kartu .lbl{
   display:flex;align-items:center;gap:8px;
