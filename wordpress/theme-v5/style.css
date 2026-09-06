@@ -388,6 +388,31 @@ header.wp-block-template-part{
 
 }
 
+/* Ponsel dipegang mendatar. Padding panel dan ukuran item dikunci ke LEBAR
+   (16vw dan 9vw), jadi di layar yang lebar tapi pendek dua duanya justru
+   membesar tepat saat ruangnya menyempit: di 844x390 isinya menjumlah 403
+   sementara ruang yang tersisa cuma 150, jadi dua item terakhir harus digulir.
+
+   Dipisah lewat ambang TINGGI, bukan dengan mengutak atik 16vw dan 9vw, supaya
+   potret tidak bisa ikut bergeser sama sekali. 390x844 dan 768x1024 tidak
+   memenuhi max-height:520px, jadi keduanya tidak pernah menyentuh blok ini.
+
+   Tombol tutup ikut naik ke 8 supaya tidak bertumpuk dengan item pertama:
+   dia setinggi 44, jadi berhenti di 52, sementara isi mulai di 56. */
+@media(max-width:900px) and (max-height:520px){
+  .bar .wp-block-navigation__responsive-container.is-menu-open{
+    padding:56px clamp(28px,8vw,64px) 24px;
+  }
+  .bar .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__container{
+    gap:4px;
+  }
+  .bar .wp-block-navigation__responsive-container.is-menu-open a{
+    font-size:40px;
+  }
+  .bar .wp-block-navigation__responsive-container-close{top:8px}
+}
+
 /* Di layar paling sempit label Menu dibuang, sisakan ikonnya saja, supaya
    tombol Hubungi kami tetap kebagian ruang. */
 @media(max-width:480px){
