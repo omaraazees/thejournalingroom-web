@@ -75,7 +75,7 @@ function tjr_v5_bawaan_teks( $nama = '' ) {
 		'hero_cetakan_teks'      => 'Nov 2025',
 
 		/* Pengantar */
-		'pengantar_1'            => 'The Journaling Room menggelar workshop journaling dan kelas menulis jurnal di Yogyakarta sejak November 2025. ' . $kali . ', selalu dengan pola yang sama: satu meja panjang, bahan yang sudah ditata rapi, dan waktu yang tidak diburu.',
+		'pengantar_1'            => 'The Journaling Room menggelar workshop journaling dan kelas menulis jurnal di Yogyakarta sejak Agustus 2025. ' . $kali . ', selalu dengan pola yang sama: satu meja panjang, bahan yang sudah ditata rapi, dan waktu yang tidak diburu.',
 		'pengantar_2'            => 'Tidak ada sesi perkenalan yang membuat kaku. Kamu boleh menulis, menempel, atau hanya memegang gunting sambil menonton orang lain bekerja. Sorenya selesai ketika kamu merasa selesai.',
 		'kutipan'                => 'Halaman kosong tidak pernah menuntut apa apa',
 		'pengantar_cetakan_teks' => 'Pendopo Radian',

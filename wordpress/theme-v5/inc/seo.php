@@ -612,7 +612,7 @@ function tjr_v5_seo_graf() {
 		'image'         => $foto( 'snapobox-11.jpg' ),
 		'description'   => 'Penyelenggara workshop journaling di Yogyakarta. Sesi dipandu, alat tulis dan bahan disediakan, tidak ada giliran bercerita di depan orang.',
 		'slogan'        => 'Your kind journaling companions',
-		'foundingDate'  => '2025-11',
+		'foundingDate'  => '2025-08',
 		'sameAs'        => array( 'https://instagram.com/thejournalingroom' ),
 		'knowsLanguage' => array( 'id', 'en' ),
 		'areaServed'    => array(

@@ -34,11 +34,6 @@ $tjr_lead = 'Dokumentasi dari beberapa workshop yang sudah kami gelar di Yogyaka
 <!-- wp:paragraph {"className":"lead","style":{"spacing":{"margin":{"top":"var:preset|spacing|jarak-2"}}}} --><p class="lead" style="margin-top:var(--wp--preset--spacing--jarak-2)"><?php echo esc_html( $tjr_lead ); ?></p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
-<!-- wp:buttons -->
-<div class="wp-block-buttons">
-<!-- wp:button {"className":"is-style-pil"} --><div class="wp-block-button is-style-pil"><a class="wp-block-button__link wp-element-button" href="#arsip">Semua kolaborasi</a></div><!-- /wp:button -->
-</div>
-<!-- /wp:buttons -->
 </div>
 <!-- /wp:group -->
 

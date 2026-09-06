@@ -122,7 +122,6 @@ editor. Kategorinya dua: `tjr` dan `tjr-beranda`.
 | `jadwal-kartu.php` | `tjr-v5/jadwal-kartu` | Tiga acara yang baru saja lewat |
 | `galeri-bento.php` | `tjr-v5/galeri-bento` | Empat foto dalam petak bento |
 | `tumpukan-cetakan.php` | `tjr-v5/tumpukan-cetakan` | Sembilan cetakan polaroid |
-| `arsip-kolaborasi.php` | `tjr-v5/arsip-kolaborasi` | Daftar baris acara yang sudah lewat |
 | `pita-kolaborator.php` | `tjr-v5/pita-kolaborator` | Petak dua belas logo |
 | `ajakan-whatsapp.php` | `tjr-v5/ajakan-whatsapp` | Penutup rose dengan lengkung besar |
 
