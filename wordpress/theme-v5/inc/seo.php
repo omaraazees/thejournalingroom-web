@@ -1064,3 +1064,39 @@ function tjr_v5_daftarkan_sitemap_arsip( $wp_sitemaps ) {
 // eksplisit: "Additional sitemaps should be registered on this hook."
 // Percobaan dengan add_action('init', ..., 20) tidak pernah muncul di indeks.
 add_action( 'wp_sitemaps_init', 'tjr_v5_daftarkan_sitemap_arsip' );
+
+/**
+ * Buang sitemap penulis.
+ *
+ * `wp-sitemap-users-1.xml` mendaftarkan halaman arsip penulis. Di situs ini
+ * penulisnya satu orang dan arsip itu tidak pernah ditautkan dari mana pun,
+ * isinya pun mengulang daftar acara. Halaman tipis seperti itu tidak menambah
+ * apa-apa di indeks dan cuma memakai jatah crawl.
+ *
+ * @param array $penyedia Daftar penyedia sitemap bawaan.
+ * @return array
+ */
+function tjr_v5_buang_sitemap_penulis( $penyedia ) {
+	unset( $penyedia['users'] );
+
+	return $penyedia;
+}
+add_filter( 'wp_sitemaps_add_provider', 'tjr_v5_sitemap_tanpa_penulis', 10, 2 );
+
+/**
+ * Versi per-penyedia dari fungsi di atas.
+ *
+ * WordPress memanggil filter ini sekali untuk TIAP penyedia, jadi cara
+ * membuangnya adalah mengembalikan false untuk yang tidak diinginkan.
+ *
+ * @param WP_Sitemaps_Provider $provider Penyedia yang sedang didaftarkan.
+ * @param string               $nama     Namanya.
+ * @return WP_Sitemaps_Provider|false
+ */
+function tjr_v5_sitemap_tanpa_penulis( $provider, $nama ) {
+	if ( 'users' === $nama ) {
+		return false;
+	}
+
+	return $provider;
+}
