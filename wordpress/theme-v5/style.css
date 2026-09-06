@@ -350,16 +350,28 @@ header.wp-block-template-part{
   }
   .bar .wp-block-navigation__responsive-container.is-menu-open a::after{content:none}
 
-  /* Di layar sentuh tidak ada kursor yang menggantung, jadi cincin fokus baru
-     muncul sesudah tautannya diketuk, dan karena tautannya selebar baris
-     cincinnya terbaca sebagai kotak yang tertinggal di sekeliling satu kata.
-     Yang dipakai cuma warna teksnya. Keyboard di layar besar tetap dapat
-     cincinnya seperti biasa. */
+  /* Tautan menu selebar baris, jadi cincin fokus di sekelilingnya terbaca
+     sebagai kotak membulat yang tertinggal, bukan sebagai penanda fokus.
+     Yang memunculkannya bukan pengguna: begitu panel dibuka, focus trap blok
+     Navigation langsung memindahkan fokus ke item PERTAMA, jadi kotaknya
+     muncul di 'Tentang' tanpa ada yang menyentuhnya.
+
+     Percobaan sebelumnya menaruh peredam ini di dalam
+     @media(hover:none),(pointer:coarse), jadi tidak pernah kena pengguna mouse.
+     Bukan kalah spesifisitas, kalah CAKUPAN. Sekarang :focus telanjang diredam
+     di semua perangkat, dan cincinnya dikembalikan khusus untuk :focus-visible
+     supaya navigasi keyboard tetap punya penanda yang terlihat (WCAG 2.4.7).
+     Gayanya disamakan dengan :focus-visible global di bagian 1. */
+  .bar .wp-block-navigation__responsive-container.is-menu-open a:focus{
+    outline:none;
+  }
+  .bar .wp-block-navigation__responsive-container.is-menu-open a:focus-visible{
+    outline:2px solid var(--wp--preset--color--burgundy);
+    outline-offset:3px;border-radius:4px;
+  }
+  /* Di layar sentuh tidak ada kursor yang menggantung, jadi sesudah diketuk
+     yang tertinggal cuma warna teksnya. */
   @media(hover:none),(pointer:coarse){
-    .bar .wp-block-navigation__responsive-container.is-menu-open a:focus,
-    .bar .wp-block-navigation__responsive-container.is-menu-open a:focus-visible{
-      outline:none;
-    }
     .bar .wp-block-navigation__responsive-container.is-menu-open a:focus,
     .bar .wp-block-navigation__responsive-container.is-menu-open a:active{
       color:var(--wp--preset--color--burgundy);
