@@ -35,6 +35,9 @@ if ( $tjr_sesi ) {
 	$tjr_s_tpt  = tjr_v5_tempat_acara( $tjr_sid );
 	$tjr_kursi  = tjr_v5_kursi_acara( $tjr_sid );
 	$tjr_s_krs  = $tjr_kursi ? $tjr_kursi['terisi'] . ' dari ' . $tjr_kursi['kapasitas'] . ' kursi terisi' : '';
+	// Memakai fungsi yang sama dengan kartu jadwal dan halaman acara, jadi
+	// penjagaannya ikut: cuma dirender kalau harga lebih dari nol.
+	$tjr_s_hrg  = tjr_v5_harga_acara( $tjr_sid );
 }
 ?>
 <!-- wp:group {"tagName":"section","className":"hero","layout":{"type":"default"}} -->
@@ -98,6 +101,9 @@ if ( $tjr_sesi ) {
 <?php endif; ?>
 <?php if ( $tjr_s_tpt ) : ?>
 <!-- wp:paragraph {"className":"ik-pin"} --><p class="ik-pin"><?php echo $tjr_s_tpt; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p><!-- /wp:paragraph -->
+<?php endif; ?>
+<?php if ( $tjr_s_hrg ) : ?>
+<!-- wp:paragraph {"className":"ik-tag"} --><p class="ik-tag"><?php echo $tjr_s_hrg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p><!-- /wp:paragraph -->
 <?php endif; ?>
 <?php if ( $tjr_s_krs ) : ?>
 <!-- wp:paragraph {"className":"ik-orang"} --><p class="ik-orang"><?php echo esc_html( $tjr_s_krs ); ?></p><!-- /wp:paragraph -->
