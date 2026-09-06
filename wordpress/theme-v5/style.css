@@ -1171,9 +1171,27 @@ footer.wp-block-template-part{
   letter-spacing:.2em;text-transform:uppercase;
   color:var(--wp--preset--color--tinta-samar);
 }
+/* Selectornya WAJIB sepasang, sama persis dengan aturan dasar di atas.
+   Aturan dasar menyebut `footer.wp-block-template-part` yang berbobot satu
+   elemen plus satu kelas, sementara `.kaki` sendirian cuma satu kelas. Media
+   query TIDAK menambah spesifisitas, jadi selama ditulis `.kaki` saja aturan
+   ini kalah di semua lebar dan kakinya tetap empat kolom di ponsel. Kolom
+   isinya cuma sekitar 49px, jadi hampir tiap tautan pecah dua baris. */
 @media(max-width:900px){
-  .kaki{grid-template-columns:1fr 1fr;gap:var(--wp--preset--spacing--jarak-3)}
+  .kaki,
+  footer.wp-block-template-part{
+    grid-template-columns:1fr 1fr;gap:var(--wp--preset--spacing--jarak-3);
+  }
   .kaki > *:first-child{grid-column:1/-1}
+}
+/* Tautan terpanjang, 'Mantrijeron, Yogyakarta', butuh 190px untuk satu baris,
+   dan 'Chat ke 0857 2022 5369' butuh 165. Dua kolom baru sanggup memuat 190
+   mulai sekitar 452px lebar layar, jadi di bawah 480 dua kolom PASTI memecah
+   baris berapa pun gap-nya. Di situ satu kolom yang jujur. Angkanya diukur,
+   bukan diambil dari clamp. */
+@media(max-width:480px){
+  .kaki,
+  footer.wp-block-template-part{grid-template-columns:1fr}
 }
 
 /* ===== 17. Tombol WhatsApp mengambang ===== */
