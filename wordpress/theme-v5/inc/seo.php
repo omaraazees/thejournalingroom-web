@@ -999,8 +999,8 @@ add_action( 'wp_head', 'tjr_v5_seo_head', 2 );
  * Hasilnya muncul sebagai wp-sitemap-arsip-acara-1.xml dan ikut terdaftar di
  * wp-sitemap.xml.
  */
-function tjr_v5_daftarkan_sitemap_arsip() {
-	if ( ! class_exists( 'WP_Sitemaps_Provider' ) || ! function_exists( 'wp_sitemaps_register_provider' ) ) {
+function tjr_v5_daftarkan_sitemap_arsip( $wp_sitemaps ) {
+	if ( ! class_exists( 'WP_Sitemaps_Provider' ) ) {
 		return;
 	}
 
@@ -1050,6 +1050,11 @@ function tjr_v5_daftarkan_sitemap_arsip() {
 		}
 	}
 
-	wp_sitemaps_register_provider( 'arsip-acara', new TJR_V5_Sitemap_Arsip() );
+	// Dipasang lewat objek yang dioper hook-nya, bukan wp_sitemaps_get_server(),
+	// karena kita SEDANG berada di dalam inisialisasi server itu.
+	$wp_sitemaps->registry->add_provider( 'arsip-acara', new TJR_V5_Sitemap_Arsip() );
 }
-add_action( 'init', 'tjr_v5_daftarkan_sitemap_arsip', 20 );
+// HARUS wp_sitemaps_init, bukan init. Dokumentasi WordPress menyebutnya
+// eksplisit: "Additional sitemaps should be registered on this hook."
+// Percobaan dengan add_action('init', ..., 20) tidak pernah muncul di indeks.
+add_action( 'wp_sitemaps_init', 'tjr_v5_daftarkan_sitemap_arsip' );
