@@ -39,28 +39,61 @@
 
 <!-- wp:group {"className":"fakta","layout":{"type":"default"}} -->
 <div class="wp-block-group fakta">
+
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
 <!-- wp:paragraph {"className":"dt ik-kalender"} --><p class="dt ik-kalender">Tanggal</p><!-- /wp:paragraph -->
 <!-- wp:post-date {"format":"l, j F Y","className":"dd","isLink":false} /-->
 </div>
 <!-- /wp:group -->
+
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
-<!-- wp:paragraph {"className":"dt ik-pin"} --><p class="dt ik-pin">Kota</p><!-- /wp:paragraph -->
-<!-- wp:post-terms {"term":"kota","className":"dd"} /-->
+<!-- wp:paragraph {"className":"dt ik-jam"} --><p class="dt ik-jam">Waktu</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"dd dd-waktu"} --><p class="dd dd-waktu">15.00 sampai 18.00 WIB</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
+
+<!-- wp:group {"layout":{"type":"default"}} -->
+<div class="wp-block-group">
+<!-- wp:paragraph {"className":"dt ik-pin"} --><p class="dt ik-pin">Tempat</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"dd dd-tempat"} --><p class="dd dd-tempat">Belum diisi</p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"layout":{"type":"default"}} -->
+<div class="wp-block-group">
+<!-- wp:paragraph {"className":"dt ik-orang"} --><p class="dt ik-orang">Format</p><!-- /wp:paragraph -->
+<!-- wp:post-terms {"term":"format-acara","className":"dd"} /-->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"layout":{"type":"default"}} -->
+<div class="wp-block-group">
+<!-- wp:paragraph {"className":"dt ik-kotak"} --><p class="dt ik-kotak">Yang disediakan</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"dd dd-kit"} --><p class="dd dd-kit">Belum diisi</p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"layout":{"type":"default"}} -->
+<div class="wp-block-group">
+<!-- wp:paragraph {"className":"dt ik-tas"} --><p class="dt ik-tas">Yang perlu dibawa</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"dd dd-bawa"} --><p class="dd dd-bawa">Tidak ada. Jurnal sendiri boleh dibawa kalau ingin</p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
 </div>
 <!-- /wp:group -->
 
 <!-- wp:html -->
-<div class="acara-acf-slot" data-catatan="Diisi lane CMS: venue plus link Maps, harga, catatan harga, kapasitas, slot terisi, isi kit, dan bar sisa slot dari tjr_bar_slot()."></div>
+<div class="slot" role="img" aria-label="Sisa kursi"><i style="--p:0%"></i></div>
 <!-- /wp:html -->
+
+<!-- wp:paragraph {"className":"slot-catatan dd-kursi"} --><p class="slot-catatan dd-kursi">Kursi belum diatur</p><!-- /wp:paragraph -->
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
-<!-- wp:button {"className":"is-style-pil-isi"} --><div class="wp-block-button is-style-pil-isi"><a class="wp-block-button__link wp-element-button" href="https://wa.me/6285720225369?text=Halo%2C%20kakmin%20TJR%2C%20aku%20mau%20daftar%20journaling%20workshop%2C%20dong%21%20%2A%5C%28%5Eo%5E%29%2F%2A%20%3C3" target="_blank" rel="noopener" aria-label="Tanyakan slotnya ke kami lewat WhatsApp">Tanyakan slotnya ke kami</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-pil-isi wa-slot"} --><div class="wp-block-button is-style-pil-isi wa-slot"><a class="wp-block-button__link wp-element-button" href="https://wa.me/6285720225369" target="_blank" rel="noopener" aria-label="Tanyakan slotnya ke kami lewat WhatsApp">Tanyakan slotnya ke kami</a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
 

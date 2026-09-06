@@ -669,7 +669,7 @@ header.wp-block-template-part{
 .kartu-judul a::after{content:"";position:absolute;inset:0;z-index:4}
 
 .kaki-kartu{
-  position:absolute;left:0;right:0;bottom:0;z-index:3;padding:16px 20px;
+  position:absolute;left:0;right:0;bottom:0;z-index:3;padding:20px 20px 24px;
   background:var(--wp--preset--color--zaitun);
   color:var(--wp--preset--color--kertas-redup);
   transition:background .45s;
@@ -688,10 +688,18 @@ header.wp-block-template-part{
   color:var(--wp--preset--color--kertas-redup);
 }
 .kaki-kartu .lbl::before,.kaki-kartu .mini::before{width:12px;height:12px;opacity:.85}
-.kaki-kartu p{font-size:12.5px;line-height:1.55;margin-top:4px;color:var(--wp--preset--color--kertas-redup)}
+.kaki-kartu p{
+  font-size:12.5px;line-height:1.6;margin-top:8px;
+  color:var(--wp--preset--color--kertas-redup);
+}
+/* Baris kota berdiri sendiri di bawah ringkasan, bukan menempel di ekornya.
+   Jaraknya dinaikkan dan diberi garis tipis supaya terbaca sebagai keterangan
+   terpisah, bukan lanjutan kalimat. */
 .kaki-kartu .mini{
   display:flex;align-items:center;gap:8px;
-  font-size:11px;line-height:1.5;margin-top:8px;letter-spacing:.01em;
+  font-size:11px;line-height:1.5;letter-spacing:.01em;
+  margin-top:16px;padding-top:12px;
+  border-top:1px solid rgb(251 247 240 / .18);
 }
 
 /* ===== 10. Sesi terdekat, kartu besar ===== */

@@ -495,11 +495,34 @@ function tjr_v5_kursi_acara( $id ) {
 function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 	$nama = isset( $parsed['blockName'] ) ? $parsed['blockName'] : '';
 
+	if ( 'core/button' === $nama ) {
+		// Tombol bertanda wa-slot memakai nomor dan pesan tanya slot yang berlaku,
+		// bukan alamat yang diketik di template.
+		$kelas = isset( $parsed['attrs']['className'] ) ? $parsed['attrs']['className'] : '';
+
+		if ( false === strpos( $kelas, 'wa-slot' ) ) {
+			return $konten;
+		}
+
+		return preg_replace(
+			'#(<a\b[^>]*\bhref=")[^"]*(")#',
+			'${1}' . esc_url( tjr_v5_link_wa_slot() ) . '${2}',
+			$konten,
+			1
+		);
+	}
+
 	if ( 'core/paragraph' !== $nama && 'core/html' !== $nama ) {
 		return $konten;
 	}
 
 	$id = ( $blok && isset( $blok->context['postId'] ) ) ? (int) $blok->context['postId'] : 0;
+
+	// Di template halaman tunggal konteksnya kadang tidak diteruskan, jadi
+	// dipakai postingan yang sedang ditampilkan.
+	if ( ! $id && is_singular( 'acara' ) ) {
+		$id = (int) get_the_ID();
+	}
 
 	if ( ! $id || 'acara' !== get_post_type( $id ) ) {
 		return $konten;
@@ -571,7 +594,7 @@ function tjr_v5_konteks_post_id( $metadata ) {
 		return $metadata;
 	}
 
-	if ( ! in_array( $metadata['name'], array( 'core/paragraph', 'core/html' ), true ) ) {
+	if ( ! in_array( $metadata['name'], array( 'core/paragraph', 'core/html', 'core/button' ), true ) ) {
 		return $metadata;
 	}
 
@@ -626,7 +649,13 @@ function tjr_v5_acara_terdekat() {
 
 
 /**
- * Panel Catatan sesi: Yang disediakan dan Yang perlu dibawa.
+ * Panel Judul dan catatan sesi.
+ *
+ * Judul acara sengaja disediakan sebagai kolom biasa, karena kotak judul besar
+ * di kanvas tidak terbaca sebagai kolom isian oleh yang bukan orang teknis.
+ * Nilainya disinkronkan dua arah dengan judul postingan: waktu layar dibuka
+ * kolomnya diisi dari judul, waktu disimpan judulnya ikut kolom. Jadi tidak ada
+ * dua sumber kebenaran, dan tautan serta alamat halaman tetap benar.
  *
  * Dua baris di kartu sesi yang tidak punya tempat di grup Detail Acara. Yang
  * disediakan sebenarnya sudah ada sebagai daftar centang di sana, tapi kolom
@@ -646,8 +675,17 @@ function tjr_v5_daftar_catatan_sesi() {
 	acf_add_local_field_group(
 		array(
 			'key'                   => 'group_tjr_catatan_sesi',
-			'title'                 => 'Catatan sesi',
+			'title'                 => 'Judul dan catatan sesi',
 			'fields'                => array(
+				array(
+					'key'          => 'field_tjr_judul_acara',
+					'label'        => 'Judul acara',
+					'name'         => 'judul_acara',
+					'type'         => 'text',
+					'instructions' => 'Nama sesinya. Ini yang tampil sebagai judul di kartu sesi, di arsip, dan di halaman acara. Sama dengan judul di kotak besar atas, cukup diisi salah satu.',
+					'placeholder'  => 'Tracing Shadows, Mapping Stars',
+					'required'     => 0,
+				),
 				array(
 					'key'          => 'field_tjr_disediakan_teks',
 					'label'        => 'Yang disediakan',
@@ -684,3 +722,93 @@ function tjr_v5_daftar_catatan_sesi() {
 	);
 }
 add_action( 'acf/init', 'tjr_v5_daftar_catatan_sesi' );
+
+
+/**
+ * Isi kolom Judul acara dari judul postingan waktu layar edit dibuka.
+ *
+ * @param mixed $nilai Nilai tersimpan.
+ * @param int   $id    ID post.
+ * @return mixed
+ */
+function tjr_v5_muat_judul_acara( $nilai, $id ) {
+	if ( is_numeric( $id ) && 'acara' === get_post_type( $id ) ) {
+		$judul = get_the_title( $id );
+
+		if ( '' !== $judul ) {
+			return $judul;
+		}
+	}
+
+	return $nilai;
+}
+add_filter( 'acf/load_value/key=field_tjr_judul_acara', 'tjr_v5_muat_judul_acara', 10, 2 );
+
+/**
+ * Simpan kolom Judul acara balik ke judul postingan.
+ *
+ * Judul postingan tetap sumber kebenaran, karena dia yang dipakai tautan,
+ * alamat halaman, dan daftar di dasbor. Kolom cuma pintu masuknya.
+ *
+ * @param int|string $id ID post.
+ */
+function tjr_v5_simpan_judul_acara( $id ) {
+	if ( ! is_numeric( $id ) || 'acara' !== get_post_type( $id ) ) {
+		return;
+	}
+
+	$baru = isset( $_POST['acf']['field_tjr_judul_acara'] )
+		? sanitize_text_field( wp_unslash( $_POST['acf']['field_tjr_judul_acara'] ) )
+		: '';
+
+	if ( '' === $baru || $baru === get_the_title( $id ) ) {
+		return;
+	}
+
+	// Nilainya tidak perlu disimpan sebagai meta, judul postingan yang dipakai.
+	delete_post_meta( $id, 'judul_acara' );
+
+	$ubah = array(
+		'ID'         => (int) $id,
+		'post_title' => $baru,
+	);
+
+	// Kotak judul di kanvas sudah tidak ada, jadi acara baru lahir tanpa judul
+	// dan slug-nya jatuh ke angka ID. Begitu judulnya diisi, slug ikut dibuatkan.
+	// Slug yang sudah rapi tidak pernah diganggu, supaya tautan lama tidak putus.
+	$slug = get_post_field( 'post_name', $id );
+
+	if ( '' === $slug || ctype_digit( (string) $slug ) ) {
+		$ubah['post_name'] = sanitize_title( $baru );
+	}
+
+	remove_action( 'acf/save_post', 'tjr_v5_simpan_judul_acara', 20 );
+	wp_update_post( $ubah );
+	add_action( 'acf/save_post', 'tjr_v5_simpan_judul_acara', 20 );
+}
+add_action( 'acf/save_post', 'tjr_v5_simpan_judul_acara', 20 );
+
+
+/**
+ * Sembunyikan kotak judul besar di kanvas editor Acara.
+ *
+ * Judulnya diisi lewat kolom Judul acara di panel, jadi kotak di kanvas cuma
+ * jadi tempat kedua yang membingungkan. Disembunyikan lewat CSS, bukan dengan
+ * mencabut dukungan title, supaya WordPress tetap tahu judulnya: slug terbentuk
+ * sendiri dan bar atas editor tidak berbunyi No title.
+ */
+function tjr_v5_sembunyikan_judul_kanvas() {
+	$layar = get_current_screen();
+
+	if ( ! $layar || 'acara' !== $layar->post_type || 'post' !== $layar->base ) {
+		return;
+	}
+
+	$css = '.edit-post-visual-editor__post-title-wrapper,'
+		. '.editor-visual-editor__post-title-wrapper{display:none}';
+
+	wp_register_style( 'tjr-v5-editor-acara', false, array(), TJR_V5_VERSION );
+	wp_enqueue_style( 'tjr-v5-editor-acara' );
+	wp_add_inline_style( 'tjr-v5-editor-acara', $css );
+}
+add_action( 'admin_enqueue_scripts', 'tjr_v5_sembunyikan_judul_kanvas' );

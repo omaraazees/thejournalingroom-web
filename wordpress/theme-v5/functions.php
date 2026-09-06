@@ -432,6 +432,10 @@ function tjr_v5_register_acara() {
 			'show_in_rest'     => true,
 			'menu_position'    => 5,
 			'menu_icon'        => 'dashicons-calendar-alt',
+			// 'title' tetap didukung supaya WordPress tahu judulnya, slug terbentuk
+			// sendiri, dan bar atas editor tidak berbunyi No title. Kotak judul di
+			// kanvas disembunyikan lewat CSS di tjr_v5_sembunyikan_judul_kanvas(),
+			// karena pengisiannya sudah pindah ke kolom Judul acara di panel.
 			'supports'         => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'custom-fields' ),
 			'has_archive'      => 'jadwal',
 			'rewrite'          => array(
