@@ -569,9 +569,11 @@ function tjr_v5_seo_rentang_harga() {
  *    dulu, kalau QRIS belum ada hapus dari daftar", dan konfirmasinya belum ada.
  * 4. `priceRange` dihitung dari harga acara, bukan ditulis mati.
  *
- * Node Event sengaja tidak ada di sini. Datanya belum lengkap: sebagian besar
- * acara belum punya alamat venue dan gambar utama, dan schema Event tanpa itu
- * ditolak.
+ * Node Event acara yang sedang dibuka disisipkan di bawah, lewat
+ * tjr_v5_seo_event_acara(). Cuma acara yang sedang dilihat yang disisipkan,
+ * bukan seluruh acara sekaligus, karena blok ini dicetak di SETIAP halaman
+ * dan mengambil semua acara di sini akan memboroskan query di halaman yang
+ * tidak sedang menampilkan acara.
  *
  * @return array
  */
@@ -694,10 +696,211 @@ function tjr_v5_seo_graf() {
 		$bisnis['priceRange'] = $rentang;
 	}
 
+	$graf = array( $organisasi, $bisnis );
+
+	if ( is_singular( 'acara' ) ) {
+		$event = tjr_v5_seo_event_acara( get_queried_object_id(), $situs );
+
+		if ( null !== $event ) {
+			$graf[] = $event;
+		}
+	}
+
 	return array(
 		'@context' => 'https://schema.org',
-		'@graph'   => array( $organisasi, $bisnis ),
+		'@graph'   => $graf,
 	);
+}
+
+
+/* =====================================================================
+ * 6.5. JSON-LD Event, untuk halaman detail acara
+ * ===================================================================== */
+
+/**
+ * Pecah venue_alamat jadi PostalAddress: streetAddress, addressLocality,
+ * postalCode, addressRegion, addressCountry.
+ *
+ * venue_alamat ditulis bebas sebagai satu baris teks (lihat field ACF-nya),
+ * jadi tidak ada batas yang pasti antara jalan dan kota. Heuristik yang
+ * dipakai: alamat Indonesia pada umumnya menutup dengan "<kota> <kode pos>"
+ * sebagai segmen terakhir setelah koma, jadi segmen TERAKHIR itu yang
+ * dianggap kota + kode pos, dan SEMUA segmen sebelumnya (termasuk
+ * kecamatan, kalau ditulis) digabung jadi streetAddress apa adanya.
+ *
+ * Kecamatan sengaja tidak dipisah ke field sendiri: schema.org PostalAddress
+ * tidak punya properti untuk itu, dan memaksanya jadi addressLocality akan
+ * salah (addressLocality semestinya nama kota, bukan kecamatan). Contoh:
+ * "Gg. Melati, Jl. Ngadinegaran MJ 3 No. 99, Mantrijeron, Yogyakarta 55143"
+ * jadi streetAddress "Gg. Melati, Jl. Ngadinegaran MJ 3 No. 99, Mantrijeron"
+ * dan addressLocality "Yogyakarta". Alamat yang formatnya beda (tidak
+ * berakhir "<kota> <kode pos>", atau tidak ada koma sama sekali) akan
+ * meleset, dan kalau itu terjadi baris ini yang perlu ditulis ulang, bukan
+ * ditambal lagi jadi tebakan berlapis.
+ *
+ * @param string $alamat Isi field venue_alamat, boleh kosong.
+ * @return array|null Null kalau alamatnya kosong.
+ */
+function tjr_v5_seo_alamat_acara( $alamat ) {
+	$alamat = trim( (string) $alamat );
+
+	if ( '' === $alamat ) {
+		return null;
+	}
+
+	$bagian = array_map( 'trim', explode( ',', $alamat ) );
+
+	// Tidak ada koma sama sekali: tidak ada batas yang bisa diandalkan, jadi
+	// seluruh alamat dipakai sebagai streetAddress, TANPA menebak kotanya.
+	if ( count( $bagian ) < 2 ) {
+		return array(
+			'@type'          => 'PostalAddress',
+			'streetAddress'  => $alamat,
+			'addressRegion'  => 'DI Yogyakarta',
+			'addressCountry' => 'ID',
+		);
+	}
+
+	$akhir    = array_pop( $bagian );
+	$kode_pos = '';
+
+	if ( preg_match( '/^(.*?)\s+(\d{5})$/', $akhir, $cocok ) ) {
+		$akhir    = trim( $cocok[1] );
+		$kode_pos = $cocok[2];
+	}
+
+	$pos = array(
+		'@type'           => 'PostalAddress',
+		'streetAddress'   => implode( ', ', $bagian ),
+		'addressLocality' => $akhir,
+		'addressRegion'   => 'DI Yogyakarta',
+		'addressCountry'  => 'ID',
+	);
+
+	if ( '' !== $kode_pos ) {
+		$pos['postalCode'] = $kode_pos;
+	}
+
+	return $pos;
+}
+
+/**
+ * Node Event schema.org untuk satu acara.
+ *
+ * Field wajib Google untuk Event: name, startDate, location. Tanpa salah
+ * satu, fungsi ini mengembalikan null dan tjr_v5_seo_graf() tidak menyisipkan
+ * apa-apa, daripada mengirim Event setengah jadi yang ditolak validator.
+ *
+ * Field acara yang lain semuanya OPSIONAL di sini dengan sengaja:
+ * - catatan_harga: tidak dipetakan ke Event sama sekali (itu modifier tampilan
+ *   harga di kartu, bukan bagian dari Offer).
+ * - slot_terisi: kalau kosong dianggap 0 oleh tjr_v5_kursi_acara(), jadi
+ *   availability jatuh ke InStock, bukan bikin fungsi ini gagal.
+ * - disediakan_teks: tidak relevan untuk Event, dilewati.
+ * - venue_alamat, venue_maps, featured_media, durasi_jam, harga: masing-masing
+ *   boleh kosong, dan kalau kosong properti terkaitnya (address, hasMap,
+ *   image, endDate, offers) di bawah cuma tidak ikut ditulis.
+ *
+ * endDate dihitung dari tanggal_mulai + durasi_jam di wp_timezone(), BUKAN
+ * UTC. Pola sama seperti tjr_v5_jam_acara() dan tjr_v5_acara_lewat() di
+ * inc/isi-beranda.php: tanggal_mulai tersimpan sebagai waktu lokal tanpa
+ * zona, jadi DateTimeImmutable dibuat dengan wp_timezone() secara eksplisit.
+ *
+ * @param int    $id    ID acara.
+ * @param string $situs home_url( '/' ), diteruskan supaya tidak dihitung ulang.
+ * @return array|null
+ */
+function tjr_v5_seo_event_acara( $id, $situs ) {
+	$nama  = get_the_title( $id );
+	$mulai = trim( (string) get_post_meta( $id, TJR_FIELD_MULAI, true ) );
+	$venue = trim( (string) get_post_meta( $id, 'venue_nama', true ) );
+
+	if ( '' === $nama || '' === $mulai || '' === $venue ) {
+		return null;
+	}
+
+	try {
+		$waktu_mulai = new DateTimeImmutable( $mulai, wp_timezone() );
+	} catch ( Exception $e ) {
+		return null;
+	}
+
+	$tautan = (string) get_permalink( $id );
+
+	$event = array(
+		'@type'               => 'Event',
+		'@id'                 => $tautan . '#acara',
+		'name'                => $nama,
+		'startDate'           => $waktu_mulai->format( 'c' ),
+		'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
+		'eventStatus'         => 'https://schema.org/EventScheduled',
+		'url'                 => $tautan,
+	);
+
+	$deskripsi = tjr_v5_seo_deskripsi_acara( $id );
+
+	if ( '' !== $deskripsi ) {
+		$event['description'] = $deskripsi;
+	}
+
+	$durasi = (float) get_post_meta( $id, 'durasi_jam', true );
+
+	if ( $durasi > 0 ) {
+		$event['endDate'] = $waktu_mulai
+			->modify( '+' . (int) round( $durasi * HOUR_IN_SECONDS ) . ' seconds' )
+			->format( 'c' );
+	}
+
+	$gambar = get_the_post_thumbnail_url( $id, 'full' );
+
+	if ( $gambar ) {
+		$event['image'] = array( $gambar );
+	}
+
+	$lokasi = array(
+		'@type' => 'Place',
+		'name'  => $venue,
+	);
+
+	$alamat = tjr_v5_seo_alamat_acara( get_post_meta( $id, 'venue_alamat', true ) );
+
+	if ( null !== $alamat ) {
+		$lokasi['address'] = $alamat;
+	}
+
+	$peta = trim( (string) get_post_meta( $id, 'venue_maps', true ) );
+
+	if ( '' !== $peta ) {
+		$lokasi['hasMap'] = $peta;
+	}
+
+	$event['location'] = $lokasi;
+
+	$harga = (int) get_post_meta( $id, 'harga', true );
+
+	// Harga nol berarti belum diisi (lihat tjr_v5_harga_acara di
+	// inc/isi-beranda.php), bukan gratis, jadi offers dilewati semua daripada
+	// mengirim price 0.
+	if ( $harga > 0 ) {
+		$kursi        = tjr_v5_kursi_acara( $id );
+		$penuh        = $kursi && 0 === ( $kursi['kapasitas'] - $kursi['terisi'] );
+		$ketersediaan = $penuh ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock';
+
+		$event['offers'] = array(
+			'@type'         => 'Offer',
+			'price'         => (string) $harga,
+			'priceCurrency' => 'IDR',
+			'availability'  => $ketersediaan,
+			'url'           => $tautan,
+		);
+	}
+
+	// Organizer dirujuk lewat @id ke node Organization yang sudah ada di
+	// @graph yang sama, pola yang sama seperti logo dan contactPoint di atas.
+	// Tidak menulis ulang name/url Organization di sini.
+	$event['organizer'] = array( '@id' => $situs . '#organisasi' );
+
+	return $event;
 }
 
 
