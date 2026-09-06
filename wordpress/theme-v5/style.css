@@ -451,7 +451,7 @@ header.wp-block-template-part{
 .hero-aksi .wp-block-button{margin:0}
 .hero-judul{text-align:right}
 .hero-judul .lbl{text-align:right;margin-bottom:16px}
-.hero h1,.hero .d-xxl{text-align:right;max-width:16ch;margin-left:auto}
+.hero-judul h1,.hero-judul .d-xxl{text-align:right;max-width:16ch;margin-left:auto}
 /* Susunan dua kolom cuma masuk akal kalau pil dan judul benar benar
    berdampingan. Di bawah 1280px judulnya sudah memakan satu baris penuh, jadi
    semuanya dirata kiri. Perhatikan flex:0 0 auto pada hero-judul: di mode
@@ -463,11 +463,11 @@ header.wp-block-template-part{
   }
   .hero-judul{flex:0 0 auto;width:100%;text-align:left}
   .hero-judul .lbl{text-align:left}
-  .hero h1,.hero .d-xxl{text-align:left;margin-left:0;max-width:22ch}
+  .hero-judul h1,.hero-judul .d-xxl{text-align:left;margin-left:0;max-width:22ch}
   .hero-aksi{padding-bottom:0}
 }
 @media(max-width:560px){
-  .hero h1,.hero .d-xxl{max-width:none}
+  .hero-judul h1,.hero-judul .d-xxl{max-width:none}
 }
 /* Di layar lebar jarak besar antara bar dan judul itu ruang bernapas. Di layar
    sempit jadi lubang: bar dan judul sama sama rata kiri dan selebar layar,
@@ -717,6 +717,15 @@ header.wp-block-template-part{
   text-align:center;flex-direction:column;align-items:center;gap:12px;
 }
 .kepala-tengah .lead{margin-inline:auto;text-align:center;max-width:46ch}
+
+/* Kembaran .kepala-tengah untuk halaman yang isinya daftar rata kiri, misalnya
+   arsip. Judul yang ditengahkan atau dikanankan mengambang lepas dari baris
+   daftar di bawahnya; rata kiri menyatukan tepi kirinya jadi satu garis. */
+.kepala-kiri{
+  text-align:left;flex-direction:column;align-items:flex-start;gap:12px;
+}
+.kepala-kiri .lead{margin-inline:0;text-align:left;max-width:52ch}
+.kepala-kiri h1,.kepala-kiri .d{text-align:left;margin-left:0;max-width:20ch}
 
 .seksi{margin-top:var(--wp--preset--spacing--jarak-7)}
 @media(max-width:900px){.seksi{margin-top:var(--wp--preset--spacing--jarak-6)}}
