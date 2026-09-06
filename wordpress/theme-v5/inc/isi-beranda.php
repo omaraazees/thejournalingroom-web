@@ -120,7 +120,7 @@ function tjr_v5_bawaan_teks( $nama = '' ) {
 function tjr_v5_bawaan_foto( $nama = '' ) {
 	$peta = array(
 		/* Hero */
-		'hero_foto'         => array( 'snapobox-11.jpg', 'Peserta workshop The Journaling Room memegang jurnal masing masing di bawah lampion' ),
+		'hero_foto'         => array( 'radian-13.jpg', 'Fasilitator The Journaling Room memandu peserta menghias jurnal di pendopo Yogyakarta' ),
 		'hero_cetakan'      => array( 'sundayreads-27.jpg', '' ),
 
 		/* Pengantar */
