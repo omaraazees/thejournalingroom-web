@@ -1008,10 +1008,14 @@ function tjr_v5_sitemap_arsip_acara( $url_list, $post_type, $page_num ) {
 		return $url_list;
 	}
 
+	// Kalau rewrite-nya sedang tidak sehat, get_post_type_archive_link() bisa
+	// mengembalikan false. Slug arsipnya tetap 'jadwal' (has_archive di
+	// registrasi CPT), jadi dipakai sebagai cadangan supaya URL-nya tidak
+	// hilang diam-diam dari sitemap.
 	$arsip = get_post_type_archive_link( 'acara' );
 
 	if ( ! $arsip ) {
-		return $url_list;
+		$arsip = home_url( '/jadwal/' );
 	}
 
 	array_unshift( $url_list, array( 'loc' => $arsip ) );
