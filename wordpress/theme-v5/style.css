@@ -541,8 +541,15 @@ header.wp-block-template-part{
   .kartu-sesi::after{right:-8px;top:-12px}
 }
 
-/* Daftar baris berikon di dalam kartu sesi */
-.baris{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:16px}
+/* Daftar baris berikon di dalam kartu sesi.
+   Jaraknya ditulis lewat .kartu-sesi .baris, bukan .baris saja. WordPress
+   memasang sendiri margin-block-start untuk tiap anak langsung layout flow
+   lewat .wp-block-group.is-layout-flow > * yang berbobot dua kelas, jadi
+   .baris sendirian kalah dan margin 20px-nya dulu hilang tanpa jejak. */
+.baris{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+/* Judul acara ke baris fakta pertama diberi jeda lebih besar daripada jarak
+   antar baris, supaya judulnya kebaca sebagai kepala, bukan baris pertama. */
+.kartu-sesi .baris{margin-top:28px}
 .baris li,.baris > p{
   display:flex;align-items:center;gap:12px;margin:0;
   font-size:var(--wp--preset--font-size--kecil);line-height:1.4;
