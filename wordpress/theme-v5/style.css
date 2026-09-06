@@ -1113,27 +1113,41 @@ header.wp-block-template-part{
 /* ===== 14. Pita kolaborator ===== */
 
 .logos{
-  display:grid;grid-template-columns:repeat(6,1fr);gap:1px;
-  background:var(--wp--preset--color--garis);
+  display:flex;flex-wrap:wrap;justify-content:center;
+  background:var(--wp--preset--color--kertas);
   border:1px solid var(--wp--preset--color--garis);
   border-radius:var(--wp--custom--radius--besar);overflow:hidden;
 }
 .logos > *{
+  flex:0 0 calc(100% / 6);max-width:calc(100% / 6);
   background:var(--wp--preset--color--kertas);
   display:grid;place-items:center;min-height:120px;
   padding:var(--wp--preset--spacing--jarak-3) var(--wp--preset--spacing--jarak-2);
   transition:background .4s;margin:0;border-radius:0;
+  border-right:1px solid var(--wp--preset--color--garis);
+  border-bottom:1px solid var(--wp--preset--color--garis);
 }
+/* Baris terakhir dipusatkan oleh justify-content, jadi kolom terakhir per
+   baris bukan lagi kelipatan tetap dari jumlah total. Garis kanannya dibuang
+   di titik itu supaya tidak dobel dengan bingkai kontainer atau menggantung
+   sendirian di ruang kosong sisi kanan baris yang tidak penuh. */
+.logos > *:nth-child(6n),.logos > *:last-child{border-right:none}
 .logos > *:hover{background:var(--wp--preset--color--kertas-tua)}
 .logos img{
   max-width:120px;max-height:48px;width:auto;height:auto;object-fit:contain;
   opacity:.55;transition:opacity .45s;border-radius:0;
 }
 .logos > *:hover img{opacity:1}
-@media(max-width:1100px){.logos{grid-template-columns:repeat(4,1fr)}}
+/* Rentangnya SENGAJA eksklusif (min-width dipasang di tingkat menengah),
+   supaya tiap tingkat berdiri sendiri dan aturan nth-child-nya tidak
+   bertumpuk diam-diam dengan tingkat yang lain di lebar yang sama. */
+@media(max-width:1100px) and (min-width:641px){
+  .logos > *{flex-basis:25%;max-width:25%;border-right:1px solid var(--wp--preset--color--garis)}
+  .logos > *:nth-child(4n),.logos > *:last-child{border-right:none}
+}
 @media(max-width:640px){
-  .logos{grid-template-columns:repeat(2,1fr)}
-  .logos > *{min-height:98px}
+  .logos > *{flex-basis:50%;max-width:50%;min-height:98px;border-right:1px solid var(--wp--preset--color--garis)}
+  .logos > *:nth-child(2n),.logos > *:last-child{border-right:none}
 }
 
 /* ===== 15. Ajakan WhatsApp ===== */
