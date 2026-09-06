@@ -42,12 +42,6 @@ if ( $tjr_dari_cms ) {
 	}
 }
 
-// Logo TJR sendiri selalu jadi petak terakhir, dan tidak ikut dihitung.
-$tjr_petak[] = array(
-	'nama' => 'The Journaling Room',
-	'logo' => get_theme_file_uri( '/assets/img/tjr-mark.png' ),
-);
-
 ?>
 <!-- wp:group {"tagName":"section","className":"seksi","anchor":"kolaborator","layout":{"type":"default"}} -->
 <section class="wp-block-group seksi" id="kolaborator">
