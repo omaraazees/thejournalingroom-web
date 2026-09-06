@@ -983,43 +983,73 @@ add_action( 'wp_head', 'tjr_v5_seo_head', 2 );
  * ===================================================================== */
 
 /**
- * Masukkan /jadwal/ ke sitemap.
+ * Daftarkan /jadwal/ sebagai sitemap tersendiri.
  *
  * Sitemap bawaan WordPress cuma memuat post INDIVIDUAL sebuah custom post
- * type, tidak pernah halaman arsipnya. Akibatnya /jadwal/ tidak terdaftar di
- * mana pun: diperiksa lewat URL Inspection Search Console pada 2026-09-07,
- * halaman itu satu-satunya yang berstatus "URL is unknown to Google" dengan
- * "No referring sitemaps detected", sementara URL lain tercatat ditemukan
- * lewat wp-sitemap.xml.
+ * type, tidak pernah halaman arsipnya. Diperiksa lewat URL Inspection Search
+ * Console 2026-09-07: /jadwal/ satu-satunya URL berstatus "URL is unknown to
+ * Google" dengan "No referring sitemaps detected".
  *
- * Google masih bisa menemukannya lewat tautan internal "Semua jadwal", tapi
- * jalur itu lebih lambat dan bergantung pada halaman lain ikut ter-crawl.
+ * CATATAN PAHIT, jangan diulang: percobaan pertama memakai filter
+ * `wp_sitemaps_posts_url_list` dan tidak pernah jalan, karena filter itu TIDAK
+ * ADA di WordPress. Yang ada cuma `wp_sitemaps_posts_pre_url_list` (short
+ * circuit di awal) dan `wp_sitemaps_posts_entry` (per entri). Keduanya tidak
+ * cocok untuk menyisipkan satu URL tambahan, jadi dipakai provider sendiri.
  *
- * Disisipkan di depan halaman pertama saja supaya tidak berulang kalau
- * acaranya nanti banyak dan sitemap-nya terbagi beberapa halaman.
- *
- * @param array  $url_list  Daftar URL yang sudah dirakit inti.
- * @param string $post_type Tipe konten yang sedang dirender.
- * @param int    $page_num  Halaman sitemap ke berapa.
- * @return array
+ * Hasilnya muncul sebagai wp-sitemap-arsip-acara-1.xml dan ikut terdaftar di
+ * wp-sitemap.xml.
  */
-function tjr_v5_sitemap_arsip_acara( $url_list, $post_type, $page_num ) {
-	if ( 'acara' !== $post_type || 1 !== (int) $page_num ) {
-		return $url_list;
+function tjr_v5_daftarkan_sitemap_arsip() {
+	if ( ! class_exists( 'WP_Sitemaps_Provider' ) || ! function_exists( 'wp_sitemaps_register_provider' ) ) {
+		return;
 	}
 
-	// Kalau rewrite-nya sedang tidak sehat, get_post_type_archive_link() bisa
-	// mengembalikan false. Slug arsipnya tetap 'jadwal' (has_archive di
-	// registrasi CPT), jadi dipakai sebagai cadangan supaya URL-nya tidak
-	// hilang diam-diam dari sitemap.
-	$arsip = get_post_type_archive_link( 'acara' );
+	if ( ! class_exists( 'TJR_V5_Sitemap_Arsip' ) ) {
 
-	if ( ! $arsip ) {
-		$arsip = home_url( '/jadwal/' );
+		/**
+		 * Provider satu URL: halaman arsip acara.
+		 */
+		class TJR_V5_Sitemap_Arsip extends WP_Sitemaps_Provider {
+
+			/**
+			 * Konstruktor.
+			 */
+			public function __construct() {
+				$this->name        = 'arsip-acara';
+				$this->object_type = 'arsip-acara';
+			}
+
+			/**
+			 * Satu-satunya URL yang disajikan provider ini.
+			 *
+			 * @param int    $page_num       Halaman ke berapa.
+			 * @param string $object_subtype Tidak dipakai.
+			 * @return array
+			 */
+			public function get_url_list( $page_num, $object_subtype = '' ) {
+				$arsip = get_post_type_archive_link( 'acara' );
+
+				// Kalau rewrite sedang tidak sehat, fungsinya bisa false.
+				// Slug arsipnya tetap 'jadwal' dari has_archive.
+				if ( ! $arsip ) {
+					$arsip = home_url( '/jadwal/' );
+				}
+
+				return array( array( 'loc' => $arsip ) );
+			}
+
+			/**
+			 * Selalu satu halaman.
+			 *
+			 * @param string $object_subtype Tidak dipakai.
+			 * @return int
+			 */
+			public function get_max_num_pages( $object_subtype = '' ) {
+				return 1;
+			}
+		}
 	}
 
-	array_unshift( $url_list, array( 'loc' => $arsip ) );
-
-	return $url_list;
+	wp_sitemaps_register_provider( 'arsip-acara', new TJR_V5_Sitemap_Arsip() );
 }
-add_filter( 'wp_sitemaps_posts_url_list', 'tjr_v5_sitemap_arsip_acara', 10, 3 );
+add_action( 'init', 'tjr_v5_daftarkan_sitemap_arsip', 20 );
