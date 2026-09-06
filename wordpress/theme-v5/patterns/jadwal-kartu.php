@@ -51,7 +51,7 @@ if ( empty( $tjr_v5_ada_yang_lewat ) ) {
 <!-- /wp:group -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
-<!-- wp:button {"className":"is-style-pil"} --><div class="wp-block-button is-style-pil"><a class="wp-block-button__link wp-element-button" href="/jadwal/">Semua arsip</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-pil"} --><div class="wp-block-button is-style-pil"><a class="wp-block-button__link wp-element-button" href="/jadwal/">Semua jadwal</a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
 </div>
