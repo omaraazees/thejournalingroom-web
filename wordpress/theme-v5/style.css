@@ -963,19 +963,30 @@ header.wp-block-template-part{
   width:100%;border-radius:var(--wp--custom--radius--cetakan);
   aspect-ratio:1;object-fit:cover;
 }
-/* Caption cetakan dulu Pinyon Script, huruf tangan, dan ukurannya dinaikkan
-   sekitar satu setengah kali (17 dan 20) karena tinggi huruf kecil Pinyon
-   jauh di bawah Playfair. Manrope tidak butuh dongkrakan itu, jadi ukurannya
-   turun ke preset caption tema, mikro 12 dan kecil 13.
-   Angkanya diukur, bukan ditebak: di halaman live, dengan Manrope, kartu
-   selipan selebar 108 sampai 114 piksel mulai memotong "Artotel, Apr 2026"
-   pada 14, jadi 12 memberi ruang untuk nama yang lebih panjang nanti.
-   Kartu tumpukan selebar 148 piksel masih muat sampai 16, dipakai 13. */
+/* Caption cetakan dulu Pinyon Script, huruf tangan setinggi 17 dan 20, dan
+   dipatok bottom:8px. Bentuk itu punya dua cacat sekaligus: kotak teksnya
+   MENINDIH foto satu piksel, sementara di bawahnya tersisa 16 piksel kosong.
+   Diukur di halaman live, jarak dari tepi foto ke atas huruf 2,2 dan dari
+   dasar huruf ke tepi kartu 16,0. Itu yang bikin captionnya terbaca menempel
+   ke foto dan menggantung di ruang bawahnya.
+
+   Sekarang captionnya MENGISI pita putih di bawah foto, bukan ditempel dari
+   bawah. height sama dengan padding-bawah kartunya (28 di kartu selipan, 32 di
+   kartu tumpukan), dan line-height dibuat sama dengan height itu. Dengan satu
+   baris teks, half-leading membagi sisa ruangnya rata sendiri, jadi tidak ada
+   angka jarak yang perlu ditebak dan hasilnya ikut kalau ukuran hurufnya
+   berubah. Sengaja TIDAK memakai flex: dengan flex teksnya jadi item anonim
+   dan text-overflow:ellipsis berhenti bekerja. Blok biasa menjaga jaring
+   pengaman itu, dan hasilnya identik, sudah dibandingkan.
+
+   Ukuran huruf turun ke preset yang sudah ada: label 10 di kartu selipan,
+   mikro 12 di kartu tumpukan. Caption itu keterangan, bukan judul. */
 .cetakan figcaption,
 .cetakan .wp-element-caption{
-  position:absolute;left:8px;right:8px;bottom:8px;text-align:center;margin:0;
+  position:absolute;left:8px;right:8px;bottom:0;height:28px;
+  text-align:center;margin:0;
   font-family:var(--wp--preset--font-family--teks);font-style:normal;
-  font-size:var(--wp--preset--font-size--mikro);line-height:1.25;letter-spacing:.01em;
+  font-size:var(--wp--preset--font-size--label);line-height:28px;letter-spacing:.01em;
   color:var(--wp--preset--color--tinta-lembut);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
@@ -1000,10 +1011,13 @@ header.wp-block-template-part{
   width:var(--pw,clamp(104px,10.5vw,164px));
 }
 /* cetakan di tumpukan lebih lebar dari yang diselipkan, jadi captionnya naik
-   satu tingkat dan alasnya diberi ruang lebih */
+   satu tingkat dan alasnya diberi ruang lebih. height dan line-height WAJIB
+   ikut padding-bawah di baris atasnya, keduanya 32. */
 .tumpukan .cetakan{padding:8px 8px 32px}
 .tumpukan .cetakan figcaption,
-.tumpukan .cetakan .wp-element-caption{font-size:var(--wp--preset--font-size--kecil);bottom:8px}
+.tumpukan .cetakan .wp-element-caption{
+  font-size:var(--wp--preset--font-size--mikro);height:32px;line-height:32px;
+}
 .tumpukan .cetakan:hover{z-index:20}
 
 .tumpukan .cetakan:nth-child(1){--x:2%;--y:18%;--rot:-9deg;--fx:26vw;--fy:8%}
