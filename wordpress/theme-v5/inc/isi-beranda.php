@@ -120,7 +120,7 @@ function tjr_v5_bawaan_teks( $nama = '' ) {
 function tjr_v5_bawaan_foto( $nama = '' ) {
 	$peta = array(
 		/* Hero */
-		'hero_foto'         => array( 'radian-13.jpg', 'Fasilitator The Journaling Room memandu peserta menghias jurnal di pendopo Yogyakarta' ),
+		'hero_foto'         => array( 'sundayreads-19.jpg', 'Jurnal terbuka penuh tempelan dan kertas warna warni, tangan peserta sedang menghias halaman' ),
 		'hero_cetakan'      => array( 'sundayreads-27.jpg', '' ),
 
 		/* Pengantar */

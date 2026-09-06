@@ -609,7 +609,7 @@ function tjr_v5_seo_graf() {
 			'url'     => $foto( 'tjr-black.png' ),
 			'caption' => 'The Journaling Room',
 		),
-		'image'         => $foto( 'radian-13.jpg' ),
+		'image'         => $foto( 'sundayreads-19.jpg' ),
 		'description'   => 'Penyelenggara workshop journaling di Yogyakarta. Sesi dipandu, alat tulis dan bahan disediakan, tidak ada giliran bercerita di depan orang.',
 		'slogan'        => 'Your kind journaling companions',
 		'foundingDate'  => '2025-08',
@@ -641,7 +641,7 @@ function tjr_v5_seo_graf() {
 		'name'                      => 'The Journaling Room',
 		'url'                       => $situs,
 		'image'                     => array(
-			$foto( 'radian-13.jpg' ),
+			$foto( 'sundayreads-19.jpg' ),
 			$foto( 'radian-11.jpg' ),
 			$foto( 'kupiku-01.jpg' ),
 		),
