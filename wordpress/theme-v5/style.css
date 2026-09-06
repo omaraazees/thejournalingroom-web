@@ -514,11 +514,13 @@ header.wp-block-template-part{
 .panggung-teks{
   /* Lebarnya dinaikkan dari 34ch/40% supaya kalimatnya patah jadi tiga baris,
      bukan lima dengan satu baris yatim berisi kata "berusia" saja.
-     JANGAN ditambatkan ke bawah. Sempat dicoba bottom:clamp(32px,5vw,64px) dan
-     hasilnya buruk: panggung 16/9 setinggi ~750px, jadi di viewport 900px
-     teksnya mulai di y=897 -- cuma 3 piksel yang terlihat di atas lipatan.
-     top:50% menjaganya tetap terbaca tanpa menggulir. */
-  position:absolute;left:clamp(24px,3.4vw,56px);top:50%;translate:0 -50%;z-index:2;
+     Ditambatkan ke DASAR panggung atas pilihan Umar. Konsekuensinya sudah
+     diukur dan diterima: panggung 16/9 setinggi ~750px, jadi di viewport
+     1440x900 teksnya jatuh di bawah lipatan dan baru terbaca sesudah menggulir
+     sedikit. Kalau suatu saat itu jadi masalah, obatnya membatasi tinggi
+     .panggung, bukan mengembalikan teks ke tengah. */
+  position:absolute;left:clamp(24px,3.4vw,56px);
+  bottom:clamp(32px,5vw,64px);z-index:2;
   width:min(40ch,44%);color:var(--wp--preset--color--kertas);
 }
 .panggung-teks h2,.panggung-teks .d{
@@ -1028,7 +1030,11 @@ header.wp-block-template-part{
 @media(max-width:1100px){.cetakan.selip{display:none}}
 
 /* posisi cetakan yang diselipkan di antara seksi */
-.cetakan.selip-hero{left:2.2%;top:calc(100% - 96px);--rot:-8deg;--w:clamp(96px,8.4vw,124px);z-index:6}
+/* Dipindah dari kiri BAWAH ke kiri ATAS: teks hero sekarang menempati pojok
+   kiri bawah panggung, dan cetakan ini menutupinya. Di kiri atas dia justru
+   menonjol karena duduk di bagian gradient yang paling gelap, dan tidak
+   bertabrakan dengan kartu sesi yang ada di kanan bawah. */
+.cetakan.selip-hero{left:2.2%;top:4%;--rot:-8deg;--w:clamp(96px,8.4vw,124px);z-index:6}
 .cetakan.selip-pasangan{right:3.5%;top:-32px;--rot:7deg;--w:clamp(96px,8.6vw,130px)}
 .cetakan.selip-kolaborator{right:2%;bottom:-48px;--rot:7deg;--w:clamp(96px,8.2vw,120px)}
 .cetakan.ajakan-1{left:37%;bottom:24px;--rot:-7deg}
