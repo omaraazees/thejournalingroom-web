@@ -10,6 +10,11 @@
 
 // Sembilan cetakan, isinya dari tab Cetakan di halaman depan. Foto dan nama
 // bawaannya ada di tjr_v5_bawaan_foto() dan tjr_v5_bawaan_teks().
+
+// Label yang dibaca pengunjung sekarang "Memori", tapi id seksinya tetap
+// #cetakan dan nama fieldnya tetap cetakan_1 dan seterusnya. Itu DISENGAJA:
+// id dipakai enam tautan nav dan kaki, dan mengubahnya memutus tautan yang
+// sudah tayang. Jangan diseragamkan.
 $tjr_cetakan = array();
 
 for ( $tjr_n = 1; $tjr_n <= 9; $tjr_n++ ) {
@@ -25,7 +30,7 @@ for ( $tjr_n = 1; $tjr_n <= 9; $tjr_n++ ) {
 
 <!-- wp:group {"className":"kepala kepala-tengah","layout":{"type":"default"}} -->
 <div class="wp-block-group kepala kepala-tengah">
-<!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Cetakan</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Memori</p><!-- /wp:paragraph -->
 <!-- wp:heading {"level":2,"className":"d d-xl"} --><h2 class="wp-block-heading d d-xl">Sore yang tersimpan</h2><!-- /wp:heading -->
 <!-- wp:paragraph {"className":"lead"} --><p class="lead">Setiap kelas meninggalkan setumpuk cetakan di atas meja. Ini sebagiannya, dari sembilan kolaborasi yang berbeda.</p><!-- /wp:paragraph -->
 </div>
