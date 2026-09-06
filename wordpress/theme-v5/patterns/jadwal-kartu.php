@@ -7,6 +7,36 @@
  * Keywords: jadwal, arsip, kartu, baru lewat, query loop
  * Viewport Width: 1400
  */
+
+// Seksi ini tidak boleh dirender kalau belum ada acara yang lewat sama sekali.
+// Tanpa penjagaan ini, judul "Sesi yang lalu" dan tombol "Semua arsip" tetap
+// tampil di atas daftar kosong, dan itu persis yang terjadi di beranda setelah
+// 15 acara lama dibuang pada 2026-09-07.
+//
+// Syaratnya sengaja dicerminkan dari tjr_v5_query_acara() di functions.php
+// (namespace tjr/baru-lewat): lewat berarti TJR_FIELD_MULAI lebih kecil dari
+// waktu sekarang. Kalau syarat di sana berubah, ubah juga di sini.
+$tjr_v5_ada_yang_lewat = get_posts(
+	array(
+		'post_type'      => 'acara',
+		'post_status'    => 'publish',
+		'posts_per_page' => 1,
+		'fields'         => 'ids',
+		'no_found_rows'  => true,
+		'meta_query'     => array(
+			array(
+				'key'     => TJR_FIELD_MULAI,
+				'value'   => current_datetime()->format( 'Y-m-d H:i:s' ),
+				'compare' => '<',
+				'type'    => 'DATETIME',
+			),
+		),
+	)
+);
+
+if ( empty( $tjr_v5_ada_yang_lewat ) ) {
+	return;
+}
 ?>
 <!-- wp:group {"tagName":"section","className":"jarak-atas-besar","anchor":"baru-lewat","layout":{"type":"default"}} -->
 <section class="wp-block-group jarak-atas-besar" id="baru-lewat">
