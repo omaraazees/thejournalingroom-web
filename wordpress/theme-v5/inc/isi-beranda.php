@@ -243,6 +243,138 @@ function tjr_v5_foto_alt( $nama, $bawaan = null ) {
 
 
 /* =====================================================================
+ * Sifat gambar: ukuran asli, lazy, dan prioritas
+ * ===================================================================== */
+
+/**
+ * Ukuran asli satu gambar, dicari dari URL-nya.
+ *
+ * Dipakai buat mencetak width dan height di tiap <img>. Ukurannya tidak boleh
+ * ditulis tangan di pattern karena fotonya bisa diganti dari dasbor lewat ACF,
+ * dan foto pengganti belum tentu sebangun dengan bawaannya. Angka yang salah
+ * lebih buruk daripada tidak ada angka: browser memakainya untuk menghitung
+ * aspect-ratio cadangan sebelum CSS sampai.
+ *
+ * Tiga sumber, berurutan:
+ * 1. Unggahan Media Library, ukurannya sudah ada di metadata attachment.
+ * 2. Berkas tema di assets/img/, dibaca sekali lalu disimpan di transient.
+ * 3. Menyerah, kembalikan nol supaya pemanggilnya tidak mencetak apa apa.
+ *
+ * @param string $url URL gambar.
+ * @return array array( int $lebar, int $tinggi ). Nol berarti tidak ketemu.
+ */
+function tjr_v5_ukuran_gambar( $url ) {
+	static $ingat = array();
+
+	if ( ! is_string( $url ) || '' === $url ) {
+		return array( 0, 0 );
+	}
+
+	if ( isset( $ingat[ $url ] ) ) {
+		return $ingat[ $url ];
+	}
+
+	$hasil = array( 0, 0 );
+
+	// 1. Unggahan. attachment_url_to_postid() query database, jadi cuma
+	// dicoba untuk URL yang memang ada di folder uploads.
+	$unggahan = wp_get_upload_dir();
+
+	if ( ! empty( $unggahan['baseurl'] ) && 0 === strpos( $url, $unggahan['baseurl'] ) ) {
+		$id = attachment_url_to_postid( $url );
+
+		if ( $id ) {
+			$meta = wp_get_attachment_metadata( $id );
+
+			if ( ! empty( $meta['width'] ) && ! empty( $meta['height'] ) ) {
+				$hasil = array( (int) $meta['width'], (int) $meta['height'] );
+			}
+		}
+	}
+
+	// 2. Berkas tema. Satu transient menampung seluruh peta, jadi halaman
+	// dengan dua puluh gambar tetap cuma sekali baca, bukan dua puluh kali
+	// getimagesize() ke disk. Tiap entri menyimpan mtime berkasnya, jadi
+	// deploy yang mengganti sebuah foto otomatis bikin entri itu saja
+	// dihitung ulang, tanpa perlu menaikkan versi tema dengan tangan.
+	if ( array( 0, 0 ) === $hasil ) {
+		$pangkal = get_theme_file_uri( '/assets/img/' );
+
+		if ( 0 === strpos( $url, $pangkal ) ) {
+			$berkas = basename( (string) wp_parse_url( $url, PHP_URL_PATH ) );
+			$jalur  = $berkas ? get_theme_file_path( '/assets/img/' . $berkas ) : '';
+			$umur   = ( $jalur && file_exists( $jalur ) ) ? (int) filemtime( $jalur ) : 0;
+
+			if ( $umur ) {
+				$kunci = 'tjr_v5_ukuran_gambar';
+				$peta  = get_transient( $kunci );
+
+				if ( ! is_array( $peta ) ) {
+					$peta = array();
+				}
+
+				if ( ! isset( $peta[ $berkas ] ) || $peta[ $berkas ][2] !== $umur ) {
+					$ukur = getimagesize( $jalur );
+
+					$peta[ $berkas ] = ( $ukur && ! empty( $ukur[0] ) )
+						? array( (int) $ukur[0], (int) $ukur[1], $umur )
+						: array( 0, 0, $umur );
+
+					set_transient( $kunci, $peta, WEEK_IN_SECONDS );
+				}
+
+				$hasil = array( $peta[ $berkas ][0], $peta[ $berkas ][1] );
+			}
+		}
+	}
+
+	$ingat[ $url ] = $hasil;
+
+	return $hasil;
+}
+
+/**
+ * Atribut siap tempel untuk satu <img> di beranda.
+ *
+ * Yang dicetak: width dan height supaya kotaknya sudah dipesan sebelum
+ * gambarnya datang, lalu salah satu dari dua perlakuan.
+ *
+ * Gambar pembuka ($utama true) TIDAK di-lazy dan diberi fetchpriority high.
+ * Me-lazy gambar pembuka justru menunda LCP karena browser baru mengantrenya
+ * sesudah tata letak dihitung.
+ *
+ * Gambar lain di-lazy. Beranda memuat 32 gambar, ~3,2 MB, dan di layar ponsel
+ * cuma satu yang benar benar terlihat sebelum digulir. Sisanya sekarang baru
+ * diunduh waktu didekati.
+ *
+ * Tema ini menulis <img> mentah di pattern, bukan lewat wp_get_attachment_image(),
+ * jadi lapisan otomatis WordPress (wp_get_loading_optimization_attributes)
+ * tidak pernah melihatnya. Itu sebabnya atributnya dipasang tangan di sini.
+ *
+ * @param string $url    URL gambar yang sama dengan yang dipakai di src.
+ * @param bool   $utama  True cuma untuk gambar pembuka di atas lipatan.
+ * @return string Atribut HTML, sudah diawali spasi. Kosong kalau tidak ada apa apa.
+ */
+function tjr_v5_sifat_gambar( $url, $utama = false ) {
+	list( $lebar, $tinggi ) = tjr_v5_ukuran_gambar( $url );
+
+	$sifat = '';
+
+	if ( $lebar > 0 && $tinggi > 0 ) {
+		$sifat .= ' width="' . (int) $lebar . '" height="' . (int) $tinggi . '"';
+	}
+
+	if ( $utama ) {
+		$sifat .= ' fetchpriority="high" decoding="async"';
+	} else {
+		$sifat .= ' loading="lazy" decoding="async"';
+	}
+
+	return $sifat;
+}
+
+
+/* =====================================================================
  * Pendaftaran field
  * ===================================================================== */
 

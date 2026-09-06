@@ -61,14 +61,14 @@ if ( $tjr_sesi ) {
 <!-- /wp:group -->
 
 <!-- wp:image {"className":"cetakan selip selip-hero","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan selip selip-hero"><img src="<?php echo esc_url( $tjr_cetak ); ?>" alt=""/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_cetak_t ); ?></figcaption></figure>
+<figure class="wp-block-image size-full cetakan selip selip-hero"><img src="<?php echo esc_url( $tjr_cetak ); ?>" alt=""<?php echo tjr_v5_sifat_gambar( $tjr_cetak ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_cetak_t ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"panggung","layout":{"type":"default"}} -->
 <div class="wp-block-group panggung">
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( $tjr_foto ); ?>" alt="<?php echo esc_attr( $tjr_alt ); ?>"/></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( $tjr_foto ); ?>" alt="<?php echo esc_attr( $tjr_alt ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto, true ); ?>/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"panggung-teks","layout":{"type":"default"}} -->

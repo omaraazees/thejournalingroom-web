@@ -35,7 +35,7 @@ for ( $tjr_n = 1; $tjr_n <= 9; $tjr_n++ ) {
 <div class="wp-block-group tumpukan">
 <?php foreach ( $tjr_cetakan as $tjr_satu ) : ?>
 <!-- wp:image {"className":"cetakan","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan"><img src="<?php echo esc_url( $tjr_satu[0] ); ?>" alt="<?php echo esc_attr( $tjr_satu[2] ); ?>"/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_satu[1] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full cetakan"><img src="<?php echo esc_url( $tjr_satu[0] ); ?>" alt="<?php echo esc_attr( $tjr_satu[2] ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_satu[0] ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_satu[1] ); ?></figcaption></figure>
 <!-- /wp:image -->
 <?php endforeach; ?>
 </div>

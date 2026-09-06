@@ -73,7 +73,7 @@ $tjr_judul = tjr_v5_angka_kata( $tjr_kolab ) . ' nama di meja';
 <!-- /wp:group -->
 
 <!-- wp:image {"className":"cetakan selip selip-kolaborator","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan selip selip-kolaborator"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/artotel-16.jpg' ) ); ?>" alt=""/><figcaption class="wp-element-caption">Artotel, Apr 2026</figcaption></figure>
+<figure class="wp-block-image size-full cetakan selip selip-kolaborator"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/artotel-16.jpg' ) ); ?>" alt=""<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/artotel-16.jpg' ) ); ?>/><figcaption class="wp-element-caption">Artotel, Apr 2026</figcaption></figure>
 <!-- /wp:image -->
 
 </div>
@@ -83,7 +83,7 @@ $tjr_judul = tjr_v5_angka_kata( $tjr_kolab ) . ' nama di meja';
 <div class="wp-block-group logos naik">
 <?php foreach ( $tjr_petak as $tjr_satu ) : ?>
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( $tjr_satu['logo'] ); ?>" alt="<?php echo esc_attr( $tjr_satu['nama'] ); ?>"/></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( $tjr_satu['logo'] ); ?>" alt="<?php echo esc_attr( $tjr_satu['nama'] ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_satu['logo'] ); ?>/></figure>
 <!-- /wp:image -->
 <?php endforeach; ?>
 </div>

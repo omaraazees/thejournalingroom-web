@@ -50,19 +50,19 @@ $tjr_lead = ( 0 === $tjr_jml )
 <div class="wp-block-group bento naik">
 
 <!-- wp:image {"className":"t1 is-style-strip-zaitun","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full t1 is-style-strip-zaitun"><img src="<?php echo esc_url( $tjr_foto[1] ); ?>" alt="<?php echo esc_attr( $tjr_alt[1] ); ?>"/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[1] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full t1 is-style-strip-zaitun"><img src="<?php echo esc_url( $tjr_foto[1] ); ?>" alt="<?php echo esc_attr( $tjr_alt[1] ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto[1] ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[1] ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"t2 is-style-strip-kraft","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full t2 is-style-strip-kraft"><img src="<?php echo esc_url( $tjr_foto[2] ); ?>" alt="<?php echo esc_attr( $tjr_alt[2] ); ?>"/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[2] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full t2 is-style-strip-kraft"><img src="<?php echo esc_url( $tjr_foto[2] ); ?>" alt="<?php echo esc_attr( $tjr_alt[2] ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto[2] ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[2] ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"t3 is-style-strip-rose","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full t3 is-style-strip-rose"><img src="<?php echo esc_url( $tjr_foto[3] ); ?>" alt="<?php echo esc_attr( $tjr_alt[3] ); ?>"/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[3] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full t3 is-style-strip-rose"><img src="<?php echo esc_url( $tjr_foto[3] ); ?>" alt="<?php echo esc_attr( $tjr_alt[3] ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto[3] ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[3] ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"t4 is-style-strip-burgundy","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full t4 is-style-strip-burgundy"><img src="<?php echo esc_url( $tjr_foto[4] ); ?>" alt="<?php echo esc_attr( $tjr_alt[4] ); ?>"/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[4] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full t4 is-style-strip-burgundy"><img src="<?php echo esc_url( $tjr_foto[4] ); ?>" alt="<?php echo esc_attr( $tjr_alt[4] ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto[4] ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[4] ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 </div>

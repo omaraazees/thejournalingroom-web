@@ -27,15 +27,15 @@ $tjr_wa = esc_url( tjr_v5_link_wa() );
 <!-- /wp:group -->
 
 <!-- wp:image {"className":"ajakan-kanan","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full ajakan-kanan"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/artotel-13.jpg' ) ); ?>" alt="Foto bersama peserta workshop TJR di Artotel"/></figure>
+<figure class="wp-block-image size-full ajakan-kanan"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/artotel-13.jpg' ) ); ?>" alt="Foto bersama peserta workshop TJR di Artotel"<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/artotel-13.jpg' ) ); ?>/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"cetakan ajakan-1","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan ajakan-1"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/sundayreads-27.jpg' ) ); ?>" alt=""/><figcaption class="wp-element-caption">Sunday Reads</figcaption></figure>
+<figure class="wp-block-image size-full cetakan ajakan-1"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/sundayreads-27.jpg' ) ); ?>" alt=""<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/sundayreads-27.jpg' ) ); ?>/><figcaption class="wp-element-caption">Sunday Reads</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"cetakan ajakan-2","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan ajakan-2"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/radian-24.jpg' ) ); ?>" alt=""/><figcaption class="wp-element-caption">Radian</figcaption></figure>
+<figure class="wp-block-image size-full cetakan ajakan-2"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/radian-24.jpg' ) ); ?>" alt=""<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/radian-24.jpg' ) ); ?>/><figcaption class="wp-element-caption">Radian</figcaption></figure>
 <!-- /wp:image -->
 
 </section>
