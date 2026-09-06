@@ -3,16 +3,10 @@
  * Title: Pengantar dan kutipan
  * Slug: tjr-v5/pengantar-kutipan
  * Categories: tjr, tjr-beranda
- * Description: Dua kolom pengantar tentang ruangnya, disusul sepasang foto lebar dan kotak kutipan rose, plus satu cetakan polaroid yang diselipkan di antaranya.
+ * Description: Dua kolom pengantar tentang ruang ini, disusul sepasang foto lebar dan kotak kutipan rose, plus satu cetakan polaroid yang diselipkan di antaranya.
  * Keywords: tentang, pengantar, kutipan, cerita
  * Viewport Width: 1400
  */
-
-// Dua tempat di bawah menyebut berapa kali TJR sudah duduk bersama. Yang
-// dihitung cuma acara yang tanggalnya sudah lewat, karena sesi yang belum
-// terjadi tidak bisa disebut sudah duduk bersama.
-$tjr_n = tjr_v5_jumlah_acara( 'lewat' );
-$tjr_tombol = ( 0 === $tjr_n ) ? 'Lihat arsip' : tjr_v5_angka_kata( $tjr_n ) . ' kolaborasi';
 
 // Isi dari halaman depan. Bawaannya ada di tjr_v5_bawaan_teks() dan
 // tjr_v5_bawaan_foto(), termasuk paragraf pertama yang menyebut angka tadi.
@@ -29,7 +23,7 @@ $tjr_cetak_t = tjr_v5_isi( 'pengantar_cetakan_teks' );
 
 <!-- wp:group {"className":"naik","layout":{"type":"default"}} -->
 <div class="wp-block-group naik">
-<!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Tentang ruangnya</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Tentang ruang ini</p><!-- /wp:paragraph -->
 <!-- wp:heading {"level":2,"className":"d d-xl","style":{"spacing":{"margin":{"top":"var:preset|spacing|jarak-2"}}}} --><h2 class="wp-block-heading d d-xl" style="margin-top:var(--wp--preset--spacing--jarak-2)">Yang tumbuh di meja panjang</h2><!-- /wp:heading -->
 </div>
 <!-- /wp:group -->
@@ -40,7 +34,7 @@ $tjr_cetak_t = tjr_v5_isi( 'pengantar_cetakan_teks' );
 <!-- wp:paragraph {"className":"lead"} --><p class="lead"><?php echo esc_html( $tjr_p2 ); ?></p><!-- /wp:paragraph -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
-<!-- wp:button {"className":"is-style-pil"} --><div class="wp-block-button is-style-pil"><a class="wp-block-button__link wp-element-button" href="#arsip"><?php echo esc_html( $tjr_tombol ); ?></a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-pil"} --><div class="wp-block-button is-style-pil"><a class="wp-block-button__link wp-element-button" href="#kolaborator">Para Kolaborator</a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
 </div>
