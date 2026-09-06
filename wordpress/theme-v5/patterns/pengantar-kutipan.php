@@ -15,7 +15,21 @@ $tjr_p2      = tjr_v5_isi( 'pengantar_2' );
 $tjr_kutip   = tjr_v5_isi( 'kutipan' );
 $tjr_foto    = tjr_v5_foto( 'pengantar_foto' );
 $tjr_alt     = tjr_v5_foto_alt( 'pengantar_foto' );
-$tjr_cetak   = tjr_v5_foto( 'pengantar_cetakan' );
+
+// Kartu P-3: cetakan polaroid di sini tampil kecil (~120px), jadi dialihkan
+// ke .webp hasil resize kalau berkasnya memang ada. pengantar_foto TIDAK
+// disentuh: foto itu tampil hampir selebar section (.pasangan, ~900px di
+// desktop), jadi berkas 900x1600 aslinya belum oversized di konteks ini.
+$tjr_ke_webp = static function ( $url ) {
+	$webp = preg_replace( '/\.jpe?g$/i', '.webp', (string) $url );
+	if ( $webp === $url ) {
+		return $url;
+	}
+	$jalur = get_theme_file_path( '/assets/img/' . basename( (string) wp_parse_url( $webp, PHP_URL_PATH ) ) );
+	return file_exists( $jalur ) ? $webp : $url;
+};
+
+$tjr_cetak   = $tjr_ke_webp( tjr_v5_foto( 'pengantar_cetakan' ) );
 $tjr_cetak_t = tjr_v5_isi( 'pengantar_cetakan_teks' );
 ?>
 <!-- wp:group {"tagName":"section","className":"duo seksi","anchor":"tentang","layout":{"type":"default"}} -->

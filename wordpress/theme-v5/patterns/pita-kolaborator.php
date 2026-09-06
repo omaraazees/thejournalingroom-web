@@ -56,7 +56,7 @@ if ( $tjr_dari_cms ) {
 <!-- /wp:group -->
 
 <!-- wp:image {"className":"cetakan selip selip-kolaborator","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan selip selip-kolaborator"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/artotel-16.jpg' ) ); ?>" alt=""<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/artotel-16.jpg' ) ); ?>/><figcaption class="wp-element-caption">Artotel, Apr 2026</figcaption></figure>
+<figure class="wp-block-image size-full cetakan selip selip-kolaborator"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/artotel-16.webp' ) ); ?>" alt=""<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/artotel-16.webp' ) ); ?>/><figcaption class="wp-element-caption">Artotel, Apr 2026</figcaption></figure>
 <!-- /wp:image -->
 
 </div>

@@ -14,8 +14,21 @@ $tjr_foto = array();
 $tjr_alt  = array();
 $tjr_teks = array();
 
+// Kartu P-3: kalau URL-nya masih berkas tema di assets/img/ dan ada padanan
+// .webp hasil resize di sebelahnya, pakai itu. Foto yang sudah diganti dari
+// dasbor (ACF, di luar assets/img/) tidak tersentuh dan tetap tampil apa
+// adanya lewat $tjr_foto asli.
+$tjr_ke_webp = static function ( $url ) {
+	$webp = preg_replace( '/\.jpe?g$/i', '.webp', (string) $url );
+	if ( $webp === $url ) {
+		return $url;
+	}
+	$jalur = get_theme_file_path( '/assets/img/' . basename( (string) wp_parse_url( $webp, PHP_URL_PATH ) ) );
+	return file_exists( $jalur ) ? $webp : $url;
+};
+
 for ( $tjr_n = 1; $tjr_n <= 4; $tjr_n++ ) {
-	$tjr_foto[ $tjr_n ] = tjr_v5_foto( 'bento_' . $tjr_n );
+	$tjr_foto[ $tjr_n ] = $tjr_ke_webp( tjr_v5_foto( 'bento_' . $tjr_n ) );
 	$tjr_alt[ $tjr_n ]  = tjr_v5_foto_alt( 'bento_' . $tjr_n );
 	$tjr_teks[ $tjr_n ] = tjr_v5_isi( 'bento_' . $tjr_n . '_teks' );
 }
