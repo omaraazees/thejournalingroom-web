@@ -20,11 +20,7 @@ for ( $tjr_n = 1; $tjr_n <= 4; $tjr_n++ ) {
 	$tjr_teks[ $tjr_n ] = tjr_v5_isi( 'bento_' . $tjr_n . '_teks' );
 }
 
-// Kalimat pengantar menyebut jumlah, jadi angkanya ikut isi CMS.
-$tjr_jml = tjr_v5_jumlah_acara( 'lewat' );
-$tjr_lead = ( 0 === $tjr_jml )
-	? 'Dokumentasi dari workshop journaling yang sudah kami gelar di Yogyakarta.'
-	: 'Dokumentasi dari ' . strtolower( tjr_v5_angka_kata( $tjr_jml ) ) . ' workshop journaling yang sudah kami gelar di Yogyakarta.';
+$tjr_lead = 'Dokumentasi dari beberapa workshop yang sudah kami gelar di Yogyakarta.';
 ?>
 <!-- wp:group {"tagName":"section","className":"seksi","anchor":"galeri","layout":{"type":"default"}} -->
 <section class="wp-block-group seksi" id="galeri">
@@ -34,7 +30,7 @@ $tjr_lead = ( 0 === $tjr_jml )
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
 <!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Dokumentasi</p><!-- /wp:paragraph -->
-<!-- wp:heading {"level":2,"className":"d d-xl","style":{"spacing":{"margin":{"top":"var:preset|spacing|jarak-2"}}}} --><h2 class="wp-block-heading d d-xl" style="margin-top:var(--wp--preset--spacing--jarak-2)">Apa yang tertinggal di meja</h2><!-- /wp:heading -->
+<!-- wp:heading {"level":2,"className":"d d-xl","style":{"spacing":{"margin":{"top":"var:preset|spacing|jarak-2"}}}} --><h2 class="wp-block-heading d d-xl" style="margin-top:var(--wp--preset--spacing--jarak-2)">Merangkai memori bersama</h2><!-- /wp:heading -->
 <!-- wp:paragraph {"className":"lead","style":{"spacing":{"margin":{"top":"var:preset|spacing|jarak-2"}}}} --><p class="lead" style="margin-top:var(--wp--preset--spacing--jarak-2)"><?php echo esc_html( $tjr_lead ); ?></p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->

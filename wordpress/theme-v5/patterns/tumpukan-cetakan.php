@@ -31,8 +31,8 @@ for ( $tjr_n = 1; $tjr_n <= 9; $tjr_n++ ) {
 <!-- wp:group {"className":"kepala kepala-tengah","layout":{"type":"default"}} -->
 <div class="wp-block-group kepala kepala-tengah">
 <!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Memori</p><!-- /wp:paragraph -->
-<!-- wp:heading {"level":2,"className":"d d-xl"} --><h2 class="wp-block-heading d d-xl">Sore yang tersimpan</h2><!-- /wp:heading -->
-<!-- wp:paragraph {"className":"lead"} --><p class="lead">Setiap kelas meninggalkan setumpuk cetakan di atas meja. Ini sebagiannya, dari sembilan kolaborasi yang berbeda.</p><!-- /wp:paragraph -->
+<!-- wp:heading {"level":2,"className":"d d-xl"} --><h2 class="wp-block-heading d d-xl">Kenangan yang tersimpan</h2><!-- /wp:heading -->
+<!-- wp:paragraph {"className":"lead"} --><p class="lead">Setiap pertemuan meninggalkan setumpuk memori diatas meja. Memori itu kami kenang lengkap dengan rasa syukur dan bahagianya.</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
