@@ -385,7 +385,11 @@ header.wp-block-template-part{
 
 /* ===== 6. Hero ===== */
 
-.hero{position:relative;padding:var(--wp--preset--spacing--jarak-5) 0 0}
+/* Jarak bar ke judul itu jumlah TIGA nilai, bukan dua: kaki bar 24, blockGap
+   lembar 24 (styles.spacing.blockGap = jarak-3, dicetak jadi margin-top main),
+   lalu kepala hero. Dengan jarak-5 totalnya 112 dan terbaca menganga di desktop.
+   jarak-2 membawanya ke 64. Layar sempit punya aturannya sendiri di bawah. */
+.hero{position:relative;padding:var(--wp--preset--spacing--jarak-2) 0 0}
 .hero-atas{
   display:flex;align-items:flex-end;justify-content:space-between;
   gap:var(--wp--preset--spacing--jarak-4);flex-wrap:wrap-reverse;
