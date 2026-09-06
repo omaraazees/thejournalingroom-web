@@ -722,9 +722,20 @@ header.wp-block-template-part{
    arsip. Judul yang ditengahkan atau dikanankan mengambang lepas dari baris
    daftar di bawahnya; rata kiri menyatukan tepi kirinya jadi satu garis. */
 .kepala-kiri{
-  text-align:left;flex-direction:column;align-items:flex-start;gap:12px;
+  text-align:left;flex-direction:column;align-items:flex-start;
+  gap:var(--wp--preset--spacing--jarak-2);
+  /* Lebih longgar dari .kepala biasa. Halaman daftar butuh jeda yang jelas
+     antara kepala dan baris pertama, kalau tidak keduanya terbaca satu blok. */
+  margin-bottom:var(--wp--preset--spacing--jarak-5);
 }
-.kepala-kiri .lead{margin-inline:0;text-align:left;max-width:52ch}
+/* margin-top di sini MENAMBAH gap flex, jadi jarak judul ke paragraf jadi dua
+   kali lipat jarak label ke judul. Sengaja: judulnya serif display dengan
+   line-height .98, dan ekor huruf seperti J dan g pada "Jogja" turun jauh
+   melewati baseline sehingga hampir menyentuh paragraf kalau jaraknya rata. */
+.kepala-kiri .lead{
+  margin-inline:0;text-align:left;max-width:52ch;
+  margin-top:var(--wp--preset--spacing--jarak-2);
+}
 .kepala-kiri h1,.kepala-kiri .d{text-align:left;margin-left:0;max-width:20ch}
 
 .seksi{margin-top:var(--wp--preset--spacing--jarak-7)}
