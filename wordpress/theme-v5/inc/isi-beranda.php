@@ -618,6 +618,14 @@ function tjr_v5_daftar_isi_beranda() {
 			'instruction_placement' => 'label',
 			'active'                => true,
 			'description'           => 'Foto dan kalimat di beranda. Tata letaknya diatur di tema, jadi yang perlu diisi cuma isinya.',
+			// Tanpa ini kolomnya TIDAK bisa dibaca maupun ditulis lewat REST:
+			// /wp/v2/pages/6 mengembalikan "acf": [] dan tidak ada jalan lain.
+			// Akibatnya satu satunya cara mengubah isi beranda lewat layar edit,
+			// dan menyimpan di sana menuliskan SELURUH kolom yang terisi bawaan
+			// ke database sekaligus, jadi bawaan di PHP berhenti berpengaruh.
+			// Dengan ini satu kolom bisa diubah sendirian, yang lain tetap kosong
+			// dan tetap ikut bawaan di tjr_v5_bawaan_teks().
+			'show_in_rest'          => true,
 		)
 	);
 }
