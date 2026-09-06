@@ -780,6 +780,37 @@ function tjr_v5_kit_acara( $id ) {
 }
 
 /**
+ * Harga per orang, format Rupiah, plus catatan singkat kalau diisi.
+ *
+ * Catatannya cuma modifier kecil untuk angka di sebelahnya (lihat instruksi
+ * field-nya di ACF: "Muncul kecil di sebelah harga"), bukan kalimat berdiri
+ * sendiri. Makanya digantung ke syarat harga sudah terisi: acara yang
+ * harganya belum diisi (kolom kosong atau nol, misalnya sesi yang harganya
+ * belum turun dari brand brief) tidak menampilkan baris ini sama sekali,
+ * jadi catatan draf/internal yang kadang dipakai sebagai pengingat isi
+ * kolom itu ikut aman, tidak pernah bocor ke publik.
+ *
+ * @param int $id ID acara.
+ * @return string
+ */
+function tjr_v5_harga_acara( $id ) {
+	$harga = (int) get_post_meta( $id, 'harga', true );
+
+	if ( $harga < 1 ) {
+		return '';
+	}
+
+	$tampil  = 'Rp' . number_format( $harga, 0, ',', '.' );
+	$catatan = trim( (string) get_post_meta( $id, 'catatan_harga', true ) );
+
+	if ( '' !== $catatan ) {
+		$tampil .= ' <span class="slot-catatan">&middot; ' . esc_html( $catatan ) . '</span>';
+	}
+
+	return $tampil;
+}
+
+/**
  * Angka kursi: terisi, kapasitas, dan persennya.
  *
  * @param int $id ID acara.
@@ -933,6 +964,8 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 		$isi = esc_html( tjr_v5_jam_acara( $id ) );
 	} elseif ( false !== strpos( $kelas, 'dd-tempat' ) ) {
 		$isi = tjr_v5_tempat_acara( $id );
+	} elseif ( false !== strpos( $kelas, 'dd-harga' ) ) {
+		$isi = tjr_v5_harga_acara( $id );
 	} elseif ( false !== strpos( $kelas, 'dd-kit' ) ) {
 		// Teks bebas menang atas daftar centang, kalau diisi.
 		$tulis = trim( (string) get_post_meta( $id, 'disediakan_teks', true ) );
