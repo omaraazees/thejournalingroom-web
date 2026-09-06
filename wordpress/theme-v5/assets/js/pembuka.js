@@ -51,6 +51,13 @@
       try {
         a.finish();
       } catch (e) {}
+      // Wajib sesudah finish(), bukan sebagai gantinya. Animasi fill:'both' yang
+      // sudah selesai TETAP menahan nilainya, dan finish() pada animasi yang
+      // sudah dibatalkan justru menghidupkannya lagi. Nilai akhirnya sama dengan
+      // keadaan alami elemen, jadi membatalkannya tidak mengubah tampilan.
+      try {
+        a.cancel();
+      } catch (e) {}
     });
     if (tirai && tirai.parentNode) {
       tirai.remove();
@@ -65,17 +72,44 @@
     return;
   }
 
+  /**
+   * fill:'both' menahan nilai akhir selamanya, dan itu berlaku juga untuk
+   * transform. Elemen yang transform-nya bukan none jadi containing block untuk
+   * position:fixed di dalamnya, jadi panel menu yang fixed inset:0 terkurung di
+   * kotak .bar alih alih memenuhi layar: kotak pendek dengan scrollbar sendiri,
+   * item menu terpotong, dan isi halaman tembus di bawahnya. Nilai akhir tiap
+   * animasi di sini sama persis dengan keadaan alami elemennya, jadi animasinya
+   * dibatalkan begitu selesai dan tidak ada yang berubah di mata.
+   * finish() saja tidak cukup, animasi yang sudah selesai tetap menahan nilainya.
+   */
+  function bebaskan(a) {
+    if (!a || !a.finished) {
+      return a;
+    }
+    a.finished.then(
+      function () {
+        try {
+          a.cancel();
+        } catch (e) {}
+      },
+      function () {}
+    );
+    return a;
+  }
+
   function gerak(el, dari, ke, ms, tunda) {
     if (!el) {
       return;
     }
     anims.push(
-      el.animate([dari, ke], {
-        duration: ms,
-        delay: tunda || 0,
-        easing: E,
-        fill: 'both'
-      })
+      bebaskan(
+        el.animate([dari, ke], {
+          duration: ms,
+          delay: tunda || 0,
+          easing: E,
+          fill: 'both'
+        })
+      )
     );
   }
 
@@ -240,9 +274,11 @@
       // 5. halaman ikut turun sedikit, seperti kertas yang mendarat
       if (lembar) {
         anims.push(
-          lembar.animate(
-            [{ transform: 'scale(.986) translateY(8px)' }, { transform: 'none' }],
-            { duration: BUKA + 320, easing: E, fill: 'both' }
+          bebaskan(
+            lembar.animate(
+              [{ transform: 'scale(.986) translateY(8px)' }, { transform: 'none' }],
+              { duration: BUKA + 320, easing: E, fill: 'both' }
+            )
           )
         );
       }
