@@ -73,7 +73,7 @@ $tjr_wa = esc_url( tjr_v5_link_wa_slot() );
 
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
-<!-- wp:paragraph {"className":"dt"} --><p class="dt">Harga</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"dt ik-tag"} --><p class="dt ik-tag">Investment fee</p><!-- /wp:paragraph -->
 <!-- wp:paragraph {"className":"dd dd-harga"} --><p class="dd dd-harga">Rp75.000</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
