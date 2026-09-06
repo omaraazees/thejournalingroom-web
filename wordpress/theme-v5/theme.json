@@ -107,70 +107,12 @@
         {
           "slug": "display",
           "name": "Playfair Display",
-          "fontFamily": "\"Playfair Display\", Georgia, \"Times New Roman\", serif",
-          "fontFace": [
-            {
-              "fontFamily": "Playfair Display",
-              "fontStyle": "italic",
-              "fontWeight": "400",
-              "fontDisplay": "swap",
-              "src": [
-                "file:./assets/fonts/playfair-display-italic-400.woff2"
-              ]
-            },
-            {
-              "fontFamily": "Playfair Display",
-              "fontStyle": "italic",
-              "fontWeight": "500",
-              "fontDisplay": "swap",
-              "src": [
-                "file:./assets/fonts/playfair-display-italic-500.woff2"
-              ]
-            },
-            {
-              "fontFamily": "Playfair Display",
-              "fontStyle": "italic",
-              "fontWeight": "600",
-              "fontDisplay": "swap",
-              "src": [
-                "file:./assets/fonts/playfair-display-italic-600.woff2"
-              ]
-            }
-          ]
+          "fontFamily": "\"Playfair Display\", Georgia, \"Times New Roman\", serif"
         },
         {
           "slug": "teks",
           "name": "Manrope",
-          "fontFamily": "\"Manrope\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
-          "fontFace": [
-            {
-              "fontFamily": "Manrope",
-              "fontStyle": "normal",
-              "fontWeight": "400",
-              "fontDisplay": "swap",
-              "src": [
-                "file:./assets/fonts/manrope-400.woff2"
-              ]
-            },
-            {
-              "fontFamily": "Manrope",
-              "fontStyle": "normal",
-              "fontWeight": "500",
-              "fontDisplay": "swap",
-              "src": [
-                "file:./assets/fonts/manrope-500.woff2"
-              ]
-            },
-            {
-              "fontFamily": "Manrope",
-              "fontStyle": "normal",
-              "fontWeight": "700",
-              "fontDisplay": "swap",
-              "src": [
-                "file:./assets/fonts/manrope-700.woff2"
-              ]
-            }
-          ]
+          "fontFamily": "\"Manrope\", system-ui, -apple-system, \"Segoe UI\", sans-serif"
         },
         {
           "slug": "tangan",

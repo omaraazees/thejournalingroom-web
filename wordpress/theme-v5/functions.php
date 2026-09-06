@@ -140,56 +140,33 @@ function tjr_v5_font_lokal_ada() {
 }
 
 /**
- * Buang deklarasi fontFace theme.json yang menunjuk berkas yang tidak ada.
+ * Bersihkan cache stylesheet global sekali, sesudah theme.json berhenti
+ * mendaftarkan @font-face self-host yang berkasnya tidak ada.
  *
- * theme.json mendaftarkan @font-face self-host untuk tiap berat Playfair
- * Display italic dan Manrope lewat "src": ["file:./assets/fonts/....woff2"],
- * tapi folder assets/fonts/ kosong (lihat tjr_v5_font_lokal_ada() di atas).
- * WordPress tetap mencetak keenam @font-face itu ke stylesheet global apa
- * adanya, jadi browser mencoba memuatnya, gagal 404, lalu baru jatuh ke
- * family yang sama dari Google Fonts CDN (yang didaftarkan tjr_v5_enqueue()
- * dan memang berhasil) -- situs tampil benar, tapi tiap page-load membuang
- * request 404 percuma untuk tiap berat yang dipakai halaman itu.
+ * theme.json DULU mendaftarkan @font-face untuk tiap berat Playfair Display
+ * italic dan Manrope lewat "src": ["file:./assets/fonts/....woff2"], padahal
+ * folder assets/fonts/ kosong (lihat tjr_v5_font_lokal_ada() di atas) --
+ * keenam deklarasi itu sekarang sudah dibuang langsung dari theme.json karena
+ * situs sudah mengandalkan Google Fonts CDN (tjr_v5_enqueue()) yang memang
+ * berhasil.
  *
- * Filter ini menyaring fontFace per berkas: begitu satu berkas woff2 lokal
- * diletakkan di assets/fonts/, deklarasi @font-face-nya otomatis ikut lagi
- * tanpa perlu ubah theme.json atau filter ini.
- *
- * @param WP_Theme_JSON_Data $theme_json Data theme.json tema aktif.
- * @return WP_Theme_JSON_Data
+ * TAPI wp_get_global_stylesheet() menyimpan hasil compile-nya di object
+ * cache (grup 'theme_json'), dan WordPress cuma membersihkan cache itu lewat
+ * wp_clean_theme_json_cache() yang di-hook ke 'switch_theme'/
+ * 'start_previewing_theme' -- BUKAN ke perubahan berkas tema. Tanpa baris
+ * ini, cache lama (isinya masih 6 @font-face mati itu) tetap disajikan
+ * sampai kapan pun. Dijaga flag opsi supaya cuma jalan sekali, dan otomatis
+ * jalan lagi kalau TJR_V5_VERSION dinaikkan untuk perubahan theme.json
+ * berikutnya.
  */
-function tjr_v5_buang_font_face_mati( $theme_json ) {
-	$data = $theme_json->get_data();
-
-	if ( empty( $data['settings']['typography']['fontFamilies'] ) ) {
-		return $theme_json;
+function tjr_v5_bersihkan_cache_gaya_global() {
+	if ( get_option( 'tjr_v5_cache_gaya_global_dibersihkan' ) === TJR_V5_VERSION ) {
+		return;
 	}
-
-	foreach ( $data['settings']['typography']['fontFamilies'] as &$keluarga ) {
-		if ( empty( $keluarga['fontFace'] ) ) {
-			continue;
-		}
-
-		$keluarga['fontFace'] = array_values(
-			array_filter(
-				$keluarga['fontFace'],
-				function ( $wajah ) {
-					foreach ( (array) $wajah['src'] as $sumber ) {
-						$relatif = preg_replace( '#^file:\.?/?#', '/', $sumber );
-						if ( file_exists( get_theme_file_path( $relatif ) ) ) {
-							return true;
-						}
-					}
-					return false;
-				}
-			)
-		);
-	}
-	unset( $keluarga );
-
-	return $theme_json->update_with( $data );
+	wp_clean_theme_json_cache();
+	update_option( 'tjr_v5_cache_gaya_global_dibersihkan', TJR_V5_VERSION, false );
 }
-add_filter( 'wp_theme_json_data_theme', 'tjr_v5_buang_font_face_mati' );
+add_action( 'init', 'tjr_v5_bersihkan_cache_gaya_global' );
 
 /**
  * Versi berkas untuk cache busting.
