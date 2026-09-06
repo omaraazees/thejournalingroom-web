@@ -58,6 +58,12 @@ if ( ! defined( 'TJR_PESAN_WA_SLOT' ) ) {
  */
 require_once get_theme_file_path( '/inc/isi-beranda.php' );
 
+/**
+ * Lapisan head: title, description, canonical, Open Graph, Twitter card, dan
+ * JSON-LD. Ditulis di tema, bukan lewat plugin SEO.
+ */
+require_once get_theme_file_path( '/inc/seo.php' );
+
 
 /* =====================================================================
  * 1. Dukungan tema
@@ -329,6 +335,9 @@ function tjr_v5_reset_hitungan( $id = 0 ) {
 	foreach ( array( 'semua', 'lewat', 'depan' ) as $kapan ) {
 		delete_transient( 'tjr_v5_jumlah_acara_' . $kapan );
 	}
+
+	// Rentang harga di JSON-LD LocalBusiness dihitung dari acara juga.
+	delete_transient( 'tjr_v5_seo_harga' );
 }
 add_action( 'save_post_acara', 'tjr_v5_reset_hitungan' );
 add_action( 'deleted_post', 'tjr_v5_reset_hitungan' );
