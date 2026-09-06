@@ -344,14 +344,18 @@ header.wp-block-template-part{
   .bar .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__container{
     display:flex;flex-direction:column;align-items:stretch;
-    gap:clamp(8px,1.6vw,12px);
+    /* Serif display italik di 54px punya ekor huruf yang turun jauh (g, y, J
+       pada "Sesi yang akan datang" dan "Jadwal"), jadi gap 12px membuat baris
+       benar-benar bersentuhan. Digandakan supaya tiap item terbaca sebagai
+       baris tersendiri. */
+    gap:clamp(16px,3.4vw,26px);
   }
   /* di layar penuh judulnya boleh besar, pakai serif display seperti hero */
   .bar .wp-block-navigation__responsive-container.is-menu-open a{
     display:block;width:100%;padding:8px 0;
     font-family:var(--wp--preset--font-family--display);
     font-style:italic;font-weight:400;text-transform:none;
-    font-size:clamp(30px,9vw,54px);line-height:1.06;letter-spacing:-.02em;
+    font-size:clamp(30px,9vw,54px);line-height:1.14;letter-spacing:-.02em;
     color:var(--wp--preset--color--tinta);text-decoration:none;text-align:left;
     transition:color .3s;
   }
