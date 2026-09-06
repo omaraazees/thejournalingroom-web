@@ -996,8 +996,14 @@ add_action( 'wp_head', 'tjr_v5_seo_head', 2 );
  * circuit di awal) dan `wp_sitemaps_posts_entry` (per entri). Keduanya tidak
  * cocok untuk menyisipkan satu URL tambahan, jadi dipakai provider sendiri.
  *
- * Hasilnya muncul sebagai wp-sitemap-arsip-acara-1.xml dan ikut terdaftar di
+ * Hasilnya muncul sebagai wp-sitemap-jadwal-1.xml dan ikut terdaftar di
  * wp-sitemap.xml.
+ *
+ * NAMA PROVIDER TIDAK BOLEH MENGANDUNG TANDA HUBUNG. Percobaan dengan nama
+ * 'arsip-acara' menghasilkan URL wp-sitemap-arsip-acara-1.xml, dan pola
+ * rewrite WordPress ^wp-sitemap-([a-z]+?)-([a-z\d_-]+?)-(\d+?)\.xml$
+ * menguraikannya jadi provider 'arsip' plus subtype 'acara'. Provider bernama
+ * 'arsip' tidak ada, jadi request-nya jatuh ke HTML beranda, bukan XML.
  */
 function tjr_v5_daftarkan_sitemap_arsip( $wp_sitemaps ) {
 	if ( ! class_exists( 'WP_Sitemaps_Provider' ) ) {
@@ -1015,8 +1021,8 @@ function tjr_v5_daftarkan_sitemap_arsip( $wp_sitemaps ) {
 			 * Konstruktor.
 			 */
 			public function __construct() {
-				$this->name        = 'arsip-acara';
-				$this->object_type = 'arsip-acara';
+				$this->name        = 'jadwal';
+				$this->object_type = 'jadwal';
 			}
 
 			/**
@@ -1052,7 +1058,7 @@ function tjr_v5_daftarkan_sitemap_arsip( $wp_sitemaps ) {
 
 	// Dipasang lewat objek yang dioper hook-nya, bukan wp_sitemaps_get_server(),
 	// karena kita SEDANG berada di dalam inisialisasi server itu.
-	$wp_sitemaps->registry->add_provider( 'arsip-acara', new TJR_V5_Sitemap_Arsip() );
+	$wp_sitemaps->registry->add_provider( 'jadwal', new TJR_V5_Sitemap_Arsip() );
 }
 // HARUS wp_sitemaps_init, bukan init. Dokumentasi WordPress menyebutnya
 // eksplisit: "Additional sitemaps should be registered on this hook."
