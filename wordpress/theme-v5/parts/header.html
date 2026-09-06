@@ -1,12 +1,17 @@
 <!-- wp:site-logo {"width":52,"shouldSyncIcon":false,"className":"mark"} /-->
 
+<!-- Tautan nav memakai /#seksi, BUKAN #seksi. Keenam id itu cuma ada di
+     pola beranda, jadi anchor telanjang tidak menunjuk apa pun begitu
+     pengunjung membuka halaman lain dan seluruh nav mati di sana. Awalan /
+     membuatnya selalu berarti "seksi itu di beranda". Di beranda sendiri
+     tetap lompatan fragmen biasa, tanpa memuat ulang halaman. -->
 <!-- wp:navigation {"overlayMenu":"mobile","icon":"menu","overlayBackgroundColor":"kertas","overlayTextColor":"tinta","layout":{"type":"flex","justifyContent":"center","flexWrap":"nowrap"}} -->
-<!-- wp:navigation-link {"label":"Tentang","url":"#tentang","kind":"custom"} /-->
-<!-- wp:navigation-link {"label":"Jadwal","url":"#jadwal","kind":"custom"} /-->
-<!-- wp:navigation-link {"label":"Galeri","url":"#galeri","kind":"custom"} /-->
-<!-- wp:navigation-link {"label":"Cetakan","url":"#cetakan","kind":"custom"} /-->
-<!-- wp:navigation-link {"label":"Arsip","url":"#arsip","kind":"custom"} /-->
-<!-- wp:navigation-link {"label":"Kolaborator","url":"#kolaborator","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Tentang","url":"/#tentang","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Jadwal","url":"/#jadwal","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Galeri","url":"/#galeri","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Cetakan","url":"/#cetakan","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Arsip","url":"/#arsip","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Kolaborator","url":"/#kolaborator","kind":"custom"} /-->
 <!-- /wp:navigation -->
 
 <!-- wp:buttons -->

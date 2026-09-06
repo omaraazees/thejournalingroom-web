@@ -67,7 +67,12 @@
   setTimeout(selesai, 4200);
   window.addEventListener('pagehide', selesai);
 
-  if (!tirai || !sampul || !mark || reduce || !document.body.animate || document.visibilityState !== 'visible') {
+  // location.hash ikut jadi alasan melewatkan sampul: pengunjung yang datang
+  // lewat tautan nav dari halaman lain sedang menuju satu seksi, bukan sedang
+  // meminta sampul dibuka. Sampulnya juga menahan layar 4,2 detik dan menggeser
+  // tata letak selama itu, jadi kalau dibiarkan jalan posisi pendaratannya ikut
+  // bergeser sesudah dipasang.
+  if (location.hash.length > 1 || !tirai || !sampul || !mark || reduce || !document.body.animate || document.visibilityState !== 'visible') {
     selesai();
     return;
   }
@@ -312,4 +317,49 @@
 
   window.addEventListener('scroll', tampil, { passive: true });
   tampil();
+})();
+
+/**
+ * Pendaratan tautan nav dari halaman lain.
+ *
+ * Tombol nav header menunjuk /#seksi, jadi dari halaman mana pun ia membuka
+ * beranda dengan hash. Lompatan bawaan browser terjadi saat parsing, sebelum
+ * gambar dan huruf selesai dimuat, jadi tinggi halaman masih berubah sesudahnya
+ * dan posisinya hilang lagi: terukur berhenti di scrollY 56 padahal seksinya di
+ * 4048. Jadi posisinya dipasang ulang sesudah tata letaknya tenang.
+ *
+ * Kelas .intro sudah tidak dipasang kalau URL-nya berhash (lihat tjr_v5_tirai),
+ * karena pengunjung yang menuju satu seksi tidak sedang meminta sampul dibuka.
+ */
+(function () {
+  'use strict';
+
+  if (!location.hash || location.hash.length < 2) {
+    return;
+  }
+
+  var sasaran;
+  try {
+    sasaran = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  } catch (e) {
+    return;
+  }
+  if (!sasaran) {
+    return;
+  }
+
+  // behavior 'instant' wajib. Root memakai scroll-behavior:smooth, jadi tanpa
+  // ini pendaratannya jadi animasi ribuan piksel, dan panggilan ulang di bawah
+  // akan saling membatalkan di tengah animasi alih alih memasang ulang posisi.
+  function pasang() {
+    sasaran.scrollIntoView({ block: 'start', behavior: 'instant' });
+  }
+
+  // Sekali sesudah semua aset masuk, lalu sekali lagi satu frame kemudian
+  // untuk menangkap pergeseran terakhir dari huruf yang baru terpasang.
+  window.addEventListener('load', function () {
+    pasang();
+    requestAnimationFrame(pasang);
+    setTimeout(pasang, 300);
+  });
 })();
