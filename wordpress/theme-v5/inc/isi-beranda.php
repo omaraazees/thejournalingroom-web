@@ -36,13 +36,135 @@ function tjr_v5_id_beranda() {
 }
 
 /**
+ * Kalimat bawaan tiap kolom teks.
+ *
+ * Ini satu satunya tempat kalimat aslinya ditulis. Pattern membacanya lewat
+ * tjr_v5_isi(), dan layar edit memakai kalimat yang sama untuk mengisi kolom
+ * yang masih kosong. Kalau kalimatnya ditulis dua kali, cepat atau lambat yang
+ * di layar edit dan yang di halaman jadi beda tanpa ada yang sadar.
+ *
+ * @param string $nama Nama field. Kosongkan untuk dapat seluruh peta.
+ * @return string|array
+ */
+function tjr_v5_bawaan_teks( $nama = '' ) {
+	// Filter acf/load_value memanggil ini untuk tiap kolom yang dimuat, jadi
+	// petanya dirakit sekali saja per request.
+	static $simpan = null;
+
+	if ( null !== $simpan ) {
+		if ( '' === $nama ) {
+			return $simpan;
+		}
+
+		return isset( $simpan[ $nama ] ) ? $simpan[ $nama ] : '';
+	}
+
+	// Kalimat pengantar pertama menyebut sudah berapa kali TJR duduk bersama,
+	// jadi angkanya dihitung di sini, bukan diketik.
+	$jml  = function_exists( 'tjr_v5_jumlah_acara' ) ? tjr_v5_jumlah_acara( 'lewat' ) : 0;
+	$kali = ( 0 === $jml )
+		? 'Dari kedai kopi sampai pendopo tua'
+		: tjr_v5_angka_kata( $jml ) . ' kali, dari kedai kopi sampai pendopo tua';
+
+	$peta = array(
+		/* Hero */
+		'hero_label'             => 'Workshop journaling',
+		'hero_judul'             => 'Your kind journaling companion',
+		'hero_foto_judul'        => 'Kelas journaling di Jogja untuk yang belum tahu mau menulis apa',
+		'hero_foto_isi'          => 'Kertasnya kosong, jamnya pelan. Alat tulis sudah kami siapkan, dan tidak ada giliran bercerita di depan orang.',
+		'hero_cetakan_teks'      => 'Nov 2025',
+
+		/* Pengantar */
+		'pengantar_1'            => 'The Journaling Room menggelar workshop journaling dan kelas menulis jurnal di Yogyakarta sejak November 2025. ' . $kali . ', selalu dengan pola yang sama: satu meja panjang, bahan yang sudah ditata rapi, dan waktu yang tidak diburu.',
+		'pengantar_2'            => 'Tidak ada sesi perkenalan yang membuat kaku. Kamu boleh menulis, menempel, atau hanya memegang gunting sambil menonton orang lain bekerja. Sorenya selesai ketika kamu merasa selesai.',
+		'kutipan'                => 'Halaman kosong tidak pernah menuntut apa apa',
+		'pengantar_cetakan_teks' => 'Pendopo Radian',
+
+		/* Galeri bento */
+		'bento_1_teks'           => 'Radian',
+		'bento_2_teks'           => 'Sunday Reads Club',
+		'bento_3_teks'           => 'Wardah',
+		'bento_4_teks'           => 'Pasar Jakal',
+
+		/* Tumpukan cetakan */
+		'cetakan_1_nama'         => 'Sunday Reads',
+		'cetakan_2_nama'         => 'Radian',
+		'cetakan_3_nama'         => 'Wardah',
+		'cetakan_4_nama'         => 'Artotel',
+		'cetakan_5_nama'         => 'Kolondjono',
+		'cetakan_6_nama'         => 'AMCO x Naoki',
+		'cetakan_7_nama'         => 'Snapobox',
+		'cetakan_8_nama'         => 'Pasar Jakal',
+		'cetakan_9_nama'         => 'Kupiku',
+	);
+
+	$simpan = $peta;
+
+	if ( '' === $nama ) {
+		return $peta;
+	}
+
+	return isset( $peta[ $nama ] ) ? $peta[ $nama ] : '';
+}
+
+/**
+ * Berkas foto bawaan tiap kolom gambar, plus teks alternatifnya.
+ *
+ * Berkasnya ikut tema di git, bukan di Media Library, supaya halaman tetap
+ * utuh di instalasi yang baru. Begitu kolomnya diisi dari dasbor, unggahan
+ * itu yang menang.
+ *
+ * @param string $nama Nama field. Kosongkan untuk dapat seluruh peta.
+ * @return array
+ */
+function tjr_v5_bawaan_foto( $nama = '' ) {
+	$peta = array(
+		/* Hero */
+		'hero_foto'         => array( 'snapobox-11.jpg', 'Peserta workshop The Journaling Room memegang jurnal masing masing di bawah lampion' ),
+		'hero_cetakan'      => array( 'sundayreads-27.jpg', '' ),
+
+		/* Pengantar */
+		'pengantar_foto'    => array( 'artotel-16.jpg', 'Jurnal peserta digelar berjajar di lantai setelah sesi' ),
+		'pengantar_cetakan' => array( 'radian-24.jpg', '' ),
+
+		/* Galeri bento */
+		'bento_1'           => array( 'radian-11.jpg', 'Sesi journaling di pendopo bersama Radian' ),
+		'bento_2'           => array( 'sundayreads-08.jpg', 'Bahan journaling ditata dari atas meja' ),
+		'bento_3'           => array( 'wardah-09.jpg', 'Kit alat tulis Wardah di atas meja' ),
+		'bento_4'           => array( 'pasar-jakal-06.jpg', 'Tangan peserta menempel bahan di halaman jurnal' ),
+
+		/* Tumpukan cetakan */
+		'cetakan_1'         => array( 'sundayreads-12.jpg', 'Dokumentasi sesi TJR bersama Sunday Reads' ),
+		'cetakan_2'         => array( 'radian-30.jpg', 'Dokumentasi sesi TJR bersama Radian' ),
+		'cetakan_3'         => array( 'wardah-04.jpg', 'Dokumentasi sesi TJR bersama Wardah' ),
+		'cetakan_4'         => array( 'artotel-19.jpg', 'Dokumentasi sesi TJR bersama Artotel' ),
+		'cetakan_5'         => array( 'kolondjono-20.jpg', 'Dokumentasi sesi TJR bersama Kolondjono' ),
+		'cetakan_6'         => array( 'amco-naoki-03.jpg', 'Dokumentasi sesi TJR bersama AMCO x Naoki' ),
+		'cetakan_7'         => array( 'snapobox-08.jpg', 'Dokumentasi sesi TJR bersama Snapobox' ),
+		'cetakan_8'         => array( 'pasar-jakal-02.jpg', 'Dokumentasi sesi TJR bersama Pasar Jakal' ),
+		'cetakan_9'         => array( 'kupiku-04.jpg', 'Dokumentasi sesi TJR bersama Kupiku' ),
+	);
+
+	if ( '' === $nama ) {
+		return $peta;
+	}
+
+	return isset( $peta[ $nama ] ) ? $peta[ $nama ] : array( '', '' );
+}
+
+/**
  * Ambil satu field isi beranda.
  *
  * @param string $nama   Nama field.
- * @param mixed  $bawaan Nilai kalau field kosong atau ACF belum aktif.
+ * @param mixed  $bawaan Nilai kalau field kosong. Biarkan null supaya kalimat
+ *                       bawaannya diambil dari tjr_v5_bawaan_teks().
  * @return mixed
  */
-function tjr_v5_isi( $nama, $bawaan = '' ) {
+function tjr_v5_isi( $nama, $bawaan = null ) {
+	if ( null === $bawaan ) {
+		$bawaan = tjr_v5_bawaan_teks( $nama );
+	}
+
 	if ( ! function_exists( 'get_field' ) ) {
 		return $bawaan;
 	}
@@ -67,10 +189,16 @@ function tjr_v5_isi( $nama, $bawaan = '' ) {
  *
  * @param string $nama    Nama field bertipe Image.
  * @param string $berkas  Nama berkas di assets/img/ yang dipakai kalau kosong.
+ *                        Biarkan null supaya diambil dari tjr_v5_bawaan_foto().
  * @return string
  */
-function tjr_v5_foto( $nama, $berkas ) {
-	$nilai = tjr_v5_isi( $nama, null );
+function tjr_v5_foto( $nama, $berkas = null ) {
+	if ( null === $berkas ) {
+		$bawaan = tjr_v5_bawaan_foto( $nama );
+		$berkas = $bawaan[0];
+	}
+
+	$nilai = tjr_v5_isi( $nama, '' );
 
 	if ( is_array( $nilai ) && ! empty( $nilai['url'] ) ) {
 		return $nilai['url'];
@@ -94,11 +222,17 @@ function tjr_v5_foto( $nama, $berkas ) {
  * Teks alternatif gambar dari field, dengan cadangan yang ditulis di pattern.
  *
  * @param string $nama   Nama field bertipe Image.
- * @param string $bawaan Alt cadangan.
+ * @param string $bawaan Alt cadangan. Biarkan null supaya diambil dari
+ *                       tjr_v5_bawaan_foto().
  * @return string
  */
-function tjr_v5_foto_alt( $nama, $bawaan = '' ) {
-	$nilai = tjr_v5_isi( $nama, null );
+function tjr_v5_foto_alt( $nama, $bawaan = null ) {
+	if ( null === $bawaan ) {
+		$peta   = tjr_v5_bawaan_foto( $nama );
+		$bawaan = $peta[1];
+	}
+
+	$nilai = tjr_v5_isi( $nama, '' );
 
 	if ( is_array( $nilai ) && ! empty( $nilai['alt'] ) ) {
 		return $nilai['alt'];
@@ -121,6 +255,19 @@ function tjr_v5_foto_alt( $nama, $bawaan = '' ) {
  * @return array
  */
 function tjr_v5_field_foto( $nama, $label, $petunjuk = '' ) {
+	// Foto bawaannya ikut tema, bukan Media Library, jadi tidak bisa dipasang
+	// sebagai isi kolom. Yang bisa: ditunjukkan. Tanpa ini kolomnya cuma
+	// tertulis "No image selected" dan tidak ada cara tahu foto mana yang
+	// sedang tampil di halaman.
+	$bawaan = tjr_v5_bawaan_foto( $nama );
+
+	if ( '' !== $bawaan[0] ) {
+		$petunjuk .= '<span class="tjr-bawaan">'
+			. '<img src="' . esc_url( get_theme_file_uri( '/assets/img/' . $bawaan[0] ) ) . '" alt="" />'
+			. '<span>Ini yang tampil sekarang. Kosongkan kolom ini kalau mau memakainya lagi.</span>'
+			. '</span>';
+	}
+
 	return array(
 		'key'           => 'field_tjr_' . $nama,
 		'label'         => $label,
@@ -150,10 +297,41 @@ function tjr_v5_field_teks( $nama, $label, $petunjuk = '', $panjang = false ) {
 		'name'         => $nama,
 		'type'         => $panjang ? 'textarea' : 'text',
 		'instructions' => $petunjuk,
+		'placeholder'  => tjr_v5_bawaan_teks( $nama ),
 		'rows'         => 3,
 		'new_lines'    => '',
 	);
 }
+
+/**
+ * Isi kolom teks yang masih kosong dengan kalimat yang sekarang tampil.
+ *
+ * Kolom kosong itu jalan buntu buat orang yang tidak menulis kodenya: tidak
+ * kelihatan kalimat mana yang sedang tampil, dan mengganti satu kata berarti
+ * mengetik ulang seluruh paragraf. Jadi kolomnya dibuka sudah terisi, tinggal
+ * disunting. Yang disimpan tetap cuma yang mereka tekan Update.
+ *
+ * @param mixed $nilai Nilai dari database.
+ * @param mixed $id    ID post.
+ * @param array $field Definisi field.
+ * @return mixed
+ */
+function tjr_v5_muat_isi_beranda( $nilai, $id, $field ) {
+	// Filter ini global, jadi kolom milik plugin lain disingkirkan lebih dulu
+	// sebelum peta bawaannya ikut dirakit.
+	if ( ! empty( $nilai ) || empty( $field['key'] ) || 0 !== strpos( $field['key'], 'field_tjr_' ) ) {
+		return $nilai;
+	}
+
+	if ( empty( $field['name'] ) ) {
+		return $nilai;
+	}
+
+	$bawaan = tjr_v5_bawaan_teks( $field['name'] );
+
+	return ( '' !== $bawaan ) ? $bawaan : $nilai;
+}
+add_filter( 'acf/load_value', 'tjr_v5_muat_isi_beranda', 10, 3 );
 
 /**
  * Daftarkan grup field Isi Beranda.
@@ -818,3 +996,18 @@ function tjr_v5_sembunyikan_judul_kanvas() {
 	wp_add_inline_style( 'tjr-v5-editor-acara', $css );
 }
 add_action( 'admin_enqueue_scripts', 'tjr_v5_sembunyikan_judul_kanvas' );
+
+/**
+ * Gaya kecil untuk contekan foto bawaan di panel Isi Beranda.
+ */
+function tjr_v5_gaya_isi_beranda() {
+	$css = '.tjr-bawaan{display:flex;align-items:center;gap:10px;margin-top:8px}'
+		. '.tjr-bawaan img{width:72px;height:54px;object-fit:cover;border-radius:4px;'
+		. 'border:1px solid #dcdcde;flex:none}'
+		. '.tjr-bawaan > span{font-style:italic}';
+
+	wp_register_style( 'tjr-v5-isi-beranda', false, array(), TJR_V5_VERSION );
+	wp_enqueue_style( 'tjr-v5-isi-beranda' );
+	wp_add_inline_style( 'tjr-v5-isi-beranda', $css );
+}
+add_action( 'admin_enqueue_scripts', 'tjr_v5_gaya_isi_beranda' );

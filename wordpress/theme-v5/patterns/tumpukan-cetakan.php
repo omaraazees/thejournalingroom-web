@@ -8,28 +8,15 @@
  * Viewport Width: 1400
  */
 
-$tjr_bawaan = array(
-	array( 'sundayreads-12', 'Sunday Reads', 'Dokumentasi sesi TJR bersama Sunday Reads' ),
-	array( 'radian-30', 'Radian', 'Dokumentasi sesi TJR bersama Radian' ),
-	array( 'wardah-04', 'Wardah', 'Dokumentasi sesi TJR bersama Wardah' ),
-	array( 'artotel-19', 'Artotel', 'Dokumentasi sesi TJR bersama Artotel' ),
-	array( 'kolondjono-20', 'Kolondjono', 'Dokumentasi sesi TJR bersama Kolondjono' ),
-	array( 'amco-naoki-03', 'AMCO x Naoki', 'Dokumentasi sesi TJR bersama AMCO x Naoki' ),
-	array( 'snapobox-08', 'Snapobox', 'Dokumentasi sesi TJR bersama Snapobox' ),
-	array( 'pasar-jakal-02', 'Pasar Jakal', 'Dokumentasi sesi TJR bersama Pasar Jakal' ),
-	array( 'kupiku-04', 'Kupiku', 'Dokumentasi sesi TJR bersama Kupiku' ),
-);
-
-// Tiap cetakan boleh diganti dari tab Cetakan di halaman depan. Yang dibiarkan
-// kosong memakai foto bawaan di atas.
+// Sembilan cetakan, isinya dari tab Cetakan di halaman depan. Foto dan nama
+// bawaannya ada di tjr_v5_bawaan_foto() dan tjr_v5_bawaan_teks().
 $tjr_cetakan = array();
 
-foreach ( $tjr_bawaan as $tjr_i => $tjr_satu ) {
-	$tjr_n = $tjr_i + 1;
+for ( $tjr_n = 1; $tjr_n <= 9; $tjr_n++ ) {
 	$tjr_cetakan[] = array(
-		tjr_v5_foto( 'cetakan_' . $tjr_n, $tjr_satu[0] . '.jpg' ),
-		tjr_v5_isi( 'cetakan_' . $tjr_n . '_nama', $tjr_satu[1] ),
-		tjr_v5_foto_alt( 'cetakan_' . $tjr_n, $tjr_satu[2] ),
+		tjr_v5_foto( 'cetakan_' . $tjr_n ),
+		tjr_v5_isi( 'cetakan_' . $tjr_n . '_nama' ),
+		tjr_v5_foto_alt( 'cetakan_' . $tjr_n ),
 	);
 }
 ?>

@@ -11,15 +11,16 @@
 $tjr_wa_slot = esc_url( tjr_v5_link_wa_slot() );
 
 // Isi diambil dari halaman depan lewat ACF. Kalau kolomnya belum diisi, yang
-// dipakai aset dan kalimat yang sekarang ada di tema.
-$tjr_label   = tjr_v5_isi( 'hero_label', 'Workshop journaling' );
-$tjr_judul   = tjr_v5_isi( 'hero_judul', 'Your kind journaling companion' );
-$tjr_foto    = tjr_v5_foto( 'hero_foto', 'snapobox-11.jpg' );
-$tjr_alt     = tjr_v5_foto_alt( 'hero_foto', 'Peserta workshop The Journaling Room memegang jurnal masing masing di bawah lampion' );
-$tjr_f_judul = tjr_v5_isi( 'hero_foto_judul', 'Kelas journaling di Jogja untuk yang belum tahu mau menulis apa' );
-$tjr_f_isi   = tjr_v5_isi( 'hero_foto_isi', 'Kertasnya kosong, jamnya pelan. Alat tulis sudah kami siapkan, dan tidak ada giliran bercerita di depan orang.' );
-$tjr_cetak   = tjr_v5_foto( 'hero_cetakan', 'sundayreads-27.jpg' );
-$tjr_cetak_t = tjr_v5_isi( 'hero_cetakan_teks', 'Nov 2025' );
+// dipakai aset dan kalimat bawaan di tjr_v5_bawaan_teks() dan
+// tjr_v5_bawaan_foto(), bukan yang diketik ulang di sini.
+$tjr_label   = tjr_v5_isi( 'hero_label' );
+$tjr_judul   = tjr_v5_isi( 'hero_judul' );
+$tjr_foto    = tjr_v5_foto( 'hero_foto' );
+$tjr_alt     = tjr_v5_foto_alt( 'hero_foto' );
+$tjr_f_judul = tjr_v5_isi( 'hero_foto_judul' );
+$tjr_f_isi   = tjr_v5_isi( 'hero_foto_isi' );
+$tjr_cetak   = tjr_v5_foto( 'hero_cetakan' );
+$tjr_cetak_t = tjr_v5_isi( 'hero_cetakan_teks' );
 
 // Kartu sesi terdekat mengambil acara yang tanggalnya paling dekat dan belum
 // lewat. Kalau belum ada acara sama sekali, kartunya tidak dicetak.

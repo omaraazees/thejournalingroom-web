@@ -8,21 +8,16 @@
  * Viewport Width: 1400
  */
 
-$tjr_bento = array(
-	1 => array( 'radian-11.jpg', 'Radian', 'Sesi journaling di pendopo bersama Radian' ),
-	2 => array( 'sundayreads-08.jpg', 'Sunday Reads Club', 'Bahan journaling ditata dari atas meja' ),
-	3 => array( 'wardah-09.jpg', 'Wardah', 'Kit alat tulis Wardah di atas meja' ),
-	4 => array( 'pasar-jakal-06.jpg', 'Pasar Jakal', 'Tangan peserta menempel bahan di halaman jurnal' ),
-);
-
+// Empat petak, isinya dari tab Galeri di halaman depan. Foto dan tulisan
+// bawaannya ada di tjr_v5_bawaan_foto() dan tjr_v5_bawaan_teks().
 $tjr_foto = array();
 $tjr_alt  = array();
 $tjr_teks = array();
 
-foreach ( $tjr_bento as $tjr_n => $tjr_bawaan ) {
-	$tjr_foto[ $tjr_n ] = tjr_v5_foto( 'bento_' . $tjr_n, $tjr_bawaan[0] );
-	$tjr_alt[ $tjr_n ]  = tjr_v5_foto_alt( 'bento_' . $tjr_n, $tjr_bawaan[2] );
-	$tjr_teks[ $tjr_n ] = tjr_v5_isi( 'bento_' . $tjr_n . '_teks', $tjr_bawaan[1] );
+for ( $tjr_n = 1; $tjr_n <= 4; $tjr_n++ ) {
+	$tjr_foto[ $tjr_n ] = tjr_v5_foto( 'bento_' . $tjr_n );
+	$tjr_alt[ $tjr_n ]  = tjr_v5_foto_alt( 'bento_' . $tjr_n );
+	$tjr_teks[ $tjr_n ] = tjr_v5_isi( 'bento_' . $tjr_n . '_teks' );
 }
 
 // Kalimat pengantar menyebut jumlah, jadi angkanya ikut isi CMS.
