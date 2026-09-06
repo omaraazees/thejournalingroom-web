@@ -86,7 +86,7 @@ $tjr_wa = esc_url( tjr_v5_link_wa_slot() );
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
 <!-- wp:paragraph {"className":"dt ik-tas"} --><p class="dt ik-tas">Yang perlu dibawa</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"dd"} --><p class="dd">Tidak ada. Jurnal sendiri boleh dibawa kalau ingin</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"dd dd-bawa"} --><p class="dd dd-bawa">Tidak ada. Jurnal sendiri boleh dibawa kalau ingin</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 

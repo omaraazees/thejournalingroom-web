@@ -535,6 +535,11 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 		$isi = tjr_v5_tempat_acara( $id );
 	} elseif ( false !== strpos( $kelas, 'dd-kit' ) ) {
 		$isi = esc_html( tjr_v5_kit_acara( $id ) );
+	} elseif ( false !== strpos( $kelas, 'dd-bawa' ) ) {
+		$bawa = trim( (string) get_post_meta( $id, 'bawa_sendiri', true ) );
+		// Kalimat bawaannya berlaku untuk hampir semua sesi, jadi baris ini tidak
+		// dibuang waktu kosong. Yang dipakai teks yang sudah tertulis di pattern.
+		$isi  = '' !== $bawa ? esc_html( $bawa ) : null;
 	} elseif ( false !== strpos( $kelas, 'dd-kursi' ) ) {
 		$kursi = tjr_v5_kursi_acara( $id );
 		$isi   = $kursi ? esc_html( $kursi['terisi'] . ' dari ' . $kursi['kapasitas'] . ' kursi sudah terisi' ) : '';
@@ -616,3 +621,32 @@ function tjr_v5_acara_terdekat() {
 
 	return $q->have_posts() ? $q->posts[0] : null;
 }
+
+
+/**
+ * Kolom Yang perlu dibawa, disuntikkan ke grup Detail Acara.
+ *
+ * Grup itu dibuat lewat layar ACF dan hidup di database, jadi tidak ikut git.
+ * acf_add_local_field dengan parent grup itu menambah satu kolom dari kode
+ * tanpa menyentuh grupnya, jadi kolom ini ikut versi dan tidak bisa terhapus
+ * tidak sengaja dari dasbor.
+ */
+function tjr_v5_field_bawa() {
+	if ( ! function_exists( 'acf_add_local_field' ) ) {
+		return;
+	}
+
+	acf_add_local_field(
+		array(
+			'key'           => 'field_tjr_bawa_sendiri',
+			'label'         => 'Yang perlu dibawa',
+			'name'          => 'bawa_sendiri',
+			'type'          => 'text',
+			'parent'        => 'group_tjr_acara',
+			'instructions'  => 'Muncul di kartu sesi, sebelah kanan Yang disediakan. Kosongkan untuk memakai kalimat bawaan: Tidak ada. Jurnal sendiri boleh dibawa kalau ingin.',
+			'placeholder'   => 'Tidak ada. Jurnal sendiri boleh dibawa kalau ingin',
+			'menu_order'    => 90,
+		)
+	);
+}
+add_action( 'acf/init', 'tjr_v5_field_bawa' );
