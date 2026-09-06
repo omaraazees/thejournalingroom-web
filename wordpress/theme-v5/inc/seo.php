@@ -453,7 +453,19 @@ function tjr_v5_seo_deskripsi_acara( $id ) {
 		$kalimat .= ' Sisa ' . $sisa . ' kursi.';
 	}
 
-	$kalimat .= ' Tanya slot lewat WhatsApp ' . tjr_v5_seo_nomor_tampil() . '.';
+	// Ajakan WhatsApp cuma ditempel kalau MUAT UTUH. Sebelumnya selalu
+	// ditempel lalu dipotong tjr_v5_seo_ringkas() di batas kata, dan karena
+	// nomornya sendiri berspasi hasilnya berhenti di tengah nomor:
+	// "Tanya slot lewat WhatsApp 0857". Nomor separuh di hasil pencarian
+	// lebih merugikan daripada tidak ada ajakan sama sekali.
+	$ajakan = ' Tanya slot lewat WhatsApp ' . tjr_v5_seo_nomor_tampil() . '.';
+	$panjang = function_exists( 'mb_strlen' )
+		? mb_strlen( $kalimat . $ajakan )
+		: strlen( $kalimat . $ajakan );
+
+	if ( $panjang <= 158 ) {
+		$kalimat .= $ajakan;
+	}
 
 	return tjr_v5_seo_ringkas( $kalimat );
 }
