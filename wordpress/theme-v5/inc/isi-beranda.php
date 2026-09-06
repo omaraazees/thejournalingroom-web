@@ -795,6 +795,58 @@ function tjr_v5_kursi_acara( $id ) {
 }
 
 /**
+ * Apakah tanggal acara ini sudah lewat.
+ *
+ * Dipakai untuk membedakan sesi yang masih bisa didaftari dari sesi yang sudah
+ * selesai. Acara tanpa tanggal DIANGGAP BELUM lewat, karena menebak "sudah
+ * selesai" dari data yang kosong lebih merugikan daripada menampilkan barisnya.
+ *
+ * Tanggalnya tersimpan sebagai waktu lokal tanpa zona, jadi dibaca dengan
+ * wp_timezone(). strtotime() polos akan membacanya sebagai UTC dan meleset
+ * tujuh jam untuk acara yang jatuh hari ini.
+ *
+ * @param int $id ID acara.
+ * @return bool
+ */
+function tjr_v5_acara_lewat( $id ) {
+	$mulai = trim( (string) get_post_meta( $id, TJR_FIELD_MULAI, true ) );
+
+	if ( '' === $mulai ) {
+		return false;
+	}
+
+	try {
+		$waktu = new DateTimeImmutable( $mulai, wp_timezone() );
+	} catch ( Exception $e ) {
+		return false;
+	}
+
+	return $waktu->getTimestamp() < current_datetime()->getTimestamp();
+}
+
+/**
+ * ID acara yang sedang dirender, dari konteks blok atau dari halaman tunggal.
+ *
+ * @param WP_Block|null $blok Instance blok.
+ * @return int 0 kalau yang dirender bukan acara.
+ */
+function tjr_v5_id_acara_konteks( $blok = null ) {
+	$id = ( $blok && isset( $blok->context['postId'] ) ) ? (int) $blok->context['postId'] : 0;
+
+	// Di template halaman tunggal konteksnya kadang tidak diteruskan, jadi
+	// dipakai postingan yang sedang ditampilkan.
+	if ( ! $id && is_singular( 'acara' ) ) {
+		$id = (int) get_the_ID();
+	}
+
+	if ( ! $id || 'acara' !== get_post_type( $id ) ) {
+		return 0;
+	}
+
+	return $id;
+}
+
+/**
  * Tukar isi baris fakta dan bar kursi dengan nilai acara yang sedang dirender.
  *
  * @param string   $konten Hasil render blok.
@@ -814,6 +866,15 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 			return $konten;
 		}
 
+		// Sesi yang sudah lewat tidak punya slot untuk ditanyakan, jadi ajakannya
+		// dibuang. Tautan "Semua jadwal" di kepala halaman tetap ada, jadi
+		// pengunjung tidak jadi buntu.
+		$id_acara = tjr_v5_id_acara_konteks( $blok );
+
+		if ( $id_acara && tjr_v5_acara_lewat( $id_acara ) ) {
+			return '';
+		}
+
 		return preg_replace(
 			'#(<a\b[^>]*\bhref=")[^"]*(")#',
 			'${1}' . esc_url( tjr_v5_link_wa_slot() ) . '${2}',
@@ -826,17 +887,15 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 		return $konten;
 	}
 
-	$id = ( $blok && isset( $blok->context['postId'] ) ) ? (int) $blok->context['postId'] : 0;
+	$id = tjr_v5_id_acara_konteks( $blok );
 
-	// Di template halaman tunggal konteksnya kadang tidak diteruskan, jadi
-	// dipakai postingan yang sedang ditampilkan.
-	if ( ! $id && is_singular( 'acara' ) ) {
-		$id = (int) get_the_ID();
-	}
-
-	if ( ! $id || 'acara' !== get_post_type( $id ) ) {
+	if ( ! $id ) {
 		return $konten;
 	}
+
+	// Sesi yang sudah lewat tidak menawarkan kursi, jadi penghitungnya salah
+	// berapa pun angkanya. Barisnya dan barnya dibuang, bukan diisi angka lain.
+	$lewat = tjr_v5_acara_lewat( $id );
 
 	$kelas = isset( $parsed['attrs']['className'] ) ? $parsed['attrs']['className'] : '';
 
@@ -848,7 +907,7 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 
 		$kursi = tjr_v5_kursi_acara( $id );
 
-		if ( ! $kursi ) {
+		if ( ! $kursi || $lewat ) {
 			return '';
 		}
 
@@ -877,7 +936,9 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 		$isi  = '' !== $bawa ? esc_html( $bawa ) : null;
 	} elseif ( false !== strpos( $kelas, 'dd-kursi' ) ) {
 		$kursi = tjr_v5_kursi_acara( $id );
-		$isi   = $kursi ? esc_html( $kursi['terisi'] . ' dari ' . $kursi['kapasitas'] . ' kursi sudah terisi' ) : '';
+		$isi   = ( $kursi && ! $lewat )
+			? esc_html( $kursi['terisi'] . ' dari ' . $kursi['kapasitas'] . ' kursi sudah terisi' )
+			: '';
 	}
 
 	if ( null === $isi ) {
