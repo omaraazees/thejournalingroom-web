@@ -1,5 +1,18 @@
 # BRIEF — The Journaling Room, situs WordPress
 
+> **CATATAN 2026-09-07 (god).** Dokumen ini adalah brief ASLI proyek dan dipertahankan sebagai
+> rekaman sejarah. Sebagian jalurnya sudah MATI dan jangan dipakai sebagai acuan lagi:
+>
+> - `desain/prototipe/tokens.css` — **DIHAPUS.** Token generasi lama (palet paper/ink/rose/sage/kraft).
+>   Sumber kebenaran token sekarang: `wordpress/theme-v5/theme.json` (palet kertas/tinta/burgundy).
+> - `wordpress/theme/` — **DIHAPUS.** Child theme GeneratePress generasi lama. Tema yang benar-benar
+>   tayang di thejournalingroom.id adalah `wordpress/theme-v5/`, dengan repo deploy `tjr-v5-theme`.
+> - `desain/prototipe/final-beranda.html` dan `index.html` juga generasi lama; dipertahankan sebagai
+>   arsip, tapi jangan dipakai sebagai acuan pola markup.
+>
+> Jalur mati ini sempat menyesatkan brief dispatch god sendiri di kartu D-1.
+
+
 Dibaca oleh 4 agent. Kerjakan HANYA lane kamu. Jangan sentuh folder lane lain.
 
 ## Konteks
