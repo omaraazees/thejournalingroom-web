@@ -58,6 +58,15 @@ a{color:inherit}
 @media(max-width:720px){
   .wp-site-blocks{margin:8px;border-radius:20px}
 }
+/* Lembar kertas ini kartu melayang: ada margin di keempat sisinya, sudutnya
+   bulat, dan overflow:clip menahan apa pun di dalamnya. Bagus untuk isi
+   halaman, celaka untuk panel menu, karena clip juga mengurung position:fixed
+   sehingga panelnya cuma sebesar lembar, bukan sebesar layar. WordPress
+   memasang has-modal-open di <html> selama panel terbuka, jadi clip-nya
+   dilepas sepanjang itu saja. Halamannya sendiri dikunci supaya yang di balik
+   panel tidak ikut tergulir. */
+html.has-modal-open{overflow:hidden}
+html.has-modal-open .wp-site-blocks{overflow:visible}
 
 /* ===== 2. Tipografi ===== */
 
@@ -294,19 +303,20 @@ header.wp-block-template-part{
     width:16px;height:16px;fill:currentColor;
   }
 
-  /* Menu terbuka menutup penuh, bukan kartu melayang.
-     Blok Navigation memakai position:fixed, tapi lembar kertas .wp-site-blocks
-     memakai overflow:clip dan itu mengurung elemen fixed. Jadi dipakai absolute
-     terhadap .bar yang sticky di puncak layar, ditarik sampai tepi lembar lewat
-     inset negatif sebesar padding lembar, lalu ditinggikan satu layar penuh. */
+  /* Menu terbuka menutup satu layar penuh, bukan kartu melayang.
+     Ukurannya diambil dari viewport lewat position:fixed inset:0, bukan
+     ditebak dari padding lembar. Versi sebelumnya memakai absolute dengan
+     inset negatif seukuran padding, dan angkanya meleset di perangkat yang
+     paddingnya jatuh di clamp yang berbeda: panelnya berhenti beberapa piksel
+     dari tepi, lalu sudutnya ikut dibulatkan oleh lembar yang mengurungnya.
+     Syaratnya cuma satu, clip pada lembar dilepas, dan itu diurus oleh aturan
+     html.has-modal-open di atas. */
   .bar .wp-block-navigation__responsive-container.is-menu-open{
-    --tepi:clamp(18px,3.2vw,46px);
-    position:absolute;top:0;bottom:auto;
-    left:calc(-1 * var(--tepi));right:calc(-1 * var(--tepi));
-    width:auto;min-width:0;height:100svh;min-height:0;max-height:none;
+    position:fixed;inset:0;
+    width:auto;min-width:0;height:auto;min-height:0;max-height:none;
     overflow:auto;z-index:90;
     display:flex;align-items:center;
-    padding:clamp(72px,16vw,120px) calc(var(--tepi) + clamp(16px,4vw,40px));
+    padding:clamp(72px,16vw,120px) clamp(28px,8vw,64px);
     background:var(--wp--preset--color--kertas);
     border:0;border-radius:0;box-shadow:none;
   }
@@ -339,6 +349,22 @@ header.wp-block-template-part{
     color:var(--wp--preset--color--burgundy);
   }
   .bar .wp-block-navigation__responsive-container.is-menu-open a::after{content:none}
+
+  /* Di layar sentuh tidak ada kursor yang menggantung, jadi cincin fokus baru
+     muncul sesudah tautannya diketuk, dan karena tautannya selebar baris
+     cincinnya terbaca sebagai kotak yang tertinggal di sekeliling satu kata.
+     Yang dipakai cuma warna teksnya. Keyboard di layar besar tetap dapat
+     cincinnya seperti biasa. */
+  @media(hover:none),(pointer:coarse){
+    .bar .wp-block-navigation__responsive-container.is-menu-open a:focus,
+    .bar .wp-block-navigation__responsive-container.is-menu-open a:focus-visible{
+      outline:none;
+    }
+    .bar .wp-block-navigation__responsive-container.is-menu-open a:focus,
+    .bar .wp-block-navigation__responsive-container.is-menu-open a:active{
+      color:var(--wp--preset--color--burgundy);
+    }
+  }
 
   /* tombol tutup duduk di sudut kanan atas, sejajar tempat tombol Hubungi kami */
   .bar .wp-block-navigation__responsive-container-close{
@@ -385,6 +411,15 @@ header.wp-block-template-part{
 }
 @media(max-width:560px){
   .hero h1,.hero .d-xxl{max-width:none}
+}
+/* Di layar lebar jarak besar antara bar dan judul itu ruang bernapas. Di layar
+   sempit jadi lubang: bar dan judul sama sama rata kiri dan selebar layar,
+   jadi yang terlihat cuma satu bidang kosong sebelum halamannya mulai.
+   Hitungannya 16 di kaki bar, 24 dari blockGap lembar, 8 di kepala hero. */
+@media(max-width:900px){
+  .bar,
+  header.wp-block-template-part{padding-bottom:16px}
+  .hero{padding-top:8px}
 }
 
 /* Panggung, dibangun dari blok Cover supaya fotonya bisa diganti dari editor. */
