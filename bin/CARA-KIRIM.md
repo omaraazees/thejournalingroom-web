@@ -310,9 +310,22 @@ def tersembunyi(rel):                            # predikat, per segmen jalur
     return any(bagian.startswith(".") for bagian in rel.parts)
 ```
 
-**Kalau menambah alat baru yang menulis folder goresnya sendiri, kamu tidak perlu
-melakukan apa pun di sini** selama nama foldernya berawalan titik, dan hampir semua
-alat memang begitu. Dulu instruksinya menambahkan nama itu ke sebuah daftar tolak.
+Kalau menambah alat baru yang menulis folder goresnya sendiri, **periksa dulu apakah
+nama foldernya berawalan titik.** Kalau ya, kamu nol perlu melakukan apa pun di sini.
+
+**KALAU TIDAK, BERKASNYA AKAN TERKIRIM KE SERVER PUBLIK, DIAM DIAM.** Predikat ini
+menyaring **titik di awal segmen**, bukan "berkas gores" sebagai gagasan. Nama seperti
+`_cache/`, `tmp-agent/`, atau `:memory:.ses` LOLOS sepenuhnya.
+
+Itu bukan kekhawatiran teoretis: `:memory:.ses` **ada sekarang di akar repo ini**.
+Dia selamat cuma karena kebetulan berada di luar `wordpress/theme-v5/`, bukan karena
+saringannya menangkapnya. Kalau alat berikutnya menulisnya satu tingkat lebih dalam,
+dia berangkat.
+
+Jadi untuk folder gores yang namanya nol berawalan titik: tambahkan namanya ke
+`LEWATI`, atau lebih baik, suruh alatnya menulis di luar folder tema.
+
+Dulu instruksinya menambahkan tiap nama ke sebuah daftar tolak.
 Itu dihapus di kartu T-36, karena daftar tolak menuntut kita mengetahui setiap hal
 buruk di muka, dan yang tidak disebut justru **terkirim** ke server publik. Predikat
 tetap benar untuk hal yang belum ada.
