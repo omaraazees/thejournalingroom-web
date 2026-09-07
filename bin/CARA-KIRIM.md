@@ -345,6 +345,34 @@ Yang masih butuh tangan cuma berkas yang **tidak** berawalan titik dan tidak bol
 tayang, seperti `CATATAN.md`. Tambahkan ke `LEWATI` dan ke `.gitignore`, lalu
 jalankan `python3 bin/uji-kirim-tema.py`.
 
+## 9b. Kalau Umar menyunting langsung: jalankan `--teliti` sebelum mengirim
+
+Sejak 7 Sep 2026 Umar menyunting berkas proyek **langsung**, tanpa lewat kartu dan
+tanpa pengumuman. Untuk TJR itu berarti sebuah berkas tema bisa berubah **di
+server** tanpa jejak apa pun di sisi kita.
+
+**Bahayanya bukan konflik, melainkan pembatalan yang diam.** Skrip kirim
+memperlakukan lokal sebagai sumber kebenaran. Berkas yang diubah orang di server
+muncul di daftar kirim **persis sama** dengan berkas yang kamu ubah sendiri di
+lokal, lalu ditimpa tanpa satu pun peringatan. Nol error, nol konflik, dan
+suntingan tangan pemilik file hilang.
+
+**Gerbangnya satu perintah, dan dia membaca ISI ASLI server bukan manifes:**
+
+```bash
+python3 bin/kirim-tema-ftp.py --coba --teliti
+```
+
+`kirim 0` berarti seluruh berkas server identik dengan lokal, jadi nol ada yang
+disunting tangan. Kalau ada yang muncul dan kamu **nol** menyentuhnya di lokal,
+**BERHENTI**: itu suntingan orang, bukan kiriman yang tertinggal. Tanya dulu.
+
+Ongkosnya sekitar 50 detik karena seluruh isi server diunduh dan di-hash. Itu
+murah dibandingkan membatalkan suntingan tangan pemilik file tanpa dia tahu.
+
+Diukur 7 Sep 2026 pukul 22.00 WIB: 100 dari 100 berkas identik, nol suntingan
+tangan.
+
 ## 10. Menulis data acara: pakai `bin/tulis-acara.py`, jangan curl langsung
 
 Perubahan isi acara (harga, judul, excerpt, isi kit) masuk lewat WP REST, bukan
