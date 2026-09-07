@@ -1,0 +1,43 @@
+<!-- wp:template-part {"slug":"header","tagName":"header","className":"bar","area":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"isi-halaman","layout":{"type":"default"}} -->
+<main class="wp-block-group isi-halaman">
+
+<!-- Templat arsip. Sengaja ADA supaya arsip kategori berhenti jatuh ke
+     index.html. Di index.html ada heading statis "Cerita dari The Journaling
+     Room" yang memang harus ada di sana, karena WordPress mengosongkan
+     render_block_core_query_title() untuk is_home(). Tapi di arsip
+     query-title JUSTRU mencetak, jadi halaman kategori dulu kebagian DUA h1:
+     satu dari query-title, satu heading statis itu. Di sini query-title
+     berdiri sendiri sebagai satu-satunya h1. showPrefix dimatikan supaya
+     judulnya "Panduan journaling", bukan "Category: Panduan journaling"
+     yang awalannya string bawaan berbahasa Inggris. -->
+<!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Cerita</p><!-- /wp:paragraph -->
+<!-- wp:query-title {"type":"archive","showPrefix":false,"className":"d d-xl"} /-->
+
+<!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":true},"className":"daftar-tulisan"} -->
+<div class="wp-block-query daftar-tulisan">
+
+<!-- wp:post-template -->
+<!-- wp:post-date {"format":"j F Y","isLink":false} /-->
+<!-- wp:post-title {"level":2,"isLink":true,"className":"d d-lg"} /-->
+<!-- wp:post-excerpt {"className":"lead","excerptLength":30,"showMoreOnNewLine":false} /-->
+<!-- /wp:post-template -->
+
+<!-- wp:query-pagination -->
+<!-- wp:query-pagination-previous /-->
+<!-- wp:query-pagination-numbers /-->
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph {"className":"lead"} --><p class="lead">Belum ada tulisan di sini.</p><!-- /wp:paragraph -->
+<!-- /wp:query-no-results -->
+
+</div>
+<!-- /wp:query -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"kaki","area":"footer"} /-->

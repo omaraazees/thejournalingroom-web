@@ -12,6 +12,16 @@
 
 <!-- wp:post-content {"layout":{"type":"default"}} /-->
 
+<!-- Navigasi antar tulisan. showTitle dinyalakan supaya teks tautannya judul
+     artikel tujuan, bukan kata "Sebelumnya" saja: teks tautan harus bermakna
+     kalau dibaca lepas dari sekitarnya. -->
+<!-- wp:group {"className":"nav-tulisan","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+<div class="wp-block-group nav-tulisan">
+<!-- wp:post-navigation-link {"type":"previous","label":"Tulisan sebelumnya","showTitle":true} /-->
+<!-- wp:post-navigation-link {"label":"Tulisan berikutnya","showTitle":true} /-->
+</div>
+<!-- /wp:group -->
+
 </main>
 <!-- /wp:group -->
 

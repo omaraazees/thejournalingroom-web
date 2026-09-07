@@ -1570,3 +1570,40 @@ html.intro .hero .d-xxl .kata > i{display:inline-block;font-style:italic;transla
 /* Pengantar pendek di kepala seksi arsip, dibatasi supaya barisnya tidak
    lebih panjang dari judul di sebelahnya. */
 .lead-sempit{max-width:32ch;text-wrap:pretty}
+
+/* ===== Halaman tulisan tunggal (templat single) ===== */
+
+.isi-halaman .wp-block-post-terms.lbl a{
+  /* Target sentuh. Kotak teksnya 13.5px (label 10px), jadi tanpa padding
+     tautan kategori ini 13.5px: di bawah minimum WCAG 2.5.8 AA yang 24px,
+     dan temuan ini lahir dari templat single yang baru dibuat hari ini.
+     Padding 16px membuatnya 49px terukur di browser, lewat target ergonomis
+     44px. Margin negatif sebesar padding-nya mengembalikan tinggi baris ke
+     semula: diukur, posisi h1 di bawahnya bergeser 0px dan jaraknya tetap
+     24px. Ukuran teks tetap 10px: yang dinaikkan area sentuh, bukan huruf. */
+  display:inline-block;padding:16px 0;margin:-16px 0;
+  color:inherit;text-decoration:none;
+}
+.isi-halaman .wp-block-post-terms.lbl a:hover{color:var(--wp--preset--color--burgundy)}
+
+.nav-tulisan:not(:has(a)),.nav-tulisan:empty{
+  /* Blok post-navigation-link mencetak NOL kalau tidak ada tulisan tetangga.
+     Hari ini situs baru punya satu artikel, jadi kedua sisinya kosong dan
+     tanpa aturan ini yang tersisa cuma garis atas menggantung tanpa isi di
+     bawahnya. Disembunyikan sampai artikel kedua terbit. */
+  display:none;
+}
+.nav-tulisan{
+  margin-top:var(--wp--preset--spacing--jarak-4);
+  padding-top:var(--wp--preset--spacing--jarak-2);
+  border-top:1px solid var(--wp--preset--color--garis);
+  gap:var(--wp--preset--spacing--jarak-2);
+}
+.nav-tulisan a{
+  /* Alasan padding sama dengan tautan kategori di atas: teks kecil, area
+     sentuh harus tetap lewat 44px. Terukur 52.9px. */
+  display:inline-block;padding:12px 0;
+  font-size:var(--wp--preset--font-size--sedang);
+  color:var(--wp--preset--color--tinta-lembut);text-decoration:none;
+}
+.nav-tulisan a:hover{color:var(--wp--preset--color--burgundy)}
