@@ -2,8 +2,8 @@
 
 **Selesai. Satu field di basis data, nol berkas tema, nol kiriman FTP.**
 
-Catatan penomoran: kartu ini bernomor T-36, sama dengan kartu saringan skrip
-kirim yang sudah ditutup sebelumnya. Laporannya dipisah supaya nol tertukar.
+> **Catatan penomoran.** Nomor T-36 dipakai DUA kartu. Berkas ini soal JUDUL
+> ACARA. Kartu saringan skrip kirim ada di `LAPORAN-T36.md`.
 
 ## Sumbernya SATU, tapi kandidatnya DUA, dan itu perlu dipastikan dulu
 
