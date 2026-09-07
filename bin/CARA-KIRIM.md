@@ -534,6 +534,35 @@ Cadangan yang benar untuk latar `body` adalah warna di deklarasi yang sama, dan
 dirujuk dari CSS.** Latar `body` nol pernah masuk sapuan aset T-31 karena itu.
 Kalau menyapu bobot halaman, panen dari CSS juga.
 
-Dan **`srcset` bukan daftar unduhan**: peramban memilih satu kandidat menurut
+### RUJUKAN BUKAN UNDUHAN, dan ini jebakan yang paling sering mengulang
+
+Sebelum menjumlahkan apa pun sebagai "berat halaman", tanya satu hal:
+**apa yang membuat berkas ini BENAR-BENAR diminta peramban, di halaman ini?**
+Mengunduh sendiri dengan skrip lalu menjumlahkannya menjawab pertanyaan lain,
+yaitu "berapa besar berkas ini kalau diminta", dan dua pertanyaan itu sering
+punya jawaban yang jauh berbeda.
+
+Tiga bentuk yang sudah benar benar menipu di proyek ini, 7 Sep 2026:
+
+**1. `srcset` bukan daftar unduhan.** Peramban memilih SATU kandidat menurut
 `sizes` dikali DPR. `tjr-mark@2x.png` ada di srcset tapi baru terpilih di DPR
 sekitar 3,64 ke atas, jadi praktis nol pernah diunduh.
+
+**2. `@font-face` bukan daftar unduhan.** Berkas font cuma diunduh kalau ada
+**glyph yang benar benar dirender** dengan keluarga itu. Aturan CSS yang ADA tapi
+nol cocok elemen apa pun **nol memicu unduhan**, dan `document.fonts.ready` nol
+menunggunya karena dia nol pernah masuk keadaan loading.
+Kasusnya: `Pinyon Script` terdaftar di `theme.json` dan ikut diminta di URL Google
+Fonts, tapi **nol dipakai satu elemen pun** di 14 halaman terbit. Aku menjumlahkan
+28.072 byte-nya sebagai penghematan, dan penghematannya **nol byte nol milidetik**.
+Yang tersisa dari membuangnya cuma kerapian token di editor.
+
+**3. Bobot font variabel berbagi satu berkas.** Manrope 400, 500, dan 700 menunjuk
+URL yang sama persis, begitu juga Playfair 400, 500, 600. Jadi **membuang bobot
+yang nol dipakai menghemat nol byte**. Bandingkan URL dan md5-nya sebelum
+mengusulkan.
+
+**Cara memeriksanya tanpa peramban:** hitung PEMAKAIAN, bukan DEKLARASI. Untuk font,
+cari elemen ber-`class="has-<slug>-font-family"` atau `style` yang merujuk varnya,
+dan JANGAN menghitung aturan yang mendefinisikan kelas itu, karena WordPress
+membuatnya otomatis untuk tiap token terdaftar.
