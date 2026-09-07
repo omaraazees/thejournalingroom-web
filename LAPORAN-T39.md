@@ -93,6 +93,9 @@ tersisa nol**. Ketiga halaman yang dicek memuat `style.css` yang benar.
 ## Syarat angka di laporan ini
 
 Angka keutuhan 8 dari 8 diukur **selagi CDN TJR mati**. Itu justru inti kartunya:
-selama CDN mati, berkas 320 KB pun tidak pernah gagal. Nilai perubahan ini muncul
+selama CDN mati, berkas 320 KB pun nol pernah TERAMATI gagal. Kalimat itu sengaja
+lebih lemah daripada "tidak pernah gagal", karena berkas lamanya cuma diambil beberapa
+kali dan bahkan nol masuk sapuan aset T-31, sebab dia dirujuk dari CSS bukan dari HTML.
+Nol ada deret pengukuran untuknya, jadi yang jujur adalah "nol tahu", bukan "nol gagal". Nilai perubahan ini muncul
 **begitu CDN dinyalakan lagi**, dan saat itu terjadi, yang perlu diukur ulang
 bukan berkas ini saja melainkan seluruh aset.
