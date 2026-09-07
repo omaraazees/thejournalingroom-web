@@ -24,6 +24,8 @@ $tjr_alt     = tjr_v5_foto_alt( 'pengantar_foto' );
 // fallback, jadi ini soal ketajaman saat webp-nya lolos, bukan risiko gagal
 // muat baru. Diikutkan karena kartu G-4 secara eksplisit meminta artotel-16.
 $tjr_cetak   = tjr_v5_foto( 'pengantar_cetakan' );
+// Sama seperti cetakan di hero: ada figcaption bermakna, jadi alt="" salah.
+$tjr_cetak_a = tjr_v5_foto_alt( 'pengantar_cetakan' );
 $tjr_cetak_t = tjr_v5_isi( 'pengantar_cetakan_teks' );
 ?>
 <!-- wp:group {"tagName":"section","className":"duo seksi","anchor":"tentang","layout":{"type":"default"}} -->
@@ -66,7 +68,7 @@ $tjr_cetak_t = tjr_v5_isi( 'pengantar_cetakan_teks' );
 <!-- /wp:group -->
 
 <!-- wp:image {"className":"cetakan selip selip-pasangan","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan selip selip-pasangan"><?php echo tjr_v5_gambar_tag( $tjr_cetak, '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_cetak_t ); ?></figcaption></figure>
+<figure class="wp-block-image size-full cetakan selip selip-pasangan"><?php echo tjr_v5_gambar_tag( $tjr_cetak, $tjr_cetak_a ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_cetak_t ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 </div>

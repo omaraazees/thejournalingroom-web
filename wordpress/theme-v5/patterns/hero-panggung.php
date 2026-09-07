@@ -22,6 +22,11 @@ $tjr_f_isi   = tjr_v5_isi( 'hero_foto_isi' );
 
 // Kartu G-4: alih ke .webp lewat tjr_v5_gambar_tag(), lihat inc/isi-beranda.php.
 $tjr_cetak   = tjr_v5_foto( 'hero_cetakan' );
+// Cetakan polaroid ini PUNYA figcaption bermakna, jadi alt="" salah: pembaca
+// layar mengumumkan keterangannya tanpa pernah tahu fotonya gambar apa. Alt
+// diambil sejalur dengan foto lain di pattern ini, lewat tjr_v5_foto_alt(),
+// supaya ikut berubah kalau pemilik mengganti fotonya dari dasbor.
+$tjr_cetak_a = tjr_v5_foto_alt( 'hero_cetakan' );
 $tjr_cetak_t = tjr_v5_isi( 'hero_cetakan_teks' );
 
 // Foto panggung tampil 100% lebar section di dua lebar layar (4:5 di ponsel,
@@ -87,7 +92,7 @@ if ( $tjr_sesi ) {
 <div class="wp-block-group panggung">
 
 <!-- wp:image {"className":"cetakan selip selip-hero","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan selip selip-hero"><?php echo tjr_v5_gambar_tag( $tjr_cetak, '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_cetak_t ); ?></figcaption></figure>
+<figure class="wp-block-image size-full cetakan selip selip-hero"><?php echo tjr_v5_gambar_tag( $tjr_cetak, $tjr_cetak_a ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_cetak_t ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->

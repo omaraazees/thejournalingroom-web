@@ -929,6 +929,123 @@ function tjr_v5_label_arsip_taksonomi( $konten, $parsed ) {
 add_filter( 'render_block', 'tjr_v5_label_arsip_taksonomi', 10, 2 );
 
 /**
+ * Satu halaman satu <h1>: turunkan <h1> di isi halaman jadi <h2>.
+ *
+ * Halaman "page" biasa selalu punya <h1> dari templat, karena
+ * `templates/page.html` mencetak `wp:post-title {"level":1}`. Begitu penulis
+ * isi menambahkan judulnya sendiri sebagai Heading 1 di editor, halamannya
+ * jadi punya DUA <h1> dan urutan headingnya berhenti bisa dipakai pembaca
+ * layar untuk melompat.
+ *
+ * Itu persis yang terjadi di /tentang/, /kolaborasi/, dan /kontak/. Ketiganya
+ * sudah dibersihkan di database, tapi pembersihan itu berlaku untuk tiga
+ * halaman yang ada hari ini saja: halaman kesepuluh yang dibuat pemilik brand
+ * minggu depan akan mengulang polanya, dan tidak ada yang memberi tahu.
+ * Jadi pertahanannya ditaruh di lapisan templat, tempat <h1> pertama lahir.
+ *
+ * Yang berubah cuma TINGKAT heading, bukan satu huruf pun teksnya, jadi ini
+ * bukan penyuntingan isi. Kelas, id, dan atribut lain ikut utuh karena yang
+ * ditulis ulang cuma nama tagnya.
+ *
+ * Sengaja `the_content` dan bukan `render_block`: <h1> bisa datang dari blok
+ * heading, dari blok HTML mentah, atau dari isi klasik yang belum diblokkan,
+ * dan ketiganya lewat sini.
+ *
+ * @param string $isi Isi halaman yang sudah dirender.
+ * @return string
+ */
+function tjr_v5_satu_h1( $isi ) {
+	if ( ! is_page() || ! is_main_query() || ! in_the_loop() ) {
+		return $isi;
+	}
+
+	if ( false === stripos( $isi, '<h1' ) ) {
+		return $isi;
+	}
+
+	// ${1} dan ${2}, bukan $1 dan $2: tanpa kurung kurawal, '$1h2' ambigu buat
+	// pembaca (dan pola yang sama di berkas ini sudah memakai bentuk berkurung).
+	$hasil = preg_replace( '#<(/?)h1(\s[^>]*)?>#i', '<${1}h2${2}>', $isi );
+
+	return null === $hasil ? $isi : $hasil;
+}
+add_filter( 'the_content', 'tjr_v5_satu_h1', 20 );
+
+/**
+ * Panel fakta acara jadi <dl>/<dt>/<dd> sungguhan.
+ *
+ * Panelnya sudah dipakai sebagai daftar definisi sejak awal: tujuh pasang
+ * istilah dan nilai (Tanggal, Waktu, Tempat, Investment fee, Format, Yang
+ * disediakan, Yang perlu dibawa), dan kelasnya bahkan sudah dinamai `dt` dan
+ * `dd`. Yang tidak ada cuma elemennya. Buat pembaca layar, tujuh `<p>` berkelas
+ * `dt` sama saja dengan tujuh paragraf lepas: nol hubungan istilah-nilai, dan
+ * nol cara melompat dari satu fakta ke fakta berikutnya.
+ *
+ * Kenapa lewat filter, bukan diketik langsung di pattern: blok inti tidak bisa
+ * mencetak `<dl>`. `core/group` cuma menerima tagName div, header, main,
+ * section, article, aside, dan footer; `core/paragraph` selalu `<p>`; dan dua
+ * baris di panel ini (`core/post-date` dan `core/post-terms`) blok dinamis yang
+ * markupnya ditentukan WordPress. Menggantinya dengan HTML mentah berarti
+ * membuang dua blok dinamis itu dan membuat panelnya berhenti terbaca sebagai
+ * blok di Site Editor. Jadi markup bloknya dibiarkan utuh, dan tag akhirnya
+ * ditulis ulang saat render, pola yang sama dengan tiga filter render_block
+ * lain di berkas ini.
+ *
+ * Satu filter ini menutup dua tempat sekaligus: `patterns/jadwal-sesi-terdekat.php`
+ * dan `templates/single-acara.html` memakai grup `.fakta` yang sama persis.
+ *
+ * Pembungkus baris tetap `<div>` di dalam `<dl>`. Itu sah di HTML: spesifikasi
+ * mengizinkan `<div>` mengelompokkan pasangan `<dt>`/`<dd>`, dan tata letak
+ * gridnya bergantung pada pembungkus itu.
+ *
+ * @param string $konten Hasil render blok.
+ * @param array  $parsed Blok yang sudah diurai.
+ * @return string
+ */
+function tjr_v5_fakta_jadi_dl( $konten, $parsed ) {
+	if ( ! isset( $parsed['blockName'] ) || 'core/group' !== $parsed['blockName'] ) {
+		return $konten;
+	}
+
+	$kelas = isset( $parsed['attrs']['className'] ) ? $parsed['attrs']['className'] : '';
+
+	if ( ! in_array( 'fakta', preg_split( '#\s+#', $kelas, -1, PREG_SPLIT_NO_EMPTY ), true ) ) {
+		return $konten;
+	}
+
+	// Bungkus luar: <div> jadi <dl>. Kalau salah satu ujung tidak ketemu,
+	// kembalikan apa adanya. Setengah <dl> lebih buruk daripada nol <dl>.
+	$buka  = preg_replace( '#^(\s*)<div\b#', '$1<dl', $konten, 1, $n_buka );
+	$tutup = preg_replace( '#</div>(\s*)$#', '</dl>$1', $buka, 1, $n_tutup );
+
+	if ( 1 !== $n_buka || 1 !== $n_tutup ) {
+		return $konten;
+	}
+
+	// `dt` dan `dd` diminta sebagai token kelas utuh, bukan potongan, supaya
+	// `dd-waktu` atau `dd-kursi` tidak ikut tersapu kalau suatu saat masuk
+	// ke dalam panel ini tanpa kelas `dd` di sebelahnya.
+	$dt = preg_replace(
+		'#<p(\s[^>]*class="(?:[^"]*\s)?dt(?:\s[^"]*)?"[^>]*)>(.*?)</p>#s',
+		'<dt$1>$2</dt>',
+		$tutup
+	);
+
+	if ( null === $dt ) {
+		return $konten;
+	}
+
+	$dd = preg_replace(
+		'#<(p|div)(\s[^>]*class="(?:[^"]*\s)?dd(?:\s[^"]*)?"[^>]*)>(.*?)</\1>#s',
+		'<dd$2>$3</dd>',
+		$dt
+	);
+
+	return null === $dd ? $konten : $dd;
+}
+add_filter( 'render_block', 'tjr_v5_fakta_jadi_dl', 10, 2 );
+
+/**
  * Arsip acara diurut dari tanggal mulai, bukan tanggal publikasi.
  *
  * Acara yang belum lewat naik ke atas dan diurut dari yang paling dekat.

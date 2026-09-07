@@ -255,13 +255,16 @@ header.wp-block-template-part{
   font-size:var(--wp--preset--font-size--label);font-weight:700;
   letter-spacing:.2em;text-transform:uppercase;
   color:var(--wp--preset--color--tinta-lembut);
-  /* target sentuh WCAG 2.5.8 AA minimal 24px; teks label 10px sendirian
-     cuma ~21px, padding atas-bawah menaikkan area klik, garis bawah digeser
-     supaya jaraknya ke teks tetap sama seperti sebelumnya (4px) */
-  text-decoration:none;position:relative;display:inline-block;padding:8px 0;
+  /* Target sentuh. Kotak teksnya sendiri cuma 17px (label 10px), jadi tanpa
+     padding tautan ini 21px: di bawah minimum WCAG 2.5.8 AA yang 24px.
+     Padding 14px membuatnya 45px, lewat target ergonomis 44px, bukan cuma
+     lolos ambang minimum. Garis bawah ikut digeser di aturan berikutnya
+     supaya jaraknya ke teks tetap 4px seperti desain aslinya:
+     14px padding bawah dikurangi 4px jarak = bottom:10px. */
+  text-decoration:none;position:relative;display:inline-block;padding:14px 0;
 }
 .bar .wp-block-navigation a::after{
-  content:"";position:absolute;left:0;right:0;bottom:4px;height:1px;
+  content:"";position:absolute;left:0;right:0;bottom:10px;height:1px;
   background:var(--wp--preset--color--burgundy);
   transform:scaleX(0);transform-origin:right;
   transition:transform .45s var(--wp--custom--lengkung--halus);
@@ -1263,9 +1266,11 @@ footer.wp-block-template-part{
   display:flex;flex-direction:column;
 }
 .kaki ul a{
-  /* target sentuh WCAG 2.5.8 AA minimal 24px; teks 11px sendirian cuma ~15px,
-     padding vertikal menaikkan area klik tanpa mengubah ukuran teks */
-  display:block;padding:7px 0;
+  /* Target sentuh. Kotak teksnya 18.7px (teks 11px), jadi tanpa padding
+     tautan ini 15px: temuan terberat audit, jauh di bawah minimum WCAG 2.5.8
+     AA yang 24px. Padding 13px membuatnya 44.7px, lewat target ergonomis
+     44px. Ukuran teksnya sendiri tidak berubah sedikit pun. */
+  display:block;padding:13px 0;
   font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
   color:var(--wp--preset--color--tinta-lembut);text-decoration:none;
   transition:color .3s;
