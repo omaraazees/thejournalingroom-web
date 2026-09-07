@@ -31,7 +31,7 @@ $tjr_wa = esc_url( tjr_v5_link_wa_slot() );
 <!-- wp:group {"className":"sesi-foto","layout":{"type":"default"}} -->
 <div class="wp-block-group sesi-foto">
 <!-- wp:paragraph {"className":"sesi-tag"} --><p class="sesi-tag">Sesi terdekat</p><!-- /wp:paragraph -->
-<!-- wp:post-featured-image {"isLink":true} /-->
+<!-- wp:post-featured-image {"isLink":true,"className":"gbr-sesi"} /-->
 </div>
 <!-- /wp:group -->
 

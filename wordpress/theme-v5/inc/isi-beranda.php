@@ -1375,3 +1375,49 @@ function tjr_v5_gaya_isi_beranda() {
 	wp_add_inline_style( 'tjr-v5-isi-beranda', $css );
 }
 add_action( 'admin_enqueue_scripts', 'tjr_v5_gaya_isi_beranda' );
+
+/**
+ * Atribut `sizes` gambar unggulan disesuaikan dengan lebar tampilnya.
+ *
+ * Kenapa fungsi ini ada. Blok `core/post-featured-image` selalu menulis
+ * `sizes="(max-width: 1200px) 100vw, 1200px"`, karena WordPress menganggap
+ * gambar unggulan selebar konten. Di tema ini gambar itu justru duduk di kolom
+ * sempit: kartu sesi terdekat memberinya 41% lebar kartu, dan kartu arsip
+ * membaginya bertiga. Akibatnya browser diberi tahu ia butuh 1200px padahal
+ * ruang nyatanya sekitar 540px, lalu mengunduh kandidat srcset yang jauh lebih
+ * besar dari perlu.
+ *
+ * Angka di bawah dihitung dari grid dan lebar lembar, bukan ditebak:
+ * lembar 1580px dengan padding clamp(16px,3.2vw,48px) dan margin 16px.
+ * Sengaja dibulatkan ke atas sedikit, karena `sizes` yang kekecilan membuat
+ * gambar tampil buram sementara yang kebesaran cuma kehilangan sedikit hemat.
+ *
+ * @param string $konten HTML blok.
+ * @param array  $parsed Blok terurai.
+ * @return string
+ */
+function tjr_v5_sizes_gambar( $konten, $parsed ) {
+	if ( ! isset( $parsed['blockName'] ) || 'core/post-featured-image' !== $parsed['blockName'] ) {
+		return $konten;
+	}
+
+	$kelas = isset( $parsed['attrs']['className'] ) ? $parsed['attrs']['className'] : '';
+
+	if ( false !== strpos( $kelas, 'gbr-sesi' ) ) {
+		// Kartu sesi terdekat: satu kolom penuh sampai 900px, lalu 41% lebar kartu.
+		$sizes = '(max-width: 900px) 92vw, (max-width: 1611px) 38vw, 608px';
+	} elseif ( false !== strpos( $kelas, 'gbr-kartu' ) ) {
+		// Kartu arsip: satu kolom, lalu dua, lalu tiga, dengan jarak 16px.
+		$sizes = '(max-width: 600px) 92vw, (max-width: 900px) 45vw, (max-width: 1611px) 30vw, 484px';
+	} else {
+		return $konten;
+	}
+
+	return preg_replace(
+		'#(<img\b[^>]*\bsizes=")[^"]*(")#',
+		'${1}' . esc_attr( $sizes ) . '${2}',
+		$konten,
+		1
+	);
+}
+add_filter( 'render_block', 'tjr_v5_sizes_gambar', 10, 2 );

@@ -65,7 +65,7 @@ if ( empty( $tjr_v5_ada_yang_lewat ) ) {
 <!-- wp:group {"className":"kartu naik","layout":{"type":"default"}} -->
 <div class="wp-block-group kartu naik">
 
-<!-- wp:post-featured-image {"isLink":false} /-->
+<!-- wp:post-featured-image {"isLink":false,"className":"gbr-kartu"} /-->
 <!-- wp:post-title {"level":3,"isLink":true,"className":"kartu-judul"} /-->
 
 <!-- wp:group {"className":"kaki-kartu","layout":{"type":"default"}} -->
