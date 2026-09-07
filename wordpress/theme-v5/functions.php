@@ -1331,3 +1331,41 @@ function tjr_v5_fab() {
 	<?php
 }
 add_action( 'wp_footer', 'tjr_v5_fab' );
+
+/**
+ * Label tombol menu mobile jadi bahasa Indonesia.
+ *
+ * Situs ini berlokal `id_ID` dan `<html lang="id-ID">`, tapi tombol menu di
+ * layar sempit tetap mencetak `aria-label="Open menu"` dan `"Close menu"`.
+ * Dua string itu milik blok inti `core/navigation` dengan domain `default`,
+ * bukan milik tema, jadi tidak bisa diperbaiki dari markup `parts/header.html`
+ * dan `wp:navigation` tidak menerima atribut label untuk keduanya.
+ *
+ * Terjemahan inti untuk dua string itu tidak tersedia di pemasangan ini, jadi
+ * yang keluar tetap bahasa aslinya. Filter `gettext` adalah kait resmi untuk
+ * menimpa string inti, dan sengaja dipersempit: hanya domain `default`, dan
+ * hanya kalau teksnya sama persis. Perbandingan dilakukan pada `$asli`, bukan
+ * pada `$terjemahan`, supaya kalau suatu saat berkas terjemahan id_ID benar
+ * benar terpasang, filter ini tetap menghasilkan teks yang sama dan tidak
+ * menimpa terjemahan lain yang kebetulan berbunyi mirip.
+ *
+ * Ditemukan di kartu T-17, ditambal di T-18.
+ *
+ * @param string $terjemahan Teks hasil terjemahan.
+ * @param string $asli       Teks asli sebelum diterjemahkan.
+ * @param string $domain     Domain teks.
+ * @return string
+ */
+function tjr_v5_label_menu_id( $terjemahan, $asli, $domain ) {
+	if ( 'default' !== $domain ) {
+		return $terjemahan;
+	}
+
+	$peta = array(
+		'Open menu'  => 'Buka menu',
+		'Close menu' => 'Tutup menu',
+	);
+
+	return isset( $peta[ $asli ] ) ? $peta[ $asli ] : $terjemahan;
+}
+add_filter( 'gettext', 'tjr_v5_label_menu_id', 10, 3 );

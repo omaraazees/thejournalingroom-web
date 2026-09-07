@@ -247,6 +247,52 @@ function tjr_v5_seo_konteks() {
 				: tjr_v5_seo_deskripsi_taksonomi( $term );
 		}
 
+	} elseif ( is_date() ) {
+		// Arsip tanggal. Sebelum kartu T-18 cabang ini tidak ada sama sekali,
+		// jadi /cerita/2026/09/ tayang dengan judul generik nama situs dan
+		// TANPA canonical. Tidak terlihat bertahun tahun karena arsip tanggal
+		// baru bisa dibuka setelah ada tulisan pertama.
+		$thn = (int) get_query_var( 'year' );
+		$bln = (int) get_query_var( 'monthnum' );
+		$tgl = (int) get_query_var( 'day' );
+
+		if ( is_day() ) {
+			$label  = wp_date( 'j F Y', mktime( 0, 0, 0, $bln, $tgl, $thn ) );
+			$tautan = get_day_link( $thn, $bln, $tgl );
+		} elseif ( is_month() ) {
+			$label  = wp_date( 'F Y', mktime( 0, 0, 0, $bln, 1, $thn ) );
+			$tautan = get_month_link( $thn, $bln );
+		} else {
+			$label  = (string) $thn;
+			$tautan = get_year_link( $thn );
+		}
+
+		$ctx['judul']     = 'Tulisan ' . $label . ' | ' . $nama_situs;
+		$ctx['kanonik']   = (string) $tautan;
+		$ctx['deskripsi'] = 'Tulisan The Journaling Room yang terbit ' . $label . '.';
+
+	} elseif ( is_author() ) {
+		// Arsip penulis. Sama seperti arsip tanggal, cabang ini juga tidak ada
+		// sebelumnya. Nama penulis dibaca dari display_name, jadi ikut berubah
+		// kalau nama tampilannya diganti (lihat kartu T-18: nama lama berupa
+		// alamat email dan itu bocor ke judul maupun URL).
+		$penulis = get_queried_object();
+
+		if ( $penulis instanceof WP_User ) {
+			$nama = trim( (string) $penulis->display_name );
+
+			// Kalau nama penulisnya sama dengan nama situs, "Nama | Nama"
+			// cuma mengulang diri sendiri. Dipakai label netral.
+			$ctx['judul'] = ( '' === $nama || 0 === strcasecmp( $nama, $nama_situs ) )
+				? 'Semua tulisan | ' . $nama_situs
+				: 'Tulisan oleh ' . $nama . ' | ' . $nama_situs;
+
+			$ctx['kanonik']   = (string) get_author_posts_url( $penulis->ID );
+			$ctx['deskripsi'] = ( '' !== trim( (string) $penulis->description ) )
+				? tjr_v5_seo_ringkas( $penulis->description )
+				: 'Kumpulan tulisan The Journaling Room.';
+		}
+
 	} elseif ( is_search() ) {
 		$ctx['judul'] = 'Hasil pencarian | ' . $nama_situs;
 
