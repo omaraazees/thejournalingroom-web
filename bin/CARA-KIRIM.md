@@ -16,6 +16,8 @@ Skrip menyusun daftar kirimannya dari sistem berkas:
 LOKAL = AKAR / "wordpress" / "theme-v5"
 for p in LOKAL.rglob("*"):
     if not p.is_file() or p.name in LEWATI: continue
+    rel = p.relative_to(LOKAL)
+    if tersembunyi(rel): continue          # ada segmen berawalan titik
 ```
 
 Bukan dari git. Konsekuensinya, dan ini pernah nyaris kejadian:
@@ -299,12 +301,33 @@ simpan **di luar** `wordpress/theme-v5/` supaya tidak ikut terkirim.
 publik. Berkas catatan, backup, potret, atau apa pun yang bersifat kerja
 internal harus hidup di luar folder itu.
 
-Yang disaring skrip cuma dua daftar pendek:
+Yang disaring skrip ada dua, dan bentuknya sengaja berbeda:
 
 ```python
-LEWATI        = {".DS_Store", "CATATAN.md"}      # per nama berkas
-LEWATI_FOLDER = {".claude", ".cc-writes"}        # per segmen jalur induk
+LEWATI = {"CATATAN.md"}                          # daftar, per nama berkas
+
+def tersembunyi(rel):                            # predikat, per segmen jalur
+    return any(bagian.startswith(".") for bagian in rel.parts)
 ```
 
-Kalau menambah alat baru yang menulis folder goresnya sendiri, tambahkan ke
-`LEWATI_FOLDER` dan ke `.gitignore`, lalu jalankan `python3 bin/uji-kirim-tema.py`.
+**Kalau menambah alat baru yang menulis folder goresnya sendiri, kamu tidak perlu
+melakukan apa pun di sini** selama nama foldernya berawalan titik, dan hampir semua
+alat memang begitu. Dulu instruksinya menambahkan nama itu ke sebuah daftar tolak.
+Itu dihapus di kartu T-36, karena daftar tolak menuntut kita mengetahui setiap hal
+buruk di muka, dan yang tidak disebut justru **terkirim** ke server publik. Predikat
+tetap benar untuk hal yang belum ada.
+
+Yang lolos daftar lama dan tertahan predikat ini, ketiganya pernah benar-benar
+terjadi di repo orang: folder alat yang belum dikenal, `.env` yang nyasar ke dalam
+folder tema, dan `.git` yang tertinggal di `assets/`. Dua yang terakhir lebih buruk
+daripada berkas gores: satu rahasia, satu seluruh riwayat.
+
+Arahnya tidak berlebihan. Berkas yang cuma **memuat** kata seperti
+`patterns/x.claude.php` tetap terkirim, karena tidak ada segmen jalurnya yang
+berawalan titik. Ini diuji di `uji-kirim-tema.py` nomor 11, dan pohon ujinya sengaja
+memakai folder yang belum pernah disebut di mana pun, supaya yang teruji
+mekanismenya bukan daftarnya.
+
+Yang masih butuh tangan cuma berkas yang **tidak** berawalan titik dan tidak boleh
+tayang, seperti `CATATAN.md`. Tambahkan ke `LEWATI` dan ke `.gitignore`, lalu
+jalankan `python3 bin/uji-kirim-tema.py`.

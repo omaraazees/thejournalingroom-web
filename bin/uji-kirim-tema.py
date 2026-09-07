@@ -250,6 +250,34 @@ def main():
             "%s/lama.css" % akar_remote not in ftp_hapus.berkas and "- lama.css" in h,
             "lama.css masih di server"))
 
+        # Uji 11 menguji MEKANISMENYA, bukan daftarnya. Folder yang dipakai di
+        # sini sengaja belum pernah disebut di mana pun: kalau saringannya masih
+        # daftar tolak, ia lolos. Berkas .env dan .git ikut karena keduanya
+        # pernah benar-benar terjadi di repo orang, dan keduanya lebih buruk
+        # daripada berkas gores: satu rahasia, satu seluruh riwayat.
+        # patterns/x.claude.php ada di sini sebagai penjaga arah sebaliknya,
+        # supaya predikatnya tidak berubah jadi pencocokan nama.
+        pohon = {
+            "style.css": b"a{}",
+            "patterns/x.claude.php": b"<?php // sah",
+            ".alat-baru/catatan.md": b"gores alat yang belum pernah ada",
+            "inc/.env": b"WP_APP_PASSWORD=rahasia",
+            "assets/.git/config": b"[core]",
+            "CATATAN.md": b"internal",
+        }
+        with tempfile.TemporaryDirectory() as td2:
+            lokal2 = pathlib.Path(td2) / "tema"
+            tulis_pohon(lokal2, pohon)
+            ftp_p = FtpPalsu(akar_remote, {})
+            mod3 = muat(SEKARANG, lokal2, akar_remote, pathlib.Path(td2) / "m.json")
+            keluaran = jalankan(mod3, ftp_p, ["--coba"])
+            terkirim = {b.strip()[2:] for b in keluaran.splitlines()
+                        if b.strip().startswith("+ ")}
+            lulus.append(periksa(
+                11, "predikat titik menahan jalur yang BELUM PERNAH ada di daftar mana pun",
+                terkirim == {"style.css", "patterns/x.claude.php"},
+                "yang akan terkirim: %s" % sorted(terkirim)))
+
     print()
     print("%d dari %d lulus" % (sum(lulus), len(lulus)))
     return 0 if all(lulus) else 1

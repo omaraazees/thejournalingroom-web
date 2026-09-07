@@ -48,14 +48,31 @@ AKAR = pathlib.Path(__file__).resolve().parent.parent
 LOKAL = AKAR / "wordpress" / "theme-v5"
 # Akar FTP itu home akun, bukan public_html. Situsnya ada di bawah domains/.
 REMOTE = "/domains/thejournalingroom.id/public_html/wp-content/themes/tjr-v5"
-LEWATI = {".DS_Store", "CATATAN.md"}
-# Folder gores milik alat tulis. Ada DI DALAM folder tema, jadi tanpa daftar ini
-# berkas apa pun yang jatuh ke situ ikut mendarat di wp-content/themes/tjr-v5 di
-# web server publik. Kosong waktu aturan ini ditulis, dan justru itu alasannya
-# ditutup sekarang: yang menahannya cuma kebetulan, bukan mekanisme.
-# Dicocokkan per SEGMEN JALUR, bukan per nama berkas, karena yang perlu dibuang
-# seisi folder, bukan satu nama tertentu.
-LEWATI_FOLDER = {".claude", ".cc-writes"}
+# Satu-satunya berkas yang dibuang berdasarkan NAMA. Dia tidak berawalan titik,
+# jadi predikat di bawah tidak menangkapnya.
+LEWATI = {"CATATAN.md"}
+
+
+def tersembunyi(rel):
+    """True kalau ada segmen jalur yang berawalan titik.
+
+    Dulu ini daftar tolak: {".claude", ".cc-writes"}. Daftar tolak menuntut kita
+    mengetahui setiap hal buruk di muka, dan itu terbalik: yang tidak disebut
+    justru TERKIRIM, ke wp-content/themes/tjr-v5 di web server publik.
+    Lubang .cc-writes yang ditambal 53b401d memang lubang daftar tolak.
+
+    Diganti predikat karena predikat tetap benar untuk hal yang belum ada.
+    Folder alat berikutnya, .env yang nyasar ke dalam tema, atau repo .git yang
+    tertinggal di assets, ketiganya lolos daftar lama dan tertahan yang ini
+    tanpa perlu ada yang menambahkannya lebih dulu.
+
+    Dicocokkan per SEGMEN JALUR, bukan per nama berkas: yang dibuang seisi
+    folder. Nama berkas yang cuma MEMUAT kata seperti patterns/x.claude.php
+    tetap terkirim, karena tidak ada segmennya yang berawalan titik.
+    """
+    return any(bagian.startswith(".") for bagian in rel.parts)
+
+
 # Manifes bukan sumber kebenaran, cuma catatan kiriman terakhir, jadi tidak masuk
 # git: hilang pun skrip masih benar, cuma sekali jalan lebih lambat.
 MANIFES = pathlib.Path(os.environ.get("TJR_MANIFES") or (AKAR / "bin" / ".cache-kirim" / "manifes.json"))
@@ -197,9 +214,7 @@ def main():
         if not p.is_file() or p.name in LEWATI:
             continue
         rel = p.relative_to(LOKAL)
-        # parts[:-1] = folder induknya saja. Nama berkasnya sudah diurus LEWATI
-        # di baris atas, dan tidak boleh ikut diuji di sini.
-        if LEWATI_FOLDER.intersection(rel.parts[:-1]):
+        if tersembunyi(rel):
             continue
         lokal[str(rel)] = p
 
