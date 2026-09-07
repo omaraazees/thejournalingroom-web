@@ -20,6 +20,12 @@ Di atas 25 = jangan simpulkan apa apa tanpa melihat gambarnya sendiri.
 
 ## Berkas yang namanya tidak cocok dengan isinya
 
+**Tabel ini POTRET keadaan 7 Sep 2026, bukan daftar yang selalu benar.** Yang berlaku selamanya
+adalah CARA MEMERIKSA di bagian atas; tabelnya cuma hasil menjalankan cara itu satu kali.
+Kalau ada berkas baru ditambahkan sesudah tanggal itu, tabel ini TIDAK ikut tahu.
+Jangan pakai tabel ini sebagai saringan. Jalankan ulang caranya, lalu percayai hasilnya.
+
+
 | berkas | isi sebenarnya | skor | keyakinan |
 |---|---|---|---|
 | `artotel-08-700.webp` | artotel-13 | 1.8 | yakin |
