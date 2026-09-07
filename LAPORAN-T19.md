@@ -174,7 +174,7 @@ sasaran kartu ini.
 
 Persis satu `<h1>` di kesembilannya. Halaman yang tidak memenuhi: **0**.
 
-## Temuan baru: skip-link masih berbahasa Inggris
+## Temuan baru [SUDAH DIPERBAIKI di T-21 Jim, dikirim di T-26]: skip-link masih berbahasa Inggris
 
 Ditemukan saat menyapu string inti untuk butir 4, dan **bukan akibat kiriman
 ini**: tautan lewati navigasi masih berbunyi **"Skip to content"** di setiap
@@ -215,3 +215,8 @@ CDN masih dinonaktifkan, dan pengamatannya tetap searah dengan kemarin.
 | 6 h1 | 9 dari 9 punya persis satu |
 | Temuan baru | skip-link "Skip to content" masih Inggris, dilaporkan tidak ditambal |
 
+---
+
+**Catatan status, 7 Sep 2026.** Skip-link yang dilaporkan di atas sudah
+ditambal Jim di kartu T-21 dan saya kirim di kartu T-26. Diukur di produksi:
+`Lewati ke konten` di kesebelas URL terbit, `Skip to content` nol.

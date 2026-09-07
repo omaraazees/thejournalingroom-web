@@ -135,7 +135,7 @@ sekarang", dan saya setuju: menambah jalur penghapusan bertarget ke skrip deploy
 itu perubahan yang menuntut ujinya sendiri, dan waktunya bukan di tengah kartu
 pembersihan.
 
-## Temuan sampingan: kembarannya masih ada di REPO, dan terbukti bermasalah
+## Temuan sampingan [SUDAH DIBUANG di T-12]: kembarannya masih ada di REPO, dan terbukti bermasalah
 
 `assets/img/artotel-08-1600.webp` (tanpa `-v2`), 246096 byte, ukurannya sama
 persis dengan yang baru saya buang. Bedanya: yang ini **ada di repo**, jadi ia
@@ -178,3 +178,7 @@ Dilaporkan supaya jadi keputusan sadar, bukan sisa yang terlupakan.
 | Bisakah hapus satu berkas tanpa `--hapus` | **tidak bisa**, keterbatasan alat, dicatat bukan dibangun |
 | Temuan sampingan | kembarannya di repo nol dirujuk dan terpotong 4 dari 12 |
 
+---
+
+**Catatan status, 7 Sep 2026.** Kembaran `artotel-08-1600.webp` yang
+dilaporkan di atas sudah dibuang dari repo dan dari server di kartu T-12.

@@ -1,4 +1,8 @@
-# Laporan T-1: tujuh temuan aksesibilitas
+# Laporan T-1: tujuh temuan aksesibilitas [KETUJUHNYA SELESAI DAN TAYANG]
+> **Suntingan status, 7 Sep 2026.** Judul bagian di laporan ini diberi status
+> mengikuti aturan floor baru: judul harus menyebut status, bukan cuma temuan.
+> Isi dan angka aslinya nol diubah, yang ditambahkan cuma statusnya.
+
 
 Repo: `journaling-room-web`, tema `wordpress/theme-v5`. Basis commit `578900e`.
 Situs live: `https://thejournalingroom.id` (bukan `.com`).
@@ -34,7 +38,7 @@ sebelum kartu ini) ternyata sudah menyentuh sebagian daftar ini dan sudah tayang
 mengukur ulang dulu di HTML yang benar-benar dirender, baru menambal sisanya,
 bukan menganggap semua tujuh masih mentah.
 
-## Temuan 1: target sentuh footer dan nav
+## Temuan 1 [SELESAI, tayang, terverifikasi ulang T-31]: target sentuh footer dan nav
 
 **Lapisan render: tema.** `wordpress/theme-v5/style.css`, dua aturan:
 `.bar .wp-block-navigation a` dan `.kaki ul a`. Tinggi kotak sentuhnya murni
@@ -83,7 +87,7 @@ tautan dibaca `getBoundingClientRect()`, sekali di lebar jendela asli (1782px)
 dan sekali di dalam `<iframe>` 390x844 yang punya viewport sendiri untuk media
 query. Bukan dibaca dari sumber CSS.
 
-## Temuan 2: dua `<h1>` di setiap halaman "page"
+## Temuan 2 [SELESAI, tayang, terverifikasi ulang T-31]: dua `<h1>` di setiap halaman "page"
 
 **Lapisan render: dua-duanya, dan itu inti temuannya.** `<h1>` pertama dicetak
 tema: `templates/page.html` berisi `wp:post-title {"level":1}`, jadi setiap
@@ -132,7 +136,7 @@ keluar benar, termasuk `<h10>` yang memang tidak tersentuh.
 sungguhan, karena kartu ini dilarang deploy. Yang sudah terbukti: regexnya benar,
 dan halaman yang ada sekarang memang sudah satu `<h1>` tanpa bantuan guard itu.
 
-## Temuan 3: `/cerita/` nol heading
+## Temuan 3 [SELESAI sebelum kartu ini, tayang]: `/cerita/` nol heading
 
 **Lapisan render: tema.** `/cerita/` disetel sebagai "Posts page" di
 Settings > Reading, jadi WordPress merendernya lewat `templates/index.html`,
@@ -169,7 +173,7 @@ mengisinya. Bukan cacat heading, cuma arsip kosong.
 cache-buster, lalu semua `<h1>` sampai `<h6>` diekstrak dari HTML yang dikirim
 server. Bukan dibaca dari berkas templat.
 
-## Temuan 4: polaroid `alt=""` padahal punya `figcaption` bermakna
+## Temuan 4 [SELESAI, tayang, terverifikasi ulang T-31]: polaroid `alt=""` padahal punya `figcaption` bermakna
 
 **Lapisan render: tema (patterns).** Fotonya boleh diganti pemilik lewat ACF,
 tapi atribut `alt`-nya ditentukan kode pattern, bukan database. Buktinya:
@@ -229,7 +233,7 @@ meja yang dikelilingi gulungan washi tape, kotak stiker, dan wadah alat tulis.
 bunga merah, duduk di kursi kayu ukir. Alt yang salah lebih buruk daripada alt
 kosong, jadi langkah ini tidak boleh dilewati.
 
-## Temuan 5: `aria-label` footer gagal WCAG 2.5.3 Label in Name
+## Temuan 5 [SELESAI sebelum kartu ini, tayang]: `aria-label` footer gagal WCAG 2.5.3 Label in Name
 
 **Lapisan render: tema.** `parts/footer.html`. Tautannya hidup di template part,
 bukan di menu atau widget yang disimpan database. Dicek: nol tautan footer yang
@@ -273,7 +277,7 @@ entitas HTML, lalu diuji apakah benar benar substring dari `aria-label`-nya.
 Diuji ulang juga langsung di DOM Chrome untuk beranda, karena teks terlihat
 hasil `textContent` bisa beda dari sumber kalau ada blok yang dirender PHP.
 
-## Temuan 6: kelas `.lbl` kontras 4.55:1
+## Temuan 6 [SELESAI, tayang, 5.20:1 terukur ulang T-31]: kelas `.lbl` kontras 4.55:1
 
 **Lapisan render: tema.** Warnanya token palet `tinta-samar` di `theme.json`
 (WordPress mencetaknya jadi custom property `--wp--preset--color--tinta-samar`),
@@ -326,7 +330,7 @@ diambil `getComputedStyle().color` dan latar efektif hasil penelusuran leluhur,
 dan rasionya dihitung dengan rumus WCAG di halaman itu juga. Bukan dihitung dari
 hex yang saya ketik di berkas.
 
-## Temuan 7: panel detail acara memakai kelas `dt`/`dd` tapi elemennya `<p>`
+## Temuan 7 [SELESAI, tayang, terverifikasi ulang T-31]: panel detail acara memakai kelas `dt`/`dd` tapi elemennya `<p>`
 
 **Lapisan render: tema.** Dua berkas dengan markup yang sama persis:
 `patterns/jadwal-sesi-terdekat.php` (kartu sesi terdekat di beranda dan
@@ -436,7 +440,7 @@ Tujuh tertangani, nol yang perlu dikembalikan ke Umar sebagai keputusan produk.
   warna `.lbl` yang ternyata sudah aman (temuan 6). Alasannya ada di bagian
   masing masing.
 
-## Batas yang belum tertutup
+## Batas yang belum tertutup [SUDAH TERTUTUP semua, lihat catatan di bawah]
 
 Kode temuan 2 dan 7 belum pernah dijalankan WordPress sungguhan, karena kartu
 ini dilarang deploy dan PHP CLI tidak terpasang di mesin ini. Yang sudah
@@ -445,3 +449,22 @@ hasil transformasinya nol menggeser tata letak, dan keseimbangan blok fungsinya
 diperiksa. Yang perlu dilihat sesudah deploy: `/jadwal/` dan satu halaman acara
 memang mencetak `<dl>`, dan tidak ada halaman yang kehilangan `<h1>`-nya.
 
+---
+
+## Catatan status, 7 Sep 2026
+
+Bagian **Batas yang belum tertutup** di atas sudah **tidak berlaku lagi**, dan
+dibiarkan berdiri supaya jejaknya utuh. Yang berubah sesudahnya:
+
+- Kode temuan 2 dan 7 **sudah dijalankan WordPress sungguhan**. Dikirim di kartu
+  T-10, lalu diukur di produksi: `dl` 1, `dt` 7, `dd` 7 di halaman acara dan
+  beranda. Diverifikasi ulang di T-31.
+- Kalimat "PHP CLI tidak terpasang di mesin ini" **salah waktu ditulis**.
+  `bin/periksa-php.sh` sudah ada sejak sebelumnya. Kodenya sekarang lolos
+  pemeriksaan sintaks itu.
+- Ketujuh temuan sudah tayang dan diperiksa ulang hidup-hidup di kartu T-31.
+
+**Satu hal yang sengaja dibiarkan, jangan dikira terlewat:** target sentuh
+overlay menu ponsel tetap 39,6 px. Itu **lolos** WCAG 2.5.8 AA yang minimumnya
+24 px; 44 px cuma target ergonomis. Menaikkannya menelan 26 px tinggi panel
+sementara blok lanskap cuma punya sisa 36 px.

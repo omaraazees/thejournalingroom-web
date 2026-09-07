@@ -105,7 +105,7 @@ kirim kosong itu justru bentuk paling bersih dari "nol yang tidak diduga".
 `artotel-08-700.webp` 61422 byte, `artotel-08-hero.webp` 86024 byte, dua duanya
 persis seukuran berkasnya.
 
-## Temuan sampingan: edge CDN menyajikan generasi lama `artotel-08.jpg`
+## Temuan sampingan [SUDAH HILANG sesudah CDN dimatikan]: edge CDN menyajikan generasi lama `artotel-08.jpg`
 
 Ditemukan saat memeriksa aset hero, dan **bukan akibat pengiriman ini**: daftar
 kirim T-12 kosong, jadi berkas ini tidak saya sentuh sama sekali.
@@ -166,3 +166,10 @@ Nol halaman rusak, nol gambar hilang dari halaman.
 | Langkah 3, verifikasi | server 88 jadi 87, cuma satu hilang, 404 empat kali, `--teliti` 87 dari 87 |
 | Temuan sampingan | edge CDN menyajikan generasi lama `artotel-08.jpg`, origin benar, dilaporkan tidak dipurge |
 
+---
+
+**Catatan status, 7 Sep 2026.** Generasi lama itu sudah tidak tersaji.
+Diukur di T-14: 18 dari 18 permintaan mengembalikan 368126 byte dengan md5 cocok
+repo. Dikonfirmasi lagi di T-31: seluruh respons `server: LiteSpeed` dengan nol
+header `x-hcdn`, sementara waktu T-12 penyajinya `server: hcdn` lewat `dci-edge3`
+dan `dci-edge5`.
