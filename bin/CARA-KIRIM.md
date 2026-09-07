@@ -331,3 +331,35 @@ mekanismenya bukan daftarnya.
 Yang masih butuh tangan cuma berkas yang **tidak** berawalan titik dan tidak boleh
 tayang, seperti `CATATAN.md`. Tambahkan ke `LEWATI` dan ke `.gitignore`, lalu
 jalankan `python3 bin/uji-kirim-tema.py`.
+
+## 10. Menulis data acara: pakai `bin/tulis-acara.py`, jangan curl langsung
+
+Perubahan isi acara (harga, judul, excerpt, isi kit) masuk lewat WP REST, bukan
+lewat kiriman tema. Jangan menulisnya dengan `curl` polos.
+
+```bash
+python3 bin/tulis-acara.py 12 --set acf.harga=265000 --coba   # rencana saja
+python3 bin/tulis-acara.py 12 --set acf.harga=265000          # kirim
+```
+
+**Kenapa bukan curl.** Pola yang wajar dipakai orang adalah baca, susun, kirim,
+lalu diff. Diff sesudah menulis itu **detektor, bukan gerbang**: dia memberi tahu
+apa yang terjadi, dia nol menghentikan apa pun.
+
+Kalimat Oscar yang dipakai lantai: gerbang yang cuma mengenali nilai yang kamu
+**harapkan** bukan gerbang, itu cuma penghindar pekerjaan ganda. Gerbang
+sungguhan menolak **semua** yang tidak dikenal.
+
+**Bahayanya paling besar di ACF.** REST menolak kiriman sebagian, jadi seluruh
+objek `acf` harus dikirim ulang. Kalau bacaanmu basi, kamu diam diam
+**mengembalikan** perubahan orang lain di field **lain**, bukan cuma di field
+yang kamu sentuh.
+
+Skrip itu membaca dua kali: sekali untuk menyusun rencana, sekali lagi tepat
+sebelum mengirim. Kalau ada satu pun field isi yang bergeser di antaranya, dia
+berhenti dan menyebutkan field mana. `modified`, `_links`, dan `generated_slug`
+diabaikan karena berubah sendiri tiap penyimpanan, tapi `modified` tetap
+dilaporkan sebagai tripwire.
+
+Sisi gagalnya diuji, bukan diasumsikan: enam kasus, tiga yang harus menyalakan
+gerbang dan tiga yang tidak boleh.
