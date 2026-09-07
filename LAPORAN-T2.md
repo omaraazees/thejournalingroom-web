@@ -355,3 +355,116 @@ arsip atau sumber turunan kecil. Itu tidak membatalkan pekerjaannya, tapi mengub
 - **Nol berkas repo diubah** selain menulis laporan ini.
 - Ditulis bertahap, diappend per kelompok, bukan dibuffer di konteks lalu ditulis sekali.
 - Nol em dash.
+
+---
+
+# T-2 lanjutan: pengukuran SEBELUM membakar kredit
+
+god memintaku bicara kalau bentuk kerjanya keliru, sebelum kredit terpakai. Ini hasilnya.
+**Nol kredit terpakai sampai titik ini.** Saldo Magnific tidak bergerak: 13.070 tersedia,
+6.930 terpakai dari 20.000.
+
+## Ringkas: jangan jalankan batch 29 foto. Bukan karena mahal, tapi karena tidak bisa bekerja.
+
+Ukuran yang dikirim ke pengunjung dibatasi BYTE, bukan piksel. Dan master yang kita punya
+sudah lebih besar dari yang terkirim. Menaikkan resolusi master tidak mengubah apa pun di
+layar pengunjung, tapi menambah byte, yang persis penyakit yang merusak situs hari ini.
+
+## Yang sebenarnya ada di situs sekarang (manifest sudah basi)
+
+`aset-manifest.json` ditulis 5 Sep dan **tidak lagi menggambarkan keadaan**. Angkanya
+menyebut webp 1x sampai 199 KB. Yang benar-benar terkirim hari ini jauh lebih kecil, dan
+sudah ada varian `-v2` dan `-lebar` yang tidak ada di manifest. Siapa pun yang menalar dari
+manifest hari ini akan salah.
+
+Beranda merujuk 36 berkas gambar dari `assets/img/`, total 6,03 MB, dalam bentuk `<picture>`
+webp plus fallback jpg.
+
+**Jalur webp sudah dikecilkan, dan aman.** 300 sampai 700 px, 10,2 sampai 88,8 KB.
+Semuanya di bawah ambang aman 91 KB.
+
+**Jalur fallback jpg TIDAK pernah dikecilkan, dan itu risiko yang masih hidup.**
+15 berkas jpg berukuran 273 sampai 385 KB, semuanya di 896-1600 px. Ambang gagal terukur
+163 KB. Jadi kelima belasnya duduk jauh di dalam zona gagal:
+
+| berkas | dimensi | KB |
+|---|---|---|
+| snapobox-08.jpg | 896x1600 | 385,2 |
+| pasar-jakal-02.jpg | 1600x896 | 384,7 |
+| kolondjono-20.jpg | 896x1600 | 367,4 |
+| sundayreads-08.jpg | 1196x1600 | 365,0 |
+| sundayreads-27.jpg | 1196x1600 | 360,2 |
+| amco-naoki-03.jpg | 896x1600 | 355,0 |
+| pasar-jakal-06.jpg | 896x1600 | 353,5 |
+| artotel-19.jpg | 896x1600 | 350,2 |
+| wardah-09.jpg | 896x1600 | 350,1 |
+| radian-11.jpg | 1196x1600 | 342,7 |
+| radian-30.jpg | 1196x1600 | 334,2 |
+| sundayreads-12.jpg | 1196x1600 | 306,2 |
+| kupiku-04.jpg | 1600x896 | 289,7 |
+| wardah-04.jpg | 1196x1600 | 286,6 |
+| radian-24.jpg | 1196x1600 | 273,4 |
+
+Selama CDN mati, ini tidak terasa. Begitu CDN dinyalakan lagi, dan kita memang minta
+Hostinger memperbaikinya, kelima belas berkas ini yang rusak duluan.
+
+## Kenapa Magnific tidak bisa menolong di sini
+
+Master lokal di `wordpress/foto-2026/` **1600 px** sisi terpanjang, bukan 4032 px.
+Angka `sisi_terpanjang_asli: 4032` di manifest merujuk HEIC asli di perangkat Umar
+(`sumber_asli` isinya nama berkas telanjang seperti `IMG_3298.heic`), dan **nol dari 28
+berkas itu ada di repo.**
+
+Yang terkirim ke pengunjung 300 sampai 700 px. Master 1600 px. Jadi sumbernya sudah
+**2,3 sampai 5,3 kali lebih banyak piksel** daripada yang dipakai. Tidak ada detail yang
+hilang untuk direkonstruksi. Yang membatasi bukan piksel, tapi anggaran byte.
+
+## Berapa besar sebenarnya yang muat di 91 KB (diukur, bukan ditebak)
+
+Kuencode ulang tiga foto dari master 1600 px, kualitas webp bertingkat:
+
+| foto | sekarang | yang muat di bawah 91 KB |
+|---|---|---|
+| pasar-jakal-02 | 300x168, 19,7 KB | 600x336 q82 = 68,8 KB. 900px sudah 145 KB, tidak muat |
+| radian-11 | 700x936, 88,8 KB | 672x900 q82 = 84,3 KB, bahkan 897x1200 q68 = 89,5 KB muat |
+| sundayreads-08 | 400x535, 52,9 KB | 448x600 q82 = 64,9 KB. 672x900 q68 = 98,6 KB, lewat tipis |
+
+Jadi anggaran 91 KB memberi sekitar **600 sampai 900 px**, tergantung isi fotonya.
+Beberapa berkas sekarang **lebih kecil dari yang mampu dibayar anggarannya**: pasar-jakal-02
+di 300 px padahal 600 px muat. Itu perbaikan ketajaman yang kelihatan mata, gratis.
+
+Dan di 600-900 px dari master 1600 px, oversampling-nya masih 1,8 sampai 2,7 kali.
+Tetap tidak ada ruang kerja untuk AI.
+
+## Dugaanku soal asal kartu ini
+
+Kalau Umar melihat galeri terlihat lembek lalu minta "boost resolusi", sebabnya bukan
+kekurangan sumber. Sebabnya pengecilan yang terlalu agresif waktu memadamkan kebakaran CDN
+hari ini, sampai ada yang turun ke 300 px. Obatnya menaikkan kembali ke 600-900 px dari
+master yang sudah ada, bukan AI.
+
+## Perkiraan kredit kalau tetap dijalankan
+
+`simulate_cost` untuk `images_upscale`: 90 (S), 180 (M), 270 (L), 1.080 (XL) per gambar.
+Untuk 29 foto: **2.610 / 5.220 / 7.830 / 31.320 kredit.** Tier XL melebihi saldo
+(31.320 lawan 13.070 tersedia).
+
+Catatan kecil untuk anomali 5.880 yang belum terjelaskan: dengan tarif di atas, 5.880 setara
+sekitar 65 gambar di S, 33 di M, 22 di L, atau 5,4 di XL. **Ini aritmetika, bukan temuan.**
+Aku tidak punya bukti apa yang sebenarnya dijalankan, karena riwayat MCP tidak mengindeks
+pekerjaan lewat API key.
+
+## Usulku
+
+1. **Gratis, kerjakan duluan:** encode ulang 15 fallback jpg supaya di bawah 91 KB. Ini
+   menutup risiko yang hidup lagi begitu CDN menyala.
+2. **Gratis:** naikkan kembali webp yang kekecilan ke 600-900 px sesuai anggaran per foto.
+   Ini yang benar-benar menjawab keluhan "fotonya lembek".
+3. **Gratis dan lebih baik dari AI:** minta Umar mengirim HEIC 4032 px aslinya. Menurunkan
+   dari foto asli selalu mengalahkan rekonstruksi AI, dan ongkosnya nol.
+4. **Kalau tetap mau bukti soal Magnific:** jalankan SATU foto sebagai uji A/B, bukan 29.
+   Bandingkan turunan 600-900 px dari master biasa lawan dari master hasil Magnific, pada
+   ukuran tayang yang sama. Ongkos 90 sampai 270 kredit, dan hasilnya menyelesaikan
+   perdebatan dengan bukti.
+
+Aku berhenti di sini dan menunggu keputusan. Nol kredit terpakai.
