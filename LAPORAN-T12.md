@@ -136,6 +136,24 @@ Dampaknya kecil dan itu perlu dikatakan jujur: `artotel-08.jpg` cuma fallback
 lebih dulu. **Saya tidak memurge CDN**, karena itu di luar kartu ini dan
 menyentuh layanan yang dipakai seluruh situs.
 
+## Repo tema ikut didorong, dan sapuan akhir
+
+`bin/dorong-tema.sh` dijalankan sesudah FTP: `a7ec7cb..69f31eb` ke
+`omaraazees/tjr-v5-theme`. Tidak diminta eksplisit di kartu ini, tapi kalau
+dilewatkan, repo tema akan menyimpan berkas yang sudah dibuang repo utama, dan
+itu jenis divergensi yang justru sedang kita bersihkan.
+
+Sembilan halaman terbit disapu ulang sesudah semuanya selesai:
+
+```
+h1 = 1 di kesembilan halaman
+dl = 1 di / dan /acara/embracing-growth/, dt 7 dd 7
+rujukan artotel-08-1600 = 0 di kesembilan halaman
+pemotongan Hostinger = 0 di putaran ini
+```
+
+Nol halaman rusak, nol gambar hilang dari halaman.
+
 ## Ringkasan T-12
 
 | Langkah | Hasil |
