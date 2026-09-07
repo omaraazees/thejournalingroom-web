@@ -410,3 +410,90 @@ artikel.
 | Temuan baru | satu berkas yatim 246 KB di server, dilaporkan bukan dihapus |
 | Diserahkan | pembersihan template `tjr-v5//single` di Site Editor |
 
+## Susulan: template `tjr-v5//single` di database dihapus
+
+God menaikkan ini dari "boleh diserahkan" jadi **wajib**, dengan alasan dari Jim
+yang saya setujui setelah memeriksanya sendiri: template di database **selalu
+menang** atas berkas tema. Selama salinan DB masih hidup, situs memang tetap
+benar karena isinya sama, tapi setiap suntingan `templates/single.html` di masa
+depan akan terlihat "tidak berefek", dan itu jenis bug yang mahal dilacak justru
+karena nol error yang muncul.
+
+### Yang saya periksa sebelum menghapus
+
+**Satu, memastikan cuma satu template yang custom.** Kesembilan template di
+database didaftar lewat REST:
+
+| id | source |
+|---|---|
+| `tjr-v5//single` | **custom** |
+| `tjr-v5//front-page`, `index`, `page`, `single-acara`, `404`, `taxonomy`, `archive-acara`, `search` | theme |
+
+Delapan sudah `theme`, satu `custom`. Persis seperti laporan Jim, dan sekarang
+terbukti bukan cuma dari ingatan.
+
+**Dua, membandingkan isinya dengan berkas tema.** Jim menulis "isinya identik".
+Hampir. Yang di DB **837 byte**, yang di tema **803 byte**, dan selisihnya cuma
+atribut yang disuntik WordPress sendiri waktu template disimpan lewat Site
+Editor:
+
+```
+-<!-- wp:template-part {"slug":"header", ... ,"area":"header"} /-->
++<!-- wp:template-part {"slug":"header", ... ,"area":"header","theme":"tjr-v5"} /-->
+```
+
+Dua baris, header dan footer, dua duanya cuma menambah `"theme":"tjr-v5"` yang
+menunjuk tema yang sama. Nol perbedaan perilaku. Saya memeriksanya karena
+"identik" itu klaim yang murah diucapkan dan mahal kalau salah: kalau ternyata
+DB memuat perubahan yang tidak ada di git, menghapusnya berarti membuang kerja
+orang.
+
+**Tiga, menyimpan salinan sebelum menghapus.** Rekaman REST lengkapnya
+disimpan di luar folder tema (supaya tidak ikut dikapalkan FTP):
+
+```
+hive/agents/pam-mtqta34j/backup/tjr-v5-single-db-2026-09-07.json
+hive/agents/pam-mtqta34j/backup/tjr-v5-single-db-2026-09-07.html
+```
+
+### Cara menghapusnya
+
+Lewat WP REST, bukan klik di Site Editor:
+`DELETE /wp-json/wp/v2/templates/tjr-v5//single?force=true`. Operasi yang sama
+persis dengan tombol "Clear customizations" di Site Editor, tapi bisa diverifikasi
+sebelum dan sesudah, dan nol risiko salah klik di layar yang penuh menu.
+Respons: `http 200`, `deleted: true`, `previous.source: custom`.
+
+### Angka sebelum dan sesudah
+
+| Ukuran | Sebelum | Sesudah |
+|---|---|---|
+| Template ber-`source: custom` di DB | 1 (`tjr-v5//single`) | **0** |
+| `source` untuk `tjr-v5//single` | `custom` | **`theme`** |
+| Jumlah template terdaftar | 9 | 9 |
+| Artikel: byte HTML | 88881 | 88881 |
+| Artikel: `<h1>` | judul artikel | judul artikel |
+| Artikel: `wp-block-post-terms` / `post-date` | 6 / 4 | 6 / 4 |
+| Artikel: `daftar-tulisan` (penanda fallback) | 0 | 0 |
+
+Jumlah template tetap sembilan, jadi tidak ada yang hilang: yang berubah cuma
+dari mana `single` dibaca. Halaman artikelnya keluar **byte per byte sama**,
+yang memang harapannya, karena isinya sudah identik sejak awal.
+
+Kesembilan URL terbit disapu ulang sesudah penghapusan, dengan retry:
+
+```
+/ dan /acara/embracing-growth/   h1 1, dl 1, dt 7
+tujuh halaman lain               h1 1, dl 0 (memang tidak punya panel)
+nol pemotongan di putaran ini
+```
+
+Nol halaman yang rusak, nol yang kehilangan `<h1>`.
+
+### Yang belum bisa saya buktikan
+
+Bahwa suntingan `single.html` **berikutnya** benar benar sampai ke halaman. Itu
+baru terbukti pada pengiriman berikutnya yang menyentuh berkas itu. Yang sudah
+terbukti sekarang: WordPress melaporkan `source: theme`, artinya ia membacanya
+dari berkas tema, dan itu sebab langsung dari akibat yang dimaksud.
+
