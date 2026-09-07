@@ -398,8 +398,7 @@ function tjr_v5_seo_judul_acara( $id ) {
  * @return string
  */
 function tjr_v5_seo_deskripsi_acara( $id ) {
-	$mulai   = get_post_meta( $id, TJR_FIELD_MULAI, true );
-	$stempel = $mulai ? strtotime( $mulai ) : 0;
+	$stempel = tjr_v5_stempel_acara( $id );
 	$tanggal = $stempel ? tjr_v5_tanggal_id( 'l, j F Y', $stempel ) : '';
 	$venue   = trim( (string) get_post_meta( $id, 'venue_nama', true ) );
 

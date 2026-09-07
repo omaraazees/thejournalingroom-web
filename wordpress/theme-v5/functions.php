@@ -864,8 +864,7 @@ function tjr_v5_tanggal_acara( $konten, $parsed, $blok = null ) {
 		return $konten;
 	}
 
-	$mulai = get_post_meta( $id, TJR_FIELD_MULAI, true );
-	$stempel = $mulai ? strtotime( $mulai ) : false;
+	$stempel = tjr_v5_stempel_acara( $id );
 
 	if ( ! $stempel ) {
 		return $konten;

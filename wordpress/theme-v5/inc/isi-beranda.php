@@ -651,6 +651,66 @@ add_action( 'acf/init', 'tjr_v5_daftar_isi_beranda' );
  * @param int    $stempel Timestamp.
  * @return string
  */
+/**
+ * Stempel waktu acara, dibaca sebagai waktu lokal situs.
+ *
+ * Kenapa fungsi ini ada. Nilai TJR_FIELD_MULAI disimpan sebagai "Y-m-d H:i:s"
+ * TANPA zona, dan yang dimaksud penulisnya selalu jam dinding Jakarta.
+ * `strtotime()` telanjang membacanya memakai zona default PHP, dan WordPress
+ * menyetel zona default PHP ke UTC. Hasilnya digeser lagi oleh `wp_date()`
+ * ke zona situs, jadi jamnya maju tujuh jam: 09.00 tampil sebagai 16.00.
+ *
+ * Empat pemanggil dulu mengulang kesalahan yang sama sendiri-sendiri. Sekarang
+ * satu pintu, supaya tidak ada lagi yang lolos.
+ *
+ * @param int $id ID acara.
+ * @return int|false Stempel UTC, atau false kalau tanggalnya kosong/tidak sah.
+ */
+function tjr_v5_stempel_acara( $id ) {
+	$mulai = trim( (string) get_post_meta( $id, TJR_FIELD_MULAI, true ) );
+
+	if ( '' === $mulai ) {
+		return false;
+	}
+
+	try {
+		$waktu = new DateTimeImmutable( $mulai, wp_timezone() );
+	} catch ( Exception $e ) {
+		return false;
+	}
+
+	return $waktu->getTimestamp();
+}
+
+/**
+ * Kalimat kursi, satu sumber untuk semua tempat yang menampilkannya.
+ *
+ * Kenapa fungsi ini ada. Kalimat ini dulu disusun di tiga tempat terpisah
+ * (baris fakta, bar kursi, dan kartu hero) dengan kata-kata yang sedikit
+ * berbeda, jadi menambal satu tempat meninggalkan dua yang lain tetap tayang.
+ *
+ * Aturan isinya: acara tanpa pendaftar TIDAK mengumumkan "0 dari 8 kursi sudah
+ * terisi". Itu bukti sosial terbalik, terpampang tepat waktu orang menimbang
+ * ikut atau tidak. Angka kapasitasnya tetap jujur, cuma dibaca dari sisi yang
+ * masih kosong.
+ *
+ * @param int $id ID acara.
+ * @return string Kalimat siap tampil, atau kosong kalau kapasitasnya tidak ada.
+ */
+function tjr_v5_label_kursi( $id ) {
+	$kursi = tjr_v5_kursi_acara( $id );
+
+	if ( ! $kursi ) {
+		return '';
+	}
+
+	if ( $kursi['terisi'] < 1 ) {
+		return $kursi['kapasitas'] . ' kursi tersedia';
+	}
+
+	return $kursi['terisi'] . ' dari ' . $kursi['kapasitas'] . ' kursi sudah terisi';
+}
+
 function tjr_v5_tanggal_id( $format, $stempel ) {
 	$peta = array(
 		'Sunday'    => 'Minggu',
@@ -702,8 +762,7 @@ function tjr_v5_tanggal_id( $format, $stempel ) {
  * @return string
  */
 function tjr_v5_jam_acara( $id ) {
-	$mulai = get_post_meta( $id, TJR_FIELD_MULAI, true );
-	$stempel = $mulai ? strtotime( $mulai ) : false;
+	$stempel = tjr_v5_stempel_acara( $id );
 
 	if ( ! $stempel ) {
 		return '';
@@ -950,12 +1009,9 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 			return '';
 		}
 
-		// Nama aksesibelnya harus berbunyi sama dengan teks yang dilihat mata di
-		// baris dd-kursi. Kalau tidak, pengguna pembaca layar mendengar "0 dari 8
-		// kursi sudah terisi" sementara yang lain membaca "8 kursi tersedia".
-		$label = $kursi['terisi'] < 1
-			? $kursi['kapasitas'] . ' kursi tersedia'
-			: $kursi['terisi'] . ' dari ' . $kursi['kapasitas'] . ' kursi sudah terisi';
+		// Nama aksesibelnya wajib berbunyi sama dengan teks yang dilihat mata,
+		// jadi kalimatnya diambil dari sumber yang sama.
+		$label = tjr_v5_label_kursi( $id );
 
 		return sprintf(
 			'<div class="slot" role="img" aria-label="%1$s"><i style="--p:%2$s%%"></i></div>',
@@ -982,18 +1038,7 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 		// dibuang waktu kosong. Yang dipakai teks yang sudah tertulis di pattern.
 		$isi  = '' !== $bawa ? esc_html( $bawa ) : null;
 	} elseif ( false !== strpos( $kelas, 'dd-kursi' ) ) {
-		$kursi = tjr_v5_kursi_acara( $id );
-
-		if ( ! $kursi || $lewat ) {
-			$isi = '';
-		} elseif ( $kursi['terisi'] < 1 ) {
-			// Sesi yang belum ada pendaftarnya jangan mengumumkan "0 dari 8 kursi sudah
-			// terisi". Itu bukti sosial terbalik. Angka kapasitasnya tetap jujur dan tetap
-			// memberi kesan kelas kecil, cuma dibingkai dari sisi yang tersedia.
-			$isi = esc_html( $kursi['kapasitas'] . ' kursi tersedia' );
-		} else {
-			$isi = esc_html( $kursi['terisi'] . ' dari ' . $kursi['kapasitas'] . ' kursi sudah terisi' );
-		}
+		$isi = $lewat ? '' : esc_html( tjr_v5_label_kursi( $id ) );
 	}
 
 	if ( null === $isi ) {

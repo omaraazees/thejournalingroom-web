@@ -59,13 +59,11 @@ $tjr_sesi = tjr_v5_acara_terdekat();
 
 if ( $tjr_sesi ) {
 	$tjr_sid    = $tjr_sesi->ID;
-	$tjr_s_mul  = get_post_meta( $tjr_sid, TJR_FIELD_MULAI, true );
-	$tjr_s_cap  = $tjr_s_mul ? strtotime( $tjr_s_mul ) : false;
+	$tjr_s_cap  = tjr_v5_stempel_acara( $tjr_sid );
 	$tjr_s_tgl  = $tjr_s_cap ? tjr_v5_tanggal_id( 'l, j F', $tjr_s_cap ) : '';
 	$tjr_s_jam  = str_replace( ' WIB', '', tjr_v5_jam_acara( $tjr_sid ) );
 	$tjr_s_tpt  = tjr_v5_tempat_acara( $tjr_sid );
-	$tjr_kursi  = tjr_v5_kursi_acara( $tjr_sid );
-	$tjr_s_krs  = $tjr_kursi ? $tjr_kursi['terisi'] . ' dari ' . $tjr_kursi['kapasitas'] . ' kursi terisi' : '';
+	$tjr_s_krs  = tjr_v5_label_kursi( $tjr_sid );
 	// Memakai fungsi yang sama dengan kartu jadwal dan halaman acara, jadi
 	// penjagaannya ikut: cuma dirender kalau harga lebih dari nol.
 	$tjr_s_hrg  = tjr_v5_harga_acara( $tjr_sid );
