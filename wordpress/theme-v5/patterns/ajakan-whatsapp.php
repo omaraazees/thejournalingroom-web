@@ -27,15 +27,15 @@ $tjr_wa = esc_url( tjr_v5_link_wa() );
 <!-- /wp:group -->
 
 <!-- wp:image {"className":"ajakan-kanan","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full ajakan-kanan"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/artotel-13.webp' ) ); ?>" alt="Foto bersama peserta workshop TJR di Artotel"<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/artotel-13.webp' ) ); ?>/></figure>
+<figure class="wp-block-image size-full ajakan-kanan"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/kolondjono-01-ajakan-v1.webp' ) ); ?>" alt="Peserta workshop journaling menulis bersama di meja Kopi Kolondjono"<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/kolondjono-01-ajakan-v1.webp' ) ); ?>/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"cetakan ajakan-1","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan ajakan-1"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/sundayreads-27.webp' ) ); ?>" alt="Jurnal terbuka di atas meja dikelilingi washi tape dan stiker dekorasi"<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/sundayreads-27.webp' ) ); ?>/><figcaption class="wp-element-caption">Sunday Reads</figcaption></figure>
+<figure class="wp-block-image size-full cetakan ajakan-1"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/wardah-06-cetakan-v1.webp' ) ); ?>" alt="Dua peserta mengerjakan jurnal berdampingan di dekat jendela"<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/wardah-06-cetakan-v1.webp' ) ); ?>/><figcaption class="wp-element-caption">Wardah</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"cetakan ajakan-2","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan ajakan-2"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/radian-24.webp' ) ); ?>" alt="Peserta menulis di jurnal bersampul bunga merah"<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/radian-24.webp' ) ); ?>/><figcaption class="wp-element-caption">Radian</figcaption></figure>
+<figure class="wp-block-image size-full cetakan ajakan-2"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/pasar-jakal-08-cetakan-v1.webp' ) ); ?>" alt="Tangan peserta menempel hiasan di halaman jurnal"<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/pasar-jakal-08-cetakan-v1.webp' ) ); ?>/><figcaption class="wp-element-caption">Pasar Jakal</figcaption></figure>
 <!-- /wp:image -->
 
 </section>

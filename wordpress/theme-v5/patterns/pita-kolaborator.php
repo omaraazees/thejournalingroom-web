@@ -56,7 +56,7 @@ if ( $tjr_dari_cms ) {
 <!-- /wp:group -->
 
 <!-- wp:image {"className":"cetakan selip selip-kolaborator","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan selip selip-kolaborator"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/artotel-16-v2.webp' ) ); ?>" alt="Jurnal peserta digelar berjajar di lantai setelah sesi"<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/artotel-16-v2.webp' ) ); ?>/><figcaption class="wp-element-caption">Artotel, Apr 2026</figcaption></figure>
+<figure class="wp-block-image size-full cetakan selip selip-kolaborator"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/artotel-05-cetakan-v1.webp' ) ); ?>" alt="Peserta menghias jurnal di depan mural warna warni Artotel"<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/artotel-05-cetakan-v1.webp' ) ); ?>/><figcaption class="wp-element-caption">Artotel, Apr 2026</figcaption></figure>
 <!-- /wp:image -->
 
 </div>

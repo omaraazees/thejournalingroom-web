@@ -36,14 +36,14 @@ $tjr_cetak_t = tjr_v5_isi( 'hero_cetakan_teks' );
 // seperti sebelumnya karena kita tidak tahu ukurannya.
 $tjr_foto_srcset = '';
 if ( $tjr_foto === get_theme_file_uri( '/assets/img/artotel-08.jpg' ) ) {
-	$tjr_kecil = get_theme_file_path( '/assets/img/artotel-08-700.webp' );
-	$tjr_besar = get_theme_file_path( '/assets/img/artotel-08-hero.webp' );
+	$tjr_kecil = get_theme_file_path( '/assets/img/artotel-13-panggung-700-v1.webp' );
+	$tjr_besar = get_theme_file_path( '/assets/img/artotel-13-panggung-v1.webp' );
 	if ( file_exists( $tjr_kecil ) && file_exists( $tjr_besar ) ) {
-		$tjr_foto = get_theme_file_uri( '/assets/img/artotel-08-hero.webp' );
+		$tjr_foto = get_theme_file_uri( '/assets/img/artotel-13-panggung-v1.webp' );
 		$tjr_foto_srcset = sprintf(
 			' srcset="%s 700w, %s 1600w" sizes="100vw"',
-			esc_url( get_theme_file_uri( '/assets/img/artotel-08-700.webp' ) ),
-			esc_url( get_theme_file_uri( '/assets/img/artotel-08-hero.webp' ) )
+			esc_url( get_theme_file_uri( '/assets/img/artotel-13-panggung-700-v1.webp' ) ),
+			esc_url( get_theme_file_uri( '/assets/img/artotel-13-panggung-v1.webp' ) )
 		);
 	}
 }
