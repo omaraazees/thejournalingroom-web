@@ -363,3 +363,86 @@ dilaporkan sebagai tripwire.
 
 Sisi gagalnya diuji, bukan diasumsikan: enam kasus, tiga yang harus menyalakan
 gerbang dan tiga yang tidak boleh.
+
+## 11. Mengecilkan aset: ambang, dan cara memilih yang benar
+
+Dipakai di kartu T-39 dan lanjutannya, 7 Sep 2026. Ditulis di sini karena
+metodenya berulang dan angkanya mahal didapat.
+
+### Dua ambang, dan keduanya dipakai
+
+| Ambang | Byte | Asalnya |
+|---|---|---|
+| terbukti aman | 32.391 | ambang yang dipakai lantai |
+| titik potong teramati | 28.210 | berkas 246 KB dulu dipotong **tepat** di angka ini |
+
+Yang di bawah **keduanya** punya dua alasan aman yang berdiri sendiri-sendiri.
+Itu yang dikejar, bukan sekadar lolos yang pertama.
+
+### Pilih dengan MARGIN, bukan sekadar lolos
+
+Godaannya mengambil kandidat bermutu tertinggi yang masih lolos. Di T-39 itu
+`1100px q55` pada 31.496 byte, cuma **895 byte** di bawah ambang. Margin setipis
+itu nol pantas untuk pekerjaan yang tujuannya menjinakkan bom. Yang dipakai
+`1000px q42` pada 24.512, yaitu 7.879 di bawah ambang pertama dan 3.698 di bawah
+ambang kedua.
+
+### Format bukan obat, UKURAN PIKSEL yang biasanya salah
+
+- Foto padat detail: WebP memberi **13x**.
+- **PNG beralfa yang sudah dioptimalkan: WebP cuma memberi 1,5 sampai 1,7x.**
+
+Jadi sebelum menyalahkan format, hitung dulu berapa piksel yang **benar-benar
+dibutuhkan** ukuran tampilnya. Itu yang biasanya memberi keuntungan besar.
+
+### Pakai lossless kalau isinya garis tipis
+
+Logo TJR tulisan tangan, dan catatan di `tjr_v5_logo_bar()` mencatat garis rambut
+huruf sambungnya hilang kalau diperkecil sembarangan. Untuk isi begini, WebP
+**lossless** menghapus seluruh pertanyaan artefak: yang berubah cuma penyampelan.
+
+### Ukur mutu pada UKURAN TAMPIL, dan pasang kontrol dulu
+
+Membandingkan pada ukuran berkas menjawab pertanyaan yang salah. Yang penting
+rupanya pada tinggi atau lebar yang benar-benar dirender.
+
+**Dua jebakan yang keduanya pernah kejadian:**
+
+1. **Gambar beralfa nol bisa dibandingkan sesudah `convert("RGB")`.** Logo hitam
+   di atas transparan menyimpan seluruh bentuknya di kanal **alfa**. Membuang
+   alfa menyisakan dua bidang hitam identik, dan selisihnya **0,00 untuk apa
+   pun**. Benarnya: `alpha_composite` ke warna latar tempat gambar itu duduk,
+   baru buang alfa.
+2. **Selalu jalankan kontrol yang HARUS menyala** sebelum mempercayai angka
+   kandidat, terutama sebelum mempercayai nol. Jebakan nomor 1 di atas ketahuan
+   justru karena kontrolnya ikut memberi 0,00.
+
+Angka acuan yang sehat: kandidat memberi beda rata-rata 0,12 sampai 0,25 dari
+255, sementara kontrol yang sengaja dibuat buruk memberi 0,72 dan 5,47.
+
+### Versikan nama, jangan menimpa
+
+`.htaccess` menyetel gambar `max-age` setahun, dan satu URL di situs ini pernah
+mengembalikan **tiga generasi berbeda yang semuanya valid**.
+
+Berkas asli beresolusi penuh **disimpan** sebagai sumber turunan. Perbarui
+`assets/img/CATATAN.md` supaya "nol dirujuk" di situ nol dibaca sebagai "mati".
+
+### Fallback: ukur dulu, jangan diasumsikan
+
+Di T-39 fallback JPEG **ditolak karena diukur**: pada lebar dan mutu serendah apa
+pun yang masih layak, JPEG-nya tetap di atas ambang, yang paling kecil 900px q35
+sudah 33.445 byte. Memasangnya berarti memasang ulang bom yang sedang dijinakkan.
+
+Cadangan yang benar untuk latar `body` adalah warna di deklarasi yang sama, dan
+`theme.json` memang sudah menamainya "Meja (warna cadangan latar foto)".
+
+### Satu cacat metode yang perlu diketahui
+
+**Sapuan aset yang memanen `src` dan `srcset` dari HTML BUTA terhadap aset yang
+dirujuk dari CSS.** Latar `body` nol pernah masuk sapuan aset T-31 karena itu.
+Kalau menyapu bobot halaman, panen dari CSS juga.
+
+Dan **`srcset` bukan daftar unduhan**: peramban memilih satu kandidat menurut
+`sizes` dikali DPR. `tjr-mark@2x.png` ada di srcset tapi baru terpilih di DPR
+sekitar 3,64 ke atas, jadi praktis nol pernah diunduh.
