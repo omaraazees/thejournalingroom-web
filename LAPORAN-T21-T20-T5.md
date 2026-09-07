@@ -252,3 +252,90 @@ dari kartu ini.
   dengan menyapu seluruh situs sesudah tambalan tayang.
 - Judul feed, sengaja tidak disentuh.
 - Halaman pencarian dengan kata kunci yang mengandung tanda kutip atau HTML.
+
+---
+
+## Tambahan T-5: menguji dugaan "dua kelompok itu saling duplikat"
+
+Diminta god: verifikasi murah, TANPA memulihkan apa pun, tanpa mengubah status, tanpa
+mengubah judul. Semua di bawah ini hasil baca saja (`GET` REST dan `GET` halaman publik).
+Nol tulis.
+
+### Jawabannya: dugaan itu TIDAK terbukti
+
+`id 16` dan `id 101` bukan satu acara yang dibuat dua kali. Field-nya berjauhan:
+
+| field | id 16 `wardah-x-tjr` | id 101 `tjr-x-wardah` |
+|---|---|---|
+| `tanggal_mulai` | 2026-11-08 10.00 | 2026-02-21 16.00 |
+| `venue_nama` | Copenhagen | Wardah |
+| `harga` | 125000 | kosong |
+| `kapasitas` / `slot_terisi` | 30 / 30 | 0 / 0 |
+| `durasi_jam` | 3 | 0 |
+
+Selisih tanggalnya sembilan bulan, venue-nya beda, yang satu punya data komersial lengkap
+dan yang satu nol. Ditambah lagi tanggal `id 16` itu sendiri tanggal karangan (`_sumber`
+menandainya `contoh`), jadi dipakai sebagai bukti pun tidak bisa.
+
+### Yang benar: dua kelompok itu dua JENIS data, bukan dua salinan
+
+**id 13-17, dibuat 5 Sep 08.41.** Salinan persis fixture `data-acara-contoh.json`, field per
+field: judul, `tanggal_mulai`, `venue_nama`, `harga`, `kapasitas`, `slot_terisi` semuanya
+cocok. Tanggalnya semua DI MASA DEPAN (28 Sep sampai 8 Nov 2026).
+
+**id 98-107, dibuat 6 Sep 15.42.** Satu acara per kolaborator, `venue_nama` = nama
+kolaboratornya, tanggalnya semua SUDAH LEWAT (9 Nov 2025 sampai 30 Agu 2026), dan
+`harga`/`kapasitas`/`slot_terisi` semuanya kosong. Persis bentuk "arsip kolaborasi yang
+sudah selesai". Pemetaannya satu lawan satu ke post type `kolaborator`:
+
+`98`→46 Sunday Reads Club, `99`→48 Radian, `100`→50 Kupiku Coffee, `101`→53 Wardah,
+`102`→55 Artotel, `103`→61 Statement Beauty, `104`→136 Kolondjono (draft),
+`105`→63 AMCO Bakehouse, `106`→65 Pasar Jakal, `107`→67 Snapobox.
+
+Dua kolaborator tanpa acara arsip: Hanasui (57) dan Heejaz (59). Heejaz cuma muncul sebagai
+venue fixture `id 17`.
+
+Yang tumpang tindih itu SUBJEK-nya, bukan record-nya. Wardah muncul di dua kelompok
+(16 dan 101), Artotel juga (13 venue-nya "ROCCA Artotel", 102 judulnya "TJR x Artotel").
+Kalau dua kelompok itu tayang bersama, situs akan menampilkan dua entri Wardah dengan
+tanggal berjarak sembilan bulan. Itu alasan sah untuk membuang salah satu kelompok. Tapi
+itu cuma menjelaskan 4 dari 15.
+
+### Penjelasan yang jauh lebih pas, dan ada di repo
+
+`design/INVENTARIS-ACARA.md`, commit `f37b1f0`, "KARTU S-9", waktu commit
+**2026-09-07 01.44 +0700 = 2026-09-06 18.44 UTC**. Zona waktu situs UTC (`modified` sama
+persis dengan `modified_gmt`, sudah kucek). `modified` massal kelima belas acara:
+**2026-09-06 19.00 UTC. Enam belas menit sesudahnya.**
+
+Isi dokumen itu: daftar 16 acara, dipisah "TAMPIL di Beranda (4)" dan "TIDAK TAMPIL di
+Beranda (12)", dan tentang yang 12 tertulis apa adanya "bisa dievaluasi untuk penghapusan".
+
+Jadi urutannya: kartu inventaris selesai, enam belas menit kemudian 15 acara kena tindakan
+massal. Kartu S-9 itu yang memicu pembuangan, bukan duplikasi.
+
+Satu hal yang TIDAK cocok dengan dokumen itu: dokumennya menominasikan 12, yang dibuang 15.
+Tiga tambahannya `107`, `106`, `17`, dan ketiganya justru yang di dokumen terdaftar sebagai
+TAMPIL di beranda. Tindakannya melewati rekomendasinya sendiri. Yang selamat cuma `id 12`,
+satu-satunya acara mendatang terdekat.
+
+**Koreksi untuk laporanku sendiri yang sebelumnya.** Aku menulis `modified` 19.00 = saat
+dibuang. Itu terlalu kuat. `wp_trash_post()` menulis `post_status` langsung dan menyimpan
+waktu buang sebenarnya di meta `_wp_trash_meta_time`, yang tidak diekspos REST. Yang bisa
+kubuktikan: pukul 19.00 UTC ada satu tindakan massal yang menyentuh kelima belasnya.
+Bahwa tindakan itu pembuangannya adalah simpulan, kuat tapi bukan bukti.
+
+### Akibat yang sudah tayang sekarang, terukur
+
+- **Beranda kehilangan satu seksi utuh.** "Sesi yang lalu" (Recently) tidak ada lagi di HTML
+  beranda. `patterns/jadwal-kartu.php` baris 11-38 punya penjagaan: kalau nol acara yang
+  sudah lewat, seluruh seksi tidak dirender. Penjagaannya bekerja benar, dan justru itu
+  sebabnya tidak ada yang melapor. Beranda kehilangan satu blok tanpa terlihat rusak.
+- `/jadwal/` sekarang cuma "Embracing Growth". Tidak ada teks kosong menggantung.
+- **Sitemap bersih**, `wp-sitemap-posts-acara-1.xml` isinya tepat 1 URL. Tidak ada URL
+  terbuang yang masih terindeks, jadi tidak ada kebocoran 404 ke mesin pencari.
+- 12 entri kolaborator masih terbit semua, tapi 10 di antaranya kehilangan acara arsip yang
+  dulu memakai namanya.
+
+Nol perubahan dilakukan. Tidak ada yang dipulihkan, status tidak disentuh, judul tidak
+disentuh.
