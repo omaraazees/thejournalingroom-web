@@ -140,3 +140,96 @@ Enam berkas gambar baru di `wordpress/theme-v5/assets/img/` dan tiga pattern:
 
 `bin/periksa-php.sh`: 11 berkas PHP, 0 gagal. **Belum dikirim.** Berkas lama sengaja
 dibiarkan di tempatnya, nol ditimpa, jadi kalau perlu mundur cukup kembalikan patternnya.
+
+---
+
+# T-30 tambahan: seksi kutipan, redundansi ketiga, dan pengecualian AI
+
+## 8. Redundansi ketiga: SUDAH beres sebelum kamu menyebutnya
+
+Cetakan "Pendopo Radian" di seksi kutipan memang foto yang sama dengan cetakan "Radian" di
+seksi penutup. Keduanya `radian-24`.
+
+**Sudah beres oleh perubahan T-30 di atas.** Cetakan penutup ke-2 sudah kuganti jadi
+`pasar-jakal-08`, jadi `radian-24` sekarang cuma muncul di seksi kutipan. Kuverifikasi ulang
+dengan sapuan berbasis isi yang mencakup pattern DAN default ACF di `inc/isi-beranda.php`:
+
+| foto | dipakai di |
+|---|---|
+| artotel-13 | hero |
+| sundayreads-27 | hero, cetakan |
+| artotel-14 | kutipan, lanskap (baru) |
+| radian-24 | kutipan, cetakan |
+| artotel-05 | kolaborator, cetakan |
+| kolondjono-01 | penutup, kanan |
+| wardah-06 | penutup, cetakan 1 |
+| pasar-jakal-08 | penutup, cetakan 2 |
+
+**Nol foto muncul dua kali.** Empat kembar yang kutemukan plus yang kamu temukan, semuanya
+tertutup.
+
+## 9. Foto lantai terrazzo: Umar benar, dan aku TIDAK bisa memperbaikinya sepenuhnya
+
+Ini butir yang paling perlu dibaca utuh, karena jawabannya bukan ya atau tidak.
+
+**Penyebab lembeknya, terukur.** Foto itu tampil di slot selebar sekitar 750 sampai 900 px,
+dan berkasnya 900x675. Jadi sekitar **1x, nol cadangan retina**. Itu satu-satunya sebab.
+
+**Sumbernya BUKAN masalah, jadi pengecualian AI-mu TIDAK berlaku.** Kuukur keempat master
+kandidat adegan itu:
+
+| master | dimensi | orientasi | lebar maksimum untuk potongan 4:3 |
+|---|---|---|---|
+| artotel-17 | 900x1600 | potret | 900 |
+| artotel-18 | 900x1600 | potret | 900 |
+| **artotel-14** | 1600x900 | **lanskap** | **1200** |
+| artotel-15 | 1600x900 | lanskap | 1200 |
+
+Sumber yang dipakai selama ini **potret**, dipotong jadi lanskap, sehingga 58 persen
+bingkainya dibuang dan cuma menyisakan 900 px lebar. Itu bukan master yang kecil, itu master
+dengan **orientasi yang salah untuk slotnya**. Nol detail hilang di sumber, jadi nol yang
+bisa direkonstruksi AI. **Nol kredit terpakai.**
+
+**Yang membatasi justru anggaran byte, dan angkanya keras.** Foto ini padat detail (puluhan
+jurnal bermotif di atas lantai terrazzo bertekstur), jadi ia mahal dikompres:
+
+| lebar | webp q70 | webp q54 |
+|---|---|---|
+| 1200 | 164,1 KB | 132,8 KB |
+| 1000 | 121,1 KB | 98,7 KB |
+| 900 | 102,1 KB | **83,4 KB** |
+
+Retina sungguhan (1600x1200) butuh **216 KB, yaitu 2,4 kali ambang aman 91 KB**. Jadi
+mengabulkan permintaan "lebih HD" sepenuhnya berarti menerbitkan berkas yang **rusak begitu
+CDN dinyalakan lagi**. Persis bentuk bom waktu yang kamu minta kusebut kalau ketemu. Aku
+tidak mengambilnya.
+
+**Yang bisa kuambil, gratis, dan kuukur dulu sebelum percaya.** Kuganti sumbernya ke
+`artotel-14`, lanskap asli. Dugaan awalku "downsample bikin lebih tajam" ternyata **salah
+kalau diukur mentah**: peta tepi justru lebih tinggi di sumber potret (66,5 lawan 59,6),
+karena dipakai 1:1 sehingga derau sensornya ikut terhitung sebagai "tepi".
+
+Yang benar-benar berubah adalah **harga per kualitas**. Pada kualitas yang sama persis (q62,
+keluaran 900x675 identik): sumber potret **111,8 KB**, sumber lanskap **91,9 KB**. Lebih
+murah 18 persen karena deraunya sudah rata-rata oleh downsample. Artinya di anggaran 88 KB
+yang sama, sumber lanskap boleh jalan di **q58**, sementara sumber potret harus turun ke
+sekitar q46. Itu keuntungan nyata dan terukur, walau sederhana.
+
+| | sebelum | sesudah |
+|---|---|---|
+| webp | 900x675, 80,8 KB (kualitas rendah) | 900x675, **88,0 KB q58** |
+| jpg fallback | 900x675, **133,3 KB** (zona gagal) | 900x675, **87,5 KB q48** |
+
+Fallback jpg-nya sekalian turun dari 133,3 KB ke 87,5 KB, jadi **satu bom truncation hilang**
+dari beranda.
+
+**Jujurnya: resolusi yang disajikan TIDAK naik, tetap 900x675.** Yang naik kualitas per byte
+dan hilang satu bom. Kalau Umar masih merasa lembek sesudah ini, dia benar, dan obatnya cuma
+satu: Hostinger memperbaiki pemotongannya supaya kita boleh menerbitkan berkas 200 KB.
+Sampai itu terjadi, foto padat detail seperti ini memang mentok di 1x.
+
+## 10. Berkas tambahan yang kupegang
+
+`wordpress/theme-v5/assets/img/artotel-14-pengantar-v1.webp` dan `.jpg`, plus satu baris
+default di `wordpress/theme-v5/inc/isi-beranda.php` (`pengantar_foto`).
+`bin/periksa-php.sh`: 11 berkas, 0 gagal.

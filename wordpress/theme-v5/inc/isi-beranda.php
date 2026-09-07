@@ -124,7 +124,7 @@ function tjr_v5_bawaan_foto( $nama = '' ) {
 		'hero_cetakan'      => array( 'sundayreads-27.jpg', 'Jurnal terbuka di atas meja dikelilingi washi tape dan stiker dekorasi' ),
 
 		/* Pengantar */
-		'pengantar_foto'    => array( 'artotel-16-lebar-v2.jpg', 'Jurnal peserta digelar berjajar di lantai setelah sesi' ),
+		'pengantar_foto'    => array( 'artotel-14-pengantar-v1.jpg', 'Jurnal peserta digelar berjajar di lantai setelah sesi' ),
 		'pengantar_cetakan' => array( 'radian-24.jpg', 'Peserta menulis di jurnal bersampul bunga merah' ),
 
 		/* Galeri bento */
