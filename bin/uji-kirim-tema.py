@@ -278,6 +278,40 @@ def main():
                 terkirim == {"style.css", "patterns/x.claude.php"},
                 "yang akan terkirim: %s" % sorted(terkirim)))
 
+        # Uji 12 menjaga sisi HAPUS, yang dulu nol punya penjaga sama sekali.
+        # Himpunan `lokal` yang SAMA memberi makan daftar kirim DAN daftar
+        # hapus, dan arahnya berlawanan: menyempitkan lokal MELEBARKAN hapus.
+        # Jadi saringan apa pun yang membuang berkas SAH dari lokal akan diam
+        # diam mengubahnya jadi kandidat hapus. Ditemukan Jim di kartu T-36.
+        #
+        # Servernya sengaja tidak berimpit dengan lokal, dan memuat jenis
+        # berkas di luar delapan yang dipakai tema sekarang. inter.woff2 ada
+        # di DUA-DUANYA: dia berkas sah yang harus tetap hidup. Kalau
+        # saringannya suatu hari jadi allow-list ekstensi, dia jatuh dari
+        # lokal lalu muncul di daftar hapus, dan uji ini gagal.
+        pohon2 = {
+            "style.css": b"a{}",
+            "fonts/inter.woff2": b"font",
+            ".alat-baru/gores": b"g",
+        }
+        di_server2 = {
+            "style.css": b"lama",
+            "fonts/inter.woff2": b"lama",
+            "yatim.css": b"lama",
+        }
+        with tempfile.TemporaryDirectory() as td3:
+            lokal3 = pathlib.Path(td3) / "tema"
+            tulis_pohon(lokal3, pohon2)
+            ftp_h = FtpPalsu(akar_remote, di_server2)
+            mod4 = muat(SEKARANG, lokal3, akar_remote, pathlib.Path(td3) / "m.json")
+            keluaran2 = jalankan(mod4, ftp_h, ["--coba", "--hapus"])
+            akan_dibuang = {b.strip()[2:] for b in keluaran2.splitlines()
+                            if b.strip().startswith("- ")}
+            lulus.append(periksa(
+                12, "hanya berkas yatim yang jadi kandidat hapus, berkas sah nol tersentuh",
+                akan_dibuang == {"yatim.css"},
+                "yang akan dihapus: %s" % sorted(akan_dibuang)))
+
     print()
     print("%d dari %d lulus" % (sum(lulus), len(lulus)))
     return 0 if all(lulus) else 1

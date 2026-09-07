@@ -85,3 +85,79 @@ tayang, dan sampai sekarang cuma ada satu, `CATATAN.md`.
 Cara memakai skripnya **tidak berubah sama sekali**. Bendera sama, keluaran sama,
 daftar kiriman sama. Yang berubah cuma satu hal yang tidak pernah perlu dia
 lakukan lagi: mendaftarkan folder gores alat baru sebelum mengirim.
+
+---
+
+# Susulan: syarat keempat dari Jim, sisi HAPUS
+
+Jim menemukan lubang di syarat yang dipasang god, bukan di rencana saya, dan
+temuannya benar. Baris 258: `buang = sorted(set(remote) - set(lokal)) if hapus`.
+Himpunan `lokal` yang sama memberi makan daftar **kirim** dan daftar **hapus**,
+dan arahnya berlawanan. Menyempitkan `lokal` otomatis **melebarkan** daftar hapus.
+
+Kartunya sampai sesudah pekerjaan selesai, jadi ini pemeriksaan susulan.
+
+## Apakah lubang itu kena ke yang saya bangun
+
+**Tidak, dan alasannya struktural bukan kebetulan.** Saya nol membangun allow-list
+ekstensi. Yang saya bangun predikat penolak jalur bertitik, arahnya sama dengan
+daftar tolak lama, cuma mekanismenya berbeda.
+
+Buktinya sudah ada sejak sebelum saya menyentuh berkas: `lokal` **identik**,
+98 lawan 98, nol beda di kedua arah. Kalau `lokal` identik, maka
+`remote - lokal` identik untuk **remote apa pun**. Itu berlaku umum, bukan
+cuma untuk keadaan server hari ini.
+
+## Dibuktikan juga secara empiris, dan bukan dengan angka nol yang menipu
+
+`--coba --hapus` terhadap server sungguhan, kedua versi:
+`lokal 98, server 98, kirim 0, sama 98, hapus 0`.
+
+Sebelum menjalankannya saya baca dulu kodenya, tidak menuruti jaminan orang:
+`buang` dihitung di baris 258, dicetak di 261, lalu `if coba:` di 263 mencetak
+rencana, `ftp.quit()`, dan `return`. Nol unggah dan nol hapus dipanggil.
+
+Tapi `hapus 0` di kedua versi itu **bukti lemah**, karena kedua himpunannya
+kebetulan berimpit sempurna. Jadi diulang dengan server yang **sengaja tidak
+berimpit**, memuat berkas yatim, jalur bertitik, dan tiga jenis berkas di luar
+delapan yang dipakai tema sekarang:
+
+| | lama | baru |
+|---|---|---|
+| kirim | `assets/x.webp`, `inc/seo.php`, `style.css` | sama persis |
+| hapus | `.claude/gores.txt`, `README.txt`, `assets/lama.svg`, `fonts/x.woff2`, `yatim.css` | sama persis |
+
+Identik di kedua sisi.
+
+## Kenapa peringatan Jim tetap penting, dan lebih kuat dari alasan saya sendiri
+
+Waktu mengusulkan kartu ini saya menolak allow-list ekstensi dengan alasan yang
+lemah: tema wajar menerima jenis berkas baru, jadi allow-list akan menahan kerja
+orang tanpa sebab. Itu soal **kenyamanan**.
+
+Alasan Jim soal **kerusakan**, dan itu jauh lebih kuat. Simulasi logikanya, dengan
+disk dan server yang cerminan persis sehingga seharusnya nol ada yang dihapus:
+
+| Saringan | `lokal` | kandidat hapus |
+|---|---|---|
+| predikat titik | 6 | **nol** |
+| allow-list 8 jenis | 3 | `assets/ikon.svg`, `assets/logo.avif`, `fonts/inter.woff2` |
+
+Ketiganya **ada di disk dan ada di server**, sah keduanya, dan semuanya tambahan
+tema yang masuk akal di masa depan. Sebuah webfont, sebuah ikon, sebuah AVIF.
+Allow-list ekstensi akan menandainya untuk dihapus dari server publik.
+
+Jadi bentuk yang god minta di syarat awalnya, kalau saya turuti apa adanya,
+justru akan memasang senjata yang menembak ke arah sendiri.
+
+## Uji 12: sisi hapus sekarang punya penjaga tetap
+
+Sisi hapus dulu **nol punya penjaga sama sekali**, dan itu sebabnya lubang ini
+bisa lolos. Sekarang ada.
+
+Uji 12 memakai server yang tidak berimpit dan menaruh `fonts/inter.woff2` di
+**dua-duanya**, sebagai berkas sah yang harus tetap hidup. Kalau saringannya
+suatu hari diubah jadi allow-list ekstensi, berkas itu jatuh dari `lokal`, muncul
+di daftar hapus, dan uji ini gagal.
+
+**Suite sekarang 12 dari 12.**
