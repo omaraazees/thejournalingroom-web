@@ -60,7 +60,7 @@ tempat yang sama seperti sebelumnya, dan pemeriksaan escape ganda **nol** di sem
 Diff post: yang berubah cuma `excerpt.raw`, `excerpt.rendered`, `modified`,
 `modified_gmt`, dan dua tautan riwayat revisi. Nol field isi lain tergeser.
 
-## Temuan di luar kartu, dan ini perlu dilihat Umar
+## Temuan di luar kartu [SUDAH DIPUTUSKAN UMAR DAN DIKERJAKAN, lihat susulan di bawah]
 
 **Halaman acaranya sendiri, `/acara/embracing-growth/`, NOL mencetak kalimat aktivitas
 ini.** Yang ditampilkan di sana daftar `isi_kit`, field yang berbeda, isinya delapan
@@ -76,3 +76,72 @@ sana adalah klaim komersial, bukan penyuntingan gaya bahasa. Itu keputusan Umar.
 
 Kalau memang minuman termasuk yang didapat peserta, kartu lanjutannya satu baris:
 tambahkan satu butir ke `isi_kit`.
+
+---
+
+# Susulan 7 Sep 2026: Beverages dipindah ke blok yang benar
+
+Umar: "beverages nya belum tampil", dan screenshotnya blok **Yang disediakan**.
+Dia benar, dan **sasaran kartu awalnya memang salah**. Ini bukan kiriman yang
+gagal, ini kotak yang keliru.
+
+## Di mana Beverages sebenarnya mendarat
+
+Di `excerpt`, kalimat aktivitas, persis seperti kartu T-35 minta. Bukan di blok
+yang Umar lihat. Diperiksa dulu sebelum menambah yang kedua, supaya nol menulis
+dua kali untuk satu fakta.
+
+## Blok "Yang disediakan" itu field apa
+
+`dd-kit` di panel `.fakta`, dirakit `isi-beranda.php:1109`: pakai
+`disediakan_teks` kalau terisi, kalau kosong jatuh ke `tjr_v5_kit_acara()` yang
+menggabung larik `isi_kit` dengan koma.
+
+`disediakan_teks` **kosong**, jadi **`isi_kit` sumbernya**. Satu field, dirender
+di dua tempat: halaman acara dan kartu di beranda.
+
+## Keputusan penempatan, dan saya sempat salah sekali
+
+Percobaan pertama saya menggabung jadi satu butir `Snacks, Lunch & Beverages`,
+menyalin bentuk yang saya pakai di kalimat aktivitas. **Itu salah, dan kelihatan
+begitu keluaran produksinya dibaca:**
+
+> A5 Notebook, Writing Kit, **Snacks, Lunch & Beverages**, Sharing Deco Station...
+
+Daftarnya dipisah **koma**, jadi butir yang memuat koma di dalamnya nol bisa
+dibedakan dari dua butir terpisah. Pembaca melihat sembilan butir, bukan delapan.
+
+Diperbaiki jadi butir berdiri sendiri:
+
+> A5 Notebook, Writing Kit, **Snacks & Lunch, Beverages**, Sharing Deco Station...
+
+**Aturannya, dan ini berlaku umum:** kalau pemisah daftar sebuah karakter, butirnya
+nol boleh memuat karakter itu. Sekarang sembilan butir, nol yang memuat koma.
+
+## Kalimat aktivitas: saya CABUT, dan ini alasannya
+
+Kartu memberi saya pilihan. Saya cabut, jadi kembali `snack & lunch time`.
+
+- **Beverages barang yang disediakan, bukan aktivitas.** Alasan god sendiri, dan
+  sesudah melihat kedua blok berdampingan saya setuju.
+- **Satu fakta sebaiknya dinyatakan di satu tempat.** Sekarang blok Yang
+  disediakan memuatnya, jadi menyebutnya lagi di kalimat aktivitas cuma duplikasi.
+- **Ambiguitas koma yang sama juga muncul di sana.** `snack, lunch & beverages
+  time` punya penyakit yang persis sama dengan butir gabungan tadi.
+
+## Bukti dari produksi, bukan dari basis data
+
+Blok Yang disediakan, diambil dari HTML tersaji lalu didekode, di **dua** tempat
+yang merendernya:
+
+> A5 Notebook, Writing Kit, Snacks & Lunch, Beverages, Sharing Deco Station, Tools, 2 Instax Polaroid, Documentation, New Friends
+
+Sapuan 14 permukaan: varian berkoma **nol**, pengkodean ganda **nol**. `Beverages`
+muncul di tiga permukaan, yaitu halaman acara, beranda, dan REST, dan itu memang
+semua tempat `dd-kit` dirender.
+
+## Batas kartu, diperiksa di produksi
+
+Judul `“This is My First Time Too!”: Embracing My Growth`, harga `Rp260.000`,
+tanggal `27 September 2026`. Ketiganya utuh. Diff ACF: **tepat satu field**,
+`isi_kit`.

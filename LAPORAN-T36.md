@@ -1,5 +1,9 @@
 # T-36: saringan kirim dari daftar tolak jadi predikat
 
+> **Catatan penomoran.** Nomor T-36 dipakai DUA kartu. Berkas ini soal SARINGAN
+> SKRIP KIRIM. Kartu judul acara ada di `LAPORAN-T36-JUDUL.md`.
+
+
 **Selesai. Nol kiriman dilakukan.** Diuji dengan `--coba` dan suite uji.
 
 ## Yang diubah
