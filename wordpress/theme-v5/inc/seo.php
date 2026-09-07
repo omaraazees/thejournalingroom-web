@@ -457,6 +457,18 @@ function tjr_v5_seo_judul_acara( $id ) {
 	$suffix = tjr_v5_seo_acara_lettering( $id ) ? ' | Kelas Lettering Jogja' : ' | TJR Jogja';
 	$batas  = 60;
 
+	// `strlen` menghitung BYTE, bukan karakter, dan itu bukan kelalaian: batas
+	// 60 di sini memang batas lebar tampilan hasil pencarian, yang dihitung per
+	// byte. Kutip melengkung 3 byte per buah di UTF-8, jadi judul yang memakai
+	// tanda kutip lebih cepat menyentuh batas daripada yang terlihat di layar.
+	//
+	// AKIBATNYA SEKARANG, DAN INI BUKAN CACAT: judul acara yang tayang sejak
+	// 7 Sep 2026 memakai kutip melengkung dan panjangnya 53 byte, jadi bersama
+	// suffix menjadi 65 dan MELEWATI batas. Halaman acara karena itu tayang
+	// tanpa ` | TJR Jogja`. Judul sebelumnya 48 byte, pas 60 bersama suffix,
+	// tepat di ambang. Kalau suffix itu diinginkan kembali, jalannya field
+	// `judul_seo_pendek` di baris atas, bukan memendekkan judul acaranya.
+	// Rinciannya di LAPORAN-T36-JUDUL.md.
 	if ( strlen( $judul . $suffix ) > $batas ) {
 		return $judul;
 	}

@@ -366,6 +366,13 @@ header.wp-block-template-part{
     gap:clamp(16px,3.4vw,26px);
   }
   /* di layar penuh judulnya boleh besar, pakai serif display seperti hero */
+  /* TARGET SENTUH DI SINI SENGAJA TIDAK DINAIKKAN KE 44px, jangan dikira
+     terlewat. Nav dan kaki memang dinaikkan di kartu T-1, overlay ini tidak.
+     Alasannya: dia LULUS WCAG 2.5.8 AA, yang minimumnya 24px. Angka 44px itu
+     target ergonomis, bukan syarat lulus. Menaikkannya menelan tinggi panel,
+     sementara blok lanskap max-height:520px di bawah cuma punya sisa sedikit,
+     jadi ongkosnya jatuh ke layar yang ruangnya paling sempit.
+     Angka terukurnya ada di LAPORAN-T1.md, temuan 1, diukur 7 Sep 2026. */
   .bar .wp-block-navigation__responsive-container.is-menu-open a{
     display:block;width:100%;padding:8px 0;
     font-family:var(--wp--preset--font-family--display);
