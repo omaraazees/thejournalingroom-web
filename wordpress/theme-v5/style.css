@@ -255,10 +255,13 @@ header.wp-block-template-part{
   font-size:var(--wp--preset--font-size--label);font-weight:700;
   letter-spacing:.2em;text-transform:uppercase;
   color:var(--wp--preset--color--tinta-lembut);
-  text-decoration:none;position:relative;padding-bottom:4px;
+  /* target sentuh WCAG 2.5.8 AA minimal 24px; teks label 10px sendirian
+     cuma ~21px, padding atas-bawah menaikkan area klik, garis bawah digeser
+     supaya jaraknya ke teks tetap sama seperti sebelumnya (4px) */
+  text-decoration:none;position:relative;display:inline-block;padding:8px 0;
 }
 .bar .wp-block-navigation a::after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  content:"";position:absolute;left:0;right:0;bottom:4px;height:1px;
   background:var(--wp--preset--color--burgundy);
   transform:scaleX(0);transform-origin:right;
   transition:transform .45s var(--wp--custom--lengkung--halus);
@@ -1257,9 +1260,12 @@ footer.wp-block-template-part{
 .kaki .mark img{height:64px;width:auto;opacity:.92}
 .kaki ul{
   list-style:none;margin:16px 0 0;padding:0;
-  display:flex;flex-direction:column;gap:8px;
+  display:flex;flex-direction:column;
 }
 .kaki ul a{
+  /* target sentuh WCAG 2.5.8 AA minimal 24px; teks 11px sendirian cuma ~15px,
+     padding vertikal menaikkan area klik tanpa mengubah ukuran teks */
+  display:block;padding:7px 0;
   font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
   color:var(--wp--preset--color--tinta-lembut);text-decoration:none;
   transition:color .3s;

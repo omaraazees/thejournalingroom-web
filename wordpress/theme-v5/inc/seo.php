@@ -77,6 +77,14 @@ function tjr_v5_seo_bawaan( $kunci = '' ) {
 			// jadi cukup satu tempat kalau nomornya berubah.
 			'deskripsi' => 'Tanya jadwal, slot, atau kolaborasi lewat WhatsApp %nomor% dan Instagram. Dibalas 09.00 sampai 21.00. Basis kami di Mantrijeron, Yogyakarta.',
 		),
+		'cerita'     => array(
+			// 39 karakter.
+			'judul'     => 'Cerita dari The Journaling Room | Jogja',
+			// Sengaja tidak menyebut jumlah tulisan, karena arsipnya masih kosong
+			// dan angkanya akan berubah begitu tulisan pertama terbit.
+			// 149 karakter.
+			'deskripsi' => 'Catatan dan cerita di balik sesi journaling The Journaling Room di Yogyakarta: proses menulis jurnal, ide dekorasi halaman, dan kabar dari tiap sesi.',
+		),
 	);
 
 	if ( '' === $kunci ) {
@@ -90,7 +98,10 @@ function tjr_v5_seo_bawaan( $kunci = '' ) {
  * Slug halaman WordPress yang dipetakan ke kunci di tjr_v5_seo_bawaan().
  *
  * Dipisah dari petanya sendiri karena `jadwal` tidak punya slug halaman, dan
- * `cerita` punya slug tapi tidak punya baris di v5-meta.md.
+ * `cerita` sengaja tidak masuk sini: is_page() tidak pernah true untuknya
+ * (WordPress menganggapnya query is_home() begitu jadi "Posts page"), jadi
+ * baris `cerita` di tjr_v5_seo_bawaan() dibaca langsung dari cabang is_home()
+ * di tjr_v5_seo_konteks(), bukan lewat peta ini.
  *
  * @return array
  */
@@ -199,12 +210,17 @@ function tjr_v5_seo_konteks() {
 		$ctx['gambar']  = (string) get_the_post_thumbnail_url( $id, 'full' );
 
 	} elseif ( is_home() ) {
-		// Halaman untuk posting, /cerita/. WordPress tidak pernah mencetak
-		// canonical untuk halaman ini, jadi dicetak di sini.
+		// Halaman untuk posting, /cerita/. is_page() TIDAK PERNAH true di sini
+		// meski /cerita/ punya ID Page, karena WordPress menganggapnya query
+		// posting begitu dijadikan "Posts page" di Settings > Reading. WordPress
+		// juga tidak pernah mencetak canonical untuk halaman ini, jadi dicetak
+		// di sini juga.
 		$id = (int) get_option( 'page_for_posts' );
+		$b  = tjr_v5_seo_bawaan( 'cerita' );
 
-		$ctx['judul']   = ( $id ? get_the_title( $id ) : 'Cerita' ) . ' | ' . $nama_situs;
-		$ctx['kanonik'] = $id ? (string) get_permalink( $id ) : home_url( '/' );
+		$ctx['judul']     = ! empty( $b['judul'] ) ? $b['judul'] : ( ( $id ? get_the_title( $id ) : 'Cerita' ) . ' | ' . $nama_situs );
+		$ctx['deskripsi'] = isset( $b['deskripsi'] ) ? $b['deskripsi'] : '';
+		$ctx['kanonik']   = $id ? (string) get_permalink( $id ) : home_url( '/' );
 
 	} elseif ( is_singular() ) {
 		$id = get_queried_object_id();

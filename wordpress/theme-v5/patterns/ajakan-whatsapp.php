@@ -31,11 +31,11 @@ $tjr_wa = esc_url( tjr_v5_link_wa() );
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"cetakan ajakan-1","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan ajakan-1"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/sundayreads-27.webp' ) ); ?>" alt=""<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/sundayreads-27.webp' ) ); ?>/><figcaption class="wp-element-caption">Sunday Reads</figcaption></figure>
+<figure class="wp-block-image size-full cetakan ajakan-1"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/sundayreads-27.webp' ) ); ?>" alt="Jurnal terbuka di atas meja dikelilingi washi tape dan stiker dekorasi"<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/sundayreads-27.webp' ) ); ?>/><figcaption class="wp-element-caption">Sunday Reads</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"cetakan ajakan-2","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan ajakan-2"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/radian-24.webp' ) ); ?>" alt=""<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/radian-24.webp' ) ); ?>/><figcaption class="wp-element-caption">Radian</figcaption></figure>
+<figure class="wp-block-image size-full cetakan ajakan-2"><img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/radian-24.webp' ) ); ?>" alt="Peserta menulis di jurnal bersampul bunga merah"<?php echo tjr_v5_sifat_gambar( get_theme_file_uri( '/assets/img/radian-24.webp' ) ); ?>/><figcaption class="wp-element-caption">Radian</figcaption></figure>
 <!-- /wp:image -->
 
 </section>

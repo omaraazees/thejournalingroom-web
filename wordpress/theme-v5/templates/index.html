@@ -5,6 +5,12 @@
 
 <!-- wp:paragraph {"className":"lbl"} --><p class="lbl">Cerita</p><!-- /wp:paragraph -->
 <!-- wp:query-title {"type":"archive","className":"d d-xl"} /-->
+<!-- query-title TIDAK PERNAH mencetak apa pun di sini: WordPress sengaja
+     mengosongkan render_block_core_query_title() untuk is_home() (halaman
+     posting biasa), beda dari arsip lain. Heading statis di bawah ini yang
+     jadi satu-satunya H1 nyata di halaman ini; blok di atas dibiarkan
+     (nol dampak) supaya Site Editor tidak menandainya "konten hilang". -->
+<!-- wp:heading {"level":1,"className":"d d-xl"} --><h1 class="wp-block-heading d d-xl">Cerita dari The Journaling Room</h1><!-- /wp:heading -->
 
 <!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":true},"className":"daftar-tulisan"} -->
 <div class="wp-block-query daftar-tulisan">
