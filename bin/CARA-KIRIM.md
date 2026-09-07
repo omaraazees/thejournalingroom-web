@@ -1,0 +1,310 @@
+# Cara mengirim tema, dan cara membuktikan kirimannya benar
+
+README menjelaskan **mekanik** skripnya: bendera, kredensial, manifes, hash.
+Berkas ini menjelaskan **urutan dan gerbangnya**: apa yang diperiksa sebelum
+mengirim, apa yang dibuktikan sesudahnya, dan apa yang skrip ini tidak bisa
+lakukan. Ditulis 7 Sep 2026 sesudah empat pengiriman berturut turut (kartu T-10
+sampai T-12), dan angka di dalamnya hasil pengukuran, bukan taksiran.
+
+Kalau kamu cuma punya waktu membaca satu bagian, baca yang pertama.
+
+## 1. Gerbang pengiriman adalah DISK, bukan `git status`
+
+Skrip menyusun daftar kirimannya dari sistem berkas:
+
+```python
+LOKAL = AKAR / "wordpress" / "theme-v5"
+for p in LOKAL.rglob("*"):
+    if not p.is_file() or p.name in LEWATI: continue
+```
+
+Bukan dari git. Konsekuensinya, dan ini pernah nyaris kejadian:
+
+- Berkas tema yang **belum di-commit**, bahkan yang belum pernah `git add`,
+  tetap berangkat ke server.
+- `bin/dorong-tema.sh` memang menolak jalan kalau pohon kerja kotor, tapi itu
+  menjaga **repo tema**, bukan menjaga **server**. Dua jalur terpisah.
+
+Jadi memeriksa `git status` saja tidak cukup. Yang benar, banding isi disk lawan
+isi git di folder tema:
+
+```bash
+python3 - <<'PY'
+import subprocess, os
+akar = 'wordpress/theme-v5'
+tracked = set(subprocess.run(['git','ls-files',akar],capture_output=True,text=True).stdout.split())
+disk = {os.path.join(r,n) for r,_,f in os.walk(akar) for n in f}
+print('di disk tapi tidak di git:', sorted(disk-tracked) or 'NOL')
+print('di git tapi tidak di disk:', sorted(tracked-disk) or 'NOL')
+PY
+```
+
+Dua duanya harus NOL. Arah keduanya penting, dan alasannya beda:
+
+- **Di disk tapi tidak di git** berarti ada yang akan tayang tanpa jejak commit.
+- **Di git tapi tidak di disk** berarti daftar hapus akan berisi berkas server
+  yang sah. Lihat bagian 3.
+
+## 2. Urutan sebelum mengirim
+
+```bash
+# 1. gerbang disk lawan git di atas, dua duanya NOL
+# 2. sintaks PHP
+bash bin/periksa-php.sh                       # 11 berkas, 0 gagal
+# 3. pohon kerja
+git status --short --untracked-files=no       # harus kosong
+# 4. rencana kiriman
+python3 bin/kirim-tema-ftp.py --coba          # baca daftarnya, cari yang asing
+# 5. berangkat
+bash bin/dorong-tema.sh                       # repo tema dulu
+python3 bin/kirim-tema-ftp.py                 # baru server
+```
+
+Jangan menjalankan `--coba` terlalu pagi. Daftar kirimannya berubah setiap kali
+siapa pun menyimpan berkas, jadi dry run yang dijalankan setengah jam sebelum
+berangkat cuma menghasilkan jawaban basi.
+
+`dorong-tema.sh` dijalankan **sekalipun kartu cuma menyebut FTP**. Kalau
+dilewatkan, repo tema menyimpan berkas yang sudah dibuang repo utama, dan
+divergensi itu baru ketahuan berbulan bulan kemudian.
+
+## 3. Kontrak `--hapus`, dan kenapa ia butuh dua gerbang
+
+`--hapus` **tidak** menghapus satu berkas yang kamu maksud. Ia menghapus seluruh
+himpunan berkas server yang tidak ada di lokal:
+
+```python
+buang = sorted(set(remote) - set(lokal)) if hapus else []
+```
+
+Perhatikan `if hapus`: jalan biasa **tidak pernah menghapus apa pun**.
+Penghapusan hanya terjadi kalau benderanya diberikan.
+
+Karena daftarnya himpunan, ia butuh gerbang di **dua** sisi:
+
+**Gerbang (a), MASUKAN.** Buktikan sisi lokal utuh lebih dulu, dengan
+perbandingan disk lawan git di bagian 1. Ini bukan formalitas: `buang` dihitung
+dari `remote - lokal`, jadi satu berkas lokal yang hilang diam diam akan
+menghapus berkas server yang sah, dan dry run akan melaporkannya dengan tenang
+seolah itu benar.
+
+**Gerbang (b), KELUARAN.** Cetak daftar lengkapnya, bukan jumlahnya:
+
+```bash
+python3 bin/kirim-tema-ftp.py --coba --hapus
+```
+
+`--coba` mencetak daftar kirim berawalan `  + ` dan daftar hapus berawalan
+`  - `, lalu `return` sebelum menulis apa pun termasuk manifes.
+
+Lanjut **hanya** kalau daftar hapus berisi persis berkas yang dimaksud. Kalau
+lebih, kalau lain, atau kalau kosong: berhenti. Jangan menyaring manual, jangan
+menghapus di luar skrip, jangan mengakali daftarnya. Daftar yang tidak sesuai
+artinya alat ini bukan alat yang tepat untuk pekerjaan itu.
+
+### Keterbatasan yang perlu diketahui, bukan ditambal
+
+**Skrip ini tidak bisa menghapus satu berkas tertentu.** Seluruh permukaan
+argumennya tiga bendera boolean:
+
+```python
+hapus  = "--hapus"  in sys.argv
+coba   = "--coba"   in sys.argv
+teliti = "--teliti" in sys.argv
+```
+
+Nol argumen jalur, nol pola. Jadi menghapus satu berkas selalu berarti
+mempercayakan bahwa `remote - lokal` kebetulan berisi satu anggota, dan itulah
+sebabnya gerbang (b) ada. Kalau suatu saat ada dua berkas yatim dan cuma satu
+yang ingin dibuang, alat ini tidak cukup.
+
+### Membuang berkas aset yang ADA DI REPO butuh dua langkah
+
+`git rm` saja tidak cukup. Berkas itu sudah pernah terkirim, jadi kalau berhenti
+di commit, ia berubah jadi **yatim di server**. Urutannya: `git rm` dan commit,
+lalu kirim dengan `--hapus` melewati kedua gerbang di atas.
+
+## 4. Verifikasi sesudah mengirim, lima lapis
+
+Yang pertama paling sering dilewatkan dan paling sering menyelamatkan.
+
+**Lapis 1, potret daftar server sebelum dan sesudah, bandingkan nama demi nama.**
+Bukan hitungannya. Hitungan yang cocok bisa menyembunyikan satu berkas hilang
+dan satu berkas baru sekaligus.
+
+```bash
+python3 - <<'PY'
+import importlib.util
+spec = importlib.util.spec_from_file_location("k","bin/kirim-tema-ftp.py")
+m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+host,user,sandi = m.kredensial(); ftp = m.sambung(host,user,sandi)
+r = m.daftar_remote(ftp, m.REMOTE)
+for k in sorted(r): print(f"{k}\t{r[k]['size']}")
+ftp.quit()
+PY
+```
+
+Simpan keluarannya sebelum dan sesudah, lalu diff. Bandingkan tiga hal: yang
+hilang, yang baru, dan yang ukurannya berubah.
+
+**Lapis 2, isi asli di server.** `--coba --teliti` mengunduh dan mem-hash isi
+server, bukan membaca manifes. Ini satu satunya cara membuktikan "yang tayang
+sama dengan repo" tanpa menebak:
+
+```bash
+python3 bin/kirim-tema-ftp.py --coba --teliti   # sekitar 32 detik
+```
+
+Ia juga membocorkan berkas yatim: kalau `server` lebih besar dari `lokal`, ada
+berkas di server yang tidak ada di repo.
+
+**Lapis 3, HTTP.** Berkas yang dihapus harus 404, berkas yang dipakai harus
+terlayani seukuran berkasnya.
+
+**Lapis 4, halaman.** Sapu semua URL terbit, hitung penanda yang relevan dengan
+perubahannya. Contoh yang dipakai 7 Sep: jumlah `<h1>` per halaman, jumlah
+`<dl>`/`<dt>`/`<dd>`, dan nol rujukan ke berkas yang dibuang.
+
+**Lapis 5, sintaks bukan jaminan.** `periksa-php.sh` menangkap salah ketik, nol
+fatal saat jalan seperti fungsi yang tidak ada. Buka situsnya.
+
+## 5. HTTP 200 tidak berarti isinya utuh
+
+Hostinger memotong respons berkas besar secara acak **sambil tetap mengirim
+`content-length` penuh dan status 200**. Terukur 7 Sep 2026:
+
+| Berkas | Ukuran | Utuh | Terpotong |
+|---|---|---|---|
+| `artotel-08-1600.webp` | 246096 | 8 dari 12 | 4 dari 12, selalu berhenti di 28210 byte |
+| `artotel-08-hero.webp` | 86024 | 8 dari 8 | 0 |
+
+Ini terjadi pada **HTML juga**, bukan cuma gambar: satu permintaan `/kontak/`
+putus dengan `IncompleteRead(17754 bytes read, 1996 more expected)`.
+
+Akibatnya untuk siapa pun yang menulis skrip verifikasi:
+
+- **Wajib punya retry**, jangan sekali tembak. Sekitar satu dari sepuluh gagal.
+- Kalau memeriksa berkas, **hitung byte** dan bandingkan dengan ukuran
+  sebenarnya. Jangan percaya `%{http_code}`.
+- Kalau memeriksa halaman, ulangi sampai lolos lalu catat berapa kali gagal.
+
+Akar masalahnya di sisi hosting dan belum ditangani.
+
+### Membedakan "terpotong" dari "generasi lama"
+
+Ukuran yang beda dari yang diharapkan punya dua sebab yang sangat berbeda, dan
+obatnya berlawanan. Bedakan lewat **penanda akhir format**, bukan lewat ukuran:
+
+```bash
+python3 -c "
+b=open('a.jpg','rb').read()
+print(len(b), b[:2].hex(), b[-2:].hex())   # JPEG utuh: ffd8 ... ffd9
+"
+```
+
+- Penanda akhir **hilang** berarti **terpotong**. Ulangi permintaannya.
+- Penanda akhir **ada** tapi ukurannya beda berarti **generasi lama di edge
+  CDN**. `.htaccess` menyetel `max-age` gambar satu tahun, jadi mengganti berkas
+  dengan nama sama membuat beberapa edge menyajikan generasi berbeda dari satu
+  URL. Mengirim ulang **tidak** menyembuhkannya kalau origin sudah benar;
+  obatnya purge di hPanel **Performa > CDN > Flush cache**, dan itu menu yang
+  BERBEDA dari "Cache Manager" yang layernya lain.
+
+Kalau ragu origin atau edge: `--coba --teliti` membaca lewat FTP, jadi ia
+melihat origin. Kalau `--teliti` bilang identik tapi HTTP memberi ukuran lain,
+yang basi itu edge.
+
+## 6. Mengukur perubahan tema TANPA mengirimnya
+
+Berguna waktu kartu melarang deploy, atau waktu ingin tahu efek sebuah
+perubahan sebelum ia tayang. Semuanya dijalankan di halaman **live** di Chrome.
+
+**Perubahan CSS.** Salin blok aturan yang kamu ubah apa adanya dari `style.css`,
+suntik sebagai `<style>` terakhir di kaskade. Selektornya sama, jadi urutan yang
+menang, dan hasilnya sama dengan berkas baru. Lalu ukur dengan
+`getBoundingClientRect()`.
+
+**Perubahan token `theme.json`.** Cukup setel ulang custom property-nya
+(`--wp--preset--color--*`) di `:root`, karena itu persis yang dicetak WordPress
+dari `theme.json`.
+
+**Perubahan markup.** Ganti `el.outerHTML` dengan hasil transformasinya, lalu
+bandingkan `getBoundingClientRect()` tiap baris sebelum dan sesudah. Ini cara
+membuktikan sebuah perubahan struktur **nol menggeser tata letak**.
+
+**Lebar layar lain.** `resize_window` tidak menggigit di jendela Chrome yang
+ter-maximize. Yang berhasil: `<iframe>` selebar 390 atau 768 yang memuat
+situsnya, karena iframe punya viewport sendiri untuk media query dan
+same-origin jadi isinya bisa diukur dari luar.
+
+Satu jebakan yang sudah memakan waktu: ukur dengan halaman dalam keadaan
+tenang. Mengklik tombol lalu membaca terlalu cepat pernah menghasilkan angka nol
+yang mengejutkan dan salah. Kalau sebuah angka mengejutkan, ukur dua kali
+sebelum melaporkannya.
+
+## 7. Sandbox memblokir soket keluar
+
+Di mesin kerja ini, koneksi keluar dan bind soket diblokir sandbox dan gagal
+dengan `PermissionError: [Errno 1] Operation not permitted`. Yang kena:
+
+- `python3 bin/kirim-tema-ftp.py` (FTP)
+- `bash bin/dorong-tema.sh` (`git push`)
+- `python3 -m http.server` (bind), jadi server statis lokal bukan pilihan, dan
+  itu sebabnya teknik di bagian 6 dipakai
+
+Jalankan perintah perintah itu dengan sandbox dimatikan. Kegagalannya bukan bug
+skrip.
+
+## 8. Template di database SELALU menang atas berkas tema
+
+Kalau seseorang pernah menyimpan template lewat Site Editor, salinannya masuk
+database dan **mengunci** berkas temanya. Situs tetap terlihat benar selama
+isinya sama, tapi setiap suntingan berkas tema sesudah itu akan terlihat "tidak
+berefek" tanpa satu pun error muncul. Bug yang mahal dilacak justru karena
+senyap.
+
+Periksa dan bersihkan lewat WP REST, bukan klik, supaya bisa diverifikasi
+sebelum dan sesudah:
+
+```bash
+set -a; . ~/.tjr-wp; set +a     # WP_URL, WP_USER, WP_APP_PASSWORD
+
+# template mana yang sumbernya database
+curl -sS -u "$WP_USER:$WP_APP_PASSWORD" \
+  "$WP_URL/wp-json/wp/v2/templates?per_page=100&_fields=id,slug,source"
+
+# isi lengkapnya, context=edit wajib untuk content.raw
+curl -sS -u "$WP_USER:$WP_APP_PASSWORD" \
+  "$WP_URL/wp-json/wp/v2/templates/tjr-v5//single?context=edit"
+
+# hapus, sama persis dengan "Clear customizations" di Site Editor
+curl -sS -X DELETE -u "$WP_USER:$WP_APP_PASSWORD" \
+  "$WP_URL/wp-json/wp/v2/templates/tjr-v5//single?force=true"
+```
+
+Semua template sehat berbunyi `"source": "theme"`. Yang berbunyi `"custom"`
+sedang mengunci berkasnya.
+
+**Sebelum menghapus, bandingkan isinya dengan berkas tema.** Kalau database
+ternyata memuat perubahan yang tidak ada di git, menghapusnya berarti membuang
+kerja orang. Perlu diketahui supaya tidak salah alarm: WordPress **menyuntik
+sendiri** `"theme":"tjr-v5"` ke blok `template-part` waktu menyimpan, jadi
+salinan database wajar sedikit lebih panjang daripada berkasnya (pernah terukur
+837 lawan 803 byte) tanpa ada perbedaan perilaku. Simpan salinannya dulu, dan
+simpan **di luar** `wordpress/theme-v5/` supaya tidak ikut terkirim.
+
+## 9. Jangan menaruh apa pun di dalam folder tema yang tidak mau tayang
+
+`wordpress/theme-v5/` dicermin ke `wp-content/themes/tjr-v5` di web server
+publik. Berkas catatan, backup, potret, atau apa pun yang bersifat kerja
+internal harus hidup di luar folder itu.
+
+Yang disaring skrip cuma dua daftar pendek:
+
+```python
+LEWATI        = {".DS_Store", "CATATAN.md"}      # per nama berkas
+LEWATI_FOLDER = {".claude", ".cc-writes"}        # per segmen jalur induk
+```
+
+Kalau menambah alat baru yang menulis folder goresnya sendiri, tambahkan ke
+`LEWATI_FOLDER` dan ke `.gitignore`, lalu jalankan `python3 bin/uji-kirim-tema.py`.

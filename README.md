@@ -101,6 +101,13 @@ Ujinya: `python3 bin/uji-kirim-tema.py`. Dia memakai FTP palsu di memori, tidak
 menyentuh server, dan membandingkan skrip sekarang dengan versi sebelum
 perbaikan lewat `git show`.
 
+**Sebelum mengirim sungguhan, baca [`bin/CARA-KIRIM.md`](bin/CARA-KIRIM.md).**
+Bagian ini menjelaskan mekanik skripnya; berkas itu menjelaskan urutan dan
+gerbangnya: kenapa gerbang pengiriman adalah isi disk dan bukan `git status`,
+kontrak dua gerbang untuk `--hapus` (yang menghapus SELURUH himpunan berkas
+server yang tidak ada di lokal, bukan satu berkas yang kamu maksud), lima lapis
+verifikasi sesudah kirim, dan kenapa HTTP 200 tidak berarti isinya utuh.
+
 ### Periksa PHP sebelum mengirim
 
 Deploy di sini FTP, bukan build, jadi satu salah ketik PHP langsung jadi layar
