@@ -1351,21 +1351,63 @@ add_action( 'wp_footer', 'tjr_v5_fab' );
  *
  * Ditemukan di kartu T-17, ditambal di T-18.
  *
+ * Susulan kartu T-21: `Skip to content` ikut ditambahkan. Sekelas persis,
+ * string blok inti berdomain `default` tanpa terjemahan `id_ID`, tapi
+ * dampaknya lebih besar daripada label menu: tautan lewati-ke-konten cuma
+ * dibaca pembaca layar, jadi salah bahasa di sana tidak terlihat mata
+ * siapa pun dan bisa bertahan lama tanpa ada yang melaporkannya.
+ *
  * @param string $terjemahan Teks hasil terjemahan.
  * @param string $asli       Teks asli sebelum diterjemahkan.
  * @param string $domain     Domain teks.
  * @return string
  */
-function tjr_v5_label_menu_id( $terjemahan, $asli, $domain ) {
+function tjr_v5_string_inti_id( $terjemahan, $asli, $domain ) {
 	if ( 'default' !== $domain ) {
 		return $terjemahan;
 	}
 
 	$peta = array(
-		'Open menu'  => 'Buka menu',
-		'Close menu' => 'Tutup menu',
+		'Open menu'       => 'Buka menu',
+		'Close menu'      => 'Tutup menu',
+		'Skip to content' => 'Lewati ke konten',
 	);
 
 	return isset( $peta[ $asli ] ) ? $peta[ $asli ] : $terjemahan;
 }
-add_filter( 'gettext', 'tjr_v5_label_menu_id', 10, 3 );
+add_filter( 'gettext', 'tjr_v5_string_inti_id', 10, 3 );
+
+/**
+ * Judul halaman hasil pencarian jadi bahasa Indonesia.
+ *
+ * Blok `core/query-title` mencetak `Search results for: "kata"` sebagai `h1`
+ * di `/?s=`, padahal tepat di atasnya label tema sudah berbunyi "Hasil
+ * pencarian". Jadi yang terbaca pengunjung adalah label Indonesia disusul
+ * judul Inggris yang mengulang artinya.
+ *
+ * Sengaja TIDAK lewat filter `gettext` seperti tiga string di atas. Alasannya:
+ * string ini majemuk, bentuknya `Search results for: %s` dengan placeholder,
+ * dan menambalnya lewat `gettext` berarti menebak `msgid` persis milik versi
+ * WordPress yang sedang jalan. Tebakan yang salah tidak akan bersuara, dia
+ * cuma diam tidak berefek, dan itu jenis kegagalan yang paling mahal dilacak.
+ *
+ * Yang dicocokkan di sini adalah KELUARAN yang sudah saya amati sendiri di
+ * HTML terrender, yaitu potongan "Search results for:". Mencocokkan sesuatu
+ * yang sudah dilihat lebih jujur daripada menebak kunci terjemahan yang belum
+ * pernah dilihat. Kata kuncinya sendiri tetap utuh karena yang diganti cuma
+ * awalannya.
+ *
+ * Kartu T-21.
+ *
+ * @param string $isi   HTML hasil render blok.
+ * @param array  $blok  Data blok.
+ * @return string
+ */
+function tjr_v5_judul_pencarian_id( $isi, $blok ) {
+	if ( ! is_search() || false === strpos( $isi, 'Search results for:' ) ) {
+		return $isi;
+	}
+
+	return str_replace( 'Search results for:', 'Hasil pencarian untuk:', $isi );
+}
+add_filter( 'render_block_core/query-title', 'tjr_v5_judul_pencarian_id', 10, 2 );

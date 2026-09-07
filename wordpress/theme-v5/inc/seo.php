@@ -1176,3 +1176,41 @@ function tjr_v5_sitemap_tanpa_penulis( $provider, $nama ) {
 	return $provider;
 }
 add_filter( 'wp_sitemaps_add_provider', 'tjr_v5_sitemap_tanpa_penulis', 10, 2 );
+
+/**
+ * Arsip penulis tidak diindeks.
+ *
+ * Situs ini satu penulis, jadi `/cerita/author/<slug>/` isinya menduplikasi
+ * `/cerita/` persis: query yang sama, urutan yang sama, tulisan yang sama.
+ * Dua URL berisi hal yang sama membuat mesin pencari membagi sinyal di antara
+ * keduanya, dan tidak ada satu pun alasan pengunjung perlu mendarat di versi
+ * arsip penulisnya.
+ *
+ * Niat menyembunyikan arsip ini sudah ada sejak commit f749450 yang
+ * mengeluarkannya dari sitemap. Tapi mencabut dari sitemap BUKAN menutup
+ * halaman: URL-nya tetap hidup, tetap menjawab 200, dan tetap boleh dirayapi.
+ * `noindex` yang menutupnya.
+ *
+ * `follow` sengaja dibiarkan menyala. Yang tidak diinginkan cuma halamannya
+ * masuk indeks; tautan di dalamnya tetap boleh ditelusuri supaya tulisan yang
+ * ditautkan dari sana tidak ikut kehilangan jalur.
+ *
+ * Catatan kartu T-18: dulu halaman ini juga membocorkan alamat email pemilik
+ * lewat judul dan URL. Itu sudah ditutup terpisah dengan mengganti
+ * `display_name`, `nickname`, dan `user_nicename`. Jadi `noindex` di sini
+ * murni soal SEO, bukan lagi soal privasi.
+ *
+ * Kartu T-20.
+ *
+ * @param array $robots Arahan robots yang sudah terkumpul.
+ * @return array
+ */
+function tjr_v5_robots_arsip_penulis( $robots ) {
+	if ( is_author() ) {
+		$robots['noindex'] = true;
+		$robots['follow']  = true;
+	}
+
+	return $robots;
+}
+add_filter( 'wp_robots', 'tjr_v5_robots_arsip_penulis' );
