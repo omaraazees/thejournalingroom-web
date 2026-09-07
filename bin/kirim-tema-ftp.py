@@ -230,7 +230,7 @@ def main():
         print("manifes belum ada, sekali ini isi server diunduh dan di-hash")
         teliti = True
 
-    kirim, lewat = [], 0
+    kirim, lewat, disentuh = [], 0, []
     for rel in sorted(lokal):
         di_server = remote.get(rel)
         if di_server is None:
@@ -241,6 +241,19 @@ def main():
             # Kebenaran, bukan pembukuan: hash isi asli yang ada di server.
             sama = sidik_remote(ftp, f"{REMOTE}/{rel}") == sidik_lokal[rel]
             if sama:
+                # Isinya sama, jadi aman ditimpa dan nol perlu dikirim. TAPI
+                # stempel server yang bergerak berarti ADA YANG MENYENTUHNYA,
+                # dan itu tetap layak dikatakan. Sejak 7 Sep 2026 Umar
+                # menyunting berkas proyek langsung, jadi sentuhan tanpa
+                # perubahan isi adalah peringatan dini bahwa dia sedang bekerja
+                # di berkas itu.
+                #
+                # Dilaporkan SEBELUM manifes ditimpa, karena baris di bawah ini
+                # menulis stempel server yang baru dan dengan itu MENGHAPUS
+                # satu satunya bukti bahwa berkasnya pernah disentuh.
+                catatan = manifes.get(rel)
+                if catatan and catatan.get("modify") != di_server["modify"]:
+                    disentuh.append((rel, catatan.get("modify"), di_server["modify"]))
                 # Sudah dibuktikan sama, jadi stempelnya boleh masuk manifes.
                 manifes[rel] = dict(di_server, sha256=sidik_lokal[rel])
         else:
@@ -259,6 +272,14 @@ def main():
 
     print(f"lokal {len(lokal)} berkas, server {len(remote)} berkas")
     print(f"kirim {len(kirim)}, sama {lewat}, hapus {len(buang)}")
+
+    # Nol memengaruhi apa yang dikirim maupun dihapus. Murni laporan.
+    if disentuh:
+        print(f"disentuh di server tapi isinya SAMA: {len(disentuh)}")
+        for rel, lama_, baru_ in disentuh:
+            print(f"  ~ {rel}  stempel {lama_} jadi {baru_}")
+        print("  Isinya identik jadi aman, tapi ada yang membukanya. Tanya dulu")
+        print("  kalau kamu nol merasa menyentuhnya.")
 
     if coba:
         for rel in kirim:

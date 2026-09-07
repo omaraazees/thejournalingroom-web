@@ -367,6 +367,25 @@ python3 bin/kirim-tema-ftp.py --coba --teliti
 disunting tangan. Kalau ada yang muncul dan kamu **nol** menyentuhnya di lokal,
 **BERHENTI**: itu suntingan orang, bukan kiriman yang tertinggal. Tanya dulu.
 
+Skrip juga melaporkan baris terpisah untuk berkas yang **disentuh tapi isinya
+sama**:
+
+```
+disentuh di server tapi isinya SAMA: 1
+  ~ style.css  stempel 20260907140000 jadi 20260907152233
+```
+
+Isinya identik jadi **aman ditimpa**, dan berkasnya memang **nol dikirim**. Tapi
+stempel yang bergerak berarti **ada yang membuka dan menyimpannya**, dan itu
+peringatan dini bahwa seseorang sedang bekerja di berkas itu. Kalau kamu nol
+merasa menyentuhnya, tanya dulu sebelum mengirim apa pun ke folder itu.
+
+Laporan ini sengaja dicetak **sebelum** manifes diperbarui, karena pembaruan
+manifes menulis stempel server yang baru dan dengan itu **menghapus satu satunya
+bukti** bahwa berkasnya pernah disentuh. Diuji di `uji-kirim-tema.py` nomor 13,
+yang memeriksa dua hal sekaligus: laporannya muncul, **dan** berkasnya tetap nol
+dikirim.
+
 Ongkosnya sekitar 50 detik karena seluruh isi server diunduh dan di-hash. Itu
 murah dibandingkan membatalkan suntingan tangan pemilik file tanpa dia tahu.
 

@@ -312,6 +312,31 @@ def main():
                 akan_dibuang == {"yatim.css"},
                 "yang akan dihapus: %s" % sorted(akan_dibuang)))
 
+        # Uji 13. Berkas yang DISENTUH di server tapi isinya SAMA. Sejak Umar
+        # menyunting berkas proyek langsung, sentuhan tanpa perubahan isi adalah
+        # peringatan dini. Yang diuji DUA hal sekaligus, dan yang kedua justru
+        # yang menjaga: laporannya muncul, DAN berkasnya tetap nol dikirim.
+        # Gerbang yang belum pernah menyala belum terbukti gerbang, jadi ini
+        # menyalakannya dengan sengaja.
+        with tempfile.TemporaryDirectory() as td4:
+            td4 = pathlib.Path(td4)
+            lokal4 = td4 / "tema"
+            tulis_pohon(lokal4, {"style.css": b"a{}"})
+            man4 = td4 / "m.json"
+            ftp4 = FtpPalsu(akar_remote, {"style.css": b"a{}"})
+            mod5 = muat(SEKARANG, lokal4, akar_remote, man4)
+            # jalan pertama: bikin manifes, isinya sudah sama jadi nol dikirim
+            jalankan(mod5, ftp4, ["--teliti"])
+            # ada yang MENYENTUH berkasnya di server: stempel bergerak, isi tetap
+            ftp4.waktu["%s/style.css" % akar_remote] = "20990101000000"
+            keluaran3 = jalankan(mod5, ftp4, ["--coba", "--teliti"])
+            lulus.append(periksa(
+                13, "stempel server bergerak dengan isi SAMA dilaporkan, dan tetap nol dikirim",
+                "disentuh di server tapi isinya SAMA: 1" in keluaran3
+                and "~ style.css" in keluaran3
+                and "kirim 0" in keluaran3,
+                "keluaran:\n%s" % keluaran3))
+
     print()
     print("%d dari %d lulus" % (sum(lulus), len(lulus)))
     return 0 if all(lulus) else 1
