@@ -49,6 +49,13 @@ LOKAL = AKAR / "wordpress" / "theme-v5"
 # Akar FTP itu home akun, bukan public_html. Situsnya ada di bawah domains/.
 REMOTE = "/domains/thejournalingroom.id/public_html/wp-content/themes/tjr-v5"
 LEWATI = {".DS_Store", "CATATAN.md"}
+# Folder gores milik alat tulis. Ada DI DALAM folder tema, jadi tanpa daftar ini
+# berkas apa pun yang jatuh ke situ ikut mendarat di wp-content/themes/tjr-v5 di
+# web server publik. Kosong waktu aturan ini ditulis, dan justru itu alasannya
+# ditutup sekarang: yang menahannya cuma kebetulan, bukan mekanisme.
+# Dicocokkan per SEGMEN JALUR, bukan per nama berkas, karena yang perlu dibuang
+# seisi folder, bukan satu nama tertentu.
+LEWATI_FOLDER = {".claude", ".cc-writes"}
 # Manifes bukan sumber kebenaran, cuma catatan kiriman terakhir, jadi tidak masuk
 # git: hilang pun skrip masih benar, cuma sekali jalan lebih lambat.
 MANIFES = pathlib.Path(os.environ.get("TJR_MANIFES") or (AKAR / "bin" / ".cache-kirim" / "manifes.json"))
@@ -187,8 +194,14 @@ def main():
 
     lokal = {}
     for p in LOKAL.rglob("*"):
-        if p.is_file() and p.name not in LEWATI:
-            lokal[str(p.relative_to(LOKAL))] = p
+        if not p.is_file() or p.name in LEWATI:
+            continue
+        rel = p.relative_to(LOKAL)
+        # parts[:-1] = folder induknya saja. Nama berkasnya sudah diurus LEWATI
+        # di baris atas, dan tidak boleh ikut diuji di sini.
+        if LEWATI_FOLDER.intersection(rel.parts[:-1]):
+            continue
+        lokal[str(rel)] = p
 
     sidik_lokal = {rel: sidik(p) for rel, p in lokal.items()}
 

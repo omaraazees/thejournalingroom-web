@@ -31,3 +31,10 @@ bin/.cache-lint/
 
 # Manifes hash kiriman FTP, dibuat ulang sendiri oleh bin/kirim-tema-ftp.py
 bin/.cache-kirim/
+
+# Folder gores alat tulis. Bisa muncul di mana saja, termasuk DI DALAM
+# wordpress/theme-v5 yang dicermin penuh ke web server publik oleh
+# bin/kirim-tema-ftp.py. Skrip itu punya daftarnya sendiri (LEWATI_FOLDER);
+# baris di sini menjaga sisi git-nya.
+.claude/
+.cc-writes/
