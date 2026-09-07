@@ -121,11 +121,11 @@ function tjr_v5_bawaan_foto( $nama = '' ) {
 	$peta = array(
 		/* Hero */
 		'hero_foto'         => array( 'artotel-08.jpg', 'Rombongan peserta workshop journaling tersenyum sambil mengangkat jurnal masing masing' ),
-		'hero_cetakan'      => array( 'sundayreads-27.jpg', '' ),
+		'hero_cetakan'      => array( 'sundayreads-27.jpg', 'Jurnal terbuka di atas meja dikelilingi washi tape dan stiker dekorasi' ),
 
 		/* Pengantar */
 		'pengantar_foto'    => array( 'artotel-16-lebar-v2.jpg', 'Jurnal peserta digelar berjajar di lantai setelah sesi' ),
-		'pengantar_cetakan' => array( 'radian-24.jpg', '' ),
+		'pengantar_cetakan' => array( 'radian-24.jpg', 'Peserta menulis di jurnal bersampul bunga merah' ),
 
 		/* Galeri bento */
 		'bento_1'           => array( 'radian-11.jpg', 'Sesi journaling di pendopo bersama Radian' ),
@@ -923,15 +923,14 @@ function tjr_v5_kit_acara( $id ) {
 }
 
 /**
- * Harga per orang, format Rupiah, plus catatan singkat kalau diisi.
+ * Harga per orang, format Rupiah.
  *
- * Catatannya cuma modifier kecil untuk angka di sebelahnya (lihat instruksi
- * field-nya di ACF: "Muncul kecil di sebelah harga"), bukan kalimat berdiri
- * sendiri. Makanya digantung ke syarat harga sudah terisi: acara yang
- * harganya belum diisi (kolom kosong atau nol, misalnya sesi yang harganya
- * belum turun dari brand brief) tidak menampilkan baris ini sama sekali,
- * jadi catatan draf/internal yang kadang dipakai sebagai pengingat isi
- * kolom itu ikut aman, tidak pernah bocor ke publik.
+ * Acara yang harganya belum diisi (kolom kosong atau nol, misalnya sesi yang
+ * harganya belum turun dari brand brief) tidak menampilkan baris ini sama
+ * sekali.
+ *
+ * Field `catatan_harga` dihapus atas keputusan Umar (kartu T-3, 7 Sep 2026).
+ * Dulu isinya ditempel kecil di sebelah angka lewat span .slot-catatan.
  *
  * @param int $id ID acara.
  * @return string
@@ -943,14 +942,7 @@ function tjr_v5_harga_acara( $id ) {
 		return '';
 	}
 
-	$tampil  = 'Rp' . number_format( $harga, 0, ',', '.' );
-	$catatan = trim( (string) get_post_meta( $id, 'catatan_harga', true ) );
-
-	if ( '' !== $catatan ) {
-		$tampil .= ' <span class="slot-catatan">&middot; ' . esc_html( $catatan ) . '</span>';
-	}
-
-	return $tampil;
+	return 'Rp' . number_format( $harga, 0, ',', '.' );
 }
 
 /**

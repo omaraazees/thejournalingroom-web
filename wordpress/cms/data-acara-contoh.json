@@ -22,7 +22,6 @@
         "venue_alamat": "",
         "venue_maps": "",
         "harga": 75000,
-        "catatan_harga": "",
         "kapasitas": 15,
         "slot_terisi": 11,
         "isi_kit": ["Notebook A6", "Sticker sheet", "Booklet panduan", "Akses deco station", "Minuman", "Dokumentasi foto", "Teman baru"]
@@ -56,7 +55,6 @@
         "venue_alamat": "",
         "venue_maps": "",
         "harga": 98000,
-        "catatan_harga": "",
         "kapasitas": 12,
         "slot_terisi": 10,
         "isi_kit": ["Notebook A6", "Sticker sheet", "Booklet panduan", "Foto cetak", "Minuman", "Dokumentasi foto"]
@@ -90,7 +88,6 @@
         "venue_alamat": "",
         "venue_maps": "",
         "harga": 40000,
-        "catatan_harga": "minimum spend",
         "kapasitas": 6,
         "slot_terisi": 6,
         "isi_kit": ["Akses deco station", "Teman baru"]
@@ -101,7 +98,6 @@
         "format_acara": "brand-brief",
         "venue_nama": "beranda",
         "harga": "brand-brief",
-        "catatan_harga": "brand-brief",
         "kapasitas": "brand-brief",
         "durasi_jam": "contoh",
         "ringkasan": "ditulis untuk contoh",
@@ -125,7 +121,6 @@
         "venue_alamat": "",
         "venue_maps": "",
         "harga": 100000,
-        "catatan_harga": "termasuk buku",
         "kapasitas": 20,
         "slot_terisi": 5,
         "isi_kit": ["Notebook A6", "Sticker sheet", "Booklet panduan", "Foto cetak", "Akses deco station", "Minuman", "Dokumentasi foto", "Teman baru"]
@@ -136,7 +131,6 @@
         "format_acara": "brand-brief",
         "venue_nama": "brand-brief",
         "harga": "brand-brief",
-        "catatan_harga": "brand-brief",
         "durasi_jam": "brand-brief",
         "ringkasan": "ditulis untuk contoh",
         "tanggal_mulai": "contoh",
@@ -160,7 +154,6 @@
         "venue_alamat": "",
         "venue_maps": "",
         "harga": 125000,
-        "catatan_harga": "",
         "kapasitas": 30,
         "slot_terisi": 30,
         "isi_kit": ["Notebook A6", "Sticker sheet", "Booklet panduan", "Foto cetak", "Minuman", "Dokumentasi foto"]
@@ -194,7 +187,6 @@
         "venue_alamat": "",
         "venue_maps": "",
         "harga": 0,
-        "catatan_harga": "HARGA BELUM ADA DI BRAND BRIEF, isi sebelum tayang",
         "kapasitas": 15,
         "slot_terisi": 15,
         "isi_kit": ["Notebook A6", "Booklet panduan", "Minuman", "Teman baru"]

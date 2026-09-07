@@ -157,26 +157,6 @@
         "placeholder": "75000"
       },
       {
-        "key": "field_tjr_catatan_harga",
-        "label": "Catatan harga",
-        "name": "catatan_harga",
-        "aria-label": "",
-        "type": "text",
-        "instructions": "Muncul kecil di sebelah harga. Contoh: termasuk buku, atau minimum spend.",
-        "required": 0,
-        "conditional_logic": 0,
-        "wrapper": {
-          "width": "50",
-          "class": "",
-          "id": ""
-        },
-        "default_value": "",
-        "maxlength": 60,
-        "placeholder": "termasuk buku",
-        "prepend": "",
-        "append": ""
-      },
-      {
         "key": "field_tjr_tab_slot",
         "label": "Slot",
         "name": "",

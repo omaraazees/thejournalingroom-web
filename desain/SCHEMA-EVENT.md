@@ -77,7 +77,7 @@ sebelumnya) — bukan menulis ulang `name`/`url`-nya.
 | `offers` | Opsional, dari `harga`. | Sama seperti `tjr_v5_harga_acara()` yang sudah ada: harga 0 dianggap BELUM DIISI, bukan gratis, jadi `offers` dilewati total kalau harga masih 0, bukan mengirim `price: "0"`. |
 | `offers.availability` | Dihitung dari `kapasitas` dan `slot_terisi`. | Kosong (`slot_terisi` kosong dianggap 0 oleh `tjr_v5_kursi_acara()`) → sisa kursi penuh → `InStock`. Baru jadi `SoldOut` kalau `slot_terisi` sama dengan `kapasitas`. |
 | `description` | Opsional, pakai `tjr_v5_seo_deskripsi_acara()` yang sudah ada (dipakai juga untuk meta description). | Kalau tanggal atau venue kosong, fungsi itu sendiri balik string kosong, dan `description` tidak ditulis ke Event. |
-| `catatan_harga`, `disediakan_teks` | **Tidak dipetakan ke Event sama sekali.** | `catatan_harga` cuma modifier tampilan di sebelah harga (lihat `tjr_v5_harga_acara()`), bukan bagian dari `Offer` schema.org. `disediakan_teks` (isi kit) tidak relevan untuk field Event manapun yang diminta kartu ini. |
+| `disediakan_teks` | **Tidak dipetakan ke Event sama sekali.** | Isi kit, tidak relevan untuk field Event manapun yang diminta kartu ini. Catatan: `catatan_harga` dulu ikut di baris ini, field itu dihapus 7 Sep 2026 (kartu T-3). |
 
 ## `PostalAddress`: cara memecah `venue_alamat`
 

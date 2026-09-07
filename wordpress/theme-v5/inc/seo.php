@@ -848,8 +848,6 @@ function tjr_v5_seo_alamat_acara( $alamat ) {
  * apa-apa, daripada mengirim Event setengah jadi yang ditolak validator.
  *
  * Field acara yang lain semuanya OPSIONAL di sini dengan sengaja:
- * - catatan_harga: tidak dipetakan ke Event sama sekali (itu modifier tampilan
- *   harga di kartu, bukan bagian dari Offer).
  * - slot_terisi: kalau kosong dianggap 0 oleh tjr_v5_kursi_acara(), jadi
  *   availability jatuh ke InStock, bukan bikin fungsi ini gagal.
  * - disediakan_teks: tidak relevan untuk Event, dilewati.
