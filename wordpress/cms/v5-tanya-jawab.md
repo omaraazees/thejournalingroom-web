@@ -127,8 +127,10 @@ paling atas. Salah ketik di situ bikin seluruh situs tidak bisa dibuka.
 Situs menghitung penuh dari perbandingan dua angka: **Slot terisi** dan **Kapasitas**.
 
 - Buka acaranya, tab **Slot**, pastikan angka slot terisi sudah sama persis dengan kapasitas.
-- Kalau kapasitasnya diisi `0`, statusnya memang tidak akan pernah jadi Penuh. Isian `0` artinya
-  sesi tanpa batas kursi.
+- Kolom Kapasitas tidak menerima angka `0`, batas minimalnya 1. Kalau ada acara lama yang
+  kapasitasnya kosong atau nol, statusnya memang tidak akan pernah jadi Penuh dan bar slotnya
+  tidak muncul, karena situs menganggap angkanya belum diketahui. Isi kapasitas yang benar,
+  statusnya langsung menyusul.
 - Kalau dua duanya sudah benar tapi tombolnya belum berubah, tunggu lima menit lalu muat ulang
   halamannya sambil menahan Shift.
 

@@ -198,7 +198,36 @@ database. Selisihnya paling lama beberapa jam, dan halaman detail tetap memakai
   jadi Selesai tujuh jam lebih awal.
 - Fungsi ini memanggil `get_field()` milik ACF. Kalau plugin ACF dimatikan, seluruh status akan
   jatuh ke `belum-siap`.
-- Kalau kapasitas diisi 0, status tidak pernah jadi Penuh maupun Hampir penuh. Ini disengaja untuk
-  sesi yang tidak dibatasi seat, misalnya Playdate dengan minimum spend.
+- Kalau kapasitas kurang dari 1, status tidak pernah jadi Penuh maupun Hampir penuh, dan bar slot
+  tidak muncul sama sekali. Penjaga ini ADA MAKSUDNYA dan jangan dihapus, tapi maksudnya bukan
+  yang tertulis di versi lama dokumen ini. Lihat bagian berikut.
 - Angka slot terisi tidak terhubung ke pembayaran. Selama booking masih manual lewat WhatsApp,
   angka ini diketik tangan. Kalau nanti ada sistem booking, fungsi ini tinggal membaca dari sana.
+
+## Kapasitas kurang dari 1 artinya kapasitas TIDAK DIKETAHUI
+
+Versi lama dokumen ini menulis bahwa kapasitas 0 disengaja untuk sesi tanpa batas kursi, misalnya
+Playdate dengan minimum spend. Itu tidak didukung datanya, dan kalau diikuti justru menyesatkan.
+
+Yang sebenarnya terjadi di situs, dicek 7 September 2026:
+
+- Sepuluh acara memakai kapasitas 0. Semuanya entri arsip acara lama dengan harga juga kosong,
+  jadi 0 di situ artinya angkanya memang tidak pernah diketahui, bukan sesi tanpa batas.
+- Acara Journaling Playdate yang justru dijadikan contoh di dokumen lama memakai kapasitas 6,
+  bukan 0.
+- Tidak ada satu pun format TJR yang benar benar tanpa batas kursi. Playdate 6 orang, Inner Circle
+  privat, brand activation ikut brief brand.
+
+Jadi penjaga `kapasitas > 0` di kode itu bukan fitur sesi tanpa batas, melainkan penanganan data
+yang belum lengkap. Fungsinya: kalau angkanya tidak ada, situs diam soal kursi, bukan menampilkan
+0 dari 0 atau menghitung persentase dari nol.
+
+**Penjaga ini menanggung beban, jangan dihapus.** `tjr_v5_kursi_acara()` menghitung
+`round( terisi / kapasitas * 100 )`. Tanpa penjaganya, sepuluh entri arsip itu akan membuat
+pembagian dengan nol begitu ada yang mengembalikannya dari tempat sampah.
+
+**Jangan pula menyuruh orang mengetik 0.** Kolom Kapasitas di ACF punya batas minimum 1, jadi 0
+ditolak waktu disimpan. Batas itu benar dan sebaiknya dibiarkan: sesi yang dijual dan dipesan
+selalu punya angka kursi, dan kapasitas 0 yang diketik sengaja cuma menghasilkan kartu acara yang
+diam soal kursi dan berstatus Buka selamanya. Kalau memang ada sesi yang kursinya longgar, isi
+angka yang lebih besar dari perkiraan peserta.
