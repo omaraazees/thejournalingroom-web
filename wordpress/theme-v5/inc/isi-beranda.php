@@ -950,10 +950,16 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 			return '';
 		}
 
+		// Nama aksesibelnya harus berbunyi sama dengan teks yang dilihat mata di
+		// baris dd-kursi. Kalau tidak, pengguna pembaca layar mendengar "0 dari 8
+		// kursi sudah terisi" sementara yang lain membaca "8 kursi tersedia".
+		$label = $kursi['terisi'] < 1
+			? $kursi['kapasitas'] . ' kursi tersedia'
+			: $kursi['terisi'] . ' dari ' . $kursi['kapasitas'] . ' kursi sudah terisi';
+
 		return sprintf(
-			'<div class="slot" role="img" aria-label="%1$s dari %2$s kursi sudah terisi"><i style="--p:%3$s%%"></i></div>',
-			(int) $kursi['terisi'],
-			(int) $kursi['kapasitas'],
+			'<div class="slot" role="img" aria-label="%1$s"><i style="--p:%2$s%%"></i></div>',
+			esc_attr( $label ),
 			(int) $kursi['persen']
 		);
 	}
