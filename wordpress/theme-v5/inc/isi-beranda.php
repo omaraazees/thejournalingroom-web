@@ -124,7 +124,7 @@ function tjr_v5_bawaan_foto( $nama = '' ) {
 		'hero_cetakan'      => array( 'sundayreads-27.jpg', '' ),
 
 		/* Pengantar */
-		'pengantar_foto'    => array( 'artotel-16-lebar.jpg', 'Jurnal peserta digelar berjajar di lantai setelah sesi' ),
+		'pengantar_foto'    => array( 'artotel-16-lebar-v2.jpg', 'Jurnal peserta digelar berjajar di lantai setelah sesi' ),
 		'pengantar_cetakan' => array( 'radian-24.jpg', '' ),
 
 		/* Galeri bento */
