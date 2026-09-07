@@ -39,7 +39,16 @@ body::before{
   background:radial-gradient(120% 90% at 50% 40%,rgb(60 48 34 / .12),rgb(46 37 26 / .38));
 }
 
-img{max-width:100%;display:block}
+img{max-width:100%;display:block;overflow:hidden}
+/* Kartu G-4: overflow:hidden di <img> sendiri, bukan cuma di pembungkusnya.
+   Kalau gambarnya gagal dimuat (server Hostinger memotong respons besar
+   secara acak), ini yang mencegah ikon+teks alt cadangan browser meluber
+   keluar kotak thumbnail; aspect-ratio dan object-fit di aturan lain menjaga
+   kotaknya sendiri tidak berubah ukuran. Aturan picture di bawah bikin
+   pembungkus <picture> (dipakai buat <source webp>) tidak menambah kotak
+   baru di antara figure dan img, jadi seluruh aturan di atas tetap kena img
+   seperti sebelumnya. */
+picture{display:contents}
 a{color:inherit}
 /* SATU SATUNYA cincin fokus di tema ini, dan sengaja :focus-visible supaya cuma
    muncul untuk keyboard. Sebelumnya bukan ini yang mengecat: theme.json punya
@@ -970,6 +979,12 @@ header.wp-block-template-part{
   font-family:var(--wp--preset--font-family--display);font-style:italic;
   font-size:var(--wp--preset--font-size--teks);line-height:1.2;text-align:left;
   transition:background .45s;
+  /* Kartu G-4: dulu tanpa batas lebar, jadi tulisan panjang di petak sempit
+     390px bisa membungkus dua baris dan stripnya jadi lebih tinggi dari
+     petak sebelahnya. max-width plus nowrap+ellipsis menjamin satu baris di
+     lebar berapa pun, sama seperti pola .cetakan figcaption di bawah. */
+  max-width:calc(100% - 16px);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .bento .strip-kraft figcaption,.bento .strip-kraft .wp-element-caption,.strip.kraft{background:var(--wp--preset--color--kraft)}
 .bento .strip-rose figcaption,.bento .strip-rose .wp-element-caption,.strip.rose{background:var(--wp--preset--color--rose-tua)}

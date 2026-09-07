@@ -373,6 +373,65 @@ function tjr_v5_sifat_gambar( $url, $utama = false ) {
 	return $sifat;
 }
 
+/**
+ * URL .webp pendamping sebuah .jpg di assets/img/, kalau berkasnya ada.
+ *
+ * Kartu G-4. Server Hostinger memotong respons gambar JPEG besar (350-450 KB)
+ * secara acak di tengah unduhan, sementara .webp yang jauh lebih kecil (hasil
+ * optimasi kartu P-3) lolos utuh setiap kali diminta. Yang bisa ditambal dari
+ * kode cuma menyajikan .webp yang sudah ada; potongan di sisi hosting sendiri
+ * bukan urusan tema.
+ *
+ * Sebelum ini empat pattern (galeri bento, hero, pengantar, tumpukan cetakan)
+ * masing masing menulis closure yang sama persis untuk pengecekan ini.
+ * Disatukan di sini supaya slot baru ikut otomatis, dan cuma satu tempat yang
+ * perlu diingat kalau berkas pendampingnya bertambah.
+ *
+ * @param string $url URL gambar asli. Cuma berkas .jpg/.jpeg di assets/img/
+ *                     tema yang dicek; foto unggahan ACF di luar situ tidak
+ *                     disentuh, dikembalikan apa adanya lewat string kosong.
+ * @return string URL .webp, atau string kosong kalau sibling-nya tidak ada.
+ */
+function tjr_v5_webp_pendamping( $url ) {
+	$webp = preg_replace( '/\.jpe?g$/i', '.webp', (string) $url );
+
+	if ( $webp === $url ) {
+		return '';
+	}
+
+	$jalur = get_theme_file_path( '/assets/img/' . basename( (string) wp_parse_url( $webp, PHP_URL_PATH ) ) );
+
+	return ( $jalur && file_exists( $jalur ) ) ? $webp : '';
+}
+
+/**
+ * <img> siap tempel di pattern, dibungkus <picture> kalau ada .webp pendamping.
+ *
+ * Kartu G-4, pertahanan lapis pertama. Sampai sebelum ini, alih ke .webp
+ * dikerjakan dengan menukar src SEBELUM dicetak, jadi begitu unduhan .webp
+ * itu sendiri yang gagal, tidak ada jalan mundur karena .jpg aslinya sudah
+ * tidak disebut sama sekali di HTML. <picture> menjaga <img src> tetap
+ * berisi URL asli (jpg) sebagai fallback, dan cuma menambahkan
+ * <source type="image/webp"> di depannya yang dicoba browser lebih dulu.
+ *
+ * @param string $url    URL gambar asli, sama seperti keluaran tjr_v5_foto().
+ * @param string $alt    Teks alternatif. Kosongkan untuk gambar dekoratif.
+ * @param bool   $utama  Diteruskan ke tjr_v5_sifat_gambar().
+ * @return string HTML siap echo: <picture>...</picture>, atau <img> tunggal
+ *                kalau tidak ada .webp pendamping.
+ */
+function tjr_v5_gambar_tag( $url, $alt, $utama = false ) {
+	$webp  = tjr_v5_webp_pendamping( $url );
+	$sifat = tjr_v5_sifat_gambar( '' !== $webp ? $webp : $url, $utama );
+	$img   = '<img src="' . esc_url( $url ) . '" alt="' . esc_attr( $alt ) . '"' . $sifat . '/>';
+
+	if ( '' === $webp ) {
+		return $img;
+	}
+
+	return '<picture><source srcset="' . esc_url( $webp ) . '" type="image/webp"/>' . $img . '</picture>';
+}
+
 
 /* =====================================================================
  * Pendaftaran field
