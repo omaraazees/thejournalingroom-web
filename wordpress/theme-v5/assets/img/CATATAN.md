@@ -38,7 +38,8 @@ Jangan pakai tabel ini sebagai saringan. Jalankan ulang caranya, lalu percayai h
 | `artotel-16-v2.webp` | artotel-18 | 0.3 | yakin |
 | `artotel-16.jpg` | artotel-17 | 1.7 | yakin |
 | `artotel-16.webp` | artotel-17 | 1.7 | yakin |
-| `latar-meja.jpg` | - | 43.3 | BUKAN dari foto-2026 (2200x1237, lebih besar dari master mana pun) |
+| `latar-meja.jpg` | - | 43.3 | BUKAN dari foto-2026 (2200x1237, lebih besar dari master mana pun). **Sejak T-39 nol dirujuk CSS**, disimpan sebagai sumber turunan v2 |
+| `latar-meja-v2.webp` | latar-meja.jpg | - | turunan T-39, 1000x562 q42, 24.512 byte. **Ini yang dipakai `body`** |
 | `pasar-jakal-05.jpg` | pasar-jakal-06 | 1.7 | yakin |
 | `pasar-jakal-06.jpg` | pasar-jakal-07 | 1.7 | yakin |
 | `pasar-jakal-06.webp` | pasar-jakal-07 | 1.8 | yakin |
@@ -46,6 +47,11 @@ Jangan pakai tabel ini sebagai saringan. Jalankan ulang caranya, lalu percayai h
 `latar-meja.jpg` **namanya jujur**. Isinya memang meja kerja dengan jurnal, pena, dan stiker.
 Ia cuma bukan berasal dari `foto-2026`, jadi pencocokan otomatis wajar memberi skor tinggi.
 **Skor tinggi berarti tidak tahu, bukan berarti bohong.**
+
+Per kartu T-39 (7 Sep 2026), yang dimuat `body` **bukan lagi** `latar-meja.jpg`
+melainkan `latar-meja-v2.webp`. Berkas 2200px aslinya sengaja disimpan sebagai
+sumber turunan, jadi **nol dirujuk bukan berarti mati**. Alasan dan angkanya ada
+di komentar `style.css` pada aturan `body` dan di `LAPORAN-T39.md`.
 
 ## Yang sudah dibereskan (kartu T-32)
 

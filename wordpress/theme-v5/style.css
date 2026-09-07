@@ -29,7 +29,32 @@ html{scroll-behavior:smooth}
 
 body{
   margin:0;
-  background:var(--wp--preset--color--meja) url("assets/img/latar-meja.jpg") center/cover fixed no-repeat;
+  /* Latar meja, kartu T-39. Dulu latar-meja.jpg 320.444 byte, dan karena dia
+     latar BODY dia dimuat di SETIAP halaman. Itu 9,9x ambang yang terbukti
+     aman di server ini (32.391) dan 11x titik potong yang pernah teramati
+     (28.210). Selama CDN mati dia tidak pernah gagal, tapi seluruh riwayat
+     pemotongan respons di situs ini terpojok ke CDN, jadi begitu CDN
+     dinyalakan lagi yang gagal dimuat bukan satu gambar di satu halaman,
+     melainkan latar SELURUH situs.
+
+     Sekarang latar-meja-v2.webp, 1000x562 q42, 24.512 byte, 13,1x lebih kecil
+     dan di bawah KEDUA ambang itu. Diukur 7 Sep 2026.
+
+     Namanya diversikan, bukan ditimpa di tempat, karena .htaccess menyetel
+     gambar max-age setahun dan satu URL pernah mengembalikan tiga generasi
+     berbeda yang semuanya valid.
+
+     NOL fallback JPEG, dan itu diukur bukan diasumsikan: pada lebar dan mutu
+     serendah apa pun yang masih layak, JPEG-nya tetap di ATAS ambang. Yang
+     paling kecil, 900px q35, sudah 33.445 byte. Memasangnya berarti memasang
+     ulang bom yang persis sedang dijinakkan kartu ini.
+     Cadangannya warna `meja` di deklarasi yang sama, dan theme.json memang
+     sudah menamainya "Meja (warna cadangan latar foto)". Peramban yang nol
+     mendukung WebP melihat warna itu, bukan halaman kosong.
+
+     Berkas 2200px aslinya SENGAJA disimpan sebagai sumber turunan ini,
+     alasannya sama dengan artotel-08 di kartu T-14. */
+  background:var(--wp--preset--color--meja) url("assets/img/latar-meja-v2.webp") center/cover fixed no-repeat;
   -webkit-font-smoothing:antialiased;
 }
 
