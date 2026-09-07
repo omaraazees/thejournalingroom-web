@@ -652,6 +652,31 @@ add_action( 'acf/init', 'tjr_v5_daftar_isi_beranda' );
  * @return string
  */
 /**
+ * Huruf pertama dijadikan kapital, aman untuk UTF-8.
+ *
+ * Kenapa fungsi ini ada. Baris fakta acara diisi lewat CMS, jadi kapitalnya
+ * ikut cara mengetik saat itu. Hasilnya berdampingan: baris kit terbaca
+ * "A5 Notebook, Writing Kit, ..." sementara baris bawaan terbaca "tumbler,
+ * barang/stationery ...". Yang rapi bukan mengandalkan penulisnya konsisten,
+ * melainkan barisnya sendiri yang menjamin bentuknya.
+ *
+ * `ucfirst()` bawaan PHP bekerja per byte, jadi salah kalau nanti ada isian
+ * yang diawali huruf beraksen. Yang dipakai di sini versi multibyte.
+ *
+ * @param string $teks Teks apa adanya dari CMS.
+ * @return string
+ */
+function tjr_v5_awali_kapital( $teks ) {
+	$teks = trim( (string) $teks );
+
+	if ( '' === $teks ) {
+		return '';
+	}
+
+	return mb_strtoupper( mb_substr( $teks, 0, 1 ) ) . mb_substr( $teks, 1 );
+}
+
+/**
  * Stempel waktu acara, dibaca sebagai waktu lokal situs.
  *
  * Kenapa fungsi ini ada. Nilai TJR_FIELD_MULAI disimpan sebagai "Y-m-d H:i:s"
@@ -1031,12 +1056,12 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 	} elseif ( false !== strpos( $kelas, 'dd-kit' ) ) {
 		// Teks bebas menang atas daftar centang, kalau diisi.
 		$tulis = trim( (string) get_post_meta( $id, 'disediakan_teks', true ) );
-		$isi   = esc_html( '' !== $tulis ? $tulis : tjr_v5_kit_acara( $id ) );
+		$isi   = esc_html( tjr_v5_awali_kapital( '' !== $tulis ? $tulis : tjr_v5_kit_acara( $id ) ) );
 	} elseif ( false !== strpos( $kelas, 'dd-bawa' ) ) {
 		$bawa = trim( (string) get_post_meta( $id, 'bawa_sendiri', true ) );
 		// Kalimat bawaannya berlaku untuk hampir semua sesi, jadi baris ini tidak
 		// dibuang waktu kosong. Yang dipakai teks yang sudah tertulis di pattern.
-		$isi  = '' !== $bawa ? esc_html( $bawa ) : null;
+		$isi  = '' !== $bawa ? esc_html( tjr_v5_awali_kapital( $bawa ) ) : null;
 	} elseif ( false !== strpos( $kelas, 'dd-kursi' ) ) {
 		$isi = $lewat ? '' : esc_html( tjr_v5_label_kursi( $id ) );
 	}
