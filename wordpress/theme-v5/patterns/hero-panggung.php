@@ -20,18 +20,8 @@ $tjr_alt     = tjr_v5_foto_alt( 'hero_foto' );
 $tjr_f_judul = tjr_v5_isi( 'hero_foto_judul' );
 $tjr_f_isi   = tjr_v5_isi( 'hero_foto_isi' );
 
-// Kartu P-3: sama seperti galeri bento, cuma alihkan ke .webp kalau
-// padanannya memang ada di assets/img/; foto ACF di luar situ tidak disentuh.
-$tjr_ke_webp = static function ( $url ) {
-	$webp = preg_replace( '/\.jpe?g$/i', '.webp', (string) $url );
-	if ( $webp === $url ) {
-		return $url;
-	}
-	$jalur = get_theme_file_path( '/assets/img/' . basename( (string) wp_parse_url( $webp, PHP_URL_PATH ) ) );
-	return file_exists( $jalur ) ? $webp : $url;
-};
-
-$tjr_cetak   = $tjr_ke_webp( tjr_v5_foto( 'hero_cetakan' ) );
+// Kartu G-4: alih ke .webp lewat tjr_v5_gambar_tag(), lihat inc/isi-beranda.php.
+$tjr_cetak   = tjr_v5_foto( 'hero_cetakan' );
 $tjr_cetak_t = tjr_v5_isi( 'hero_cetakan_teks' );
 
 // Foto panggung tampil 100% lebar section di dua lebar layar (4:5 di ponsel,
@@ -97,7 +87,7 @@ if ( $tjr_sesi ) {
 <div class="wp-block-group panggung">
 
 <!-- wp:image {"className":"cetakan selip selip-hero","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan selip selip-hero"><img src="<?php echo esc_url( $tjr_cetak ); ?>" alt=""<?php echo tjr_v5_sifat_gambar( $tjr_cetak ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_cetak_t ); ?></figcaption></figure>
+<figure class="wp-block-image size-full cetakan selip selip-hero"><?php echo tjr_v5_gambar_tag( $tjr_cetak, '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_cetak_t ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->

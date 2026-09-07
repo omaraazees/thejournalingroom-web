@@ -17,20 +17,10 @@
 // sudah tayang. Jangan diseragamkan.
 $tjr_cetakan = array();
 
-// Kartu P-3: sama seperti galeri bento, cuma alihkan ke .webp kalau
-// padanannya memang ada di assets/img/; foto ACF di luar situ tidak disentuh.
-$tjr_ke_webp = static function ( $url ) {
-	$webp = preg_replace( '/\.jpe?g$/i', '.webp', (string) $url );
-	if ( $webp === $url ) {
-		return $url;
-	}
-	$jalur = get_theme_file_path( '/assets/img/' . basename( (string) wp_parse_url( $webp, PHP_URL_PATH ) ) );
-	return file_exists( $jalur ) ? $webp : $url;
-};
-
+// Kartu G-4: alih ke .webp lewat tjr_v5_gambar_tag(), lihat inc/isi-beranda.php.
 for ( $tjr_n = 1; $tjr_n <= 9; $tjr_n++ ) {
 	$tjr_cetakan[] = array(
-		$tjr_ke_webp( tjr_v5_foto( 'cetakan_' . $tjr_n ) ),
+		tjr_v5_foto( 'cetakan_' . $tjr_n ),
 		tjr_v5_isi( 'cetakan_' . $tjr_n . '_nama' ),
 		tjr_v5_foto_alt( 'cetakan_' . $tjr_n ),
 	);
@@ -51,7 +41,7 @@ for ( $tjr_n = 1; $tjr_n <= 9; $tjr_n++ ) {
 <div class="wp-block-group tumpukan">
 <?php foreach ( $tjr_cetakan as $tjr_satu ) : ?>
 <!-- wp:image {"className":"cetakan","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan"><img src="<?php echo esc_url( $tjr_satu[0] ); ?>" alt="<?php echo esc_attr( $tjr_satu[2] ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_satu[0] ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_satu[1] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full cetakan"><?php echo tjr_v5_gambar_tag( $tjr_satu[0], $tjr_satu[2] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_satu[1] ); ?></figcaption></figure>
 <!-- /wp:image -->
 <?php endforeach; ?>
 </div>

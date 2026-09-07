@@ -14,21 +14,11 @@ $tjr_foto = array();
 $tjr_alt  = array();
 $tjr_teks = array();
 
-// Kartu P-3: kalau URL-nya masih berkas tema di assets/img/ dan ada padanan
-// .webp hasil resize di sebelahnya, pakai itu. Foto yang sudah diganti dari
-// dasbor (ACF, di luar assets/img/) tidak tersentuh dan tetap tampil apa
-// adanya lewat $tjr_foto asli.
-$tjr_ke_webp = static function ( $url ) {
-	$webp = preg_replace( '/\.jpe?g$/i', '.webp', (string) $url );
-	if ( $webp === $url ) {
-		return $url;
-	}
-	$jalur = get_theme_file_path( '/assets/img/' . basename( (string) wp_parse_url( $webp, PHP_URL_PATH ) ) );
-	return file_exists( $jalur ) ? $webp : $url;
-};
-
+// Kartu G-4: alih ke .webp (kalau sibling-nya ada) dikerjakan tjr_v5_gambar_tag()
+// lewat <picture>, bukan menukar src di sini. $tjr_foto tetap URL asli (jpg),
+// jadi tetap tersedia sebagai fallback kalau <source webp>-nya sendiri gagal.
 for ( $tjr_n = 1; $tjr_n <= 4; $tjr_n++ ) {
-	$tjr_foto[ $tjr_n ] = $tjr_ke_webp( tjr_v5_foto( 'bento_' . $tjr_n ) );
+	$tjr_foto[ $tjr_n ] = tjr_v5_foto( 'bento_' . $tjr_n );
 	$tjr_alt[ $tjr_n ]  = tjr_v5_foto_alt( 'bento_' . $tjr_n );
 	$tjr_teks[ $tjr_n ] = tjr_v5_isi( 'bento_' . $tjr_n . '_teks' );
 }
@@ -59,19 +49,19 @@ $tjr_lead = 'Dokumentasi dari beberapa workshop yang sudah kami gelar di Yogyaka
 <div class="wp-block-group bento naik">
 
 <!-- wp:image {"className":"t1 is-style-strip-zaitun","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full t1 is-style-strip-zaitun"><img src="<?php echo esc_url( $tjr_foto[1] ); ?>" alt="<?php echo esc_attr( $tjr_alt[1] ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto[1] ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[1] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full t1 is-style-strip-zaitun"><?php echo tjr_v5_gambar_tag( $tjr_foto[1], $tjr_alt[1] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[1] ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"t2 is-style-strip-kraft","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full t2 is-style-strip-kraft"><img src="<?php echo esc_url( $tjr_foto[2] ); ?>" alt="<?php echo esc_attr( $tjr_alt[2] ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto[2] ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[2] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full t2 is-style-strip-kraft"><?php echo tjr_v5_gambar_tag( $tjr_foto[2], $tjr_alt[2] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[2] ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"t3 is-style-strip-rose","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full t3 is-style-strip-rose"><img src="<?php echo esc_url( $tjr_foto[3] ); ?>" alt="<?php echo esc_attr( $tjr_alt[3] ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto[3] ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[3] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full t3 is-style-strip-rose"><?php echo tjr_v5_gambar_tag( $tjr_foto[3], $tjr_alt[3] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[3] ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"t4 is-style-strip-burgundy","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full t4 is-style-strip-burgundy"><img src="<?php echo esc_url( $tjr_foto[4] ); ?>" alt="<?php echo esc_attr( $tjr_alt[4] ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto[4] ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[4] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full t4 is-style-strip-burgundy"><?php echo tjr_v5_gambar_tag( $tjr_foto[4], $tjr_alt[4] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[4] ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 </div>

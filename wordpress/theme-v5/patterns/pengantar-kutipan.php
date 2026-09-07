@@ -16,20 +16,14 @@ $tjr_kutip   = tjr_v5_isi( 'kutipan' );
 $tjr_foto    = tjr_v5_foto( 'pengantar_foto' );
 $tjr_alt     = tjr_v5_foto_alt( 'pengantar_foto' );
 
-// Kartu P-3: cetakan polaroid di sini tampil kecil (~120px), jadi dialihkan
-// ke .webp hasil resize kalau berkasnya memang ada. pengantar_foto TIDAK
-// disentuh: foto itu tampil hampir selebar section (.pasangan, ~900px di
-// desktop), jadi berkas 900x1600 aslinya belum oversized di konteks ini.
-$tjr_ke_webp = static function ( $url ) {
-	$webp = preg_replace( '/\.jpe?g$/i', '.webp', (string) $url );
-	if ( $webp === $url ) {
-		return $url;
-	}
-	$jalur = get_theme_file_path( '/assets/img/' . basename( (string) wp_parse_url( $webp, PHP_URL_PATH ) ) );
-	return file_exists( $jalur ) ? $webp : $url;
-};
-
-$tjr_cetak   = $tjr_ke_webp( tjr_v5_foto( 'pengantar_cetakan' ) );
+// Kartu G-4: alih ke .webp lewat tjr_v5_gambar_tag(), lihat inc/isi-beranda.php.
+// pengantar_foto ikut sekarang juga (artotel-16, dulu sengaja dilewati kartu
+// P-3 karena tampil hampir selebar section di desktop dan webp-nya cuma
+// 300x533 px, jadi bisa terlihat agak lembek waktu diregangkan ke ~900px di
+// layar lebar). <picture> di sini tetap menyertakan .jpg asli sebagai
+// fallback, jadi ini soal ketajaman saat webp-nya lolos, bukan risiko gagal
+// muat baru. Diikutkan karena kartu G-4 secara eksplisit meminta artotel-16.
+$tjr_cetak   = tjr_v5_foto( 'pengantar_cetakan' );
 $tjr_cetak_t = tjr_v5_isi( 'pengantar_cetakan_teks' );
 ?>
 <!-- wp:group {"tagName":"section","className":"duo seksi","anchor":"tentang","layout":{"type":"default"}} -->
@@ -61,7 +55,7 @@ $tjr_cetak_t = tjr_v5_isi( 'pengantar_cetakan_teks' );
 <div class="wp-block-group pasangan naik">
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( $tjr_foto ); ?>" alt="<?php echo esc_attr( $tjr_alt ); ?>"<?php echo tjr_v5_sifat_gambar( $tjr_foto ); ?>/></figure>
+<figure class="wp-block-image size-full"><?php echo tjr_v5_gambar_tag( $tjr_foto, $tjr_alt ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"kutipan","layout":{"type":"default"}} -->
@@ -72,7 +66,7 @@ $tjr_cetak_t = tjr_v5_isi( 'pengantar_cetakan_teks' );
 <!-- /wp:group -->
 
 <!-- wp:image {"className":"cetakan selip selip-pasangan","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full cetakan selip selip-pasangan"><img src="<?php echo esc_url( $tjr_cetak ); ?>" alt=""<?php echo tjr_v5_sifat_gambar( $tjr_cetak ); ?>/><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_cetak_t ); ?></figcaption></figure>
+<figure class="wp-block-image size-full cetakan selip selip-pasangan"><?php echo tjr_v5_gambar_tag( $tjr_cetak, '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_cetak_t ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 </div>
