@@ -325,12 +325,12 @@ function tjr_v5_seo_konteks() {
 			$ctx['gambar'] = get_theme_file_uri( '/assets/img/' . $hero[0] );
 
 			// og:image/twitter:image dibaca crawler (WhatsApp dkk) yang
-			// minta URL ini APA ADANYA, tidak lewat <picture>. artotel-08.jpg
+			// minta URL ini APA ADANYA, tidak lewat <picture>. artotel-13.jpg (dulu salah dinamai artotel-08.jpg)
 			// (377 KB) TERBUKTI kepotong acak oleh Hostinger, lihat catatan
 			// di $foto() pada tjr_v5_seo_json_ld() -- fix yang sama berlaku
 			// di sini karena jalur kodenya terpisah.
-			if ( $ctx['gambar'] === get_theme_file_uri( '/assets/img/artotel-08.jpg' ) ) {
-				$ctx['gambar'] = get_theme_file_uri( '/assets/img/artotel-08-hero.webp' );
+			if ( $ctx['gambar'] === get_theme_file_uri( '/assets/img/artotel-13.jpg' ) ) {
+				$ctx['gambar'] = get_theme_file_uri( '/assets/img/artotel-13-panggung-v1.webp' );
 			} else {
 				$webp = tjr_v5_webp_pendamping( $ctx['gambar'] );
 
@@ -689,10 +689,10 @@ function tjr_v5_seo_graf() {
 		// ADANYA. Beberapa .jpg sumber di sini 300-380 KB dan TERBUKTI
 		// kepotong acak oleh Hostinger kalau diminta langsung (lihat
 		// pref-hive-multi-agent / project-tjr-hosting di wiki) --
-		// artotel-08.jpg gagal ~80% dari lima percobaan waktu diaudit.
+		// artotel-13.jpg (dulu salah dinamai artotel-08.jpg) gagal ~80% dari lima percobaan waktu diaudit.
 		// Utamakan padanan .webp yang jauh lebih kecil kalau ada.
-		if ( 'artotel-08.jpg' === $berkas ) {
-			return get_theme_file_uri( '/assets/img/artotel-08-hero.webp' );
+		if ( 'artotel-13.jpg' === $berkas ) {
+			return get_theme_file_uri( '/assets/img/artotel-13-panggung-v1.webp' );
 		}
 
 		$mentah = get_theme_file_uri( '/assets/img/' . $berkas );
@@ -713,7 +713,7 @@ function tjr_v5_seo_graf() {
 			'url'     => $foto( 'tjr-black.png' ),
 			'caption' => 'The Journaling Room',
 		),
-		'image'         => $foto( 'artotel-08.jpg' ),
+		'image'         => $foto( 'artotel-13.jpg' ),
 		'description'   => 'Penyelenggara workshop journaling di Yogyakarta. Sesi dipandu, alat tulis dan bahan disediakan, tidak ada giliran bercerita di depan orang.',
 		'slogan'        => 'Your kind journaling companions',
 		'foundingDate'  => '2025-08',
@@ -745,7 +745,7 @@ function tjr_v5_seo_graf() {
 		'name'                      => 'The Journaling Room',
 		'url'                       => $situs,
 		'image'                     => array(
-			$foto( 'artotel-08.jpg' ),
+			$foto( 'artotel-13.jpg' ),
 			$foto( 'radian-11.jpg' ),
 			$foto( 'kupiku-01.jpg' ),
 		),

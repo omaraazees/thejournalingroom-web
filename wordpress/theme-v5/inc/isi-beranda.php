@@ -120,7 +120,7 @@ function tjr_v5_bawaan_teks( $nama = '' ) {
 function tjr_v5_bawaan_foto( $nama = '' ) {
 	$peta = array(
 		/* Hero */
-		'hero_foto'         => array( 'artotel-08.jpg', 'Rombongan peserta workshop journaling tersenyum sambil mengangkat jurnal masing masing' ),
+		'hero_foto'         => array( 'artotel-13.jpg', 'Rombongan peserta workshop journaling tersenyum sambil mengangkat jurnal masing masing' ),
 		'hero_cetakan'      => array( 'sundayreads-27.jpg', 'Jurnal terbuka di atas meja dikelilingi washi tape dan stiker dekorasi' ),
 
 		/* Pengantar */
@@ -131,7 +131,7 @@ function tjr_v5_bawaan_foto( $nama = '' ) {
 		'bento_1'           => array( 'radian-11.jpg', 'Sesi journaling di pendopo bersama Radian' ),
 		'bento_2'           => array( 'sundayreads-08.jpg', 'Bahan journaling ditata dari atas meja' ),
 		'bento_3'           => array( 'wardah-09.jpg', 'Kit alat tulis Wardah di atas meja' ),
-		'bento_4'           => array( 'pasar-jakal-06.jpg', 'Tangan peserta menempel bahan di halaman jurnal' ),
+		'bento_4'           => array( 'pasar-jakal-07.jpg', 'Tangan peserta menempel bahan di halaman jurnal' ),
 
 		/* Tumpukan cetakan */
 		'cetakan_1'         => array( 'sundayreads-12.jpg', 'Dokumentasi sesi TJR bersama Sunday Reads' ),

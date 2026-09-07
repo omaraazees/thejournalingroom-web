@@ -35,7 +35,7 @@ $tjr_cetak_t = tjr_v5_isi( 'hero_cetakan_teks' );
 // bawaan; foto yang sudah diganti dari dasbor lewat ACF tetap satu berkas
 // seperti sebelumnya karena kita tidak tahu ukurannya.
 $tjr_foto_srcset = '';
-if ( $tjr_foto === get_theme_file_uri( '/assets/img/artotel-08.jpg' ) ) {
+if ( $tjr_foto === get_theme_file_uri( '/assets/img/artotel-13.jpg' ) ) {
 	$tjr_kecil = get_theme_file_path( '/assets/img/artotel-13-panggung-700-v1.webp' );
 	$tjr_besar = get_theme_file_path( '/assets/img/artotel-13-panggung-v1.webp' );
 	if ( file_exists( $tjr_kecil ) && file_exists( $tjr_besar ) ) {
