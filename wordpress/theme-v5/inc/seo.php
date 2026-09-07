@@ -623,7 +623,21 @@ function tjr_v5_seo_graf() {
 	);
 
 	$foto = static function ( $berkas ) {
-		return get_theme_file_uri( '/assets/img/' . $berkas );
+		// og:image, twitter:image, dan gambar JSON-LD dibaca crawler yang
+		// tidak paham <picture>/srcset, jadi mereka minta URL ini APA
+		// ADANYA. Beberapa .jpg sumber di sini 300-380 KB dan TERBUKTI
+		// kepotong acak oleh Hostinger kalau diminta langsung (lihat
+		// pref-hive-multi-agent / project-tjr-hosting di wiki) --
+		// artotel-08.jpg gagal ~80% dari lima percobaan waktu diaudit.
+		// Utamakan padanan .webp yang jauh lebih kecil kalau ada.
+		if ( 'artotel-08.jpg' === $berkas ) {
+			return get_theme_file_uri( '/assets/img/artotel-08-1600.webp' );
+		}
+
+		$mentah = get_theme_file_uri( '/assets/img/' . $berkas );
+		$webp   = tjr_v5_webp_pendamping( $mentah );
+
+		return ( '' !== $webp ) ? $webp : $mentah;
 	};
 
 	$organisasi = array(
