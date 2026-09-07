@@ -176,3 +176,237 @@ sekarang cuma menghasilkan jawaban basi. Urutan waktu kirim nanti:
    yang asing.
 4. `bash bin/dorong-tema.sh`, lalu `python3 bin/kirim-tema-ftp.py`.
 
+## Koreksi atas bagian pra-terbang di atas
+
+Sebelum melanjutkan, satu hal yang saya tulis salah di bagian C-1 dan sudah
+terlanjur saya sampaikan ke god.
+
+Saya menulis bahwa `kirim-tema-ftp.py` "menghapus berkas di server yang tidak
+ada di lokal" seolah itu perilaku bawaan. **Salah.** Penghapusan cuma terjadi
+kalau flag `--hapus` diberikan:
+
+```python
+buang = sorted(set(remote) - set(lokal)) if hapus else []      # baris 230
+hapus = "--hapus" in sys.argv                                   # baris 181
+```
+
+Uji nomor 10 di `bin/uji-kirim-tema.py` memang menguji perilaku itu, dan
+namanya sendiri sudah menyebut flagnya. Jalan biasa **tidak pernah menghapus
+apa pun**. Inti temuan C-1 tetap berdiri (daftar kiriman disusun dari disk, jadi
+berkas tanpa commit tetap berangkat), tapi separuh soal penghapusannya saya
+gambarkan lebih berbahaya daripada kenyataannya.
+
+## Langkah 0: lubang `.cc-writes` ditutup
+
+Commit `53b401d`, terpisah seperti diminta.
+
+Saringan lama cuma menguji nama berkas (`p.name in LEWATI`), jadi `gores.json`
+di dalam `.cc-writes` lolos tanpa hambatan. Ditambahkan `LEWATI_FOLDER =
+{".claude", ".cc-writes"}` yang diuji per **segmen jalur induk**
+(`rel.parts[:-1]`), karena yang perlu dibuang seisi folder, bukan satu nama.
+Segmen terakhir sengaja tidak ikut diuji supaya berkas yang kebetulan bernama
+`.claude` tetap lewat jalur `LEWATI` yang benar. `.gitignore` ikut ditambah
+untuk menjaga sisi git; nol berkas `.claude` yang tracked, jadi nol yang berubah
+status.
+
+Diuji dua lapis:
+
+| Uji | Hasil |
+|---|---|
+| `bin/uji-kirim-tema.py` (suite yang sudah ada) | 10 dari 10 lulus |
+| Uji khusus, sembilan jalur tiruan | 3 berkas tema sah lewat, 6 ditahan |
+
+Enam yang ditahan: tiga berkas di bawah `.claude/.cc-writes` pada tiga kedalaman
+berbeda (akar tema, `templates/`, `assets/img/`), `.DS_Store`, `CATATAN.md`, dan
+satu `.cc-writes` tanpa `.claude` di atasnya.
+
+## Langkah 1: pengiriman
+
+Empat gerbang dijalankan berurutan sebelum mengirim:
+
+| Gerbang | Hasil |
+|---|---|
+| Disk lawan git di folder tema | 89 tracked, 89 di disk, nol selisih dua arah |
+| `bin/periksa-php.sh` | 11 berkas PHP, 0 gagal |
+| Pohon kerja | bersih |
+| `kirim-tema-ftp.py --coba` | kirim 8, sama 80, hapus 0 |
+
+Delapan berkas di dry run persis gabungan tiga kartu, nol berkas asing:
+
+```
+functions.php                     T-1  dua fungsi baru
+inc/isi-beranda.php               T-1 alt bawaan + T-3 catatan_harga
+inc/seo.php                       T-3  komentar saja
+patterns/hero-panggung.php        T-1  alt polaroid
+patterns/pengantar-kutipan.php    T-1  alt polaroid
+style.css                         T-1  target sentuh
+templates/single.html             T-4  BERKAS BARU
+theme.json                        T-1  token kontras
+```
+
+Lalu dijalankan sungguhan:
+
+- `bin/dorong-tema.sh`: `2e9e292..a7ec7cb` ke `omaraazees/tjr-v5-theme`.
+- `bin/kirim-tema-ftp.py`: kirim 8, sama 80, **hapus 0**, 9.0 detik.
+
+Catatan lingkungan: koneksi FTP dan `git push` diblokir sandbox
+(`PermissionError: Operation not permitted` di `socket.connect`), jadi keduanya
+dijalankan di luar sandbox. Itu satu satunya cara skrip ini bisa jalan di mesin
+ini.
+
+## Langkah 2: tujuh verifikasi di produksi
+
+Semua diukur di HTML yang benar benar dikirim server, dengan cache-buster acak
+per permintaan.
+
+### 1. `<dl>` dengan `dt` dan `dd`
+
+| Halaman | `<dl>` | `<dt>` | `<dd>` | `<p class="dt` tersisa |
+|---|---|---|---|---|
+| `/` (kartu sesi terdekat) | 1 | 7 | 7 | 0 |
+| `/acara/embracing-growth/` | 1 | 7 | 7 | 0 |
+| `/` di viewport 390px | 1 | 7 | 7 | 0 |
+
+Diperiksa juga di DOM Chrome: `document.querySelector('dl.fakta').tagName`
+mengembalikan `DL`, bukan `DIV`.
+
+**`/jadwal/` nol `<dl>`, dan itu BENAR, bukan kegagalan.** Brief menyebut
+`/jadwal/` sebagai salah satu tempat panel itu, tapi halaman itu memang tidak
+pernah punya panelnya. `/jadwal/` dirender `templates/archive-acara.html` yang
+menampilkan kartu ringkas lewat `patterns/jadwal-kartu.php`, dan pattern itu
+berisi **nol** kemunculan `fakta`, `class="dt`, maupun `class="dd`. Diperiksa
+di dua sisi: di berkas pattern dan di HTML live-nya. Panel tujuh fakta cuma
+hidup di dua tempat, dan dua duanya sudah terbukti di atas.
+
+Satu catatan pengukuran supaya tidak menyesatkan siapa pun yang mengulang:
+pembacaan pertama saya di iframe 390px sempat melaporkan `dl` nol. Itu
+**artefak pengukuran**, bukan temuan. Pembacaan itu diambil sesudah panel menu
+diklik buka dan dengan jeda tunggu yang terlalu pendek. Diulang bersih tanpa
+klik dan dengan jeda lebih panjang, hasilnya `dl` 1, `dt` 7, `dd` 7. Angka yang
+saya laporkan yang kedua.
+
+### 2. Nol halaman kehilangan `<h1>`
+
+Sembilan URL terbit di sitemap diperiksa, bukan tiga:
+
+| Halaman | `<h1>` |
+|---|---|
+| `/` | 1 |
+| `/tentang/` | 1 |
+| `/kolaborasi/` | 1 |
+| `/kontak/` | 1 |
+| `/galeri/` | 1 |
+| `/cerita/` | 1 |
+| `/cerita/mulai-journaling-nggak-tahu-mau-nulis-apa/` | 1 |
+| `/jadwal/` | 1 |
+| `/acara/embracing-growth/` | 1 |
+
+Persis satu di semuanya. Nol yang kehilangan, nol yang punya dua. Guard
+`the_content` tidak memakan `<h1>` siapa pun.
+
+### 3. Target sentuh naik di live
+
+| Elemen | Sebelum semua kartu | Sesudah `63d706d` | Sekarang di produksi |
+|---|---|---|---|
+| Tautan footer, desktop 1782px | 15px | 32.7px | **44.7px** |
+| Tautan footer, 390px | 15px | 32.7px | **44.7px** |
+| Nav header desktop | 21px | 33.0px | **45.0px** |
+| Nav overlay 390px | (bukan temuan) | 39.6px | 39.6px, sengaja |
+
+Sekalian terukur di produksi: `.lbl` sekarang `rgb(117, 102, 84)` di atas
+`rgb(251, 247, 240)` = **5.20:1** (dulu 4.55:1), dan gambar ber-`figcaption`
+yang `alt`-nya kosong = **0** (dulu 2).
+
+### 4. `catatan_harga` tidak lagi dirender
+
+Baris harga di produksi sekarang isinya mentah `Rp297.300`, nol
+`<span class="slot-catatan">` menempel. Satu satunya `slot-catatan` yang tersisa
+di halaman adalah catatan kursi, `<p>8 kursi tersedia</p>`, dan itu memang
+bukan bagian temuan. Diperiksa di `/`, `/acara/embracing-growth/`, dan
+`/jadwal/`.
+
+### 5. Artikel memakai `templates/single.html` yang baru
+
+`/cerita/mulai-journaling-nggak-tahu-mau-nulis-apa/`:
+
+| Penanda | Nilai | Artinya |
+|---|---|---|
+| `<h1>` | "Mulai journaling waktu nggak tahu mau nulis apa" | judul artikel, bukan judul arsip |
+| `<main class>` | `wp-block-group isi-halaman` | kerangka `single.html` |
+| `wp-block-post-terms` | 1 | baris kategori khas `single.html` |
+| `wp-block-post-date` | 1 | idem |
+| `daftar-tulisan` | **0** | penanda `index.html`, kalau muncul berarti masih jatuh ke fallback |
+
+Nol `daftar-tulisan` itu buktinya: sebelum ada `single.html`, artikel jatuh ke
+`index.html` yang membungkus isinya dengan kelas itu.
+
+### 6. Tombol "Buka galeri" tetap hilang
+
+Nol kemunculan teks "Buka galeri" dan nol `href="#"` telanjang, diperiksa di
+`/galeri/` dan `/`.
+
+### 7. Nol berkas asing terkirim, nol berkas server terhapus
+
+- Terkirim **8**, persis daftar dry run, nol tambahan.
+- **Hapus 0.** Flag `--hapus` tidak dipakai, dan seperti koreksi di atas, jalan
+  biasa memang tidak pernah menghapus.
+- `kirim-tema-ftp.py --coba --teliti` dijalankan sesudahnya. Mode ini mengunduh
+  dan mem-hash isi asli di server, bukan membaca manifes: **88 dari 88 berkas
+  lokal identik dengan yang ada di server**, `kirim 0, sama 88`.
+
+**Satu berkas yatim ditemukan di server, dan bukan dari pengiriman ini:**
+
+```
+assets/img/artotel-08-1600-v2.webp    246096 byte    diunggah 2026-09-07 05:25:05 UTC
+```
+
+Ada di server, tidak ada di repo, dan **nol dirujuk** oleh tema (dicari di
+seluruh `wordpress/theme-v5`, yang dipakai sekarang `artotel-08-700.webp`,
+`artotel-08-hero.webp`, dan `artotel-08.jpg`). Sisa dari sesi penamaan ulang
+foto hero pagi tadi. Ukurannya 246 KB, jauh di atas ambang pemotongan Hostinger
+yang terukur (berkas 163 KB ke atas gagal sekitar separuh), jadi kalau suatu
+saat ada yang merujuknya lagi, ia akan bermasalah.
+
+**Saya TIDAK menghapusnya.** Membuangnya menuntut `--hapus`, dan itu tindakan
+yang sulit dibalik di server produksi yang tidak diminta kartu ini. Dilaporkan,
+bukan dibereskan diam diam.
+
+### Catatan pengukuran: pemotongan Hostinger benar benar kejadian
+
+Saat verifikasi, satu permintaan ke `/kontak/` putus di tengah:
+`IncompleteRead(17754 bytes read, 1996 more expected)`. Diulang, dan sembilan
+halaman lolos utuh dengan **nol** pemotongan di putaran kedua. Jadi kira kira
+satu dari sepuluh permintaan, dan ini terjadi pada **HTML**, bukan cuma gambar.
+Bukan akibat pengiriman ini, dan bukan hal baru: akar masalahnya di sisi hosting
+dan masih menunggu tiket Umar. Dicatat di sini sebagai bukti bahwa peringatan
+"HTTP 200 bukan berarti isinya utuh" itu bukan kehati hatian teoretis.
+
+## Sisa satu, sengaja diserahkan
+
+Jim mencatat ada template `tjr-v5//single` bersumber custom di database yang
+sebaiknya dihapus lewat Site Editor supaya tidak ada dua sumber kebenaran.
+Isinya identik dengan berkas tema, jadi situs tetap benar selama itu belum
+dihapus, dan god sendiri menyebut ini rapi rapi, bukan darurat.
+
+**Saya serahkan ke Umar, tidak saya kerjakan sendiri.** Alasannya: itu
+penghapusan data di database produksi lewat layar admin, sifatnya sulit dibalik,
+dan god memberi pilihan dengan kalimat "kalau kamu ragu, serahkan". Nol biaya
+menundanya, karena gejalanya nol.
+
+Langkahnya buat yang mengerjakan: WP Admin > Appearance > Editor > Templates >
+cari **Single Posts** (`tjr-v5//single`) yang bertanda "Customized", buka menu
+tiga titik, pilih **Clear customizations**. Sesudah itu template kembali dibaca
+dari berkas tema, dan pembaruan desain dari git kembali sampai ke halaman
+artikel.
+
+## Ringkasan T-10
+
+| Langkah | Hasil |
+|---|---|
+| Pra-terbang (a)(b)(c) | bersih, dua catatan, nol blokir |
+| Langkah 0, tutup lubang `.cc-writes` | commit `53b401d`, 10/10 uji lama plus uji baru lulus |
+| Langkah 1, kirim | subtree `2e9e292..a7ec7cb`, FTP kirim 8 hapus 0 |
+| Langkah 2, tujuh verifikasi | tujuh terbukti di produksi |
+| Temuan baru | satu berkas yatim 246 KB di server, dilaporkan bukan dihapus |
+| Diserahkan | pembersihan template `tjr-v5//single` di Site Editor |
+
