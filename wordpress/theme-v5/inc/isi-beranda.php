@@ -932,6 +932,21 @@ function tjr_v5_kit_acara( $id ) {
  * Field `catatan_harga` dihapus atas keputusan Umar (kartu T-3, 7 Sep 2026).
  * Dulu isinya ditempel kecil di sebelah angka lewat span .slot-catatan.
  *
+ * Keterangan `(tax incl.)` ditambahkan di kartu T-37, dan sengaja ditulis MATI
+ * di sini, bukan dengan membangkitkan `catatan_harga`. Alasannya: perlakuan
+ * pajak sama untuk semua sesi, jadi menyimpannya per acara berarti mengetik
+ * kalimat yang sama berulang dan membiarkannya bisa berbeda antar acara. Justru
+ * kelebihan itu yang membuat Umar membuang fieldnya.
+ *
+ * Tempatnya juga sengaja di fungsi ini, bukan di tiga `number_format` lain di
+ * inc/seo.php. Fungsi ini cuma memberi makan dua permukaan yang DIBACA MANUSIA,
+ * yaitu `dd-harga` di panel fakta dan `ik-tag` di kartu sesi terdekat. Angka
+ * yang dibaca MESIN tetap bersih: `offers.price` memakai integernya langsung,
+ * sementara `priceRange` dan meta description merakit angkanya sendiri.
+ *
+ * Span-nya HTML, dan itu aman: kedua pemanggil sengaja tidak meng-escape
+ * keluaran fungsi ini, sama seperti waktu `catatan_harga` masih hidup.
+ *
  * @param int $id ID acara.
  * @return string
  */
@@ -942,7 +957,8 @@ function tjr_v5_harga_acara( $id ) {
 		return '';
 	}
 
-	return 'Rp' . number_format( $harga, 0, ',', '.' );
+	return 'Rp' . number_format( $harga, 0, ',', '.' )
+		. ' <span class="slot-catatan">(tax incl.)</span>';
 }
 
 /**
