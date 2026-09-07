@@ -377,6 +377,37 @@ dilaporkan sebagai tripwire.
 Sisi gagalnya diuji, bukan diasumsikan: enam kasus, tiga yang harus menyalakan
 gerbang dan tiga yang tidak boleh.
 
+### Judul acara: tulis `title`, JANGAN `acf.judul_acara`
+
+Dua field memuat judul yang sama, dan salah satunya **cermin**. Menulis cermin
+adalah penulisan yang **berhasil tanpa berefek**: nol error, nol peringatan, dan
+judulnya nol berubah.
+
+```bash
+python3 bin/tulis-acara.py 12 --set title='Judul baru'          # benar
+python3 bin/tulis-acara.py 12 --set acf.judul_acara='Judul baru' # JANGAN
+```
+
+Yang sudah **terbukti**, dibaca dari kode dan dari data:
+
+- `post_title` sumber kebenarannya. Slug, tautan, dan daftar dasbor memakai dia.
+- `tjr_v5_muat_judul_acara()` mengisi kolom ACF itu dari `get_the_title()` tiap
+  kali layar edit dibuka, jadi nilai yang muncul di REST **dihitung ulang**,
+  bukan dibaca dari simpanan.
+- `tjr_v5_simpan_judul_acara()` justru **menghapus** meta `judul_acara` lalu
+  menulis `post_title`.
+- Buktinya di data: `meta` post cuma berisi `_acf_changed` dan `footnotes`.
+  **Nol `judul_acara` tersimpan di sana.**
+
+Yang **belum diuji dan sengaja nol diuji di produksi**: apa persisnya yang
+tertinggal kalau seseorang benar-benar menulis `acf.judul_acara` lewat REST.
+Kemungkinannya meta yatim yang nol pernah dibaca. Yang pasti, judulnya nol ikut
+berubah, karena yang dipakai `post_title`.
+
+**Bentuk umumnya, dan dia berulang di luar sini:** kalau dua field memuat fakta
+yang sama, cari dulu mana yang **diturunkan**, lalu tulis **sumbernya saja**.
+Penulisan ke salinan turunan berhasil dengan tenang dan hilang tanpa suara.
+
 ## 11. Mengecilkan aset: ambang, dan cara memilih yang benar
 
 Dipakai di kartu T-39 dan lanjutannya, 7 Sep 2026. Ditulis di sini karena
