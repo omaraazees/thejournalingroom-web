@@ -722,6 +722,11 @@ function tjr_v5_seo_graf() {
 		'logo'          => array(
 			'@type'   => 'ImageObject',
 			'@id'     => $situs . '#logo',
+			// SENGAJA tetap PNG, jangan diganti ke tjr-black-v2.webp. Tirai
+			// intro pindah ke WebP di kartu T-39 lanjutan karena dia DIUNDUH
+			// tiap halaman; yang ini cuma URL di data terstruktur, nol pernah
+			// diunduh pengunjung, dan perayap lebih aman diberi PNG 900x465
+			// yang lossless dan universal daripada turunan 650px.
 			'url'     => $foto( 'tjr-black.png' ),
 			'caption' => 'The Journaling Room',
 		),

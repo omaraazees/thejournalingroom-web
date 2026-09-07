@@ -1291,7 +1291,25 @@ function tjr_v5_sprite_ikon() {
  * dan halaman langsung tampil utuh.
  */
 function tjr_v5_tirai() {
-	$logo = get_theme_file_uri( '/assets/img/tjr-black.png' );
+	// tjr-black-v2.webp, bukan tjr-black.png. Kartu T-39 lanjutan, 7 Sep 2026.
+	// PNG-nya 47.238 byte dan diunduh di SETIAP halaman untuk ornamen yang
+	// aria-hidden, jadi dia 1,46x ambang aman 32.391 tanpa membawa satu pun isi.
+	// Sekarang 650x336 lossless, 21.804 byte, 10.587 byte di bawah ambang.
+	//
+	// LOSSLESS, dan itu bukan kehati-hatian berlebihan: catatan di
+	// tjr_v5_logo_bar() di berkas ini mencatat logonya TULISAN TANGAN dan garis
+	// rambut huruf sambungnya hilang kalau diperkecil sembarangan. Lossless
+	// berarti nol artefak kompresi, yang berubah cuma penyampelan ulang.
+	// Diukur pada UKURAN TAMPIL, bukan pada ukuran berkas: beda rata-rata 0,12
+	// sampai 0,25 dari 255 di tinggi 140, 280, dan 148 px, sementara kontrol
+	// yang sengaja dibuat buruk memberi 0,72 dan 5,47. Jadi tesnya terbukti
+	// bisa menyala sebelum angka kandidatnya dipercaya.
+	//
+	// 650px menutup layar 2x dengan sisa: tinggi tampil maksimum 140px pada
+	// rasio 1,935 berarti lebar 271px, jadi 2x butuh 542px.
+	// Nol fallback PNG, sengaja: ornamen ini aria-hidden dan nol membawa isi,
+	// jadi peramban tanpa WebP cukup melihat sampul tanpa logo.
+	$logo = get_theme_file_uri( '/assets/img/tjr-black-v2.webp' );
 
 	// Kalau logo situs sudah diatur di Customizer, itu yang dipakai.
 	$id_logo = (int) get_theme_mod( 'custom_logo' );
