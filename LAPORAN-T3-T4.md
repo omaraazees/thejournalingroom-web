@@ -298,3 +298,38 @@ yang menulis, dan kalau boleh ditulis agent, itu izin baru karena kartu ini mela
 - **Nol berkas milik Pam disentuh.** Commit menyebut berkas satu per satu, tidak pakai
   `git add -A`.
 - **Nol em dash.**
+---
+
+## Untuk Pam: berkas tema yang saya sentuh
+
+Pam yang mengirim semuanya sekali jalan. Ini daftar persis berkas tema yang berubah karena
+kerja saya, supaya tidak ada yang terlewat atau terkejut.
+
+| berkas | kartu | kenapa |
+|---|---|---|
+| `wordpress/theme-v5/inc/isi-beranda.php` | T-3 | `tjr_v5_harga_acara()` tidak lagi merender `catatan_harga` |
+| `wordpress/theme-v5/inc/seo.php` | T-3 | komentar pemetaan Event dibersihkan (komentar saja, nol perubahan perilaku) |
+| `wordpress/theme-v5/templates/single.html` | T-4 | **berkas baru.** Template artikel yang selama ini tidak ada |
+
+Di luar tema (tidak perlu dikirim FTP): `wordpress/cms/acf-fields.json`,
+`wordpress/cms/data-acara-contoh.json`, `desain/SCHEMA-EVENT.md`, dua berkas laporan.
+
+Catatan: `inc/isi-beranda.php` juga disentuh Pam untuk T-1, dan commit `4bcff93` milik saya
+ikut membawa perubahan itu karena kami menyunting berkas yang sama. Isinya utuh dan benar,
+tidak perlu dirapikan.
+
+Sesudah deploy pertama yang membawa `templates/single.html`, hapus template
+`tjr-v5//single` yang `source: custom` di database lewat Site Editor, supaya tidak ada dua
+sumber kebenaran. Selama belum dihapus, situs tetap benar karena isinya identik.
+
+## Sisa pekerjaan kalau ada yang melanjutkan
+
+Dua-duanya tertahan data, bukan tertahan kode, dan tidak ada yang setengah jadi:
+
+1. **4 acara**: butuh tanggal, jam mulai, kapasitas, alamat venue dari Dhanty atau Caca.
+   Lalu `POST /wp-json/wp/v2/acara` empat kali. Judul, format, venue, harga, durasi sudah
+   berstatus fakta di `wordpress/cms/data-acara-contoh.json`.
+2. **2 artikel**: butuh naskah, atau izin baru untuk menulisnya. Outline lengkap ada di
+   `konten/outline-blog.md`, judul dan ringkasan di `desain/halaman/cerita.html`.
+
+Nol pekerjaan saya yang tertinggal di konteks. Semua yang terverifikasi ada di laporan ini.
