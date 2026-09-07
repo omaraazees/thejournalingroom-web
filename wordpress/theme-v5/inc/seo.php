@@ -277,6 +277,21 @@ function tjr_v5_seo_konteks() {
 
 		if ( is_array( $hero ) && isset( $hero[0] ) ) {
 			$ctx['gambar'] = get_theme_file_uri( '/assets/img/' . $hero[0] );
+
+			// og:image/twitter:image dibaca crawler (WhatsApp dkk) yang
+			// minta URL ini APA ADANYA, tidak lewat <picture>. artotel-08.jpg
+			// (377 KB) TERBUKTI kepotong acak oleh Hostinger, lihat catatan
+			// di $foto() pada tjr_v5_seo_json_ld() -- fix yang sama berlaku
+			// di sini karena jalur kodenya terpisah.
+			if ( $ctx['gambar'] === get_theme_file_uri( '/assets/img/artotel-08.jpg' ) ) {
+				$ctx['gambar'] = get_theme_file_uri( '/assets/img/artotel-08-1600.webp' );
+			} else {
+				$webp = tjr_v5_webp_pendamping( $ctx['gambar'] );
+
+				if ( '' !== $webp ) {
+					$ctx['gambar'] = $webp;
+				}
+			}
 		}
 	}
 
