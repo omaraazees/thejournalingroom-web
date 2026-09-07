@@ -977,9 +977,17 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 		$isi  = '' !== $bawa ? esc_html( $bawa ) : null;
 	} elseif ( false !== strpos( $kelas, 'dd-kursi' ) ) {
 		$kursi = tjr_v5_kursi_acara( $id );
-		$isi   = ( $kursi && ! $lewat )
-			? esc_html( $kursi['terisi'] . ' dari ' . $kursi['kapasitas'] . ' kursi sudah terisi' )
-			: '';
+
+		if ( ! $kursi || $lewat ) {
+			$isi = '';
+		} elseif ( $kursi['terisi'] < 1 ) {
+			// Sesi yang belum ada pendaftarnya jangan mengumumkan "0 dari 8 kursi sudah
+			// terisi". Itu bukti sosial terbalik. Angka kapasitasnya tetap jujur dan tetap
+			// memberi kesan kelas kecil, cuma dibingkai dari sisi yang tersedia.
+			$isi = esc_html( $kursi['kapasitas'] . ' kursi tersedia' );
+		} else {
+			$isi = esc_html( $kursi['terisi'] . ' dari ' . $kursi['kapasitas'] . ' kursi sudah terisi' );
+		}
 	}
 
 	if ( null === $isi ) {
