@@ -284,7 +284,7 @@ function tjr_v5_seo_konteks() {
 			// di $foto() pada tjr_v5_seo_json_ld() -- fix yang sama berlaku
 			// di sini karena jalur kodenya terpisah.
 			if ( $ctx['gambar'] === get_theme_file_uri( '/assets/img/artotel-08.jpg' ) ) {
-				$ctx['gambar'] = get_theme_file_uri( '/assets/img/artotel-08-1600.webp' );
+				$ctx['gambar'] = get_theme_file_uri( '/assets/img/artotel-08-1600-v2.webp' );
 			} else {
 				$webp = tjr_v5_webp_pendamping( $ctx['gambar'] );
 
@@ -646,7 +646,7 @@ function tjr_v5_seo_graf() {
 		// artotel-08.jpg gagal ~80% dari lima percobaan waktu diaudit.
 		// Utamakan padanan .webp yang jauh lebih kecil kalau ada.
 		if ( 'artotel-08.jpg' === $berkas ) {
-			return get_theme_file_uri( '/assets/img/artotel-08-1600.webp' );
+			return get_theme_file_uri( '/assets/img/artotel-08-1600-v2.webp' );
 		}
 
 		$mentah = get_theme_file_uri( '/assets/img/' . $berkas );
