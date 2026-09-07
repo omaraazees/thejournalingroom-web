@@ -43,6 +43,12 @@ pengunjung dan tidak ada crawler yang halamannya menyuruh mereka memintanya.
 
 ## Alasan 2: cache basinya sendiri sudah tidak ada lagi
 
+> **SYARAT ANGKA DI BAGIAN INI, dan syaratnya bagian dari datanya.** Semua
+> angka keutuhan gambar di bawah berlaku **hanya selama CDN TJR mati**.
+> Seluruh riwayat pemotongan respons di situs ini terpojok ke lapisan CDN,
+> bukan ke origin. Begitu CDN dinyalakan lagi, angka ini KEDALUWARSA dan
+> wajib diukur ulang dari nol, bukan dirujuk.
+
 Ini mengoreksi premis kartunya, jadi saya ukur rapat sebelum mengatakannya.
 
 Brief menyatakan generasi lama **masih** tersaji 377215 byte sesudah Flush cache

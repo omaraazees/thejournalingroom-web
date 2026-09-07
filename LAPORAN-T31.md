@@ -14,6 +14,12 @@ dan justru itu yang menyajikan generasi basi. Jadi lapisan yang dulu bermasalah
 memang sudah tidak ada di jalur.
 
 ### 2. Gambar, tempat kerusakan lama muncul
+
+> **SYARAT ANGKA DI BAGIAN INI, dan syaratnya bagian dari datanya.** Semua
+> angka keutuhan gambar di bawah berlaku **hanya selama CDN TJR mati**.
+> Seluruh riwayat pemotongan respons di situs ini terpojok ke lapisan CDN,
+> bukan ke origin. Begitu CDN dinyalakan lagi, angka ini KEDALUWARSA dan
+> wajib diukur ulang dari nol, bukan dirujuk.
 Pemotongan lama mendarat di 32 sampai 39 KB, jadi yang dicari ukuran yang meleset
 dan berkas yang tidak berakhir di penanda formatnya.
 
