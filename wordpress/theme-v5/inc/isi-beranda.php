@@ -365,6 +365,7 @@ function tjr_v5_sifat_gambar( $url, $utama = false ) {
 	}
 
 	if ( $utama ) {
+		tjr_v5_prioritas_terpakai( true );
 		$sifat .= ' fetchpriority="high" decoding="async"';
 	} else {
 		$sifat .= ' loading="lazy" decoding="async"';
@@ -372,6 +373,66 @@ function tjr_v5_sifat_gambar( $url, $utama = false ) {
 
 	return $sifat;
 }
+
+/**
+ * Penanda sekali pakai: tema sudah menyatakan fetchpriority="high".
+ *
+ * Kartu O-8 T-3. Beranda menyatakan high pada DUA gambar sekaligus, dan cuma
+ * satu elemen yang bisa jadi LCP. Yang kedua bukan salah tulis siapa pun:
+ * WordPress inti memasang high sendiri pada gambar PERTAMA yang DIA render.
+ * Docblock tjr_v5_sifat_gambar() di atas sudah mencatat sebabnya, tema ini
+ * menulis <img> mentah di pattern jadi lapisan optimasi inti nol pernah
+ * melihatnya, maka inti mengira belum ada yang mengklaim prioritas.
+ *
+ * Diukur di produksi 2026-09-07T16:50:26Z pada HTML beranda:
+ *   posisi 20,4% body  artotel-13-panggung-v1.webp  1600x900  sizes=100vw
+ *                      pattern hero-panggung, pattern PERTAMA di front-page
+ *   posisi 35,2% body  embracing-growth...-hd-2x    1200x1600
+ *                      wp-block-post-featured-image di seksi #jadwal, di BAWAHnya
+ *
+ * Jadi yang di atas lipatan itu hero-panggung, dan dialah yang high-nya
+ * dipertahankan. Yang dicabut punya inti.
+ *
+ * Penanda ini diturunkan dari perilaku, bukan dari nama halaman: siapa pun
+ * yang memanggil tjr_v5_sifat_gambar( $url, true ) mendaftarkan dirinya, jadi
+ * templat baru ikut terlindungi tanpa disebut namanya di sini.
+ *
+ * @param bool $tandai True untuk menandai bahwa high sudah dipakai.
+ * @return bool True kalau tema sudah memakai high di permintaan ini.
+ */
+function tjr_v5_prioritas_terpakai( $tandai = false ) {
+	static $terpakai = false;
+
+	if ( $tandai ) {
+		$terpakai = true;
+	}
+
+	return $terpakai;
+}
+
+/**
+ * Cabut fetchpriority milik inti kalau tema sudah memakai jatahnya.
+ *
+ * Cuma fetchpriority yang disentuh. Keputusan loading milik inti dibiarkan
+ * apa adanya, karena gambar unggulan sesi terdekat duduk dekat lipatan dan
+ * me-lazy-kannya belum diukur.
+ *
+ * Batas yang diketahui: kalau suatu templat merender gambar INTI lebih dulu
+ * baru hero temanya, penanda ini belum menyala waktu filter berjalan dan
+ * halaman itu tetap punya dua high. Nol ada templat begitu sekarang;
+ * front-page menaruh hero-panggung sebagai pattern pertama.
+ *
+ * @param array $atribut Atribut hasil hitungan inti.
+ * @return array Atribut, tanpa fetchpriority kalau jatahnya sudah dipakai.
+ */
+function tjr_v5_satu_prioritas( $atribut ) {
+	if ( is_array( $atribut ) && isset( $atribut['fetchpriority'] ) && tjr_v5_prioritas_terpakai() ) {
+		unset( $atribut['fetchpriority'] );
+	}
+
+	return $atribut;
+}
+add_filter( 'wp_get_loading_optimization_attributes', 'tjr_v5_satu_prioritas' );
 
 /**
  * URL .webp pendamping sebuah .jpg di assets/img/, kalau berkasnya ada.
@@ -399,7 +460,45 @@ function tjr_v5_webp_pendamping( $url ) {
 		return '';
 	}
 
-	$jalur = get_theme_file_path( '/assets/img/' . basename( (string) wp_parse_url( $webp, PHP_URL_PATH ) ) );
+	/*
+	 * Peta versi, kartu O-11 Stanley. Gambar di assets/img/ disajikan
+	 * max-age=31536000 (satu tahun, diukur di produksi 2026-09-07).
+	 * Menimpa berkas di nama yang sama berarti pengunjung lama tetap melihat
+	 * berkas lama sampai 2027 sementara kita mengira perbaikannya sudah tayang.
+	 * Jadi re-encode SELALU dapat nama baru, berkas lama DIBIARKAN karena masih
+	 * dirujuk cache orang, dan penukarannya dicatat di sini. Kuncinya nama
+	 * .webp hasil tukaran di atas, bukan .jpg, supaya nama .jpg-nya nol perlu
+	 * ikut berubah.
+	 *
+	 * Setengah kedua jebakan ini sudah diperiksa Stanley dan aman: HTML beranda
+	 * disajikan max-age=0, jadi markup barunya langsung terlihat. Kalau HTML-nya
+	 * ikut di-cache panjang, ganti nama berkas pun nol menolong.
+	 */
+	$versi = array(
+		'artotel-14-pengantar-v1.webp' => 'artotel-14-pengantar-v2.webp',
+	);
+
+	$nama = basename( (string) wp_parse_url( $webp, PHP_URL_PATH ) );
+
+	/*
+	 * Versi baru dicoba DULU, dan kalau berkasnya belum sampai ke server kita
+	 * JATUH KE VERSI LAMA, bukan ke string kosong. String kosong berarti
+	 * <picture> hilang seluruhnya dan peramban mengunduh .jpg -- persis jalur
+	 * 89.634 byte yang dipotong Hostinger di tengah unduhan, yang kartu G-4
+	 * dibuat untuk menghindarinya. Skrip kirim mendata berkas dengan rglob,
+	 * jadi PHP dan gambar bisa terbang di kiriman yang BERBEDA; urutannya nol
+	 * boleh menentukan.
+	 */
+	if ( isset( $versi[ $nama ] ) ) {
+		$baru  = $versi[ $nama ];
+		$jalur = get_theme_file_path( '/assets/img/' . $baru );
+
+		if ( $jalur && file_exists( $jalur ) ) {
+			return str_replace( $nama, $baru, $webp );
+		}
+	}
+
+	$jalur = get_theme_file_path( '/assets/img/' . $nama );
 
 	return ( $jalur && file_exists( $jalur ) ) ? $webp : '';
 }
@@ -420,16 +519,76 @@ function tjr_v5_webp_pendamping( $url ) {
  * @return string HTML siap echo: <picture>...</picture>, atau <img> tunggal
  *                kalau tidak ada .webp pendamping.
  */
-function tjr_v5_gambar_tag( $url, $alt, $utama = false ) {
+function tjr_v5_gambar_tag( $url, $alt, $utama = false, $persegi = array() ) {
 	$webp  = tjr_v5_webp_pendamping( $url );
 	$sifat = tjr_v5_sifat_gambar( '' !== $webp ? $webp : $url, $utama );
 	$img   = '<img src="' . esc_url( $url ) . '" alt="' . esc_attr( $alt ) . '"' . $sifat . '/>';
 
-	if ( '' === $webp ) {
+	$sumber_persegi = '';
+
+	if ( ! empty( $persegi['sisi'] ) ) {
+		$sumber_persegi = tjr_v5_sumber_persegi(
+			$url,
+			$persegi['sisi'],
+			isset( $persegi['media'] ) ? $persegi['media'] : ''
+		);
+	}
+
+	if ( '' === $webp && '' === $sumber_persegi ) {
 		return $img;
 	}
 
-	return '<picture><source srcset="' . esc_url( $webp ) . '" type="image/webp"/>' . $img . '</picture>';
+	$sumber_webp = ( '' !== $webp )
+		? '<source srcset="' . esc_url( $webp ) . '" type="image/webp"/>'
+		: '';
+
+	return '<picture>' . $sumber_persegi . $sumber_webp . $img . '</picture>';
+}
+
+/**
+ * <source> persegi untuk slot yang dipotong aspect-ratio:1 + object-fit:cover.
+ *
+ * Kartu O-10 Stanley. Opt-in lewat KEBERADAAN berkas: kalau
+ * <nama>-<sisi>.webp nol ada di assets/img/, fungsinya balik string kosong dan
+ * markup nol berubah. Itu sengaja, supaya cetakan lanskap (pasar-jakal-02,
+ * kupiku-04) yang justru MEMBESAR kalau dipersegi nol perlu didaftar sebagai
+ * pengecualian di sini.
+ *
+ * String kosong di sini AMAN, dan itu perlu dinyatakan karena kartu O-11 punya
+ * cacat yang bentuknya mirip tapi akibatnya lain: di sana string kosong
+ * membuang seluruh <picture> dan menjatuhkan gambar ke .jpg telanjang. Di sini
+ * pemanggilnya tetap mencetak <picture> selama $webp ada, jadi keluarannya
+ * sama persis dengan hari ini.
+ *
+ * $media dikosongkan kalau slotnya persegi di SEMUA lebar layar (cetakan:
+ * `.cetakan img{aspect-ratio:1}` style.css:1058, di luar media query mana pun).
+ * $media diisi kalau cuma persegi di bawah satu lebar tertentu (bento t2/t3:
+ * `.bento .t2,.t3{aspect-ratio:1}` style.css:1042, cuma hidup di dalam
+ * `@media(max-width:820px)`). Angkanya 390, BUKAN 820: 820 titik henti CSS,
+ * 390 batas kecukupan berkas, dan yang menentukan yang kedua. Slot butuh
+ * V-48 px perangkat di DPR 2, dan 390-48 = 342, persis lebar berkasnya.
+ *
+ * @param string $url   URL gambar asli (.jpg).
+ * @param int    $sisi  Sisi varian persegi dalam piksel.
+ * @param string $media Media query, kosongkan kalau berlaku di semua lebar.
+ * @return string Satu <source>, atau string kosong.
+ */
+function tjr_v5_sumber_persegi( $url, $sisi, $media = '' ) {
+	$persegi = preg_replace( '/\.jpe?g$/i', '-' . (int) $sisi . '.webp', (string) $url );
+
+	if ( $persegi === $url ) {
+		return '';
+	}
+
+	$jalur = get_theme_file_path( '/assets/img/' . basename( (string) wp_parse_url( $persegi, PHP_URL_PATH ) ) );
+
+	if ( ! $jalur || ! file_exists( $jalur ) ) {
+		return '';
+	}
+
+	return '<source' . ( '' !== $media ? ' media="' . esc_attr( $media ) . '"' : '' )
+		. ' srcset="' . esc_url( $persegi ) . '" type="image/webp"'
+		. ' width="' . (int) $sisi . '" height="' . (int) $sisi . '"/>';
 }
 
 
@@ -1145,6 +1304,123 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 	return preg_replace( '#(<p\b[^>]*>).*?(</p>)#s', '${1}' . $isi . '${2}', $konten, 1 );
 }
 add_filter( 'render_block', 'tjr_v5_fakta_acara', 10, 3 );
+
+/**
+ * Peta potongan LANSKAP hero acara, per slug acara.
+ *
+ * Kartu O-2 Jim. DAFTAR IZIN EKSPLISIT, bukan nama yang diturunkan, dan itu
+ * disengaja: WordPress MENOLAK nama yang diminta waktu berkasnya diunggah lalu
+ * menambahkan akhiran `-1`. Aturan penamaan apa pun yang kutulis akan
+ * menghasilkan URL tanpa `-1`, yang 404. Diverifikasi 2026-09-07T17:08:00Z:
+ * URL ber-`-1` HTTP 200 image/webp, URL tanpa `-1` HTTP 404.
+ *
+ * Dan 404 di sini bukan degradasi anggun: di dalam <picture>, <source> yang
+ * COCOK tapi gagal diunduh NOL jatuh kembali ke <img>. Hero halaman acara
+ * akan jadi gambar rusak. Jadi URL di sini ditulis, bukan dihitung.
+ *
+ * Acara yang NOL terdaftar di sini keluarannya nol berubah sama sekali, sama
+ * persis dengan hari ini. Menambah acara berarti menambah satu baris.
+ *
+ * @return array Peta slug acara ke url, lebar, tinggi potongan lanskap.
+ */
+function tjr_v5_lanskap_acara_peta() {
+	return array(
+		'embracing-growth' => array(
+			'url'    => 'https://thejournalingroom.id/wp-content/uploads/2026/09/embracing-growth-menulis-jurnal-lanskap-1200x675-1.webp',
+			'lebar'  => 1200,
+			'tinggi' => 675,
+		),
+	);
+}
+
+/**
+ * Hero halaman acara memakai potongan lanskap di layar lebar.
+ *
+ * Kartu O-2 Jim: 211.902 byte jadi 69.650, hemat 142.252 B (67,1%).
+ *
+ * KENAPA <picture> DAN BUKAN srcset. `live-style.css:553` memuat
+ * `@media(max-width:640px){ .panggung{aspect-ratio:4/5} }`, jadi DI BAWAH 641px
+ * slotnya POTRET 0,8, bukan lanskap. Potongan lanskap di situ akan terpotong
+ * parah. `srcset` memilih berdasarkan LEBAR, jadi dia nol bisa menyatakan
+ * "potongan ini cuma untuk layar lebar". `<source media>` bisa.
+ *
+ * TIGA HAL YANG JANGAN DIJATUHKAN, semuanya dari Jim:
+ * 1. `style="display:contents"` pada <picture>. Tanpa itu <picture> membuat
+ *    kotak inline dan `height:100%` pada img (`live-style.css:1524`) kehilangan
+ *    tinggi acuannya. Ini bukan hiasan.
+ * 2. `641px` MENGGANDAKAN titik henti CSS `640px`. Dua tempat, satu angka.
+ *    Kalau CSS-nya digeser nanti, ini ikut digeser. Itu ongkos rawat satu
+ *    satunya dari perbaikan ini, dan sengaja diterima.
+ * 3. `fetchpriority="high"` pada <img> TETAP. Itu gambar LCP halaman acara.
+ *    Filter tjr_v5_satu_prioritas() nol mencabutnya di sini, sudah dibuktikan:
+ *    penanda cuma menyala lewat hero-panggung, yang cuma dipakai front-page.
+ *
+ * KENAPA MEMBUNGKUS KELUARAN INTI, BUKAN MENEMPEL SALINAN HTML. Jim menyalin
+ * <img> lama verbatim 969 karakter supaya perilaku ponsel identik dengan hari
+ * ini SECARA KONSTRUKSI. Menempel salinan itu ke templat akan MEMBEKUKANNYA:
+ * `single-acara.html` melayani SETIAP acara, jadi satu salinan berarti acara
+ * berikutnya menampilkan foto acara pertama. Membungkus keluaran inti memberi
+ * sifat verbatim yang sama tanpa membekukan apa pun, dan srcset yang inti
+ * hasilkan tetap ikut berubah kalau ukuran turunannya berubah.
+ * Diverifikasi 2026-09-07T17:08Z: <img> di produksi hari ini 969 karakter,
+ * identik byte per byte dengan salinan Jim.
+ *
+ * Dibatasi `is_singular( 'acara' )` karena gambar unggulan acara yang SAMA
+ * juga muncul di kartu kecil beranda lewat query loop, dan potongan lanskap
+ * nol cocok di situ.
+ *
+ * @param string     $konten Keluaran blok.
+ * @param array      $parsed Blok terurai.
+ * @param WP_Block   $blok   Instance blok.
+ * @return string
+ */
+function tjr_v5_lanskap_acara( $konten, $parsed, $blok = null ) {
+	$nama = isset( $parsed['blockName'] ) ? $parsed['blockName'] : '';
+
+	if ( 'core/post-featured-image' !== $nama || ! is_singular( 'acara' ) ) {
+		return $konten;
+	}
+
+	if ( false === strpos( $konten, '<img' ) || false !== strpos( $konten, '<picture' ) ) {
+		return $konten;
+	}
+
+	$id = tjr_v5_id_acara_konteks( $blok );
+
+	if ( ! $id ) {
+		$id = get_the_ID();
+	}
+
+	if ( ! $id ) {
+		return $konten;
+	}
+
+	$peta = tjr_v5_lanskap_acara_peta();
+	$slug = (string) get_post_field( 'post_name', $id );
+
+	if ( ! isset( $peta[ $slug ] ) ) {
+		return $konten;
+	}
+
+	$satu = $peta[ $slug ];
+
+	$sumber = '<source media="(min-width:641px)"'
+		. ' width="' . (int) $satu['lebar'] . '"'
+		. ' height="' . (int) $satu['tinggi'] . '"'
+		. ' srcset="' . esc_url( $satu['url'] ) . '" />';
+
+	// Callback, bukan string pengganti: URL di dalam $sumber nol boleh
+	// ditafsirkan sebagai rujukan mundur oleh preg_replace.
+	return preg_replace_callback(
+		'#<img\b[^>]*>#',
+		function ( $cocok ) use ( $sumber ) {
+			return '<picture style="display:contents">' . $sumber . $cocok[0] . '</picture>';
+		},
+		$konten,
+		1
+	);
+}
+add_filter( 'render_block', 'tjr_v5_lanskap_acara', 10, 3 );
 
 /**
  * Baris "Format" di detail acara dibuang utuh kalau acaranya tidak punya term.

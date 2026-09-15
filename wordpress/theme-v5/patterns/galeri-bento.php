@@ -53,11 +53,11 @@ $tjr_lead = 'Dokumentasi dari beberapa workshop yang sudah kami gelar di Yogyaka
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"t2 is-style-strip-kraft","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full t2 is-style-strip-kraft"><?php echo tjr_v5_gambar_tag( $tjr_foto[2], $tjr_alt[2] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[2] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full t2 is-style-strip-kraft"><?php echo tjr_v5_gambar_tag( $tjr_foto[2], $tjr_alt[2], false, array( 'sisi' => 342, 'media' => '(max-width: 390px)' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[2] ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"t3 is-style-strip-rose","sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full t3 is-style-strip-rose"><?php echo tjr_v5_gambar_tag( $tjr_foto[3], $tjr_alt[3] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[3] ); ?></figcaption></figure>
+<figure class="wp-block-image size-full t3 is-style-strip-rose"><?php echo tjr_v5_gambar_tag( $tjr_foto[3], $tjr_alt[3], false, array( 'sisi' => 342, 'media' => '(max-width: 390px)' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><figcaption class="wp-element-caption"><?php echo esc_html( $tjr_teks[3] ); ?></figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"className":"t4 is-style-strip-burgundy","sizeSlug":"full","linkDestination":"none"} -->

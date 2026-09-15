@@ -295,8 +295,8 @@
       };
 
       // isi halaman mulai sebelum sampulnya selesai, biar tidak terasa berurutan
-      setTimeout(bukaHalaman, 340);
-    }, tahan + 520);
+      setTimeout(bukaHalaman, 170);
+    }, tahan + 260);
   });
 })();
 

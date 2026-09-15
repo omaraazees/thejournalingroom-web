@@ -81,6 +81,16 @@ def bandingkan(a, b):
     return beda
 
 
+def pastikan_post(o, pid, label):
+    """Bedakan 'perbandingan jalan dan hasilnya kosong' dari 'perbandingan nol
+    pernah punya data'. Dua balasan galat yang identik akan lolos gerbang tanpa
+    pernah melihat post-nya, jadi buktikan dulu ini memang post yang diminta."""
+    if not isinstance(o, dict) or str(o.get("id")) != str(pid):
+        cuplik = json.dumps(o, ensure_ascii=False)[:200] if o is not None else "null"
+        sys.exit(f"BERHENTI. Bacaan {label} bukan post {pid}: {cuplik}")
+    return o
+
+
 def urai_nilai(teks):
     try:
         return json.loads(teks)
@@ -111,7 +121,7 @@ def main():
     endpoint = f"{url}/wp-json/wp/v2/acara/{pid}?context=edit"
 
     # 1. baseline
-    dasar = panggil(endpoint, user, sandi)
+    dasar = pastikan_post(panggil(endpoint, user, sandi), pid, "baseline")
     print(f"baseline dibaca, modified {dasar.get('modified')}")
 
     # 2. payload
@@ -125,7 +135,7 @@ def main():
         print(f"  akan menulis {jalur} = {json.dumps(nilai, ensure_ascii=False)[:70]}")
 
     # 3. GERBANG: baca ulang, tolak apa pun yang bukan keadaan yang jadi dasar rencana
-    ulang = panggil(endpoint, user, sandi)
+    ulang = pastikan_post(panggil(endpoint, user, sandi), pid, "ulang")
     geser = bandingkan(dasar, ulang)
     if geser:
         print("\nBERHENTI. Post berubah antara bacaan dan penulisan:")

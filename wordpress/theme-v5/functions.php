@@ -123,7 +123,6 @@ function tjr_v5_url_font_google() {
 	return 'https://fonts.googleapis.com/css2'
 		. '?family=Playfair+Display:ital,wght@1,400;1,500;1,600'
 		. '&family=Manrope:wght@400;500;700'
-		. '&family=Pinyon+Script'
 		. '&display=swap';
 }
 
@@ -1319,10 +1318,33 @@ function tjr_v5_tirai() {
 			$logo = $src;
 		}
 	}
+
+	// width dan height, kartu O-8 T-2. Sebelum ini <img> tirai nol punya dimensi
+	// sama sekali di keempat belas halaman. Dia .tirai position:fixed jadi nol
+	// pernah menggeser tata letak halaman, tapi tanpa rasio aspek kotaknya baru
+	// terbentuk sesudah berkasnya tiba.
+	//
+	// Diturunkan, bukan ditulis tangan 650x336: logo Customizer di atas boleh
+	// menggantinya dan rasionya bisa lain. tjr_v5_ukuran_gambar() sudah
+	// menangani dua duanya, berkas tema lewat getimagesize bertransient dan
+	// unggahan lewat metadata attachment.
+	//
+	// NOL diberi fetchpriority, dan itu keputusan yang diukur, bukan kelalaian.
+	// style.css blok 18 menyetel `.sampul img{...opacity:0}`; algoritma LCP
+	// membuang elemen ber-opacity 0, jadi gambar ini nol pernah jadi kandidat
+	// LCP pada cat pertama. Memberinya high berarti mendahulukan gambar hias
+	// aria-hidden di atas kandidat LCP yang sebenarnya. Jangan ditambahkan.
+	$tjr_ukuran = function_exists( 'tjr_v5_ukuran_gambar' )
+		? tjr_v5_ukuran_gambar( $logo )
+		: array( 0, 0 );
+
+	$tjr_dimensi = ( ! empty( $tjr_ukuran[0] ) && ! empty( $tjr_ukuran[1] ) )
+		? ' width="' . (int) $tjr_ukuran[0] . '" height="' . (int) $tjr_ukuran[1] . '"'
+		: '';
 	?>
 <div class="tirai" id="tirai" aria-hidden="true">
 	<div class="jatuh" id="jatuh"></div>
-	<div class="sampul" id="sampul"><img src="<?php echo esc_url( $logo ); ?>" alt=""></div>
+	<div class="sampul" id="sampul"><img src="<?php echo esc_url( $logo ); ?>"<?php echo $tjr_dimensi; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> alt=""></div>
 </div>
 <script>document.documentElement.classList.add('intro')</script>
 	<?php
