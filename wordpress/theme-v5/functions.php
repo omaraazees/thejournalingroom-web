@@ -51,6 +51,23 @@ if ( ! defined( 'TJR_PESAN_WA_SLOT' ) ) {
 	define( 'TJR_PESAN_WA_SLOT', 'Halo kakmin TJR, apakah slotnya masih ada untuk sesi terdekat? \\(*^_^*)/ <3' );
 }
 
+/**
+ * Formulir pemesanan kursi, tujuan tombol "Book Your Seat".
+ *
+ * Kartu T-272. Dua tombol di beranda pindah dari WhatsApp ke formulir ini atas
+ * permintaan Umar: kartu sesi terdekat di hero, dan tombol seksi Sesi terdekat.
+ * Tiga tombol lain yang labelnya dulu sama SENGAJA masih WhatsApp, karena yang
+ * ditanyakan di sana memang percakapan, bukan pemesanan: tombol mengambang di
+ * tjr_v5_fab(), pattern ajakan-whatsapp, dan tombol wa-slot di single-acara.
+ *
+ * Ditaruh sebagai konstanta sendiri, BUKAN dititipkan ke TJR_WA_DEFAULT dan
+ * kawannya, supaya nomor WhatsApp dan alamat formulir bisa berubah sendiri
+ * sendiri. Pindah formulir cukup mengganti baris ini.
+ */
+if ( ! defined( 'TJR_FORM_PESAN_KURSI' ) ) {
+	define( 'TJR_FORM_PESAN_KURSI', 'https://forms.gle/pA5cLp3PVrU7LEfS7' );
+}
+
 
 /**
  * Penanda versi aturan rewrite.
@@ -282,6 +299,19 @@ function tjr_v5_link_wa( $pesan = '' ) {
  */
 function tjr_v5_link_wa_slot() {
 	return tjr_v5_link_wa( TJR_PESAN_WA_SLOT );
+}
+
+/**
+ * Link formulir pemesanan kursi.
+ *
+ * Dipisah dari tjr_v5_link_wa_slot() dengan sengaja. Keduanya dipakai di
+ * beranda yang sama, jadi kalau satu fungsi melayani dua tujuan, mengganti
+ * salah satunya akan diam diam mengganti yang lain juga.
+ *
+ * @return string
+ */
+function tjr_v5_link_pesan_kursi() {
+	return TJR_FORM_PESAN_KURSI;
 }
 
 

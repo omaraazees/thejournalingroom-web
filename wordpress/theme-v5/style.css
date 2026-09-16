@@ -642,6 +642,33 @@ header.wp-block-template-part{
 }
 .kartu-sesi .aksi > .wp-block-button__link:hover::after,
 .kartu-sesi a.aksi:hover::after{transform:translateX(3px)}
+
+/* Tombol "Book Your Seat", kartu T-272. Dua tombol di beranda pindah dari
+   WhatsApp ke formulir pemesanan kursi, jadi ikon WhatsApp-nya harus ikut
+   pergi: ikon yang menjanjikan percakapan di tombol yang membuka formulir
+   adalah janji yang salah.
+
+   Yang dipakai TIKET, bukan panah keluar. Panah keluar sudah jadi hiasan
+   bawaan SEMUA tombol is-style-pil di situs ini, lihat blok pil di atas, jadi
+   dia cuma berbunyi "ini tombol pil" dan nol menyebut perbuatannya. Bahwa
+   tautannya meninggalkan situs sudah dibawa target="_blank" dan aria-label.
+
+   Pola gambarnya sama persis dengan ikon lain di berkas ini: mask data URI,
+   background currentColor, nol SVG di markup dan nol entri sprite baru, jadi
+   tombolnya tetap blok Button biasa yang masih bisa disunting dari editor.
+   Ukuran kotaknya sengaja NOL diubah, tetap 15px di kartu sesi dan 12px di pil
+   isi, supaya tata letak kedua tombol nol bergeser sedikit pun. */
+.kartu-sesi .aksi.pesan-kursi > .wp-block-button__link::after,
+.wp-block-button.is-style-pil-isi.pesan-kursi > .wp-block-button__link::after{
+  --tiket:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M2.5 9.5V7.5a2 2 0 0 1 2-2h15a2 2 0 0 1 2 2v2a2.5 2.5 0 0 0 0 5v2a2 2 0 0 1-2 2h-15a2 2 0 0 1-2-2v-2a2.5 2.5 0 0 0 0-5z'/%3E%3Cpath d='M14 8.5v7'/%3E%3C/svg%3E");
+  -webkit-mask:var(--tiket) center/contain no-repeat;
+  mask:var(--tiket) center/contain no-repeat;
+}
+/* Tiket nol terbang ke sudut seperti panah, jadi geserannya ikut tombol kartu
+   sesi: mendatar, bukan diagonal. */
+.wp-block-button.is-style-pil-isi.pesan-kursi > .wp-block-button__link:hover::after{
+  transform:translateX(3px);
+}
 /* Di bawah 760px kartunya turun jadi blok biasa. Dia harus jadi saudara
    .panggung, bukan anaknya: .panggung punya overflow:hidden, jadi kartu yang
    di dalamnya hilang sama sekali begitu posisinya tidak lagi absolut. */

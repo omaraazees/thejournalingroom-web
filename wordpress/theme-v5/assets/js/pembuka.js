@@ -210,9 +210,48 @@
   var mulai = Date.now();
   var siap = document.fonts ? document.fonts.ready : Promise.resolve();
 
-  // Jangan sandera halaman kalau file huruf lama datangnya.
+  /*
+   * Batas menunggu huruf. Dihitung dari NAVIGASI, bukan dari saat skrip ini
+   * jalan, dan itu satu satunya hal yang berubah di rantai ini. Animasinya
+   * sendiri, urutannya, dan durasi tiap gerakannya nol disentuh.
+   *
+   * Sebabnya diukur 16 Sep 2026 di beranda live, cache dikosongkan, throttle
+   * Fast 3G, dua kali jalan:
+   *
+   *   cat pertama            1940 ms dan 1736 ms
+   *   .bar mulai kelihatan   3763 ms dan 3910 ms
+   *   jadi bagian atas gelap 1823 ms dan 2175 ms SESUDAH cat pertama
+   *
+   * Yang dilihat pengunjung selama itu bukan halaman blank melainkan sampul
+   * krem yang diam, logonya pun belum ada karena .sampul img opacity 0 sampai
+   * rantai ini mulai. Diam selama dua detik itulah yang terbaca sebagai kedip.
+   *
+   * Dugaan bahwa rantainya digantung window load TERBANTAH oleh angka di atas:
+   * di jalan pertama .bar sudah kelihatan di 3763 ms sementara load baru di
+   * 4326 ms. Yang menggantung document.fonts.ready. Skrip ini defer dan di
+   * kaki halaman, jadi ia jalan di DOMContentLoaded, dan DI SAAT ITU stylesheet
+   * Google Fonts sudah terurai sementara berkas woff2-nya masih di jalan. Jadi
+   * promise-nya menggantung dan batas 1400 ms di bawah terpakai hampir penuh.
+   *
+   * Batas itu ditulis supaya halaman nol disandera huruf yang lambat, tapi ia
+   * dihitung dari skrip, padahal skripnya sendiri baru jalan 1,9 sampai 2,4
+   * detik setelah navigasi di muat dingin. Jadi di muat yang paling butuh,
+   * anggarannya terbayar dua kali.
+   *
+   * Dihitung dari navigasi, anggarannya jadi satu: pembuka boleh menunggu huruf
+   * sampai 900 ms sejak navigasi, dan nol pernah kurang dari 150 ms supaya muat
+   * hangat tetap punya jeda. Muat hangat nol berubah sama sekali, di sana skrip
+   * jalan sekitar 200 ms dan fonts.ready menang duluan dari cache seperti dulu.
+   *
+   * Jalur prefers-reduced-motion nol lewat sini; ia sudah return jauh di atas.
+   */
+  var ANGGARAN_HURUF = 900;
+  var LANTAI_HURUF = 150;
+  var lalu = window.performance && performance.now ? performance.now() : 0;
+  var batasMs = Math.max(LANTAI_HURUF, ANGGARAN_HURUF - lalu);
+
   var batas = new Promise(function (r) {
-    setTimeout(r, 1400);
+    setTimeout(r, batasMs);
   });
 
   Promise.race([siap, batas]).then(function () {

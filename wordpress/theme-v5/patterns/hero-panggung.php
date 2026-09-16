@@ -3,12 +3,12 @@
  * Title: Hero panggung
  * Slug: tjr-v5/hero-panggung
  * Categories: tjr, tjr-beranda
- * Description: Judul besar rata kanan, dua pil aksi, foto panggung lebar dengan teks di kiri, dan kartu sesi terdekat bertempel selotip washi di sudut kanan bawah foto.
+ * Description: Judul besar rata kanan, dua pil aksi, foto panggung lebar dengan teks di kiri, dan kartu sesi terdekat bertempel selotip washi di sudut kanan bawah foto. Tombol kartunya membuka formulir pemesanan kursi.
  * Keywords: hero, beranda, panggung, sesi terdekat
  * Viewport Width: 1400
  */
 
-$tjr_wa_slot = esc_url( tjr_v5_link_wa_slot() );
+$tjr_pesan = esc_url( tjr_v5_link_pesan_kursi() );
 
 // Isi diambil dari halaman depan lewat ACF. Kalau kolomnya belum diisi, yang
 // dipakai aset dan kalimat bawaan di tjr_v5_bawaan_teks() dan
@@ -138,7 +138,7 @@ if ( $tjr_sesi ) {
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
-<!-- wp:button {"className":"aksi","width":100} --><div class="wp-block-button aksi has-custom-width wp-block-button__width-100"><a class="wp-block-button__link wp-element-button" href="<?php echo $tjr_wa_slot; ?>" target="_blank" rel="noopener" aria-label="Tanyakan slotnya ke kami lewat WhatsApp">Tanyakan slotnya ke kami</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"aksi pesan-kursi","width":100} --><div class="wp-block-button aksi pesan-kursi has-custom-width wp-block-button__width-100"><a class="wp-block-button__link wp-element-button" href="<?php echo $tjr_pesan; ?>" target="_blank" rel="noopener" aria-label="Book Your Seat, formulir pemesanan kursi, terbuka di tab baru">Book Your Seat</a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
 

@@ -3,12 +3,12 @@
  * Title: Jadwal, sesi terdekat
  * Slug: tjr-v5/jadwal-sesi-terdekat
  * Categories: tjr, tjr-beranda
- * Description: Kepala seksi rata tengah plus satu kartu besar berisi sesi terdekat: foto di kiri, judul, ringkasan, tujuh baris fakta, bar sisa kursi, dan tombol WhatsApp. Query Loop-nya sudah dikunci ke satu acara terdekat yang tanggalnya belum lewat.
+ * Description: Kepala seksi rata tengah plus satu kartu besar berisi sesi terdekat: foto di kiri, judul, ringkasan, tujuh baris fakta, bar sisa kursi, dan tombol yang membuka formulir pemesanan kursi. Query Loop-nya sudah dikunci ke satu acara terdekat yang tanggalnya belum lewat.
  * Keywords: jadwal, acara, sesi terdekat, query loop
  * Viewport Width: 1400
  */
 
-$tjr_wa = esc_url( tjr_v5_link_wa_slot() );
+$tjr_pesan = esc_url( tjr_v5_link_pesan_kursi() );
 ?>
 <!-- wp:group {"tagName":"section","className":"seksi","anchor":"jadwal","layout":{"type":"default"}} -->
 <section class="wp-block-group seksi" id="jadwal">
@@ -110,7 +110,7 @@ $tjr_wa = esc_url( tjr_v5_link_wa_slot() );
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
-<!-- wp:button {"className":"is-style-pil-isi"} --><div class="wp-block-button is-style-pil-isi"><a class="wp-block-button__link wp-element-button" href="<?php echo $tjr_wa; ?>" target="_blank" rel="noopener">Tanyakan slotnya ke kami</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-pil-isi pesan-kursi"} --><div class="wp-block-button is-style-pil-isi pesan-kursi"><a class="wp-block-button__link wp-element-button" href="<?php echo $tjr_pesan; ?>" target="_blank" rel="noopener" aria-label="Book Your Seat, formulir pemesanan kursi, terbuka di tab baru">Book Your Seat</a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
 
