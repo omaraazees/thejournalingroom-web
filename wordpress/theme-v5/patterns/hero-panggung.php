@@ -8,6 +8,8 @@
  * Viewport Width: 1400
  */
 
+// Alamat bawaan. Diganti alamat milik sesi terdekat di bawah, kalau sesi itu
+// mengisi kolom Link pemesanan kursi sendiri.
 $tjr_pesan = esc_url( tjr_v5_link_pesan_kursi() );
 
 // Isi diambil dari halaman depan lewat ACF. Kalau kolomnya belum diisi, yang
@@ -62,6 +64,10 @@ if ( $tjr_sesi ) {
 	// Memakai fungsi yang sama dengan kartu jadwal dan halaman acara, jadi
 	// penjagaannya ikut: cuma dirender kalau harga lebih dari nol.
 	$tjr_s_hrg  = tjr_v5_harga_acara( $tjr_sid );
+	// Kartu ini bukan bagian Query Loop, jadi filter render_block di
+	// inc/isi-beranda.php tidak tahu acara mana yang tampil di sini. Alamatnya
+	// diambil langsung, dari helper yang sama.
+	$tjr_pesan  = esc_url( tjr_v5_link_pesan_kursi( $tjr_sid ) );
 }
 ?>
 <!-- wp:group {"tagName":"section","className":"hero","layout":{"type":"default"}} -->

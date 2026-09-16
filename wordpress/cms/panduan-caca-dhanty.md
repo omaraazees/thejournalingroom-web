@@ -109,6 +109,13 @@ Kalau satu sesi kitnya beda banget dan nggak cocok dijelaskan lewat centang, bal
 koma. Kolom itu menang atas daftar centang. Ada juga kolom **Yang perlu dibawa** di sebelahnya.
 Dua duanya boleh kosong, nanti pakai isi bawaan.
 
+**Panel Pemesanan kursi**
+
+Satu kolom, **Link pemesanan kursi**. Ini alamat formulir yang kebuka waktu orang menekan
+tombol Book Your Seat buat sesi ini. Biarkan kosong kalau sesinya pakai formulir yang biasa,
+alamat bawaannya sudah kelihatan abu abu di dalam kolomnya. Isi cuma kalau sesi ini punya
+formulir sendiri: tempel alamatnya, simpan, selesai.
+
 ### 4. Pasang foto acara
 
 Lihat kolom kanan. Kalau kolomnya nggak kelihatan, klik ikon kotak di sebelah tombol Publish

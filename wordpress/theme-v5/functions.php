@@ -302,15 +302,38 @@ function tjr_v5_link_wa_slot() {
 }
 
 /**
- * Link formulir pemesanan kursi.
+ * Link formulir pemesanan kursi, milik satu acara kalau acaranya punya.
  *
  * Dipisah dari tjr_v5_link_wa_slot() dengan sengaja. Keduanya dipakai di
  * beranda yang sama, jadi kalau satu fungsi melayani dua tujuan, mengganti
  * salah satunya akan diam diam mengganti yang lain juga.
  *
+ * Kartu T-278. Tiap acara boleh punya formulir sendiri lewat kolom
+ * "Link pemesanan kursi" di layar edit acara (grup group_tjr_link_kursi di
+ * inc/isi-beranda.php). Kolom yang dikosongkan, atau diisi alamat yang tidak
+ * sah, jatuh ke TJR_FORM_PESAN_KURSI. Jadi selama semua sesi memakai formulir
+ * yang sama, tidak ada yang perlu diisi sama sekali.
+ *
+ * @param int $id_acara ID acara. 0 berarti langsung memakai alamat bawaan.
  * @return string
  */
-function tjr_v5_link_pesan_kursi() {
+function tjr_v5_link_pesan_kursi( $id_acara = 0 ) {
+	$id_acara = (int) $id_acara;
+
+	if ( $id_acara ) {
+		// Dibaca lewat get_post_meta, bukan get_field, supaya tombolnya tetap
+		// hidup kalau ACF sedang mati. Nilai kolomnya disimpan apa adanya.
+		$sendiri = trim( (string) get_post_meta( $id_acara, 'link_pesan_kursi', true ) );
+
+		// esc_url_raw mengembalikan string kosong untuk skema yang tidak
+		// diizinkan, jadi alamat salah ketik tidak pernah jadi href tombol.
+		$sendiri = ( '' !== $sendiri ) ? esc_url_raw( $sendiri ) : '';
+
+		if ( '' !== $sendiri ) {
+			return $sendiri;
+		}
+	}
+
 	return TJR_FORM_PESAN_KURSI;
 }
 

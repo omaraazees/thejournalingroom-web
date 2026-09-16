@@ -1211,6 +1211,34 @@ function tjr_v5_fakta_acara( $konten, $parsed, $blok = null ) {
 		// bukan alamat yang diketik di template.
 		$kelas = isset( $parsed['attrs']['className'] ) ? $parsed['attrs']['className'] : '';
 
+		// Tombol bertanda pesan-kursi membuka formulir milik acara yang sedang
+		// dirender, kalau acara itu mengisi kolomnya sendiri.
+		if ( false !== strpos( $kelas, 'pesan-kursi' ) ) {
+			$id_acara = tjr_v5_id_acara_konteks( $blok );
+
+			// Di luar konteks acara alamat yang sudah tercetak pattern yang
+			// dipakai. Hero memanggil helpernya sendiri karena kartunya bukan
+			// bagian Query Loop, jadi menulis ulang di sini justru membuang
+			// alamat yang benar.
+			if ( ! $id_acara ) {
+				return $konten;
+			}
+
+			$alamat = esc_url( tjr_v5_link_pesan_kursi( $id_acara ) );
+
+			// Pakai callback, bukan string pengganti seperti cabang wa-slot di
+			// bawah: alamatnya diketik orang di layar edit, dan tanda dolar di
+			// dalamnya akan terbaca PCRE sebagai rujukan grup.
+			return preg_replace_callback(
+				'#(<a\b[^>]*\bhref=")[^"]*(")#',
+				static function ( $cocok ) use ( $alamat ) {
+					return $cocok[1] . $alamat . $cocok[2];
+				},
+				$konten,
+				1
+			);
+		}
+
 		if ( false === strpos( $kelas, 'wa-slot' ) ) {
 			return $konten;
 		}
@@ -1607,6 +1635,68 @@ function tjr_v5_daftar_catatan_sesi() {
 	);
 }
 add_action( 'acf/init', 'tjr_v5_daftar_catatan_sesi' );
+
+
+/**
+ * Panel Pemesanan kursi.
+ *
+ * Satu kolom saja: alamat formulir yang dibuka tombol "Book Your Seat" untuk
+ * acara ini. Dibuat per acara, bukan satu untuk seluruh situs, karena tiap sesi
+ * bisa membuka formulirnya sendiri. Yang dikosongkan jatuh ke
+ * TJR_FORM_PESAN_KURSI di functions.php, jadi selama semua sesi memakai
+ * formulir yang sama kolom ini tidak perlu disentuh sekali pun.
+ *
+ * Alamat bawaannya tetap tinggal di konstanta, bukan pindah ke database, dan
+ * kolom ini membacanya lewat satu tempat yang sama: placeholder di layar edit
+ * dan nilai mundur di tjr_v5_link_pesan_kursi() sama sama TJR_FORM_PESAN_KURSI.
+ *
+ * Grup sendiri dengan aturan lokasi sendiri, bukan kolom yang dititipkan ke
+ * grup Detail Acara. acf_add_local_field dengan parent grup yang hidup di
+ * database membuat ACF menganggap grup itu didefinisikan di kode, dan seluruh
+ * kolom aslinya hilang dari layar edit.
+ */
+function tjr_v5_daftar_link_kursi() {
+	if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+		return;
+	}
+
+	acf_add_local_field_group(
+		array(
+			'key'                   => 'group_tjr_link_kursi',
+			'title'                 => 'Pemesanan kursi',
+			'fields'                => array(
+				array(
+					'key'          => 'field_tjr_link_pesan_kursi',
+					'label'        => 'Link pemesanan kursi',
+					'name'         => 'link_pesan_kursi',
+					'type'         => 'url',
+					'instructions' => 'Alamat formulir yang dibuka tombol Book Your Seat untuk sesi ini. Kosongkan untuk memakai formulir bawaan: ' . TJR_FORM_PESAN_KURSI,
+					'placeholder'  => TJR_FORM_PESAN_KURSI,
+					'required'     => 0,
+				),
+			),
+			'location'              => array(
+				array(
+					array(
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => 'acara',
+					),
+				),
+			),
+			'menu_order'            => 30,
+			'position'              => 'normal',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'label',
+			'active'                => true,
+			// Tanpa ini kolomnya TIDAK bisa dibaca maupun ditulis lewat REST,
+			// sama seperti dua grup di atas.
+			'show_in_rest'          => true,
+		)
+	);
+}
+add_action( 'acf/init', 'tjr_v5_daftar_link_kursi' );
 
 
 /**
