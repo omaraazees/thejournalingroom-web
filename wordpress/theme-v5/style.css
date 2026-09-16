@@ -669,6 +669,30 @@ header.wp-block-template-part{
 .wp-block-button.is-style-pil-isi.pesan-kursi > .wp-block-button__link:hover::after{
   transform:translateX(3px);
 }
+/* Isi tombol kartu sesi ditengahkan, kartu T-275.
+   Aturan dasar di baris 618 memakai justify-content:space-between, dan itu
+   masuk akal waktu labelnya "Tanyakan slotnya ke kami" yang panjang. Label
+   baru cuma 109px di tombol selebar 238px, jadi space-between menyisakan 67px
+   kosong TEPAT DI TENGAH: labelnya menempel kiri, tiketnya terlempar kanan,
+   dan tombolnya terlihat berlubang.
+
+   Lebar 100 persen DIPERTAHANKAN, yang berubah cuma posisi isinya, jadi tinggi
+   tombol nol bergeser. Diukur di live dengan menyalakan dan mematikan aturan
+   ini di bingkai yang sama: 43,78px di 1920px dan 44,6px di 390px, sama persis
+   dua duanya.
+
+   Gap 16px dipertahankan. Sesudah isinya di tengah, jaraknya tinggal 1px lebih
+   lebar daripada kotak ikonnya sendiri yang 15px, jadi label dan tiket sudah
+   terbaca satu kelompok. Menurunkannya ke 12px justru membuat tombol ini lebih
+   rapat daripada tombol pil di section Sesi terdekat yang gap 12px lawan ikon
+   12px, dan itu menukar satu ketimpangan dengan ketimpangan baru.
+
+   Selektornya sengaja menuntut .pesan-kursi: .kartu-sesi .aksi tanpa kelas itu
+   masih dipakai tombol lain yang labelnya panjang dan masih butuh
+   space-between. */
+.kartu-sesi .aksi.pesan-kursi > .wp-block-button__link{
+  justify-content:center;
+}
 /* Di bawah 760px kartunya turun jadi blok biasa. Dia harus jadi saudara
    .panggung, bukan anaknya: .panggung punya overflow:hidden, jadi kartu yang
    di dalamnya hilang sama sekali begitu posisinya tidak lagi absolut. */
