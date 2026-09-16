@@ -743,10 +743,20 @@ header.wp-block-template-part{
     radial-gradient(rgb(255 255 255 / .42) 1px,rgb(255 255 255 / 0) 1.6px) 0 0/7px 7px,
     rgb(214 186 146 / .9);
 }
-@media (prefers-reduced-motion: no-preference){
-  .kartu-sesi{animation:apung 5.5s ease-in-out 2.6s infinite alternate}
-}
-@keyframes apung{from{translate:0 0;rotate:-1.1deg}to{translate:0 -5px;rotate:-.4deg}}
+/* Kartu sesi sengaja DIAM. Jangan menambahkan animasi mengambang di sini.
+   Sampai T-277 ada keyframes yang menaikkan kartu 5px dan memutarnya dari
+   -1.1deg ke -.4deg, jalan terus tanpa berhenti. Itu dicabut karena
+   melawan gambarnya sendiri: kartu ini digambar sedang diselotip washi ke foto
+   (lihat ::before dan ::after di atas), dan benda yang diselotip tidak
+   mengambang. Selotipnya jadi terbaca sebagai hiasan, bukan sebagai penahan.
+   Kemiringannya tetap ada, cuma diam: -1.1deg di .kartu-sesi di atas, dan
+   -.6deg di media query 760px di bawah. Kemiringan itu bukan sisa animasi,
+   jadi aman.
+   Pembungkus prefers-reduced-motion sudah tidak ada di sini, karena tidak ada
+   lagi gerak yang perlu dijaga. Kartu tetap ikut muncul lewat animasi pembuka
+   halaman (pembuka.js, kelas .intro); itu jalur lain dan tidak berubah.
+   Prototipe desain/prototipe/v5-fieldtime.html masih memuat versi lama gerakan
+   ini. Jangan menyalinnya balik ke sini. */
 @media(max-width:760px){
   .kartu-sesi{rotate:-.6deg}
   .kartu-sesi::before{left:-8px;top:-8px}

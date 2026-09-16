@@ -181,8 +181,11 @@
       }
     }
 
-    // Kartu sesi punya animasi apung yang jalan terus, jadi transform-nya tidak
-    // boleh dipakai di sini. Cukup opacity, biar tidak saling menimpa.
+    // Kartu sesi cukup opacity. Dulu alasannya animasi mengambang yang jalan
+    // terus di style.css, yang akan saling menimpa dengan transform di sini.
+    // Animasi itu dicabut di T-277, tapi kartunya tetap punya rotate diam
+    // (-1.1deg, -.6deg di bawah 760px), dan transform di sini akan menimpa
+    // rotate itu juga. Jadi tetap opacity saja.
     gerak(
       document.querySelector('.kartu-sesi'),
       { opacity: 0 },
